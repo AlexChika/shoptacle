@@ -1,43 +1,22 @@
-import { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import Image from "next/image";
+import SearchBar from "./SearchBar";
 import { Store } from "../store/Context";
-import { FiSearch } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
 import { IoMdList } from "react-icons/io";
 function NavBar({ page }) {
   const { handleCloseModal } = Store();
-  const [searchBtn, setSearchBtn] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [timeoutId, setTimeoutId] = useState("");
-  const handleSearchOnchange = (e) => {
-    setSearchValue(e.target.value);
-    if (e.target.value) {
-      setSearchBtn(true);
-      clearTimeout(timeoutId);
-    } else {
-      setSearchBtn(false);
-    }
-  };
-  const handleSearchToggle = () => {
-    setSearchBtn(!searchBtn);
-    clearTimeout(timeoutId);
-    const timeout = setTimeout(() => {
-      if (searchValue) return;
-      setSearchBtn(false);
-    }, 4000);
-    setTimeoutId(timeout);
-  };
-  const handleSearchOnsubmit = (e) => {
-    e.preventDefault();
-  };
+
   return (
     <Wrapper className="mt10 f align">
       <button onClick={handleCloseModal} className="side-modal-btn">
         <IoMdList />
       </button>
+      <div className="logo-name">
+        <h1>Shoptacle</h1>
+      </div>
       <div className="link-con f">
         <Link href="/">
           <span className={`trans ${page === "home" ? "active" : ""}`}>
@@ -56,25 +35,8 @@ function NavBar({ page }) {
           </span>
         </Link>
       </div>
-      <div className={`search-con ${searchBtn ? "search" : ""}`}>
-        <button className="search-btn" onClick={handleSearchToggle}>
-          <FiSearch />
-        </button>
-        <form onSubmit={handleSearchOnsubmit}>
-          <div className="form-input f ">
-            <input
-              type="text"
-              name=""
-              id=""
-              value={searchValue}
-              onChange={handleSearchOnchange}
-              placeholder="Type to search"
-            />
-            <button type="submit">
-              <FiSearch />
-            </button>
-          </div>
-        </form>
+      <div className="search-bar">
+        <SearchBar />
       </div>
       <div className="navCart-con f fcenter">
         <span>
@@ -103,9 +65,20 @@ const Wrapper = styled.nav`
   justify-content: space-between;
   height: 60px;
   margin: 0 10px;
+  padding: 0px 10px;
   .side-modal-btn {
+    order: 3;
     color: white;
-    font-size: 25px;
+    font-size: 30px;
+  }
+  .logo-name {
+    order: 1;
+    font-family: "Lobster", cursive;
+    color: white;
+    border-bottom: 2px solid;
+  }
+  .search-bar {
+    display: none;
   }
   .link-con {
     display: none;
@@ -129,67 +102,22 @@ const Wrapper = styled.nav`
       color: grey;
     }
   }
-  .search-con {
-    position: relative;
-    button {
-      font-size: 25px;
-    }
-    .search-btn {
-      text-align: 2px 2px black;
-      position: absolute;
-      top: 0%;
-      transform: translateY(25%);
-      font-size: 30px;
-      color: white;
-      display: block;
-    }
-    form {
-      transition: all 0.2s linear;
-      width: 25px;
-      overflow: hidden;
-      visibility: collapse;
-      input {
-        width: 75%;
-      }
-      button {
-        width: 25%;
-      }
-      .form-input {
-        height: 45px;
-        padding: 0px 7px;
-        background-color: white;
-        border-radius: 5px;
-      }
-    }
-  }
-  .search-con.search {
-    .search-btn {
-      display: none;
-    }
-    form {
-      visibility: visible;
-      width: 10em;
-      overflow: visible;
-    }
-  }
+
   .navCart-con {
+    order: 2;
     background: #ffffff;
     border-radius: 30px;
     width: 90px;
-    height: 45px;
+    height: 40px;
+    padding: 10px;
     span {
       margin: 0px 7px;
     }
     button {
-      font-size: 25px;
+      font-size: 23px;
     }
   }
   @media screen and (min-width: 525px) {
-    .search-con.search {
-      form {
-        width: 15em;
-      }
-    }
     .navCart-con {
       width: 100px;
     }
@@ -198,11 +126,18 @@ const Wrapper = styled.nav`
     .side-modal-btn {
       display: none;
     }
+    .logo-name {
+      display: none;
+    }
+    .search-bar {
+      display: block;
+    }
     .link-con {
       display: flex;
     }
     .navCart-con {
       width: 130px;
+      order: 4;
     }
   }
   @media screen and (min-width: 900px) {

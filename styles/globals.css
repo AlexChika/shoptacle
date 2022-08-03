@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
-@font-face {
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Lobster&display=swap");
+/* @font-face {
   font-family: "qanect elegant";
   src: url("./qanect-elegant-font.otf");
   src: url("./qanect-elegant-font.ttf") format("truetype");
-}
+} */
 html {
   scroll-behavior: smooth;
 }

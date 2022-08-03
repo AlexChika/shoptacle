@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Store } from "../store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
+import SearchBar from "./SearchBar";
 const SideBar = () => {
   const { modalOpen, handleCloseModal } = Store();
   return (
@@ -26,7 +27,7 @@ const SideBar = () => {
           <TbPlaylistX />
         </button>
       </div>
-
+      <SearchBar />
       <h1 className="mt20">welcome to SideBar</h1>
     </Wrapper>
   );
@@ -37,12 +38,13 @@ const Wrapper = styled.section`
   position: sticky;
   margin-top: -70px;
   height: 100vh;
-  max-width: 768px;
+  max-width: 465px;
   width: -100%;
   .logo-con {
-    padding: 10px;
+    padding: 20px 10px;
     text-align: center;
-    font-family: "qanect elegant";
+    /* font-family: "qanect elegant"; */
+    font-family: "Lobster", cursive;
     box-shadow: 0px 1px 5px rgba(154, 148, 137, 0.4);
   }
   .close-btn {
