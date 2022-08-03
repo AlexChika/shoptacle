@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Image from "next/image";
 import { Store } from "../store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
@@ -11,7 +12,8 @@ const SideBar = () => {
         {
           <span>
             {false ? (
-              <Image src="" />
+              // <Image src="" />
+              <div></div>
             ) : (
               <button className="user-btn" type="button">
                 <FaUser />

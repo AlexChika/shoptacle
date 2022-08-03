@@ -79,7 +79,8 @@ function NavBar({ page }) {
       <div className="navCart-con f fcenter">
         <span>
           {false ? (
-            <Image src="" />
+            // <Image src="" />
+            <div></div>
           ) : (
             <button type="button">
               <FaUser />

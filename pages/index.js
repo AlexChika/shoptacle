@@ -55,7 +55,6 @@ const Wrapper = styled.main`
     border: 2px solid red;
     top: 0;
     color: white;
-    /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)); */
     h1 {
       text-align: center;
     }

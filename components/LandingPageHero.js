@@ -6,6 +6,13 @@ import SideBar from "./SideBar";
 const LandingPageHero = () => {
   return (
     <Wrapper>
+      <section className="background-layout">
+        <div className="one"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </section>
       <div className="hero-logo red">
         <Shoptacle className="red" fill={"#69687C"} />
       </div>
