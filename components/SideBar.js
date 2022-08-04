@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 const SideBar = () => {
   const { modalOpen, handleCloseModal } = Store();
   return (
-    <Wrapper modal={modalOpen} className="trans bg">
+    <Wrapper modal={modalOpen} className="trans">
       <div className="logo-con f align j-around">
         {
           <span>
@@ -35,11 +35,13 @@ const SideBar = () => {
 
 export default SideBar;
 const Wrapper = styled.section`
-  position: sticky;
+  position: fixed;
+  background-color: var(--pink-light);
+  z-index: 10;
   margin-top: -70px;
-  height: 100vh;
+  min-height: calc(100vh + 70px);
   max-width: 465px;
-  width: -100%;
+  width: 100%;
   .logo-con {
     padding: 20px 10px;
     text-align: center;

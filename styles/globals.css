@@ -1,24 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Libre+Baskerville&family=Lobster&display=swap");
 /* @font-face {
   font-family: "qanect elegant";
   src: url("./qanect-elegant-font.otf");
   src: url("./qanect-elegant-font.ttf") format("truetype");
 } */
+:root {
+  --pink: #f58b42;
+  --pink-light: #faf4f4;
+  --gray: #c7c1b9;
+  --blue: #323148;
+  --blue-light: #464463;
+}
 html {
   scroll-behavior: smooth;
-}
-body {
-  /* max-width: 1440px;
-  margin: 0 auto; */
-  /* background: rgba(154, 148, 137, 0.4); */
 }
 a {
   color: inherit;
   text-decoration: none;
-}
-.layout {
-  max-width: 1440px;
-  margin: 0 auto;
 }
 button,
 input,
@@ -44,45 +42,34 @@ a {
 .gray {
   border: 1px solid gray;
 }
-.bg {
-  background: #faf4f4;
-}
-.logo-color {
-  color: rgba(154, 148, 137, 0.4);
-}
-.brand-pink {
-  color: #f58b42;
-}
-.brand-pink-light {
-  color: #faf4f4;
-}
-.brand-gray {
-  color: #c7c1b9;
-}
 .brand-shade {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url("../public/foooterbg.jpg");
 }
-.brand-color-light {
-  color: #464463;
-}
-.brand-color {
+.c-blue {
   color: #323148;
+}
+.bg-blue {
+  background-color: #323148;
+}
+.layout {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.center {
+  margin: 0 auto;
+}
+.display {
+  display: none;
+}
+.minvh {
+  min-height: 100%;
 }
 .trans {
   transition: all 0.3s linear;
 }
 .f {
   display: flex;
-}
-.p10 {
-  padding: 10px;
-}
-.p20 {
-  padding: 20px;
-}
-.p30 {
-  padding: 30px;
 }
 .mt10 {
   margin-top: 10px;
@@ -124,3 +111,8 @@ a {
     background: black;
   }
 } */
+@media screen and (min-width: 768px) {
+  .display {
+    display: block;
+  }
+}

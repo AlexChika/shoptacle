@@ -1,4 +1,3 @@
-import App from "next/app";
 import React, { useContext, useReducer } from "react";
 const AppContext = React.createContext();
 import reducer from "./Reducer";

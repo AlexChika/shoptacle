@@ -15,7 +15,9 @@ function NavBar({ page }) {
         <IoMdList />
       </button>
       <div className="logo-name">
-        <h1>Shoptacle</h1>
+        <Link href="/">
+          <h1>Shoptacle</h1>
+        </Link>
       </div>
       <div className="link-con f">
         <Link href="/">
@@ -93,10 +95,11 @@ const Wrapper = styled.nav`
       font-size: 18px;
       line-height: 24px;
       color: #ffffff;
+      cursor: pointer;
     }
     span.active {
       color: black;
-      border-bottom: 4px solid grey;
+      border-bottom: 2px solid black;
     }
     span:hover {
       color: grey;
@@ -107,7 +110,7 @@ const Wrapper = styled.nav`
     order: 2;
     background: #ffffff;
     border-radius: 30px;
-    width: 90px;
+    width: 100px;
     height: 40px;
     padding: 10px;
     span {
@@ -119,7 +122,7 @@ const Wrapper = styled.nav`
   }
   @media screen and (min-width: 525px) {
     .navCart-con {
-      width: 100px;
+      width: 110px;
     }
   }
   @media screen and (min-width: 768px) {
