@@ -5,25 +5,27 @@ import { Store } from "../store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
 import SearchBar from "./SearchBar";
+import profileImage from "../public/icon.png";
 const SideBar = () => {
   const { modalOpen, handleCloseModal } = Store();
   return (
     <Wrapper modal={modalOpen} className="trans">
       <div className="logo-con f align j-around">
-        {
-          <span>
-            {false ? (
-              // <Image src="" />
-              <div></div>
-            ) : (
-              <button className="user-btn" type="button">
-                <FaUser />
-              </button>
-            )}
-          </span>
-        }
-        <h1 className="logo-color">Shoptacle</h1>
-        <button onClick={handleCloseModal} type="button" className="close-btn">
+        {true ? (
+          <button type="button" className="profile-img">
+            <Image src={profileImage} />
+          </button>
+        ) : (
+          <button className="user-btn" type="button">
+            <FaUser />
+          </button>
+        )}
+        <h1 className="c-color">Shoptacle</h1>
+        <button
+          onClick={handleCloseModal}
+          type="button"
+          className="close-btn c-color"
+        >
           <TbPlaylistX />
         </button>
       </div>
@@ -45,9 +47,16 @@ const Wrapper = styled.section`
   .logo-con {
     padding: 20px 10px;
     text-align: center;
-    /* font-family: "qanect elegant"; */
     font-family: "Lobster", cursive;
     box-shadow: 0px 1px 5px rgba(154, 148, 137, 0.4);
+    .profile-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      img {
+        border-radius: 50%;
+      }
+    }
   }
   .close-btn {
     font-size: 30px;

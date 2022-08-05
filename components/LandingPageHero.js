@@ -41,9 +41,9 @@ const LandingPageHero = () => {
             </div>
           </div>
           <div className="socialCon minvh f j-around align">
-            <div className="side-text">
+            <a href="#new-arrival" className="side-text">
               <h1>Trending Collections</h1>
-            </div>
+            </a>
             <div className="social-icons">
               <a href="">
                 <FaTwitter />
@@ -160,6 +160,7 @@ const Wrapper = styled.main`
       h1 {
         height: 12em;
         margin-top: -30px;
+        cursor: pointer;
       }
       a {
         font-size: 18px;
@@ -234,7 +235,7 @@ const Wrapper = styled.main`
     .hero-main-content {
       .mainContent {
         h1 {
-          font-size: 60px;
+          font-size: 50px;
           line-height: 99px;
         }
         h2,
