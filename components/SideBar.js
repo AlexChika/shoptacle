@@ -13,7 +13,7 @@ const SideBar = () => {
       <div className="logo-con f align j-around">
         {true ? (
           <button type="button" className="profile-img">
-            <Image src={profileImage} />
+            <Image src={profileImage} alt="profile image" />
           </button>
         ) : (
           <button className="user-btn" type="button">
