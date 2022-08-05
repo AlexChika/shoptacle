@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ProductCard from "./ProductCard";
+import ProductCards from "./ProductCards";
 import { data } from "../store/tempData";
 const LandingPageNewArrival = () => {
   return (
@@ -13,7 +13,11 @@ const LandingPageNewArrival = () => {
       <section className="products center">
         {data.map((product, index) => {
           return (
-            <ProductCard index={index + 1} key={product.id} product={product} />
+            <ProductCards
+              index={index + 1}
+              key={product.id}
+              product={product}
+            />
           );
         })}
       </section>

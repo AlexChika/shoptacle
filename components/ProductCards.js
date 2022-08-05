@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../store/tempData";
-const ProductCard = ({ product, index }) => {
+const ProductCards = ({ product, index }) => {
   return (
     <Wrapper index={index}>
       <Image src={product.url} width={720} height={960} alt={product.name} />
@@ -27,7 +27,7 @@ const ProductCard = ({ product, index }) => {
     </Wrapper>
   );
 };
-export default ProductCard;
+export default ProductCards;
 const Wrapper = styled.article`
   position: relative;
   border-radius: 15px;
