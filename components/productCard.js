@@ -7,7 +7,7 @@ import { formatPrice, calculateStars } from "../store/tempData";
 const ProductCard = ({ product, index }) => {
   return (
     <Wrapper index={index}>
-      <Image src={product.url} width={720} height={960} />
+      <Image src={product.url} width={720} height={960} alt={product.name} />
       <div className="star-con">
         <h1>
           <MdStarRate /> <span>{calculateStars(product.rating).stars}</span>
