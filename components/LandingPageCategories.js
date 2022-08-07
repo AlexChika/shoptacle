@@ -20,13 +20,26 @@ const CategoryCard = ({ category }) => {
       </div>
       <div className="image-con">
         <div className="main-img">
-          <Image objectFit="cover" layout="fill" src={category.url}></Image>
+          <Image
+            objectFit="cover"
+            layout="fill"
+            src={category.url}
+            alt={category.name}
+          ></Image>
         </div>
         <div className="rectangle">
           {category.id % 2 === 1 ? (
-            <Image layout="fill" src={rightRectangle}></Image>
+            <Image
+              layout="fill"
+              src={rightRectangle}
+              alt={"image decorator"}
+            ></Image>
           ) : (
-            <Image layout="fill" src={leftRectangle}></Image>
+            <Image
+              layout="fill"
+              src={leftRectangle}
+              alt={"image decorator"}
+            ></Image>
           )}
         </div>
       </div>
