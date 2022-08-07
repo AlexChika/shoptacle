@@ -28,12 +28,17 @@ function NavBar({ page }) {
         </Link>
         <Link href="/categories">
           <span className={`trans ${page === "categories" ? "active" : ""}`}>
-            Categories
+            Products
+          </span>
+        </Link>
+        <Link href="/categories">
+          <span className={`trans ${page === "categories" ? "active" : ""}`}>
+            About
           </span>
         </Link>
         <Link href="/about">
           <span className={`trans ${page === "about" ? "active" : ""}`}>
-            About Us
+            Admin
           </span>
         </Link>
       </div>

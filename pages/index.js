@@ -1,5 +1,6 @@
 import Head from "next/head";
 import styled from "styled-components";
+import Categories from "../components/LandingPageCategories";
 import LandingPageHero from "../components/LandingPageHero";
 import LandingPageNewArrival from "../components/LandingPageNewArrival";
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <Wrapper>
         <LandingPageHero />
         <LandingPageNewArrival />
+        <Categories />
       </Wrapper>
     </>
   );

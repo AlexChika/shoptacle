@@ -41,17 +41,17 @@ const LandingPageHero = () => {
             </div>
           </div>
           <div className="socialCon minvh f j-around align">
-            <a href="#new-arrival" className="side-text">
+            <a href="#new-arrival" className="side-text trans">
               <h1>Trending Collections</h1>
             </a>
             <div className="social-icons">
-              <a href="">
+              <a className="trans" href="">
                 <FaTwitter />
               </a>
-              <a className="mt30" href="">
+              <a className="mt30 trans" href="">
                 <FaGithub />
               </a>
-              <a className="mt30" href="">
+              <a className="mt30 trans" href="">
                 <IoIosMail />
               </a>
             </div>
@@ -165,6 +165,11 @@ const Wrapper = styled.main`
       a {
         font-size: 18px;
         display: block;
+      }
+      a:hover,
+      a:active,
+      a:focus {
+        color: grey;
       }
     }
   }

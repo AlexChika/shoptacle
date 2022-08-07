@@ -3,34 +3,38 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
-import { formatPrice, calculateStars } from "../store/tempData";
+import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCards = ({ product, index }) => {
   return (
-    <Wrapper index={index}>
-      <Image src={product.url} width={720} height={960} alt={product.name} />
-      <div className="star-con">
-        <h1>
-          <MdStarRate /> <span>{calculateStars(product.rating).stars}</span>
-        </h1>
-      </div>
-      <div className="detail f j-around">
-        <h1 className="c-blue trans">{product.name}</h1>
-        <div className="f align j-between">
-          <span className="c-blue trans">
-            {formatPrice(product.price * 100)}
-          </span>
-          <Link href="/categories">
-            <button className="c-blue trans">Add To Cart</button>
-          </Link>
+    <Link href="/categories">
+      <Wrapper index={index}>
+        <Image src={product.url} alt={product.name} />
+        <div className="star-con">
+          <h1>
+            <MdStarRate /> <span>{calculateStars(product.rating).stars}</span>
+          </h1>
         </div>
-      </div>
-    </Wrapper>
+        <div className="detail f j-around">
+          <h1 className="c-blue trans">{product.name}</h1>
+          <div className="f align j-between">
+            <span className="c-blue trans">
+              {formatPrice(product.price * 100)}
+            </span>
+            <Link href="/hello">
+              <button className="c-blue trans">Add To Cart</button>
+            </Link>
+          </div>
+        </div>
+      </Wrapper>
+    </Link>
   );
 };
+// when changing to remote url   <Image src={product.url} width={720} height={960} alt={product.name} />
 export default ProductCards;
 const Wrapper = styled.article`
   position: relative;
   border-radius: 15px;
+  cursor: pointer;
   img {
     /* border-radius: 15px; */
   }

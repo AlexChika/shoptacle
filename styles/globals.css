@@ -31,6 +31,7 @@ a {
   padding: 0;
   margin: 0;
   -webkit-tap-highlight-color: transparent;
+  font-style: normal;
 }
 /* general classes */
 .red {
@@ -43,7 +44,7 @@ a {
   border: 1px solid gray;
 }
 .brand-shade {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
     url("../public/foooterbg.jpg");
 }
 .c-blue {
@@ -79,15 +80,6 @@ a {
 }
 .mt30 {
   margin-top: 30px;
-}
-.mb10 {
-  margin-bottom: 10px;
-}
-.mb20 {
-  margin-bottom: 20px;
-}
-.mb30 {
-  margin-bottom: 30px;
 }
 .align {
   align-items: center;
