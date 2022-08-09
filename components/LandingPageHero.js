@@ -45,13 +45,13 @@ const LandingPageHero = () => {
               <h1>Trending Collections</h1>
             </a>
             <div className="social-icons">
-              <a className="trans" href="">
+              <a className="trans" href="https://twitter.com/Your_Own_Alex">
                 <FaTwitter />
               </a>
-              <a className="mt30 trans" href="">
+              <a className="mt30 trans" href="https://github.com/AlexChika">
                 <FaGithub />
               </a>
-              <a className="mt30 trans" href="">
+              <a className="mt30 trans" href="mailto:i.am.alex.chika@gmail.com">
                 <IoIosMail />
               </a>
             </div>
@@ -153,13 +153,10 @@ const Wrapper = styled.main`
         font-size: 12px;
         font-weight: 500;
         letter-spacing: 0.14em;
-        height: 15em;
-        border-left: 3px solid white;
         padding: 5px;
       }
       h1 {
-        height: 12em;
-        margin-top: -30px;
+        border-left: 3px solid white;
         cursor: pointer;
       }
       a {

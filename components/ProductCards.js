@@ -4,25 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
-const ProductCards = ({ product, index }) => {
+const ProductCards = ({ product }) => {
   return (
     <Link href="/categories">
-      <Wrapper index={index}>
+      <Wrapper className="trans">
         <Image src={product.url} alt={product.name} />
         <div className="star-con">
-          <h1>
+          <h1 className="trans">
             <MdStarRate /> <span>{calculateStars(product.rating).stars}</span>
           </h1>
         </div>
-        <div className="detail f j-around">
-          <h1 className="c-blue trans">{product.name}</h1>
+        <div className="detail trans f j-around">
+          <h1 className="">{product.name}</h1>
           <div className="f align j-between">
-            <span className="c-blue trans">
-              {formatPrice(product.price * 100)}
-            </span>
-            <Link href="/hello">
-              <button className="c-blue trans">Add To Cart</button>
-            </Link>
+            <span className="">{formatPrice(product.price * 100)}</span>
+            <button className="trans">Add To Cart</button>
           </div>
         </div>
       </Wrapper>
@@ -33,17 +29,14 @@ const ProductCards = ({ product, index }) => {
 export default ProductCards;
 const Wrapper = styled.article`
   position: relative;
-  border-radius: 15px;
   cursor: pointer;
-  img {
-    /* border-radius: 15px; */
-  }
+  color: var(--blue);
   .star-con {
     position: absolute;
     top: 20px;
     right: 10px;
     padding: 10px;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
     border-radius: 15px 0px;
     h1 {
       font-size: 20px;
@@ -51,7 +44,6 @@ const Wrapper = styled.article`
       font-style: normal;
       font-weight: 500;
       color: var(--pink);
-      color: ${({ index }) => (index === 2 ? "white" : "")};
     }
   }
   .detail {
@@ -75,27 +67,30 @@ const Wrapper = styled.article`
     }
     h1 {
       font-size: 20px;
-      color: ${({ index }) => (index === 2 ? "white" : "")};
     }
     span {
       font-size: 20px;
-      color: ${({ index }) => (index === 2 ? "white" : "")};
     }
     button {
       border: 2px solid var(--blue);
       padding: 10px;
-      background-color: ${({ index }) => (index === 2 ? "white" : "")};
-      border: ${({ index }) => (index === 2 ? "2px solid white" : "")};
       font-size: 12px;
     }
-    button:hover,
-    button:active,
-    button:focus {
-      border: 2px solid var(--pink);
-      color: var(--pink);
-    }
   }
-  @media screen and (min-width: 1024px) {
-    margin-top: ${({ index }) => (index === 2 ? "-90px" : "")};
+  :hover {
+    margin-top: -30px;
+    color: white;
+    .star-con {
+      h1 {
+        color: white;
+      }
+    }
+    .detail {
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+      button {
+        color: white;
+        border: 3px solid white;
+      }
+    }
   }
 `;

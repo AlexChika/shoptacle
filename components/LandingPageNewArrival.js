@@ -6,19 +6,11 @@ const LandingPageNewArrival = () => {
   return (
     <Wrapper id="new-arrival" className="layout">
       <div className="heading center">
-        <div className="underline">
-          <h1 className="c-blue">New Arrivals</h1>
-        </div>
+        <h1 className="c-blue center">New Arrivals</h1>
       </div>
       <section className="products center">
-        {data.map((product, index) => {
-          return (
-            <ProductCards
-              index={index + 1}
-              key={product.id}
-              product={product}
-            />
-          );
+        {data.map((product) => {
+          return <ProductCards key={product.id} product={product} />;
         })}
       </section>
       {/*Room for possible pagination??  */}
@@ -40,17 +32,12 @@ const Wrapper = styled.section`
   min-height: 100vh;
   padding-bottom: 50px;
   .heading {
-    width: 10em;
-    border-bottom: 3px solid var(--blue);
     padding-top: 20px;
-    .underline {
-      width: 13em;
-      margin-left: -25px;
-    }
     h1 {
+      width: max-content;
+      border-bottom: 3px solid var(--blue);
       font-size: 30px;
       font-family: "Libre Baskerville", serif;
-      text-align: center;
     }
   }
   .products {
@@ -71,7 +58,7 @@ const Wrapper = styled.section`
     padding-top: 20px;
     .products {
       grid-template-columns: repeat(3, 1fr);
-      margin-top: 80px;
+      /* margin-top: 80px; */
     }
   }
 `;

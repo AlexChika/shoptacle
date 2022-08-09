@@ -49,7 +49,7 @@ const CategoryCard = ({ category }) => {
 const Categories = () => {
   return (
     <Wrapper className="layout">
-      <h1 className="center heading">Categories</h1>
+      <h1 className="center heading">Collections</h1>
       {categories.map((category) => {
         return <CategoryCard category={category} key={category.id} />;
       })}
@@ -68,8 +68,7 @@ const CategoryCardWrapper = styled.article`
     aspect-ratio: 1/1;
   }
   .detail {
-    order: ${(props) => (props.id % 2 === 1 ? 1 : 0)};
-    /* order: 1; */
+    order: 1;
     padding: 10px 0px;
     .content {
       width: 95%;
@@ -143,7 +142,7 @@ const CategoryCardWrapper = styled.article`
       width: 50%;
     }
     .detail {
-      /* order: ${(props) => (props.id % 2 === 1 ? 1 : 0)}; */
+      order: ${(props) => (props.id % 2 === 1 ? 1 : 0)};
       .content {
         width: 85%;
       }

@@ -1,7 +1,5 @@
 import React from "react";
-
-const Products = () => {
-  return <div>hello from Products </div>;
+const Products = ({ name }) => {
+  return <article className="layout">{name || "return hate thanks"}</article>;
 };
-
 export default Products;

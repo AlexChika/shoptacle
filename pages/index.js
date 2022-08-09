@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styled from "styled-components";
-import Categories from "../components/LandingPageCategories";
+import Categories from "../components/LandingPageCollections";
 import LandingPageHero from "../components/LandingPageHero";
 import LandingPageNewArrival from "../components/LandingPageNewArrival";
 export default function Home() {

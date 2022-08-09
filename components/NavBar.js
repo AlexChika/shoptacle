@@ -26,7 +26,7 @@ function NavBar({ page }) {
             Home
           </span>
         </Link>
-        <Link href="/categories">
+        <Link href="/products">
           <span className={`trans ${page === "categories" ? "active" : ""}`}>
             Products
           </span>
@@ -108,6 +108,9 @@ const Wrapper = styled.nav`
     }
     span:hover {
       color: grey;
+    }
+    span.active:hover {
+      border-bottom: 2px solid grey;
     }
   }
 

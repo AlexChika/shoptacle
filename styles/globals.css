@@ -1,9 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Libre+Baskerville&family=Lobster&display=swap");
-/* @font-face {
-  font-family: "qanect elegant";
-  src: url("./qanect-elegant-font.otf");
-  src: url("./qanect-elegant-font.ttf") format("truetype");
-} */
 :root {
   --pink: #f58b42;
   --pink-light: #faf4f4;
@@ -25,6 +20,7 @@ a {
   background: transparent;
   outline: none;
   cursor: pointer;
+  color: inherit;
 }
 * {
   box-sizing: border-box;
