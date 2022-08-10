@@ -10,7 +10,7 @@ const AboutPageHero = () => {
     <Wrapper className="layout">
       <NavBar page="about" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"About Us"} />
+      <PageHero pre={"Home"} curr={"About us"} />
       <section className="body mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>
@@ -48,6 +48,8 @@ const AboutPageHero = () => {
                 </article>
               );
             })}
+            <button className="bns"></button>
+            <button></button>
           </section>
         </div>
       </section>
@@ -71,8 +73,8 @@ const Wrapper = styled.main`
     p {
       font-family: "Inter", sans-serif;
       font-size: 16px;
-      line-height: 25px;
-      padding: 5px;
+      line-height: 30px;
+      padding: 10px;
     }
   }
   .testimony {

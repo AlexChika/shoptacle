@@ -13,6 +13,9 @@ import collectionClothes from "../public/clothes.jpg";
 import testimonyRay from "../public/ray.png";
 import testimonyVickky from "../public/vickky.png";
 // team images
+import teamJasmine from "../public/jasmine.png";
+import teamAda from "../public/ada.png";
+import teamDan from "../public/dan.png";
 const seedData = [
   {
     name: "Design Snickers",
@@ -129,19 +132,19 @@ const team = [
   {
     name: "Jasmine",
     position: "CEO",
-    url: "",
+    url: teamJasmine,
     desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
   },
   {
     name: "Dan",
     position: "Manager",
-    url: "",
+    url: teamDan,
     desc: "‘’Fashion business is  an ever growing field with enormous opportunities everyday’’",
   },
   {
     name: "Ada",
     position: "Chief Stylist",
-    url: "",
+    url: teamAda,
     desc: "‘’I love fashion and love helping people look good, I have a degree in Art and design’’",
   },
 ];
