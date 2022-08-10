@@ -1,18 +1,23 @@
-import React from "react";
-import shoes from "../public/shoes.jpg";
-import accessory from "../public/accessory.jpg";
-import clothes from "../public/clothes.jpg";
-import shoe from "../public/shoe.png";
-import jacket from "../public/jacket.png";
-import ladyGown from "../public/lady-gown.png";
-import watch from "../public/watch.png";
-import shoe2 from "../public/shoe2.png";
-import handBag from "../public/hand-bag.png";
+// seedData images
+import seedShoe from "../public/shoe.png";
+import seedJacket from "../public/jacket.png";
+import seedLadyGown from "../public/lady-gown.png";
+import seedWatch from "../public/watch.png";
+import seedShoe2 from "../public/shoe2.png";
+import seedHandBag from "../public/hand-bag.png";
+// collection images
+import collectionShoes from "../public/shoes.jpg";
+import collectionAccessory from "../public/accessory.jpg";
+import collectionClothes from "../public/clothes.jpg";
+// testimony images
+import testimonyRay from "../public/ray.png";
+import testimonyVickky from "../public/vickky.png";
+// team images
 const seedData = [
   {
     name: "Design Snickers",
     id: 1,
-    url: shoe,
+    url: seedShoe,
     price: 198,
     rating: {
       five: 12,
@@ -25,7 +30,7 @@ const seedData = [
   {
     name: "Designer Ball Gown ",
     id: 2,
-    url: ladyGown,
+    url: seedLadyGown,
     price: 1400,
     rating: {
       five: 12,
@@ -38,7 +43,7 @@ const seedData = [
   {
     name: "Channel Bag",
     id: 3,
-    url: handBag,
+    url: seedHandBag,
     price: 400,
     rating: {
       five: 12,
@@ -51,7 +56,7 @@ const seedData = [
   {
     name: "Apple Series Watch",
     id: 4,
-    url: watch,
+    url: seedWatch,
     price: 850,
     rating: {
       five: 12,
@@ -64,7 +69,7 @@ const seedData = [
   {
     name: "Design Boots",
     id: 5,
-    url: shoe2,
+    url: seedShoe2,
     price: 230,
     rating: {
       five: 12,
@@ -77,7 +82,7 @@ const seedData = [
   {
     name: "Versace Jacket",
     id: 6,
-    url: jacket,
+    url: seedJacket,
     price: 760,
     rating: {
       five: 20,
@@ -92,31 +97,31 @@ const collections = [
   {
     id: 1,
     name: "Clothes",
-    url: clothes,
+    url: collectionClothes,
     desc: "Here at Shoptacle we believe Fashion is a form of self-expression and autonomy in a specific context, of clothing. We have over ten thousand clothes available for you to choose from designer wears to your favorite small brands. We have clothes for fashionable men and women. ",
   },
   {
     id: 2,
     name: "Shoes & Bags",
-    url: shoes,
+    url: collectionShoes,
     desc: "Explore different designer Shoes and bags that would be perfect for your clothes and fit the occasion. Enjoy two years warranty for any designer shoes or bag you buy with express delivery to anywhere in the country. Slay any day effortlessly with our trendy shoes and bags.",
   },
   {
     id: 3,
     name: "Accessories",
-    url: accessory,
+    url: collectionAccessory,
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
 ];
 const testimony = [
   {
     name: "Ray",
-    url: "",
+    url: testimonyRay,
     desc: "“Getting to know about shoptacle is one of the best things that ever happened to me. The beautiful interface and smooth checkout process makes me so happy”",
   },
   {
     name: "Vicky",
-    url: "",
+    url: testimonyVickky,
     desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
   },
 ];
