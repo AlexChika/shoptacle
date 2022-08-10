@@ -8,7 +8,7 @@ import ladyGown from "../public/lady-gown.png";
 import watch from "../public/watch.png";
 import shoe2 from "../public/shoe2.png";
 import handBag from "../public/hand-bag.png";
-const data = [
+const seedData = [
   {
     name: "Design Snickers",
     id: 1,
@@ -88,7 +88,7 @@ const data = [
     },
   },
 ];
-const categories = [
+const collections = [
   {
     id: 1,
     name: "Clothes",
@@ -108,4 +108,36 @@ const categories = [
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
 ];
-export { data, categories };
+const testimony = [
+  {
+    name: "Ray",
+    url: "",
+    desc: "“Getting to know about shoptacle is one of the best things that ever happened to me. The beautiful interface and smooth checkout process makes me so happy”",
+  },
+  {
+    name: "Vicky",
+    url: "",
+    desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
+  },
+];
+const team = [
+  {
+    name: "Jasmine",
+    position: "CEO",
+    url: "",
+    desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
+  },
+  {
+    name: "Dan",
+    position: "Manager",
+    url: "",
+    desc: "‘’Fashion business is  an ever growing field with enormous opportunities everyday’’",
+  },
+  {
+    name: "Ada",
+    position: "Chief Stylist",
+    url: "",
+    desc: "‘’I love fashion and love helping people look good, I have a degree in Art and design’’",
+  },
+];
+export { seedData, collections, testimony, team };

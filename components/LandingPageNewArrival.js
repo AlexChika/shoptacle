@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ProductCards from "./ProductCards";
-import { data } from "../utils/data";
+import { seedData } from "../utils/data";
 const LandingPageNewArrival = () => {
   return (
     <Wrapper id="new-arrival" className="layout">
@@ -9,7 +9,7 @@ const LandingPageNewArrival = () => {
         <h1 className="c-blue center">New Arrivals</h1>
       </div>
       <section className="products center">
-        {data.map((product) => {
+        {seedData.map((product) => {
           return <ProductCards key={product.id} product={product} />;
         })}
       </section>

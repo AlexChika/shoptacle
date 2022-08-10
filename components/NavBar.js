@@ -10,7 +10,7 @@ function NavBar({ page }) {
   const { handleCloseModal } = Store();
 
   return (
-    <Wrapper className="mt10 f align">
+    <Wrapper page={page} className="mt10 f align">
       <button onClick={handleCloseModal} className="side-modal-btn">
         <IoMdList />
       </button>
@@ -27,17 +27,17 @@ function NavBar({ page }) {
           </span>
         </Link>
         <Link href="/products">
-          <span className={`trans ${page === "categories" ? "active" : ""}`}>
+          <span className={`trans ${page === "products" ? "active" : ""}`}>
             Products
-          </span>
-        </Link>
-        <Link href="/categories">
-          <span className={`trans ${page === "categories" ? "active" : ""}`}>
-            About
           </span>
         </Link>
         <Link href="/about">
           <span className={`trans ${page === "about" ? "active" : ""}`}>
+            About
+          </span>
+        </Link>
+        <Link href="/admin">
+          <span className={`trans ${page === "admin" ? "active" : ""}`}>
             Admin
           </span>
         </Link>
@@ -70,18 +70,17 @@ export default NavBar;
 
 const Wrapper = styled.nav`
   justify-content: space-between;
+  color: ${({ page }) => (page === "home" ? "white" : "var(--blue)")};
   height: 60px;
   margin: 0 10px;
   padding: 0px 10px;
   .side-modal-btn {
     order: 3;
-    color: white;
     font-size: 30px;
   }
   .logo-name {
     order: 1;
     font-family: "Lobster", cursive;
-    color: white;
     border-bottom: 2px solid;
   }
   .search-bar {
@@ -99,12 +98,11 @@ const Wrapper = styled.nav`
       font-weight: 500;
       font-size: 18px;
       line-height: 24px;
-      color: #ffffff;
       cursor: pointer;
     }
     span.active {
-      color: black;
-      border-bottom: 2px solid black;
+      color: var(--blue);
+      border-bottom: 2px solid var(--blue);
     }
     span:hover {
       color: grey;
@@ -113,7 +111,6 @@ const Wrapper = styled.nav`
       border-bottom: 2px solid grey;
     }
   }
-
   .navCart-con {
     order: 2;
     background: #ffffff;
@@ -127,6 +124,7 @@ const Wrapper = styled.nav`
     button {
       font-size: 23px;
     }
+    color: black;
   }
   @media screen and (min-width: 525px) {
     .navCart-con {
@@ -150,15 +148,5 @@ const Wrapper = styled.nav`
       width: 130px;
       order: 4;
     }
-  }
-  @media screen and (min-width: 900px) {
-    /* .link-con {
-      min-width: 18rem;
-      flex: 0.45;
-      justify-content: flex-end;
-      a {
-        font-size: 20px;
-      }
-    } */
   }
 `;

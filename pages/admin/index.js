@@ -6,9 +6,9 @@ import PageHero from "../../components/pageHero";
 const Products = () => {
   return (
     <Wrapper className="layout">
-      <NavBar page="products" />
+      <NavBar page="admin" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"Products"} />
+      <PageHero pre={"Home"} curr={"Admin"} />
     </Wrapper>
   );
 };

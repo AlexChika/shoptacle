@@ -65,7 +65,6 @@ const Wrapper = styled.div`
       top: 0%;
       transform: translateY(25%);
       font-size: 30px;
-      color: white;
       display: block;
     }
     form {
