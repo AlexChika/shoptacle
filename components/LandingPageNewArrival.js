@@ -10,7 +10,9 @@ const LandingPageNewArrival = () => {
       </div>
       <section className="products center">
         {seedData.map((product) => {
-          return <ProductCards key={product.id} product={product} />;
+          return (
+            <ProductCards page={"home"} key={product.id} product={product} />
+          );
         })}
       </section>
       {/*Room for possible pagination??  */}

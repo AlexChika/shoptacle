@@ -8,7 +8,7 @@ const Products = () => {
     <Wrapper className="layout">
       <NavBar page="admin" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"Admin"} />
+      <PageHero path="/" pre={"Home"} curr={"Admin"} />
     </Wrapper>
   );
 };

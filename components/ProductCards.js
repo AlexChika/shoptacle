@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
-const ProductCards = ({ product }) => {
+const ProductCards = ({ product, page }) => {
   return (
     <Link href="/categories">
-      <Wrapper className="trans">
+      <Wrapper page={page} className="trans">
         <Image src={product.url} alt={product.name} />
         <div className="star-con">
           <h1 className="trans">
@@ -66,10 +66,10 @@ const Wrapper = styled.article`
       font-weight: 700;
     }
     h1 {
-      font-size: 20px;
+      font-size: 18px;
     }
     span {
-      font-size: 20px;
+      font-size: 18px;
     }
     button {
       border: 2px solid var(--blue);
@@ -78,7 +78,7 @@ const Wrapper = styled.article`
     }
   }
   :hover {
-    margin-top: -30px;
+    margin-top: ${({ page }) => (page === "home" ? "-30px" : "")};
     color: white;
     .star-con {
       h1 {

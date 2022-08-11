@@ -3,12 +3,14 @@ import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import PageHero from "../../components/pageHero";
+import ProductsPage from "../../components/ProductsPage";
 const Products = () => {
   return (
     <Wrapper className="layout">
       <NavBar page="products" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"Products"} />
+      <PageHero path="/" pre={"Home"} curr={"Products"} />
+      <ProductsPage />
     </Wrapper>
   );
 };

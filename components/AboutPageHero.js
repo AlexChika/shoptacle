@@ -10,7 +10,7 @@ const AboutPageHero = () => {
     <Wrapper className="layout">
       <NavBar page="about" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"About us"} />
+      <PageHero path="/" pre={"Home"} curr={"About us"} />
       <section className="body mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>
