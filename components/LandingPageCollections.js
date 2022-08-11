@@ -4,17 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import rightRectangle from "../public/right-rectangle.png";
 import leftRectangle from "../public/left-rectangle.png";
-import { categories } from "../utils/data";
-const CategoryCard = ({ category }) => {
+import { collections } from "../utils/data";
+const CollectionCard = ({ collection }) => {
   return (
-    <CategoryCardWrapper id={category.id} className="center f">
+    <CollectionCardWrapper id={collection.id} className="center f">
       <div className="detail f fcenter">
         <div className="content">
-          <h1>{category.id}</h1>
+          <h1>{collection.id}</h1>
           <Link href="/categories">
-            <h2 className="trans">{category.name}</h2>
+            <h2 className="trans">{collection.name}</h2>
           </Link>
-          <p className="mt20">{category.desc}</p>
+          <p className="mt20">{collection.desc}</p>
           <button className="mt30 center trans">Shop Now</button>
         </div>
       </div>
@@ -23,12 +23,12 @@ const CategoryCard = ({ category }) => {
           <Image
             objectFit="cover"
             layout="fill"
-            src={category.url}
-            alt={category.name}
+            src={collection.url}
+            alt={collection.name}
           ></Image>
         </div>
         <div className="rectangle">
-          {category.id % 2 === 1 ? (
+          {collection.id % 2 === 1 ? (
             <Image
               layout="fill"
               src={rightRectangle}
@@ -43,22 +43,22 @@ const CategoryCard = ({ category }) => {
           )}
         </div>
       </div>
-    </CategoryCardWrapper>
+    </CollectionCardWrapper>
   );
 };
-const Categories = () => {
+const Collections = () => {
   return (
     <Wrapper className="layout">
       <h1 className="center heading">Collections</h1>
-      {categories.map((category) => {
-        return <CategoryCard category={category} key={category.id} />;
+      {collections.map((collection) => {
+        return <CollectionCard collection={collection} key={collection.id} />;
       })}
     </Wrapper>
   );
 };
 
-export default Categories;
-const CategoryCardWrapper = styled.article`
+export default Collections;
+const CollectionCardWrapper = styled.article`
   width: 95%;
   margin-bottom: 40px;
   flex-direction: column;
