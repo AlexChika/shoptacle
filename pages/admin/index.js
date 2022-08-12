@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
+import PageHero from "../../components/Hero";
 import SideBar from "../../components/SideBar";
-import PageHero from "../../components/pageHero";
 const Products = () => {
   return (
     <Wrapper className="layout">
       <NavBar page="admin" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"Admin"} />
+      <PageHero path="/" pre={"Home"} curr={"Admin"} />
     </Wrapper>
   );
 };

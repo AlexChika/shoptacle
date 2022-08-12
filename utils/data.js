@@ -100,31 +100,34 @@ const collections = [
   {
     id: 1,
     name: "Clothes",
-    url: collectionClothes,
+    blob: "clothes",
+    img: collectionClothes,
     desc: "Here at Shoptacle we believe Fashion is a form of self-expression and autonomy in a specific context, of clothing. We have over ten thousand clothes available for you to choose from designer wears to your favorite small brands. We have clothes for fashionable men and women. ",
   },
   {
     id: 2,
     name: "Shoes & Bags",
-    url: collectionShoes,
+    blob: "shoes-bags",
+    img: collectionShoes,
     desc: "Explore different designer Shoes and bags that would be perfect for your clothes and fit the occasion. Enjoy two years warranty for any designer shoes or bag you buy with express delivery to anywhere in the country. Slay any day effortlessly with our trendy shoes and bags.",
   },
   {
     id: 3,
     name: "Accessories",
-    url: collectionAccessory,
+    blob: "accessories",
+    img: collectionAccessory,
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
 ];
 const testimony = [
   {
     name: "Ray",
-    url: testimonyRay,
+    img: testimonyRay,
     desc: "“Getting to know about shoptacle is one of the best things that ever happened to me. The beautiful interface and smooth checkout process makes me so happy”",
   },
   {
     name: "Vicky",
-    url: testimonyVickky,
+    img: testimonyVickky,
     desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
   },
 ];
@@ -132,19 +135,19 @@ const team = [
   {
     name: "Jasmine",
     position: "CEO",
-    url: teamJasmine,
+    img: teamJasmine,
     desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
   },
   {
     name: "Dan",
     position: "Manager",
-    url: teamDan,
+    img: teamDan,
     desc: "‘’Fashion business is  an ever growing field with enormous opportunities everyday’’",
   },
   {
     name: "Ada",
     position: "Chief Stylist",
-    url: teamAda,
+    img: teamAda,
     desc: "‘’I love fashion and love helping people look good, I have a degree in Art and design’’",
   },
 ];

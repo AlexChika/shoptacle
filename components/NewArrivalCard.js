@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
-const ProductCards = ({ product }) => {
+const NewArrivalCard = ({ product }) => {
   return (
     <Link href="/categories">
       <Wrapper className="trans">
@@ -26,7 +26,7 @@ const ProductCards = ({ product }) => {
   );
 };
 // when changing to remote url   <Image src={product.url} width={720} height={960} alt={product.name} />
-export default ProductCards;
+export default NewArrivalCard;
 const Wrapper = styled.article`
   position: relative;
   cursor: pointer;
@@ -66,10 +66,10 @@ const Wrapper = styled.article`
       font-weight: 700;
     }
     h1 {
-      font-size: 20px;
+      font-size: 18px;
     }
     span {
-      font-size: 20px;
+      font-size: 18px;
     }
     button {
       border: 2px solid var(--blue);

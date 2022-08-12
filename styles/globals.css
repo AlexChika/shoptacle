@@ -28,6 +28,7 @@ a {
   margin: 0;
   -webkit-tap-highlight-color: transparent;
   font-style: normal;
+  scroll-behavior: smooth;
 }
 /* general classes */
 .red {
@@ -39,15 +40,8 @@ a {
 .gray {
   border: 1px solid gray;
 }
-.brand-shade {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-    url("../public/foooterbg.jpg");
-}
 .c-blue {
   color: #323148;
-}
-.bg-blue {
-  background-color: #323148;
 }
 .layout {
   max-width: 1440px;
@@ -105,3 +99,4 @@ a {
   }
 }
 /* font-family: "Libre Baskerville", serif; */
+/* font-family: 'Inter', sans-serif; */

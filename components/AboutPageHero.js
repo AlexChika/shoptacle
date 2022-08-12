@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import NavBar from "./NavBar";
+import PageHero from "./Hero";
 import SideBar from "./SideBar";
-import PageHero from "./pageHero";
 import { testimony } from "../utils/data";
 const AboutPageHero = () => {
   return (
     <Wrapper className="layout">
       <NavBar page="about" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"About us"} />
+      <PageHero path="/" pre={"Home"} curr={"About us"} />
       <section className="body mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>
@@ -40,7 +40,11 @@ const AboutPageHero = () => {
                     </div>
                   </div>
                   <div className="image-con">
-                    <Image layout="fill" src={testimony.url}></Image>
+                    <Image
+                      layout="fill"
+                      alt={testimony.name}
+                      src={testimony.img}
+                    ></Image>
                   </div>
                   <div className="text-con f fcenter">
                     <p>{testimony.desc}</p>

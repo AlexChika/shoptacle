@@ -26,9 +26,9 @@ function NavBar({ page }) {
             Home
           </span>
         </Link>
-        <Link href="/products">
-          <span className={`trans ${page === "products" ? "active" : ""}`}>
-            Products
+        <Link href="/shop">
+          <span className={`trans ${page === "shop" ? "active" : ""}`}>
+            Shop
           </span>
         </Link>
         <Link href="/about">

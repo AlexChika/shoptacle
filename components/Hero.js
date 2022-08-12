@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-const PageHero = ({ curr, pre }) => {
+const PageHero = ({ path, curr, pre }) => {
   return (
     <Wrapper className="mt30">
       <div className="content center">
         <h3>
-          <Link href="/">
+          <Link href={path}>
             <span className="trans"> {pre} </span>
           </Link>
           / {curr}
