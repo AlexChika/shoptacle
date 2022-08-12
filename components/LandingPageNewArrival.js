@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ProductCards from "./ProductCards";
+import NewArrivalCard from "./NewArrivalCard";
 import { seedData } from "../utils/data";
 const LandingPageNewArrival = () => {
   return (
@@ -10,9 +10,7 @@ const LandingPageNewArrival = () => {
       </div>
       <section className="products center">
         {seedData.map((product) => {
-          return (
-            <ProductCards page={"home"} key={product.id} product={product} />
-          );
+          return <NewArrivalCard key={product.id} product={product} />;
         })}
       </section>
       {/*Room for possible pagination??  */}

@@ -23,7 +23,7 @@ const CollectionCard = ({ collection }) => {
           <Image
             objectFit="cover"
             layout="fill"
-            src={collection.url}
+            src={collection.img}
             alt={collection.name}
           ></Image>
         </div>
@@ -60,6 +60,7 @@ const Collections = () => {
 export default Collections;
 const CollectionCardWrapper = styled.article`
   width: 95%;
+  max-width: 1250px;
   margin-bottom: 40px;
   flex-direction: column;
   .image-con,
@@ -134,7 +135,7 @@ const CollectionCardWrapper = styled.article`
     right: ${(props) => (props.id % 2 === 1 ? "0" : "")};
     left: ${(props) => (props.id % 2 === 1 ? "" : "0")};
   }
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 630px) {
     flex-direction: row;
     margin-bottom: 50px;
     .image-con,

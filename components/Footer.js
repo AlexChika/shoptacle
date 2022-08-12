@@ -17,7 +17,7 @@ const Footer = () => {
           <Link href="/">
             <div className="f align">
               <span className="image-con">
-                <Image layout="fill" src={Icon} />
+                <Image alt="Logo" layout="fill" src={Icon} />
               </span>
               <h2>Shoptacle...</h2>
             </div>

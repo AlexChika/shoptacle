@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
-import PageHero from "../../components/pageHero";
+import PageHero from "../../components/PageHero";
 const Products = () => {
   return (
     <Wrapper className="layout">

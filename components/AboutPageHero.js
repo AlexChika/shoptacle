@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
-import PageHero from "./pageHero";
+import PageHero from "./PageHero";
 import { testimony } from "../utils/data";
 const AboutPageHero = () => {
   return (
@@ -40,7 +40,11 @@ const AboutPageHero = () => {
                     </div>
                   </div>
                   <div className="image-con">
-                    <Image layout="fill" src={testimony.url}></Image>
+                    <Image
+                      layout="fill"
+                      alt={testimony.name}
+                      src={testimony.img}
+                    ></Image>
                   </div>
                   <div className="text-con f fcenter">
                     <p>{testimony.desc}</p>

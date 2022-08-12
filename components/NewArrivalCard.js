@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
-const ProductCards = ({ product, page }) => {
+const NewArrivalCard = ({ product }) => {
   return (
     <Link href="/categories">
-      <Wrapper page={page} className="trans">
+      <Wrapper className="trans">
         <Image src={product.url} alt={product.name} />
         <div className="star-con">
           <h1 className="trans">
@@ -26,7 +26,7 @@ const ProductCards = ({ product, page }) => {
   );
 };
 // when changing to remote url   <Image src={product.url} width={720} height={960} alt={product.name} />
-export default ProductCards;
+export default NewArrivalCard;
 const Wrapper = styled.article`
   position: relative;
   cursor: pointer;
@@ -78,7 +78,7 @@ const Wrapper = styled.article`
     }
   }
   :hover {
-    margin-top: ${({ page }) => (page === "home" ? "-30px" : "")};
+    margin-top: -30px;
     color: white;
     .star-con {
       h1 {

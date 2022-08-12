@@ -19,7 +19,7 @@ const AboutPageTeam = () => {
           return (
             <article key={index} className="f team-cards center">
               <div className={`img ${index === 1 ? "order" : ""}`}>
-                <Image layout="fill" src={team.url} />
+                <Image alt={team.name} layout="fill" src={team.img} />
               </div>
               <div className="body f align j-around">
                 <div className="title">
