@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import NavBar from "./NavBar";
-import SideBar from "./SideBar";
 import PageHero from "./PageHero";
+import SideBar from "./SideBar";
 import { testimony } from "../utils/data";
 const AboutPageHero = () => {
   return (

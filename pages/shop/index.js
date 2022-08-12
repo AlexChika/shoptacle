@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import PageHero from "../../components/PageHero";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
-import PageHero from "../../components/PageHero";
 import ProductsPage from "../../components/ProductsPage";
 const Products = () => {
   return (

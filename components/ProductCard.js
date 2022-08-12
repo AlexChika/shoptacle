@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   return (
     <Wrapper onClick={handleNavigate} className="f align">
       <div className="img">
-        <Image layout="fill" src={url}></Image>
+        <Image alt={name} layout="fill" src={url}></Image>
       </div>
       <div className="detail f align j-around">
         <h2>{name}</h2>
