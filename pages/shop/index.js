@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PageHero from "../../components/PageHero";
+import PageHero from "../../components/Hero";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import ProductsPage from "../../components/ProductsPage";

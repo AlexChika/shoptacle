@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
-import PageHero from "../../components/PageHero";
+import PageHero from "../../components/Hero";
 import SideBar from "../../components/SideBar";
 const Products = () => {
   return (
