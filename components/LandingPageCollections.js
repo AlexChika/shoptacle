@@ -11,11 +11,13 @@ const CollectionCard = ({ collection }) => {
       <div className="detail f fcenter">
         <div className="content">
           <h1>{collection.id}</h1>
-          <Link href="/categories">
-            <h2 className="trans">{collection.name}</h2>
-          </Link>
+          <h2 className="trans">
+            <Link href={`/shop/${collection.blob}`}>{collection.name}</Link>
+          </h2>
           <p className="mt20">{collection.desc}</p>
-          <button className="mt30 center trans">Shop Now</button>
+          <button className="mt30 center trans">
+            <Link href={`/shop/${collection.blob}`}>Shop Now</Link>
+          </button>
         </div>
       </div>
       <div className="image-con">
@@ -59,8 +61,9 @@ const Collections = () => {
 
 export default Collections;
 const CollectionCardWrapper = styled.article`
+  background-color: var(--blue);
   width: 95%;
-  max-width: 1250px;
+  max-width: 1170px;
   margin-bottom: 40px;
   flex-direction: column;
   .image-con,
@@ -85,9 +88,9 @@ const CollectionCardWrapper = styled.article`
     }
     h2 {
       font-family: "Libre Baskerville", serif;
-      font-size: 30px;
+      font-size: 25px;
       letter-spacing: 0.12em;
-      width: 65%;
+      width: 70%;
       cursor: pointer;
     }
     h2:hover,
@@ -163,7 +166,7 @@ const CollectionCardWrapper = styled.article`
         font-size: 60px;
       }
       h2 {
-        font-size: 35px;
+        font-size: 30px;
         letter-spacing: 0.12em;
       }
       p {
@@ -174,9 +177,9 @@ const CollectionCardWrapper = styled.article`
   }
 `;
 const Wrapper = styled.section`
+  background-color: var(--pink-light);
   min-height: 100vh;
-  padding: 20px 0px;
-  background-color: var(--blue);
+  padding: 20px 0px 10px 0px;
   color: white;
   .heading {
     text-align: center;
@@ -186,5 +189,6 @@ const Wrapper = styled.section`
     width: max-content;
     font-size: 30px;
     font-family: "Libre Baskerville", serif;
+    color: var(--blue);
   }
 `;

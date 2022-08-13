@@ -3,14 +3,14 @@ import styled from "styled-components";
 import PageHero from "../../components/Hero";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
-import ProductsPage from "../../components/ProductsPage";
+import ShopPage from "../../components/ShopPage";
 const Products = () => {
   return (
     <Wrapper className="layout">
       <NavBar page="shop" />
       <SideBar />
       <PageHero path="/" pre={"Home"} curr={"Shop"} />
-      <ProductsPage />
+      <ShopPage />
     </Wrapper>
   );
 };

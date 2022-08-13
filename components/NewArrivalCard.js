@@ -17,7 +17,7 @@ const NewArrivalCard = ({ product }) => {
         <div className="detail trans f j-around">
           <h1 className="">{product.name}</h1>
           <div className="f align j-between">
-            <span className="">{formatPrice(product.price * 100)}</span>
+            <span className="">{formatPrice(product.price)}</span>
             <button className="trans">Add To Cart</button>
           </div>
         </div>
