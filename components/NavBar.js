@@ -10,7 +10,7 @@ function NavBar({ page }) {
   const { handleCloseModal } = Store();
 
   return (
-    <Wrapper page={page} className="mt10 f align">
+    <Wrapper page={page} className="f align center">
       <button onClick={handleCloseModal} className="side-modal-btn">
         <IoMdList />
       </button>
@@ -69,10 +69,10 @@ function NavBar({ page }) {
 export default NavBar;
 
 const Wrapper = styled.nav`
+  max-width: 1170px;
   justify-content: space-between;
   color: ${({ page }) => (page === "home" ? "white" : "var(--blue)")};
   height: 60px;
-  margin: 0 10px;
   padding: 0px 10px;
   .side-modal-btn {
     order: 3;
@@ -89,10 +89,8 @@ const Wrapper = styled.nav`
   .link-con {
     display: none;
     min-width: 18rem;
-    flex: 0.45;
-    justify-content: flex-end;
     span {
-      margin: 0px 10px;
+      margin-right: 20px;
       font-family: "Inter", sans-serif;
       font-style: normal;
       font-weight: 500;

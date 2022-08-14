@@ -30,7 +30,6 @@ const Wrapper = styled.section`
   background-color: var(--pink-light);
   position: relative;
   min-height: 100vh;
-  padding-bottom: 50px;
   .heading {
     padding-top: 20px;
     h1 {
@@ -58,7 +57,6 @@ const Wrapper = styled.section`
     padding-top: 20px;
     .products {
       grid-template-columns: repeat(3, 1fr);
-      /* margin-top: 80px; */
     }
   }
 `;

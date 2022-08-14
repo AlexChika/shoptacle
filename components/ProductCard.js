@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="detail f align j-around">
         <h2>{name}</h2>
-        <h2>{formatPrice(price * 100)}</h2>
+        <h2>{formatPrice(price)}</h2>
         <div className="star-con f j-around">
           <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
           <span className="f fcenter">
