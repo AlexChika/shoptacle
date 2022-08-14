@@ -4,12 +4,14 @@ import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import Hero from "../../components/Hero";
 import ProductPage from "../../components/ProductPage";
+import FilterProducts from "../../components/FilterProducts";
 const FemaleFashion = () => {
   return (
     <Wrapper className="layout">
       <NavBar />
       <SideBar />
       <Hero path="/shop" pre="Shop" curr="Female fashion" />
+      <FilterProducts />
       <ProductPage />
     </Wrapper>
   );

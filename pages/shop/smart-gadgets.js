@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import Hero from "../../components/Hero";
+import FilterProducts from "../../components/FilterProducts";
 import ProductPage from "../../components/ProductPage";
 const FemaleFashion = () => {
   return (
@@ -10,6 +11,7 @@ const FemaleFashion = () => {
       <NavBar />
       <SideBar />
       <Hero path="/shop" pre="Shop" curr="Smart Gadgets" />
+      <FilterProducts />
       <ProductPage />
     </Wrapper>
   );

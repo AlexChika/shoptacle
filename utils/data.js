@@ -6,14 +6,10 @@ import seedWatch from "../public/watch.png";
 import seedShoe2 from "../public/shoe2.png";
 import seedHandBag from "../public/hand-bag.png";
 // collection images
-import collectionShoes from "../public/shoes.jpg";
-import collectionAccessory from "../public/accessory.jpg";
-import collectionClothes from "../public/clothes.jpg";
 import CollectionMale from "../public/collectionMale.jpg";
 import CollectionFemale from "../public/collectionFemale.jpg";
-import CollectionPhone from "../public/collectionPhone.jpg";
-// import CollectionPhone from "../public/collectionPhone.jpg";
-export { CollectionPhone, CollectionMale, CollectionFemale };
+import CollectionGadget from "../public/collectionGadget.jpg";
+import CollectionShoe from "../public/collectionShoe.png";
 // testimony images
 import testimonyRay from "../public/ray.png";
 import testimonyVickky from "../public/vickky.png";
@@ -120,14 +116,14 @@ const collections = [
     id: 3,
     name: "Unisex Shoes",
     blob: "unisex-shoes",
-    img: collectionAccessory,
+    img: CollectionShoe,
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
   {
     id: 4,
     name: "Smart Gadgets",
     blob: "smart-gadgets",
-    img: CollectionPhone,
+    img: CollectionGadget,
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
 ];
