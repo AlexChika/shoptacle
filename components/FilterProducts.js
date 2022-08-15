@@ -37,38 +37,36 @@ const FilterProducts = () => {
           })}
         </div>
       </article>
-      <article className="range mt10">
-        <h2 className="display">Price Filter</h2>
-        <div className="f align j-between">
-          <div className="side-left">
-            <div className="f align">
-              <span>30</span>
-              <input
-                onChange={handleThis}
-                type="range"
-                value={500}
-                min={40}
-                max={1000}
-                name=""
-                id=""
-              />
-              <span>1000</span>
-            </div>
-            <p>500</p>
+      <article className="range f align j-between mt10">
+        <div className="side-left">
+          <h3>Price #</h3>
+          <div className="f align j-between">
+            <h4>300 </h4>
+            <input
+              onChange={handleThis}
+              type="range"
+              value={500}
+              min={40}
+              max={1000}
+              name=""
+              id=""
+            />
+            <h4>1000</h4>
           </div>
-          <div className="side-rigt">
-            <div>
-              <div>
-                <span>Max</span>
-                <input type="text" name="" id="" />
-              </div>
-              <div>
-                <input type="text" name="" id="" />
-                <span>Min</span>
-              </div>
+          <h3>500</h3>
+        </div>
+        <div className="side-right">
+          <div>
+            <div className="f align j-between">
+              <span>Max :</span>
+              <input type="number" name="" id="" />
             </div>
-            <button>apply</button>
+            <div className="f align j-between mt10">
+              <span>Min :</span>
+              <input type="number" name="" id="" />
+            </div>
           </div>
+          <button className="mt10">apply</button>
         </div>
       </article>
       <article className="search-sort-bar f align j-between mt10">
@@ -117,8 +115,9 @@ const Wrapper = styled.section`
     flex-wrap: wrap;
     .category,
     .brand {
+      /* width: 45%; */
       max-width: 270px;
-      min-width: 145px;
+      min-width: 130px;
       text-align: center;
     }
     li {
@@ -160,9 +159,6 @@ const Wrapper = styled.section`
         background-color: white;
         color: var(--blue);
       }
-      input::placeholder {
-        text-align: center;
-      }
       p {
         font-size: 18px;
         flex: 0.3;
@@ -199,13 +195,27 @@ const Wrapper = styled.section`
     }
   }
   .range {
-    flex: 0.5;
     text-align: center;
+    .side-left,
+    .side-right {
+      width: 45%;
+      max-width: 300px;
+    }
+    input {
+      background-color: white;
+      width: 100%;
+      flex: 0.8;
+      color: var(--blue);
+      padding: 5px;
+    }
     button {
       border-radius: 10px;
       border: 2px solid var(--pink);
       padding: 5px 30px;
       background-color: var(--pink);
+    }
+    button:hover {
+      background-color: var(--gray);
     }
   }
   @media screen and (min-width: 425px) {
