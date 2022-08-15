@@ -15,6 +15,7 @@ a {
 }
 button,
 input,
+select,
 a {
   border: none;
   background: transparent;
@@ -29,6 +30,7 @@ a {
   -webkit-tap-highlight-color: transparent;
   font-style: normal;
   scroll-behavior: smooth;
+  list-style: none;
 }
 /* general classes */
 .red {
@@ -84,15 +86,6 @@ a {
   justify-content: center;
   align-items: center;
 }
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-} */
 @media screen and (min-width: 768px) {
   .display {
     display: block;
