@@ -37,8 +37,8 @@ const FilterProducts = () => {
           })}
         </div>
       </article>
-      <article className="range mt10 gray">
-        <h2 className="">Price Filter</h2>
+      <article className="range mt10">
+        <h2 className="display">Price Filter</h2>
         <div className="f align j-between">
           <div className="side-left">
             <div className="f align">
