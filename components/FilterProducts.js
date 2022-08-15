@@ -115,7 +115,6 @@ const Wrapper = styled.section`
     flex-wrap: wrap;
     .category,
     .brand {
-      /* width: 45%; */
       max-width: 270px;
       min-width: 130px;
       text-align: center;
