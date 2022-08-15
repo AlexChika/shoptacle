@@ -5,6 +5,7 @@ import SideBar from "../../components/SideBar";
 import Hero from "../../components/Hero";
 import FilterProducts from "../../components/FilterProducts";
 import ProductPage from "../../components/ProductPage";
+import { seedData } from "../../utils/data";
 const FemaleFashion = () => {
   return (
     <Wrapper className="layout">
@@ -12,7 +13,9 @@ const FemaleFashion = () => {
       <SideBar />
       <Hero path="/shop" pre="Shop" curr="Unisex Shoes" />
       <FilterProducts />
-      <ProductPage />
+      <ProductPage
+        products={[...seedData, ...seedData, ...seedData, ...seedData]}
+      />
     </Wrapper>
   );
 };

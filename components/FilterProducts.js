@@ -118,6 +118,9 @@ const Wrapper = styled.section`
       max-width: 270px;
       min-width: 130px;
       text-align: center;
+      height: 100px;
+      overflow-y: auto;
+      padding: 0px 10px;
     }
     li {
       width: 100%;

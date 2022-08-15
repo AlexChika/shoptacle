@@ -131,8 +131,8 @@ const ProductRowWrapper = styled.section`
     }
     .card:hover,
     .card:focus {
-      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1),
-        -1px -1px 2px rgba(0, 0, 0, 0.1);
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(0, 0, 0, 0.2);
     }
   }
   @media screen and (min-width: 1170px) {
