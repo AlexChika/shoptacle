@@ -15,26 +15,20 @@ const StoreProvider = ({ children }) => {
     dispatch({ type: actionTypes.HANDLE_MODAL });
   }
   useEffect(() => {
-    console.log(router.basePath);
-    if (router.query.productDetail) {
-      console.log(true);
-    } else {
-      console.log(false);
-      dispatch({
-        type: actionTypes.SET_CURRENT_ROUTE,
-        payload: router.pathname,
-      });
-    }
+    dispatch({
+      type: actionTypes.SET_CURRENT_ROUTE,
+      payload: router.pathname,
+    });
     const handleRouteChange = (url, { shallow }) => {
       dispatch({ type: actionTypes.ROUTE_CHANGE, payload: url });
     };
-    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("routeChangeStart", handleRouteChange);
     return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("routeChangeStart", handleRouteChange);
     };
   }, []);
   return (
-    <AppContext.Provider value={{ ...state, handleCloseModal }}>
+    <AppContext.Provider value={{ ...state, handleCloseModal, dispatch }}>
       {children}
     </AppContext.Provider>
   );
