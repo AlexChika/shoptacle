@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 import { Store } from "../store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
@@ -20,7 +21,9 @@ const SideBar = () => {
             <FaUser />
           </button>
         )}
-        <h1 className="c-color">Shoptacle</h1>
+        <Link href="/">
+          <h1 className="c-color">Shoptacle</h1>
+        </Link>
         <button
           onClick={handleCloseModal}
           type="button"

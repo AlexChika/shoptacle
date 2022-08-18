@@ -1,32 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import Router from "next/router";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCard = ({ product }) => {
+  const router = useRouter();
   const { id, url, name, price, rating } = product;
   const handleNavigate = () => {
-    console.log(id);
+    // router.push(`/shop/${name}-${id}`);
+    // router.push({
+    //   pathname: "/shop/[productDetail]",
+    //   query: { productDetail: `${name}-${id}` },
+    // });
   };
   return (
-    <Wrapper onClick={handleNavigate} className="f align">
-      <div className="img">
-        <Image alt={name} layout="fill" src={url}></Image>
-      </div>
-      <div className="detail f align j-around">
-        <h2>{name}</h2>
-        <h2>{formatPrice(price)}</h2>
-        <div className="star-con f j-around">
-          <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
-          <span className="f fcenter">
-            <MdStarRate />
-            &nbsp;
-            {calculateStars(rating).stars}
-          </span>
+    <Link href={`/shop/${name}-${id}`}>
+      <Wrapper onClick={handleNavigate} className="f align">
+        <div className="img">
+          <Image alt={name} layout="fill" src={url}></Image>
         </div>
-      </div>
-    </Wrapper>
+        <div className="detail f align j-around">
+          <h2>{name}</h2>
+          <h2>{formatPrice(price)}</h2>
+          <div className="star-con f j-around">
+            <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
+            <span className="f fcenter">
+              <MdStarRate />
+              &nbsp;
+              {calculateStars(rating).stars}
+            </span>
+          </div>
+        </div>
+      </Wrapper>
+    </Link>
   );
 };
 

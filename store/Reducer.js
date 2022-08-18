@@ -1,8 +1,22 @@
+import * as actionTypes from "./actionTypes";
 function reducer(state, action) {
-  if (action.type === "HANDLE_MODAL") {
+  if (action.type === actionTypes.HANDLE_MODAL) {
     return {
       ...state,
       modalOpen: !state.modalOpen,
+    };
+  }
+  if (action.type === actionTypes.SET_CURRENT_ROUTE) {
+    return {
+      ...state,
+      currRoute: action.payload,
+    };
+  }
+  if (action.type === actionTypes.ROUTE_CHANGE) {
+    return {
+      ...state,
+      preRoute: state.currRoute,
+      currRoute: action.payload,
     };
   }
   return state;

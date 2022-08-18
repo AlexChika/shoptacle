@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import Link from "next/link";
-const PageHero = ({ path, curr, pre, banner }) => {
+import { Store } from "../store/Context";
+const PageHero = () => {
+  const { currRoute, preRoute } = Store();
+  function pathNames(path) {
+    let array = path.split("/");
+    let pageName = array.at(-1);
+    pageName = pageName === "" ? "Home" : pageName.replace(/\d|[%-]/gi, " ");
+    return {
+      path: path,
+      pageName,
+    };
+  }
   return (
     <Wrapper className="f mt30">
       <div className="content center">
-        <h3>
-          <Link href={path}>
-            <span className="trans">{pre} </span>
+        <h3 className="capitalize">
+          <Link href={pathNames(preRoute).path}>
+            <span className="trans">{pathNames(preRoute).pageName} </span>
           </Link>
-          / {curr}
+          / {pathNames(currRoute).pageName}
         </h3>
       </div>
     </Wrapper>

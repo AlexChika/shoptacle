@@ -33,6 +33,9 @@ a {
   list-style: none;
 }
 /* general classes */
+.capitalize {
+  text-transform: capitalize;
+}
 .red {
   border: 2px solid red;
 }
@@ -93,3 +96,6 @@ a {
 }
 /* font-family: "Libre Baskerville", serif; */
 /* font-family: 'Inter', sans-serif; */
+/* <article className="price-bar mt10">
+        <div className="price-bar">hey</div>
+      </article>  */
