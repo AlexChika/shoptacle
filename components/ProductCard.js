@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import Router from "next/router";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCard = ({ product }) => {
+  const router = useRouter();
   const { id, url, name, price, rating } = product;
   const handleNavigate = () => {
-    console.log(id);
+    router.push(`/shop/${name}-${id}`);
   };
   return (
     <Wrapper onClick={handleNavigate} className="f align">
