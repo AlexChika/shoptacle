@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Store } from "../store/Context";
 const PageHero = () => {
+  const router = useRouter();
   const { currRoute, preRoute } = Store();
-  console.log(`current ${currRoute}  previous ${preRoute}`);
+  console.log(`curr ${currRoute} pre ${preRoute}`);
   function pathNames(path) {
-    let array = path.split("/");
-    let pageName = array.at(-1);
+    if (path === "/shop/[productDetail]") {
+      path = router.asPath;
+    }
+    let pageName = path.split("/").at(-1);
     path = pageName === "" ? "/" : path;
     pageName = pageName === "" ? "Home" : pageName.replace(/\d|[%-]/gi, " ");
     return {

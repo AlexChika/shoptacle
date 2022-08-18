@@ -22,9 +22,9 @@ const StoreProvider = ({ children }) => {
     const handleRouteChange = (url, { shallow }) => {
       dispatch({ type: actionTypes.ROUTE_CHANGE, payload: url });
     };
-    router.events.on("routeChangeStart", handleRouteChange);
+    router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
   return (

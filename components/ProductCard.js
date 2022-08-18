@@ -9,32 +9,26 @@ const ProductCard = ({ product }) => {
   const router = useRouter();
   const { id, url, name, price, rating } = product;
   const handleNavigate = () => {
-    // router.push(`/shop/${name}-${id}`);
-    // router.push({
-    //   pathname: "/shop/[productDetail]",
-    //   query: { productDetail: `${name}-${id}` },
-    // });
+    router.push(`/shop/${name}-${id}`);
   };
   return (
-    <Link href={`/shop/${name}-${id}`}>
-      <Wrapper onClick={handleNavigate} className="f align">
-        <div className="img">
-          <Image alt={name} layout="fill" src={url}></Image>
+    <Wrapper onClick={handleNavigate} className="f align">
+      <div className="img">
+        <Image alt={name} layout="fill" src={url}></Image>
+      </div>
+      <div className="detail f align j-around">
+        <h2>{name}</h2>
+        <h2>{formatPrice(price)}</h2>
+        <div className="star-con f j-around">
+          <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
+          <span className="f fcenter">
+            <MdStarRate />
+            &nbsp;
+            {calculateStars(rating).stars}
+          </span>
         </div>
-        <div className="detail f align j-around">
-          <h2>{name}</h2>
-          <h2>{formatPrice(price)}</h2>
-          <div className="star-con f j-around">
-            <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
-            <span className="f fcenter">
-              <MdStarRate />
-              &nbsp;
-              {calculateStars(rating).stars}
-            </span>
-          </div>
-        </div>
-      </Wrapper>
-    </Link>
+      </div>
+    </Wrapper>
   );
 };
 
