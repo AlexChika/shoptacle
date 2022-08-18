@@ -11,6 +11,7 @@ const Index = () => {
   const { dispatch } = Store();
   const router = useRouter();
   useEffect(() => {
+    console.log(router.asPath);
     dispatch({
       type: actionTypes.SET_CURRENT_ROUTE,
       payload: router.asPath,
