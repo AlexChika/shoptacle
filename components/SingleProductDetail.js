@@ -9,17 +9,14 @@ import { seedData } from "../utils/data";
 import { formatPrice, calculateStars, displayStar } from "../utils/functions";
 const ProductDetail = ({ id }) => {
   const data = seedData.find((item) => item.id === Number(id));
-  console.log(id);
-  console.log(data);
+  const [currentImage, setCurrentImage] = useState(data.url);
+  useEffect(() => {
+    setCurrentImage(url);
+  }, [id]);
   if (!data) {
     return <div className="spinner center mt30"></div>;
   }
   const { name, images, category, price, desc, url, rating } = data;
-  const [currentImage, setCurrentImage] = useState(url);
-  useEffect(() => {
-    setCurrentImage(url);
-  }, [id]);
-
   return (
     <Wrapper className="center">
       <section className="product-card f mt30">
@@ -35,7 +32,7 @@ const ProductDetail = ({ id }) => {
                   className="sub-image"
                   key={index}
                 >
-                  <Image layout="fill" src={img} />
+                  <Image alt={name} layout="fill" src={img} />
                 </div>
               );
             })}
@@ -88,8 +85,8 @@ const ProductDetail = ({ id }) => {
           <p className="f mt10">
             <span>{calculateStars(rating).stars}/5</span>&nbsp;
             <span>
-              {displayStar(calculateStars(rating).stars).map((star) => {
-                return <span>{star}</span>;
+              {displayStar(calculateStars(rating).stars).map((star, index) => {
+                return <span key={index}>{star}</span>;
               })}
             </span>
             &nbsp; &nbsp;
