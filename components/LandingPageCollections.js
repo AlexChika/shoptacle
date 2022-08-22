@@ -138,7 +138,7 @@ const CollectionCardWrapper = styled.article`
     right: ${(props) => (props.id % 2 === 1 ? "0" : "")};
     left: ${(props) => (props.id % 2 === 1 ? "" : "0")};
   }
-  @media screen and (min-width: 630px) {
+  @media screen and (min-width: 768px) {
     flex-direction: row;
     margin-bottom: 50px;
     .image-con,
@@ -178,6 +178,7 @@ const CollectionCardWrapper = styled.article`
 `;
 const Wrapper = styled.section`
   background-color: var(--pink-light);
+  /* background-color: var(--blue); */
   min-height: 100vh;
   padding: 20px 0px 10px 0px;
   color: white;

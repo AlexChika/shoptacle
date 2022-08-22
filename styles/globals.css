@@ -33,6 +33,33 @@ a {
   list-style: none;
 }
 /* general classes */
+.spinner {
+  width: 80px;
+  height: 80px;
+  border-left: 2px solid var(--pink);
+  border-radius: 50%;
+  animation: spinner 0.3s linear infinite;
+}
+@-moz-keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .capitalize {
   text-transform: capitalize;
 }
@@ -96,6 +123,3 @@ a {
 }
 /* font-family: "Libre Baskerville", serif; */
 /* font-family: 'Inter', sans-serif; */
-/* <article className="price-bar mt10">
-        <div className="price-bar">hey</div>
-      </article>  */

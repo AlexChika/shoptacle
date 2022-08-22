@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import NavBar from "./NavBar";
-import PageHero from "./Hero";
+import HeroBar from "./HeroBar";
 import SideBar from "./SideBar";
 import { testimony } from "../utils/data";
 const AboutPageHero = () => {
@@ -10,7 +10,7 @@ const AboutPageHero = () => {
     <Wrapper className="layout">
       <NavBar page="about" />
       <SideBar />
-      <PageHero path="/" pre={"Home"} curr={"About us"} />
+      <HeroBar path="/" pre={"Home"} curr={"About us"} />
       <section className="body mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>

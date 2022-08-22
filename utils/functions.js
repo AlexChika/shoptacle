@@ -1,3 +1,4 @@
+import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 function calculateStars(rating) {
   let totalRating = 0;
   for (const key in rating) {
@@ -8,6 +9,26 @@ function calculateStars(rating) {
   stars = stars.toFixed(1);
   return { totalRating, stars };
 }
+const displayStar = (star) => {
+  let starArray = [];
+  function recurse(star) {
+    if (star - 1 >= 0) {
+      starArray.push(<BsStarFill />);
+    } else {
+      if (star - 1 !== -1) {
+        starArray.push(<BsStarHalf />);
+      }
+      let emptyStar = 5 - starArray.length;
+      for (let i = 0; i < emptyStar; i++) {
+        starArray.push(<BsStar />);
+      }
+      return starArray;
+    }
+    recurse(star - 1);
+  }
+  recurse(star);
+  return starArray;
+};
 const formatPrice = (price) => {
   const newNumber = new Intl.NumberFormat("en-NG", {
     style: "currency",
@@ -15,4 +36,6 @@ const formatPrice = (price) => {
   }).format(price / 100);
   return newNumber;
 };
-export { calculateStars, formatPrice };
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export { calculateStars, formatPrice, displayStar, fetcher };

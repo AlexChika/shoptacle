@@ -43,9 +43,9 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     width: 95%;
-    place-content: center;
-    place-items: center;
-    gap: 2em 2em;
+    /* place-content: center;
+    place-items: center; */
+    gap: 2em 0em;
     margin-top: 30px;
   }
   @media screen and (min-width: 600px) {

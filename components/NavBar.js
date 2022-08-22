@@ -89,6 +89,8 @@ const Wrapper = styled.nav`
   .link-con {
     display: none;
     min-width: 18rem;
+    /* justify-content: flex-end;
+    flex: 0.45; */
     span {
       margin-right: 20px;
       font-family: "Inter", sans-serif;
