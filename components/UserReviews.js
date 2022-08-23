@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { BsStarFill, BsStar } from "react-icons/bs";
 import { calculateStars, displayStar, paginateFn } from "../utils/functions";
 const UserReviews = ({ rating, name }) => {
   const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const [selectStarRating, setSelectStarRating] = useState(0);
+  const [currentBtn, setCurrentBtn] = useState(0);
+  const reviewRef = useRef(null);
   const [paginateItems, setPaginateItems] = useState(
     paginateFn(array, 5).items
   );
   const handlePaginate = (val) => {
     const newItems = paginateFn(array, 5, val).items;
     setPaginateItems(newItems);
+    setCurrentBtn(val);
+    reviewRef.current.scrollTo(0, 0);
   };
   return (
     <Wrapper className="mt30">
@@ -65,7 +69,7 @@ const UserReviews = ({ rating, name }) => {
           <p className="title capitalize">
             {"435"} Reviews For {name}
           </p>
-          <div className="reviews">
+          <div ref={reviewRef} className="reviews">
             {paginateItems.map((review, index) => {
               return (
                 <div key={index} className="review-row">
@@ -74,7 +78,10 @@ const UserReviews = ({ rating, name }) => {
                       return <span key={index}>{star}</span>;
                     })}
                   </div>
-                  <h3 className="mt10">{"Excellent Product"}</h3>
+                  <h3 className="mt10">
+                    {"Excellent Product"}
+                    {review}
+                  </h3>
                   <p className="text mt10">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Ipsam corporis voluptatum quia tempora deserunt consequatur
@@ -82,17 +89,17 @@ const UserReviews = ({ rating, name }) => {
                   </p>
                   <p className="mt10">
                     <span>{"12 / 22 / 2022"}</span> &nbsp; by &nbsp;{" "}
-                    <span>"Alex Chika"</span>
+                    <span>{"Alex Chika"}</span>
                   </p>
                 </div>
               );
             })}
           </div>
-          <div className="paginate mt10">
+          <div className="paginate f fcenter mt10">
             {paginateFn(array, 5, 0).buttonArray.map((val) => {
               return (
                 <button
-                  className="active"
+                  className={`f fcenter ${currentBtn === val ? "active" : ""}`}
                   onClick={() => {
                     handlePaginate(val);
                   }}
@@ -210,17 +217,16 @@ const Wrapper = styled.section`
       padding: 10px;
       text-align: center;
       button {
-        text-align: center;
         margin: 0px 5px;
-        height: 25px;
-        width: 25px;
-        border: 2px solid var(--blue);
+        height: 20px;
+        width: 20px;
+        padding: 10px;
         border-radius: 50%;
+        border: 2px solid var(--blue);
       }
       button.active {
         background-color: var(--pink);
         border: 2px solid var(--pink);
-
         color: white;
       }
     }

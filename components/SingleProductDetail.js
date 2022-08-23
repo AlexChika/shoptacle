@@ -22,7 +22,7 @@ const ProductDetail = ({ id }) => {
     <Wrapper className="center">
       <section className="product-card f mt30">
         <article className="image-section center">
-          <Image src={currentImage} layout="fill"></Image>
+          <Image alt={name} src={currentImage} layout="fill"></Image>
           <div className="sub-image-con">
             {images.map((img, index) => {
               return (
