@@ -6,7 +6,8 @@ import { ProductRow } from "./ShopPageComponent";
 import { MdStarRate } from "react-icons/md";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { seedData } from "../utils/data";
-import { formatPrice, calculateStars, displayStar } from "../utils/functions";
+import UserReviews from "./UserReviews";
+import { formatPrice, calculateStars } from "../utils/functions";
 const ProductDetail = ({ id }) => {
   const data = seedData.find((item) => item.id === Number(id));
   const [currentImage, setCurrentImage] = useState(data.url);
@@ -46,12 +47,15 @@ const ProductDetail = ({ id }) => {
         <article className="detail-section f align center">
           <div className="content center">
             <div className="heading">
-              <h1 className="c-blue">{name}</h1>
-              <div className="mt10">
+              <h1 className="c-blue capitalize">{name}</h1>
+              <div className="mt30">
                 <Stars
                   stars={calculateStars(rating).stars}
                   reviews={calculateStars(rating).totalRating}
                 />
+                <p>
+                  Brand : <span>{"Gown"}</span>
+                </p>
               </div>
             </div>
             <div className="price-qual-con f j-between mt30">
@@ -79,28 +83,7 @@ const ProductDetail = ({ id }) => {
           </div>
         </article>
       </section>
-      <section className="user-reviews mt30">
-        <div className="heading center">
-          <h1>Verified User Reviews</h1>
-          <p className="f mt10">
-            <span>{calculateStars(rating).stars}/5</span>&nbsp;
-            <span>
-              {displayStar(calculateStars(rating).stars).map((star, index) => {
-                return <span key={index}>{star}</span>;
-              })}
-            </span>
-            &nbsp; &nbsp;
-            <span>{calculateStars(rating).totalRating}</span>&nbsp;
-            <span>verified ratings</span>
-          </p>
-        </div>
-        <div className="content f">
-          <form className="center" action="">
-            <h2>Rate {name}</h2>
-          </form>
-          <article className="reviews center"></article>
-        </div>
-      </section>
+      <UserReviews rating={rating} name={name} />
       <section className="related-products mt30">
         <ProductRow
           color={`var(--gray)`}
@@ -226,46 +209,7 @@ const Wrapper = styled.main`
       padding: 15px 25px;
     }
   }
-  .user-reviews {
-    /* background-color: var(--gray); */
-    .heading {
-      background-color: white;
-      padding: 10px;
-      width: 95%;
 
-      border-bottom: 1px solid var(--pink-light);
-      h1 {
-        font-family: "Libre Baskerville", serif;
-        color: var(--blue);
-      }
-      p {
-        color: var(--pink);
-        letter-spacing: 0.12rem;
-      }
-    }
-    .content {
-      flex-direction: column;
-      height: 500px;
-      width: 100%;
-      /* padding: 10px 0px; */
-    }
-    form {
-      height: 100%;
-      width: 95%;
-      background-color: white;
-      padding: 10px;
-      color: var(--blue);
-      h2 {
-        text-align: center;
-      }
-    }
-    .reviews {
-      height: 100%;
-      width: 95%;
-      color: var(--pink-light);
-      background-color: var(--gray);
-    }
-  }
   @media screen and (min-width: 768px) {
     .product-card {
       flex-direction: row;
@@ -277,27 +221,7 @@ const Wrapper = styled.main`
     .detail-section {
       .content {
         padding: 0px;
-      }
-    }
-  }
-  @media screen and (min-width: 768px) {
-    .detail-section {
-      .content {
         width: 75%;
-      }
-    }
-    .user-reviews {
-      .heading {
-        width: 100%;
-      }
-      .content {
-        flex-direction: row;
-      }
-      form {
-        width: 40%;
-      }
-      .reviews {
-        width: 60%;
       }
     }
   }

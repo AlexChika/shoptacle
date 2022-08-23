@@ -36,6 +36,19 @@ const formatPrice = (price) => {
   }).format(price / 100);
   return newNumber;
 };
+const paginateFn = (array, itemsPerPage, currentPage = 0) => {
+  let pageNumber = Math.ceil(array.length / itemsPerPage);
+  let startIndex = currentPage * itemsPerPage;
+  let stopIndex = startIndex + itemsPerPage;
+  let items = array.slice(startIndex, stopIndex);
+  const pageNumberArray = Array.from({ length: pageNumber }, (v, i) => {
+    return i;
+  });
+  return {
+    items,
+    buttonArray: pageNumberArray,
+  };
+};
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-export { calculateStars, formatPrice, displayStar, fetcher };
+export { calculateStars, formatPrice, displayStar, paginateFn, fetcher };

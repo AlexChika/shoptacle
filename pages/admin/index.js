@@ -9,6 +9,7 @@ const Products = () => {
       <NavBar page="admin" />
       <SideBar />
       <HeroBar path="/" pre={"Home"} curr={"Admin"} />
+      <h1>everything will be functional thanks to Firebase</h1>
     </Wrapper>
   );
 };
