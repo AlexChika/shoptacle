@@ -6,7 +6,6 @@ import { Store } from "../store/Context";
 const PageHero = () => {
   const router = useRouter();
   const { currRoute, preRoute } = Store();
-  console.log(`curr ${currRoute} pre ${preRoute}`);
   function pathNames(path) {
     if (path === "/shop/[productDetail]") {
       path = router.asPath;
@@ -24,9 +23,9 @@ const PageHero = () => {
       <div className="content center">
         <h3 className="capitalize">
           <Link href={pathNames(preRoute).path}>
-            <span className="trans">{pathNames(preRoute).pageName} </span>
+            <span className="trans">{pathNames(preRoute).pageName}&nbsp;</span>
           </Link>
-          / {pathNames(currRoute).pageName}
+          /&nbsp;{pathNames(currRoute).pageName}
         </h3>
       </div>
     </Wrapper>
@@ -43,6 +42,7 @@ const Wrapper = styled.section`
     width: 100%;
     max-width: 1170px;
     padding: 0px 10px;
+    /* font-family: "Inter", sans-serif; */
   }
   span {
     color: var(--pink);
@@ -52,7 +52,22 @@ const Wrapper = styled.section`
     color: var(--pink-light);
   }
   h3 {
-    font-size: 30px;
+    font-size: 16px;
+  }
+  @media screen and (min-width: 400px) {
+    h3 {
+      font-size: 20px;
+    }
+  }
+  @media screen and (min-width: 50px) {
+    h3 {
+      font-size: 25px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    h3 {
+      font-size: 30px;
+    }
   }
 `;
 

@@ -67,7 +67,7 @@ const Wrapper = styled.main`
     flex-direction: column;
   }
   .team-cards {
-    height: 90vh;
+    height: 650px;
     width: 100%;
     max-width: 500px;
     margin-bottom: 30px;

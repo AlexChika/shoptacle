@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { seedData, collections } from "../utils/data";
 
-const ProductRow = ({ collection }) => {
+export const ProductRow = ({ collection, color, uniqueProduct }) => {
   const { name, blob } = collection;
   let count = 0;
   const scrollForward = (e) => {
@@ -35,7 +35,7 @@ const ProductRow = ({ collection }) => {
     });
   };
   return (
-    <ProductRowWrapper>
+    <ProductRowWrapper color={color}>
       <div className="header f align j-between">
         <h1>
           <Link href={`/shop/${blob}`}>{name}</Link>
@@ -82,7 +82,7 @@ const ProductsPage = () => {
   return (
     <Wrapper className="center">
       {collections.map((col, index) => {
-        return <ProductRow key={index} collection={col} />;
+        return <ProductRow key={index} color={"#fee2cc"} collection={col} />;
       })}
     </Wrapper>
   );
@@ -99,10 +99,9 @@ const ProductRowWrapper = styled.section`
   }
   .header {
     padding: 15px;
-    background-color: var(--pink);
-    background-color: var(--gray);
-    background-color: #fee2cc;
+    background-color: ${({ color }) => color};
     color: var(--blue);
+    font-family: "Libre Baskerville", serif;
     button {
       font-size: 18px;
       span {

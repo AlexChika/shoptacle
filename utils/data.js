@@ -22,6 +22,9 @@ const seedData = [
     name: "Design Snickers",
     id: 1,
     url: seedShoe,
+    images: [seedLadyGown, seedShoe, seedHandBag],
+    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
+    category: "gown",
     price: 19800,
     rating: {
       five: 12,
@@ -35,6 +38,9 @@ const seedData = [
     name: "Designer Ball Gown ",
     id: 2,
     url: seedLadyGown,
+    images: [seedLadyGown, seedShoe, seedHandBag],
+    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
+    category: "gown",
     price: 140000,
     rating: {
       five: 12,
@@ -48,6 +54,9 @@ const seedData = [
     name: "Channel Bag",
     id: 3,
     url: seedHandBag,
+    images: [seedLadyGown, seedShoe, seedHandBag],
+    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
+    category: "gown",
     price: 40000,
     rating: {
       five: 12,
@@ -61,6 +70,9 @@ const seedData = [
     name: "Apple Series Watch",
     id: 4,
     url: seedWatch,
+    images: [seedLadyGown, seedShoe, seedHandBag],
+    category: "gown",
+    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
     price: 85000,
     rating: {
       five: 12,
@@ -74,6 +86,9 @@ const seedData = [
     name: "Design Boots",
     id: 5,
     url: seedShoe2,
+    images: [seedLadyGown, seedShoe, seedHandBag],
+    category: "gown",
+    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
     price: 23000,
     rating: {
       five: 12,
@@ -87,6 +102,9 @@ const seedData = [
     name: "Versace Jacket",
     id: 6,
     url: seedJacket,
+    images: [seedLadyGown, seedShoe, seedHandBag],
+    category: "gown",
+    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
     price: 76000,
     rating: {
       five: 20,

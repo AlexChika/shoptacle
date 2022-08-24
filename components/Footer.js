@@ -3,16 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import Icon from "../public/icon.png";
-import {
-  BsGithub,
-  BsFillEnvelopeFill,
-  BsBehance,
-  BsLinkedin,
-} from "react-icons/bs";
 const Footer = () => {
   return (
     <Wrapper className="layout">
-      <section className="headerWrapper f">
+      <section className="headerWrapper f center">
         <div className="shoptacle f col">
           <Link href="/">
             <div className="f align">
@@ -56,7 +50,7 @@ const Footer = () => {
           <h5>Refer us</h5>
         </div>
       </section>
-      <section className="footerFooter f">
+      <section className="footerFooter f center">
         <h5>
           <a href="https://www.behance.net/ClementinaClement">
             Designed by Clementina Clement <br /> UIUX Designer
@@ -74,9 +68,14 @@ const Footer = () => {
 
 export default Footer;
 const Wrapper = styled.footer`
-  background: var(--pink-light);
+  background: var(--blue);
   color: var(--blue);
   padding: 40px 20px 10px 20px;
+  /* .headerWrapper,
+  .footerFooter {
+    max-width: 1170px;
+  } */
+
   .headerWrapper {
     flex-wrap: wrap;
     justify-content: space-around;
@@ -125,6 +124,7 @@ const Wrapper = styled.footer`
     text-align: center;
     h5 {
       margin: 0px 10px;
+      color: white;
     }
   }
   @media screen and (min-width: 546px) {

@@ -51,14 +51,24 @@ function NavBar({ page }) {
             // <Image src="" />
             <div></div>
           ) : (
-            <button type="button">
-              <FaUser />
+            <button
+              className={`trans ${page === "profile" ? "active" : ""}`}
+              type="button"
+            >
+              <Link href="/login/profile">
+                <FaUser />
+              </Link>
             </button>
           )}
         </span>
         <span>
-          <button type="button">
-            <BsCartFill />
+          <button
+            className={`trans ${page === "cart" ? "active" : ""}`}
+            type="button"
+          >
+            <Link href="/cart">
+              <BsCartFill />
+            </Link>
           </button>
         </span>
       </div>
@@ -89,6 +99,8 @@ const Wrapper = styled.nav`
   .link-con {
     display: none;
     min-width: 18rem;
+    /* justify-content: flex-end;
+    flex: 0.45; */
     span {
       margin-right: 20px;
       font-family: "Inter", sans-serif;
@@ -99,14 +111,10 @@ const Wrapper = styled.nav`
       cursor: pointer;
     }
     span.active {
-      color: var(--blue);
-      border-bottom: 2px solid var(--blue);
+      border-bottom: 2px solid var(--pink);
     }
     span:hover {
-      color: grey;
-    }
-    span.active:hover {
-      border-bottom: 2px solid grey;
+      color: var(--pink);
     }
   }
   .navCart-con {
@@ -121,6 +129,9 @@ const Wrapper = styled.nav`
     }
     button {
       font-size: 23px;
+    }
+    button.active {
+      color: var(--pink);
     }
     color: black;
   }
