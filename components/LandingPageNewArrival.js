@@ -1,26 +1,38 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import NewArrivalCard from "./NewArrivalCard";
 import { seedData } from "../utils/data";
+import Paginate from "./Paginate";
+import { paginateFn } from "../utils/functions";
 const LandingPageNewArrival = () => {
+  const pageRef = useRef(null);
+  const [currentBtn, setCurrentBtn] = useState(0);
+  const [productList, setProductList] = useState(
+    paginateFn([...seedData, ...seedData], 6).items
+  );
+  const handlePaginate = (val) => {
+    const newItems = paginateFn([...seedData, ...seedData], 6, val).items;
+    setProductList(newItems);
+    setCurrentBtn(val);
+    window.scrollTo(0, Number(pageRef.current.offsetTop));
+  };
   return (
-    <Wrapper id="new-arrival" className="layout">
+    <Wrapper ref={pageRef} id="new-arrival" className="layout">
       <div className="heading center">
         <h1 className="c-blue center">New Arrivals</h1>
       </div>
       <section className="products center">
-        {seedData.map((product) => {
+        {productList.map((product) => {
           return <NewArrivalCard key={product.id} product={product} />;
         })}
       </section>
-      {/*Room for possible pagination??  */}
-      {/* <div className="paginate">
-        <Paginate/>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-      </div> */}
+      <Paginate
+        paginateFn={paginateFn}
+        array={[...seedData, ...seedData]}
+        itemsPerPage={6}
+        currentBtn={currentBtn}
+        handlePaginate={handlePaginate}
+      />
     </Wrapper>
   );
 };
@@ -45,15 +57,16 @@ const Wrapper = styled.section`
     width: 95%;
     place-content: center;
     place-items: center;
-    gap: 2em 0em;
+    gap: 1em 1em;
     margin-top: 30px;
   }
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 500px) {
     .products {
       grid-template-columns: repeat(2, 1fr);
+      gap: 2em 1em;
     }
   }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 768px) {
     padding-top: 20px;
     .products {
       grid-template-columns: repeat(3, 1fr);

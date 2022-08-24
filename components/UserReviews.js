@@ -2,17 +2,18 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { BsStarFill, BsStar } from "react-icons/bs";
 import { calculateStars, displayStar, paginateFn } from "../utils/functions";
+import Paginate from "./Paginate";
 const UserReviews = ({ rating, name }) => {
   const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const [selectStarRating, setSelectStarRating] = useState(0);
   const [currentBtn, setCurrentBtn] = useState(0);
   const reviewRef = useRef(null);
-  const [paginateItems, setPaginateItems] = useState(
+  const [paginateUserReviews, setPaginateUserReviews] = useState(
     paginateFn(array, 5).items
   );
   const handlePaginate = (val) => {
     const newItems = paginateFn(array, 5, val).items;
-    setPaginateItems(newItems);
+    setPaginateUserReviews(newItems);
     setCurrentBtn(val);
     reviewRef.current.scrollTo(0, 0);
   };
@@ -70,7 +71,7 @@ const UserReviews = ({ rating, name }) => {
             {"435"} Reviews For {name}
           </p>
           <div ref={reviewRef} className="reviews">
-            {paginateItems.map((review, index) => {
+            {paginateUserReviews.map((review, index) => {
               return (
                 <div key={index} className="review-row">
                   <div className="star-con">
@@ -95,21 +96,13 @@ const UserReviews = ({ rating, name }) => {
               );
             })}
           </div>
-          <div className="paginate f fcenter mt10">
-            {paginateFn(array, 5, 0).buttonArray.map((val) => {
-              return (
-                <button
-                  className={`f fcenter ${currentBtn === val ? "active" : ""}`}
-                  onClick={() => {
-                    handlePaginate(val);
-                  }}
-                  key={val}
-                >
-                  {val + 1}
-                </button>
-              );
-            })}
-          </div>
+          <Paginate
+            paginateFn={paginateFn}
+            array={array}
+            itemsPerPage={5}
+            currentBtn={currentBtn}
+            handlePaginate={handlePaginate}
+          />
         </article>
       </div>
     </Wrapper>
@@ -210,23 +203,6 @@ const Wrapper = styled.section`
       }
       p {
         line-height: 30px;
-      }
-    }
-    .paginate {
-      padding: 10px;
-      text-align: center;
-      button {
-        margin: 0px 5px;
-        height: 20px;
-        width: 20px;
-        padding: 10px;
-        border-radius: 50%;
-        border: 2px solid var(--blue);
-      }
-      button.active {
-        background-color: var(--pink);
-        border: 2px solid var(--pink);
-        color: white;
       }
     }
   }

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
 import Image from "next/image";
+import Link from "next/link";
 import Stars from "./Stars";
+import UserReviews from "./UserReviews";
 import { ProductRow } from "./ShopPageComponent";
 import { MdStarRate } from "react-icons/md";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { seedData } from "../utils/data";
-import UserReviews from "./UserReviews";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductDetail = ({ id }) => {
+  const { Logger } = Store();
   const data = seedData.find((item) => item.id === Number(id));
   const [currentImage, setCurrentImage] = useState(data.url);
   useEffect(() => {
@@ -79,7 +82,20 @@ const ProductDetail = ({ id }) => {
             <div className="desc mt30">
               <p>{desc}</p>
             </div>
-            <button className="cart-btn center mt30">Add To Cart</button>
+            <button
+              onClick={() => {
+                Logger(
+                  "Add to cart functionality is yet to be implemented",
+                  "success"
+                );
+              }}
+              className="cart-btn center mt30"
+            >
+              Add To Cart
+            </button>
+            <button className="btn center mt30">
+              <Link href="/cart">Go To Cart</Link>
+            </button>
           </div>
         </article>
       </section>
@@ -207,6 +223,12 @@ const Wrapper = styled.main`
       color: white;
       width: 12em;
       padding: 15px 25px;
+    }
+    .btn {
+      display: block;
+      width: max-content;
+      color: pink;
+      border-bottom: 2px solid;
     }
   }
 
