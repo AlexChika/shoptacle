@@ -29,8 +29,9 @@ const CartPageComponent = ({ cart }) => {
       ) : (
         <section className="cart mt30">
           <div className="cart-items">
-            {cart.map((cart) => {
-              return <CartItem />;
+            {cart.map((cart, index) => {
+              // remember to change key from index to id
+              return <CartItem key={index} />;
             })}
           </div>
           <div className="cart-summary">hello here</div>
