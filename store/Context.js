@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useState, useEffect, useReducer } from "react";
+import styled from "styled-components";
 const AppContext = React.createContext();
 import { useRouter } from "next/router";
 import reducer from "./Reducer";
@@ -11,9 +12,37 @@ const initialState = {
 const StoreProvider = ({ children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [logger, setLogger] = useState({
+    text: "",
+    success: true,
+    showLogger: false,
+    timeoutId: "",
+  });
   function handleCloseModal() {
     dispatch({ type: actionTypes.HANDLE_MODAL });
   }
+  const Logger = (text, type, time = 4000) => {
+    if (type === "success" || type === "error") {
+      clearTimeout(logger.timeoutId);
+      let success = type === "success";
+      const timeout = setTimeout(() => {
+        setLogger({
+          ...logger,
+          text: "",
+          show: false,
+        });
+      }, time);
+      setLogger({
+        ...logger,
+        text,
+        show: true,
+        success,
+        timeoutId: timeout,
+      });
+      return;
+    }
+    throw new Error(`wrong type "${type}" at Logger`);
+  };
   useEffect(() => {
     dispatch({
       type: actionTypes.SET_CURRENT_ROUTE,
@@ -28,10 +57,40 @@ const StoreProvider = ({ children }) => {
     };
   }, []);
   return (
-    <AppContext.Provider value={{ ...state, handleCloseModal, dispatch }}>
+    <AppContext.Provider
+      value={{ ...state, handleCloseModal, dispatch, Logger }}
+    >
+      <Wrapper
+        show={logger.show}
+        success={logger.success}
+        className="center trans f align"
+      >
+        <p>{logger.text}</p>
+      </Wrapper>
       {children}
     </AppContext.Provider>
   );
 };
 export const Store = () => useContext(AppContext);
 export default StoreProvider;
+const Wrapper = styled.div`
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-weight: 500;
+  min-height: 80px;
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  background-color: ${({ success }) =>
+    success ? "rgba(83, 255, 83, 0.75)" : "rgba(250, 86, 65, 0.75)"};
+  color: white;
+  max-width: 600px;
+  width: 100%;
+  z-index: 9;
+  visibility: ${({ show }) => (show ? "visible" : "collapse")};
+  p {
+    width: 100%;
+  }
+`;

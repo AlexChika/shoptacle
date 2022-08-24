@@ -1,15 +1,57 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
 import Link from "next/link";
 import Image from "next/image";
+import Paginate from "./Paginate";
+import Modal from "./Modal";
 import emptyCartImage from "../public/trolley.png";
+import paystackIcon from "../public/paystack.png";
+import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
+import { paginateFn, formatPrice } from "../utils/functions";
 const CartPageComponent = ({ cart }) => {
+  const { Logger } = Store();
+  const cartRef = useRef(null);
+  const [currentBtn, setCurrentBtn] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [paginateCartItems, setPaginateCartItems] = useState(
+    paginateFn(cart, 5).items
+  );
+  const handlePaginate = (val) => {
+    const newItems = paginateFn(cart, 5, val).items;
+    setPaginateCartItems(newItems);
+    setCurrentBtn(val);
+    window.scrollTo(0, Number(cartRef.current.offsetTop));
+  };
+  const handleCheckout = () => {
+    setModal(true);
+  };
+  const handleSelectCheckout = () => {
+    Logger("Checkout would be the last implementation", "success");
+  };
   return (
-    <Wrapper className="center">
+    <Wrapper className="center mt30">
+      <Modal modal={modal} setModal={setModal}>
+        <div className="modal">
+          <h2>Choose Your Payment Method</h2>
+          <div className="mt20">
+            <h3>Paystack</h3>
+            <button onClick={handleSelectCheckout} className="mt10">
+              <Image alt="paystack icon" src={paystackIcon} />
+            </button>
+          </div>
+          <div className="mt20">
+            <h3>Stripe</h3>
+            <button onClick={handleSelectCheckout} className="mt10">
+              <Image alt="stripe icon" src={stripeIcon} />
+            </button>
+          </div>
+        </div>
+      </Modal>
       {cart.length < 1 ? (
-        <section className="cart-empty mt30">
+        <section className="cart-empty">
           <div className="icon center f fcenter">
             <Image
               alt="empty cart logo"
@@ -27,14 +69,47 @@ const CartPageComponent = ({ cart }) => {
           </button>
         </section>
       ) : (
-        <section className="cart mt30">
+        <section ref={cartRef} className="cart f j-between">
           <div className="cart-items">
-            {cart.map((cart, index) => {
+            {paginateCartItems.map((cart, index) => {
               // remember to change key from index to id
-              return <CartItem key={index} />;
+              return <CartItem cart={cart} key={index} />;
             })}
+            <Paginate
+              paginateFn={paginateFn}
+              array={cart}
+              itemsPerPage={5}
+              currentBtn={currentBtn}
+              handlePaginate={handlePaginate}
+            />
           </div>
-          <div className="cart-summary">hello here</div>
+          <div className="cart-summary">
+            <div className="content">
+              <article className="summary">
+                <div className="f j-between">
+                  <p>Sub Total</p>
+                  <p>{formatPrice(877232)}</p>
+                </div>
+                <div className="f j-between mt20">
+                  <p>Delivery Fee</p>
+                  <p>{formatPrice(877232)}</p>
+                </div>
+                <div className="f j-between mt20">
+                  <p>Tax Fee</p>
+                  <p>{formatPrice(877232)}</p>
+                </div>
+              </article>
+              <article className="total">
+                <div className="f j-between mt20">
+                  <h1>Total</h1>
+                  <h1>{formatPrice(877232555)}</h1>
+                </div>
+              </article>
+            </div>
+            <button onClick={handleCheckout} className="mt30">
+              Continue To Checkout
+            </button>
+          </div>
         </section>
       )}
       <section className="recently-viewed mt30">
@@ -50,8 +125,45 @@ const CartPageComponent = ({ cart }) => {
 export default CartPageComponent;
 const Wrapper = styled.main`
   max-width: 1170px;
+  .modal {
+    padding-top: 20px;
+    text-align: center;
+    color: var(--blue);
+    h3 {
+      color: skyblue;
+    }
+    button {
+      width: 100%;
+      border: 2px solid var(--gray);
+      border-radius: 10px;
+    }
+  }
   .cart {
-    background-color: white;
+    flex-direction: column;
+    padding: 10px;
+    .cart-summary {
+      color: var(--blue);
+      max-width: 575px;
+      margin-top: 30px;
+      .content {
+        background-color: white;
+        padding: 30px;
+        .summary {
+          border-bottom: 2px solid;
+          padding-bottom: 15px;
+        }
+        .total {
+          font-size: 20px;
+        }
+      }
+      button {
+        width: 100%;
+        background-color: var(--pink);
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+      }
+    }
   }
   .cart-empty {
     flex-direction: column;
@@ -77,6 +189,19 @@ const Wrapper = styled.main`
       background-color: var(--pink);
       padding: 15px 20px;
       font-size: 16px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .cart {
+      flex-direction: row;
+      .cart-items {
+        width: 50%;
+      }
+      .cart-summary {
+        width: 45%;
+        align-self: flex-start;
+        margin-top: 0px;
+      }
     }
   }
 `;

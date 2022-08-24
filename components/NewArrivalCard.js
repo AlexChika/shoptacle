@@ -7,23 +7,23 @@ import { formatPrice, calculateStars } from "../utils/functions";
 const NewArrivalCard = ({ product }) => {
   const { price, name, id, rating, url } = product;
   return (
-    <Link href={`/shop/${name}-${id}`}>
-      <Wrapper className="trans">
-        <Image src={url} alt={name} />
-        <div className="star-con f align">
-          <h1 className="trans f align">
-            <MdStarRate /> <span>{calculateStars(rating).stars}</span>
-          </h1>
+    <Wrapper className="trans">
+      <Image src={url} alt={name} />
+      <div className="star-con f align">
+        <h1 className="trans f align">
+          <MdStarRate /> <span>{calculateStars(rating).stars}</span>
+        </h1>
+      </div>
+      <div className="detail trans f j-around">
+        <h1 className="">{name}</h1>
+        <div className="f align j-between">
+          <span className="">{formatPrice(price)}</span>
+          <button className="trans">
+            <Link href={`/shop/${name}-${id}`}>Add To Cart</Link>
+          </button>
         </div>
-        <div className="detail trans f j-around">
-          <h1 className="">{name}</h1>
-          <div className="f align j-between">
-            <span className="">{formatPrice(price)}</span>
-            <button className="trans">Add To Cart</button>
-          </div>
-        </div>
-      </Wrapper>
-    </Link>
+      </div>
+    </Wrapper>
   );
 };
 // when changing to remote url   <Image src={product.url} width={720} height={960} alt={product.name} />
