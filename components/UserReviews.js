@@ -118,7 +118,6 @@ const UserReviews = ({ rating, name }) => {
 
 export default UserReviews;
 const Wrapper = styled.section`
-  /* background-color: var(--gray); */
   color: var(--blue);
   .heading {
     background-color: white;
