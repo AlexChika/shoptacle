@@ -63,7 +63,7 @@ const StoreProvider = ({ children }) => {
       <Wrapper
         show={logger.show}
         success={logger.success}
-        className="center trans f align"
+        className="center f align"
       >
         <p>{logger.text}</p>
       </Wrapper>
@@ -75,16 +75,16 @@ export const Store = () => useContext(AppContext);
 export default StoreProvider;
 const Wrapper = styled.div`
   position: fixed;
-  top: 20%;
+  top: 0%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%);
   font-weight: 500;
   min-height: 80px;
   text-align: center;
   padding: 10px;
   font-size: 20px;
   background-color: ${({ success }) =>
-    success ? "rgba(83, 255, 83, 0.75)" : "rgba(250, 86, 65, 0.75)"};
+    success ? "rgba(47, 255, 0, 1)" : "rgba(253, 51, 91, 1)"};
   color: white;
   max-width: 600px;
   width: 100%;

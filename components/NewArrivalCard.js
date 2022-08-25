@@ -36,13 +36,13 @@ const Wrapper = styled.article`
     position: absolute;
     top: 20px;
     right: 10px;
-    height: 65px;
-    width: 65px;
+    height: 55px;
+    width: 55px;
     border-radius: 50%;
     background-color: white;
     padding: 5px;
     h1 {
-      font-size: 20px;
+      font-size: 16px;
       font-family: "Inter", sans-serif;
       font-weight: 500;
       color: var(--pink);
