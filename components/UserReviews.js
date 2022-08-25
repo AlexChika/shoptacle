@@ -177,7 +177,7 @@ const Wrapper = styled.section`
     }
   }
   .review-con {
-    height: 500px;
+    height: 600px;
     width: 95%;
     background-color: white;
     border-bottom: 2px solid var(--gray);
@@ -188,7 +188,7 @@ const Wrapper = styled.section`
     }
     .reviews {
       overflow-y: scroll;
-      height: 400px;
+      height: 500px;
       padding: 10px;
       .review-row {
         border-bottom: 2px solid var(--gray);
@@ -219,8 +219,12 @@ const Wrapper = styled.section`
     }
     .review-con {
       width: 60%;
+      height: 500px;
       border-left: 2px solid var(--gray);
       border-bottom: 0px;
+      .reviews {
+        height: 400px;
+      }
     }
   }
 `;

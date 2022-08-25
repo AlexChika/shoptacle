@@ -51,25 +51,25 @@ function NavBar({ page }) {
             // <Image src="" />
             <div></div>
           ) : (
-            <button
-              className={`trans ${page === "profile" ? "active" : ""}`}
-              type="button"
-            >
-              <Link href="/login/profile">
+            <Link href="/login/profile">
+              <button
+                className={`trans ${page === "profile" ? "active" : ""}`}
+                type="button"
+              >
                 <FaUser />
-              </Link>
-            </button>
+              </button>
+            </Link>
           )}
         </span>
         <span>
-          <button
-            className={`trans ${page === "cart" ? "active" : ""}`}
-            type="button"
-          >
-            <Link href="/cart">
+          <Link href="/cart">
+            <button
+              className={`trans ${page === "cart" ? "active" : ""}`}
+              type="button"
+            >
               <BsCartFill />
-            </Link>
-          </button>
+            </button>
+          </Link>
         </span>
       </div>
     </Wrapper>

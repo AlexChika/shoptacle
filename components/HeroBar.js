@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Store } from "../store/Context";
-const PageHero = () => {
+const HeroBar = () => {
   const router = useRouter();
   const { currRoute, preRoute } = Store();
   function pathNames(path) {
@@ -71,4 +71,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default PageHero;
+export default HeroBar;

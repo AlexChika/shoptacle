@@ -86,7 +86,7 @@ const ProductDetail = ({ id }) => {
               onClick={() => {
                 Logger(
                   "Add to cart functionality is yet to be implemented",
-                  "success"
+                  "error"
                 );
               }}
               className="cart-btn center mt30"
@@ -153,13 +153,13 @@ const Wrapper = styled.main`
       position: absolute;
       top: 20px;
       right: 10px;
-      height: 70px;
-      width: 70px;
+      height: 55px;
+      width: 55px;
       border-radius: 50%;
       background-color: white;
       padding: 10px;
       h1 {
-        font-size: 20px;
+        font-size: 16px;
         font-family: "Inter", sans-serif;
         font-weight: 500;
         color: var(--pink);
