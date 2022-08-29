@@ -10,7 +10,7 @@ function NavBar({ page }) {
   const { handleCloseModal } = Store();
 
   return (
-    <Wrapper page={page} className="mt10 f align">
+    <Wrapper page={page} className="f align center">
       <button onClick={handleCloseModal} className="side-modal-btn">
         <IoMdList />
       </button>
@@ -26,9 +26,9 @@ function NavBar({ page }) {
             Home
           </span>
         </Link>
-        <Link href="/products">
-          <span className={`trans ${page === "products" ? "active" : ""}`}>
-            Products
+        <Link href="/shop">
+          <span className={`trans ${page === "shop" ? "active" : ""}`}>
+            Shop
           </span>
         </Link>
         <Link href="/about">
@@ -51,15 +51,25 @@ function NavBar({ page }) {
             // <Image src="" />
             <div></div>
           ) : (
-            <button type="button">
-              <FaUser />
-            </button>
+            <Link href="/login/profile">
+              <button
+                className={`trans ${page === "profile" ? "active" : ""}`}
+                type="button"
+              >
+                <FaUser />
+              </button>
+            </Link>
           )}
         </span>
         <span>
-          <button type="button">
-            <BsCartFill />
-          </button>
+          <Link href="/cart">
+            <button
+              className={`trans ${page === "cart" ? "active" : ""}`}
+              type="button"
+            >
+              <BsCartFill />
+            </button>
+          </Link>
         </span>
       </div>
     </Wrapper>
@@ -69,10 +79,10 @@ function NavBar({ page }) {
 export default NavBar;
 
 const Wrapper = styled.nav`
+  max-width: 1170px;
   justify-content: space-between;
   color: ${({ page }) => (page === "home" ? "white" : "var(--blue)")};
   height: 60px;
-  margin: 0 10px;
   padding: 0px 10px;
   .side-modal-btn {
     order: 3;
@@ -89,10 +99,10 @@ const Wrapper = styled.nav`
   .link-con {
     display: none;
     min-width: 18rem;
-    flex: 0.45;
-    justify-content: flex-end;
+    /* justify-content: flex-end;
+    flex: 0.45; */
     span {
-      margin: 0px 10px;
+      margin-right: 20px;
       font-family: "Inter", sans-serif;
       font-style: normal;
       font-weight: 500;
@@ -101,14 +111,10 @@ const Wrapper = styled.nav`
       cursor: pointer;
     }
     span.active {
-      color: var(--blue);
-      border-bottom: 2px solid var(--blue);
+      border-bottom: 2px solid var(--pink);
     }
     span:hover {
-      color: grey;
-    }
-    span.active:hover {
-      border-bottom: 2px solid grey;
+      color: var(--pink);
     }
   }
   .navCart-con {
@@ -123,6 +129,9 @@ const Wrapper = styled.nav`
     }
     button {
       font-size: 23px;
+    }
+    button.active {
+      color: var(--pink);
     }
     color: black;
   }

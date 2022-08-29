@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import HeroBar from "../../components/HeroBar";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
-import PageHero from "../../components/pageHero";
+import ShopPageComponent from "../../components/ShopPageComponent";
 const Products = () => {
   return (
     <Wrapper className="layout">
-      <NavBar page="products" />
+      <NavBar page="shop" />
       <SideBar />
-      <PageHero pre={"Home"} curr={"Products"} />
+      <HeroBar path="/" pre={"Home"} curr={"Shop"} />
+      <ShopPageComponent />
     </Wrapper>
   );
 };
