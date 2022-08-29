@@ -29,6 +29,7 @@ const ModalWrap = styled.div`
   width: 100%;
   height: 100%;
   z-index: 8;
+  background-color: rgba(0, 0, 0, 0.3); //optional
   display: ${({ modal }) => (modal ? "block" : "none")};
   .modal-body {
     border: 2px solid pink;
@@ -39,7 +40,6 @@ const ModalWrap = styled.div`
     transform: translateX(-70%) translateY(-70%);
     opacity: 0;
     /* background: rgb(26, 26, 39); */
-    background: white;
     background: var(--pink-light);
     color: white;
     border-radius: 15px;
@@ -59,7 +59,8 @@ const ModalWrap = styled.div`
     font-weight: 300;
     font-size: 20px;
     padding: 0.5em 1em;
-    color: white;
+    /* color: white; */
+    color: red;
     border: none;
     background: transparent;
   }

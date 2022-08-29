@@ -4,7 +4,7 @@ import { BsStarFill, BsStar } from "react-icons/bs";
 import { calculateStars, displayStar, paginateFn } from "../utils/functions";
 import Paginate from "./Paginate";
 const UserReviews = ({ rating, name }) => {
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  const array = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const [selectStarRating, setSelectStarRating] = useState(0);
   const [currentBtn, setCurrentBtn] = useState(0);
   const reviewRef = useRef(null);
@@ -177,7 +177,7 @@ const Wrapper = styled.section`
     }
   }
   .review-con {
-    height: 600px;
+    max-height: 670px;
     width: 95%;
     background-color: white;
     border-bottom: 2px solid var(--gray);
@@ -188,7 +188,7 @@ const Wrapper = styled.section`
     }
     .reviews {
       overflow-y: scroll;
-      height: 500px;
+      max-height: 550px;
       padding: 10px;
       .review-row {
         border-bottom: 2px solid var(--gray);

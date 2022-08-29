@@ -13,6 +13,7 @@ function reducer(state, action) {
     };
   }
   if (action.type === actionTypes.ROUTE_CHANGE) {
+    if (action.payload === state.currRoute) return state;
     return {
       ...state,
       preRoute: state.currRoute,

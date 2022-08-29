@@ -11,7 +11,7 @@ const AboutPageHero = () => {
       <NavBar page="about" />
       <SideBar />
       <HeroBar path="/" pre={"Home"} curr={"About us"} />
-      <section className="body mt30">
+      <section className="body center mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>
           <p className="center c-blue mt20">
@@ -63,6 +63,7 @@ const AboutPageHero = () => {
 export default AboutPageHero;
 const Wrapper = styled.main`
   background: var(--pink-light);
+
   .heading {
     h1,
     p {

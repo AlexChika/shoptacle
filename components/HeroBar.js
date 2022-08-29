@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ const HeroBar = () => {
     };
   }
   return (
-    <Wrapper className="f mt30">
+    <Wrapper className="f align center mt30">
       <div className="content center">
         <h3 className="capitalize">
           <Link href={pathNames(preRoute).path}>
@@ -35,14 +35,13 @@ const HeroBar = () => {
 const Wrapper = styled.section`
   background: var(--blue-light);
   width: 100%;
-  min-height: 20vh;
-  align-items: center;
+  min-height: 18vh;
+  /* max-width: 1170px; */
   color: white;
   .content {
     width: 100%;
     max-width: 1170px;
     padding: 0px 10px;
-    /* font-family: "Inter", sans-serif; */
   }
   span {
     color: var(--pink);
