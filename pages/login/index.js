@@ -9,6 +9,7 @@ const Index = () => {
   const [signin, setSignIn] = useState(true);
   const handleUserLogIn = (e) => {
     e.preventDefault();
+    console.log("hello from login");
   };
   return (
     <Wrapper className="layout">
@@ -61,7 +62,7 @@ const Index = () => {
                 </button>
               </form>
               <p>
-                Don`&apos;t have an account ?{" "}
+                Don&apos;t have an account ?{" "}
                 <span
                   onClick={() => {
                     setSignIn(!signin);
