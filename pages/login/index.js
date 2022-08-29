@@ -61,7 +61,7 @@ const Index = () => {
                 </button>
               </form>
               <p>
-                Don't have an account ?{" "}
+                Don`&apos;t have an account ?{" "}
                 <span
                   onClick={() => {
                     setSignIn(!signin);

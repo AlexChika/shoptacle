@@ -12,7 +12,7 @@ const CartItem = ({ cart }) => {
     // </Link>
     <Wrapper className="f">
       <div className="img">
-        <Image layout="fill" src={SampleImage}></Image>
+        <Image layout="fill" alt="cart item" src={SampleImage}></Image>
       </div>
       <button className="rem-btn f align">
         <span>Remove</span>
