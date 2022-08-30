@@ -37,6 +37,9 @@ const formatPrice = (price) => {
   return newNumber;
 };
 const paginateFn = (array, itemsPerPage, currentPage = 0) => {
+  if (!array || !itemsPerPage)
+    throw new Error("check parameters at paginateFn");
+
   let pageNumber = Math.ceil(array.length / itemsPerPage);
   let startIndex = currentPage * itemsPerPage;
   let stopIndex = startIndex + itemsPerPage;

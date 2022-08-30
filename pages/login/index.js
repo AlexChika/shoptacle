@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
@@ -6,18 +6,24 @@ import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
 import Logo from "../../public/icon.png";
 const Index = () => {
+  const containerRef = useRef(null);
   const [signin, setSignIn] = useState(true);
   const handleUserLogIn = (e) => {
     e.preventDefault();
     console.log("hello from login");
   };
+  useEffect(() => {
+    // containerRef.current.focus();
+    window.scrollTo(0, Number(containerRef.current.offsetTop) - 100);
+  }, []);
+
   return (
     <Wrapper className="layout">
       <NavBar />
       <SideBar />
       <HeroBar />
       <main className="body f fcenter center mt30">
-        <section className="container f center">
+        <section ref={containerRef} className="container f center">
           {/* side banner display */}
           <article className="side-banner f fcenter gray">
             <div className="content f fcenter">
@@ -144,13 +150,10 @@ const Wrapper = styled.main`
     padding: 30px 0px;
     /* margin-bottom: 30px; */
     max-width: 1170px;
-    background-color: rgba(255, 255, 255, 0.3);
-    background-color: var(--blue-light);
   }
   .body .container {
-    height: 500px;
+    height: 550px;
     width: 100%;
-    max-width: 1000px;
     border-radius: 10px;
     overflow: hidden;
     article {
