@@ -18,4 +18,5 @@ const Index = () => {
 export default Index;
 const Wrapper = styled.main`
   background-color: var(--pink-light);
+  padding-bottom: 30px;
 `;

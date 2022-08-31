@@ -5,11 +5,7 @@ import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
 import CartPageComponent from "../../components/CartPageComponent";
 const Index = () => {
-  let cart = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26, 27,
-  ];
-  // let cart = [];
+  let cart = [];
   return (
     <Wrapper className="layout">
       <NavBar page={"cart"} />

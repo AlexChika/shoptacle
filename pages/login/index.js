@@ -169,7 +169,6 @@ const Wrapper = styled.main`
     display: none;
     text-align: center;
     color: var(--blue);
-    /* color: white; */
     .content {
       flex-direction: column;
       height: 200px;

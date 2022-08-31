@@ -4,7 +4,7 @@ import { BsStarFill, BsStar } from "react-icons/bs";
 import { calculateStars, displayStar, paginateFn } from "../utils/functions";
 import Paginate from "./Paginate";
 const UserReviews = ({ rating, name }) => {
-  const array = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const [selectStarRating, setSelectStarRating] = useState(0);
   const [currentBtn, setCurrentBtn] = useState(0);
   const reviewRef = useRef(null);
@@ -71,31 +71,38 @@ const UserReviews = ({ rating, name }) => {
             {"435"} Reviews For {name}
           </p>
           <div ref={reviewRef} className="reviews">
-            {paginateUserReviews.map((review, index) => {
-              return (
-                <div key={index} className="review-row">
-                  <div className="star-con">
-                    {displayStar(5).map((star, index) => {
-                      return <span key={index}>{star}</span>;
-                    })}
+            {paginateUserReviews.length > 0 ? (
+              paginateUserReviews.map((review, index) => {
+                return (
+                  <div key={index} className="review-row">
+                    <div className="star-con">
+                      {displayStar(5).map((star, index) => {
+                        return <span key={index}>{star}</span>;
+                      })}
+                    </div>
+                    <h3 className="mt10">
+                      {"Excellent Product"}
+                      {review}
+                    </h3>
+                    <p className="text mt10">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Ipsam corporis voluptatum quia tempora deserunt
+                      consequatur aperiam, dolores eaque numquam ad.
+                    </p>
+                    <p className="mt10">
+                      <span>{"12 / 22 / 2022"}</span> &nbsp; by &nbsp;{" "}
+                      <span>{"Alex Chika"}</span>
+                    </p>
                   </div>
-                  <h3 className="mt10">
-                    {"Excellent Product"}
-                    {review}
-                  </h3>
-                  <p className="text mt10">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Ipsam corporis voluptatum quia tempora deserunt consequatur
-                    aperiam, dolores eaque numquam ad.
-                  </p>
-                  <p className="mt10">
-                    <span>{"12 / 22 / 2022"}</span> &nbsp; by &nbsp;{" "}
-                    <span>{"Alex Chika"}</span>
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="minvh c-blue f fcenter">
+                <h1>This product have no ratings</h1>
+              </div>
+            )}
           </div>
+
           <Paginate
             paginateFn={paginateFn}
             array={array}
@@ -165,8 +172,8 @@ const Wrapper = styled.section`
     textarea {
       max-width: 100%;
       min-width: 100%;
-      max-height: 80px;
-      min-height: 80px;
+      max-height: 150px;
+      min-height: 150px;
     }
     .submit-btn {
       display: block;

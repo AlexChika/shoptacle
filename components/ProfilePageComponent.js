@@ -7,9 +7,9 @@ import { FaUserEdit } from "react-icons/fa";
 import { BsChatSquareText, BsCartFill } from "react-icons/bs";
 import { formatPrice, paginateFn, displayStar } from "../utils/functions";
 const ProfilePageComponent = () => {
-  // const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  const array = [];
+  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // const array = [];
+  const [tabs, setTabs] = useState(0);
   const orderRef = useRef(null);
   const reviewRef = useRef(null);
 
@@ -37,18 +37,23 @@ const ProfilePageComponent = () => {
     });
     reviewRef.current.scrollTo(0, 0);
   };
-  const [tabs, setTabs] = useState(0);
+  const handleEditDetail = (e) => {
+    e.preventDefault();
+  };
   return (
-    <Wrapper className="center">
+    <Wrapper className="center mt30">
       <h3 className="title">My Profile</h3>
-      <article className="header f align">
-        <div className="profile-image gray">
-          <Image src={Logo} layout="fill" alt="profile image"></Image>
+      <article className="header center">
+        <div className="f j-between">
+          <span className="profile-image">
+            <Image src={Logo} layout="fill" alt="profile image"></Image>
+          </span>
+          <div>
+            <h1>Chinazaram C.</h1>
+            <button>Logout</button>
+          </div>
         </div>
-        <div className="bio">
-          <h1>Alex C.</h1>
-          <p>mcluckey1@gmail.com</p>
-        </div>
+        <p className="mt10">mcluckey1@gmail.com</p>
       </article>
       <article className="address center mt20">
         <h1>Address</h1>
@@ -58,7 +63,7 @@ const ProfilePageComponent = () => {
           ipsa tenetur nulla magnam culpa.`}
         </p>
       </article>
-      <section className="tabs-con mt30">
+      <section className="tabs-con center mt30">
         {/* tabs navigation */}
         <div className="nav f j-between" aria-roledescription="nav">
           {[
@@ -158,23 +163,55 @@ const ProfilePageComponent = () => {
           )}
           {/* edit */}
           {tabs === 2 && (
-            <div className="edit gray">
-              <h1 className="mt10">Update your profile</h1>
+            <div className="edit">
+              <h1>Update your profile</h1>
+              <form
+                className="f j-around align center"
+                onSubmit={handleEditDetail}
+              >
+                <div className="inputCon f mt20">
+                  <input type="text" placeholder="First Name" name="" id="" />
+                  <code className="status"></code>
+                </div>
+                <div className="inputCon f mt20">
+                  <input type="text" placeholder="Last Name" name="" id="" />
+                  <code className="status"></code>
+                </div>
+                <div className="inputCon f mt20">
+                  <textarea
+                    placeholder="Your Address"
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="10"
+                  ></textarea>
+                  <code className="status"></code>
+                </div>
+                <div className="inputCon f mt20">
+                  <input type="file" name="" id="" />
+                  <code className="status"></code>
+                </div>
+                <button className="mt20" type="submit">
+                  Submit
+                </button>
+              </form>
             </div>
           )}
         </article>
       </section>
+      <div className="btns center f j-around">
+        <button>Go to cart</button>
+        <button>Continue shopping</button>
+        <button>Home</button>
+      </div>
     </Wrapper>
   );
 };
 
 export default ProfilePageComponent;
 const Wrapper = styled.main`
-  max-width: 620px;
-  padding: 10px;
-  min-height: 100vh;
-  /* box-shadow: 2px 2px 5px var(--gray), -2px -2px 5px var(--gray); */
-  /* background-color: white; */
+  max-width: 1170px;
+  background-color: white;
   .title {
     padding: 30px;
     font-style: italic;
@@ -183,15 +220,19 @@ const Wrapper = styled.main`
     color: var(--gray);
   }
   .header {
+    max-width: 650px;
     padding: 10px;
+    border-bottom: 1px solid var(--gray);
     .profile-image {
       position: relative;
       overflow: hidden;
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       min-width: 80px;
       border-radius: 50%;
-      margin-right: 30px;
+    }
+    div {
+      align-self: flex-end;
     }
     h1 {
       color: var(--blue);
@@ -200,6 +241,12 @@ const Wrapper = styled.main`
     p {
       word-break: break-all;
       color: var(--gray);
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      color: var(--pink);
+      text-decoration: underline;
     }
   }
   .address {
@@ -213,8 +260,8 @@ const Wrapper = styled.main`
   }
   .tabs-con {
     box-shadow: 2px 2px 5px var(--gray), -2px -2px 5px var(--gray);
+    max-width: 650px;
     .nav {
-      background-color: white;
       span {
         flex: 1;
         text-align: center;
@@ -229,19 +276,17 @@ const Wrapper = styled.main`
       }
     }
     .content {
-      background-color: white;
-      max-height: 620px;
+      max-height: 600px;
       overflow: hidden;
       .empty {
         min-height: 30vh;
         color: var(--gray);
-        background-color: white;
       }
     }
     .order {
       overflow-y: auto;
       background-color: var(--gray);
-      max-height: 550px;
+      max-height: 530px;
       .order-item {
         padding: 10px;
         border-bottom: 2px solid var(--pink-light);
@@ -264,7 +309,7 @@ const Wrapper = styled.main`
     .review {
       color: var(--blue);
       overflow-y: auto;
-      max-height: 550px;
+      max-height: 530px;
       .review-row {
         padding: 10px;
         border-bottom: 2px solid var(--gray);
@@ -283,9 +328,66 @@ const Wrapper = styled.main`
     }
     .edit {
       color: var(--blue);
+      padding: 20px 0px;
       h1 {
         text-align: center;
+        text-decoration: underline;
       }
+      form {
+        flex-direction: column;
+        max-width: 400px;
+        width: 90%;
+      }
+      .inputCon {
+        width: 100%;
+        padding: 0;
+        flex-direction: column;
+      }
+      input,
+      textarea {
+        background-color: whitesmoke;
+        color: black;
+        padding: 10px;
+      }
+      textarea {
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 150px;
+        min-height: 150px;
+      }
+      input::placeholder {
+        color: gray;
+      }
+      button {
+        background-color: var(--pink);
+        width: 100%;
+        padding: 10px 20px;
+        border-radius: 20px;
+        color: white;
+      }
+    }
+  }
+  .btns {
+    max-width: 650px;
+    padding: 30px 0px;
+    flex-wrap: wrap;
+    button {
+      background-color: red;
+      color: white;
+      flex: 1;
+      font-size: 16px;
+      min-width: 10em;
+      padding: 10px 10px;
+      margin-top: 10px;
+    }
+    button:nth-of-type(1) {
+      background-color: var(--blue);
+    }
+    button:nth-of-type(2) {
+      background-color: var(--gray);
+    }
+    button:nth-of-type(3) {
+      background-color: var(--pink);
     }
   }
 `;
