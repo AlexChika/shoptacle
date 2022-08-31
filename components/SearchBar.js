@@ -33,7 +33,7 @@ const SearchBar = () => {
           <FiSearch />
         </button>
         <form onSubmit={handleSearchOnsubmit}>
-          <div className="form-input f ">
+          <div className="form-input f align">
             <input
               type="text"
               name=""
@@ -42,7 +42,7 @@ const SearchBar = () => {
               onChange={handleSearchOnchange}
               placeholder="Type to search"
             />
-            <button type="submit">
+            <button className="submit-btn" type="submit">
               <FiSearch />
             </button>
           </div>
@@ -68,19 +68,21 @@ const Wrapper = styled.div`
       display: block;
     }
     form {
+      color: var(--blue);
       transition: all 0.2s linear;
       width: 25px;
       overflow: hidden;
       visibility: collapse;
       input {
-        width: 75%;
+        width: 80%;
+        font-size: 16px;
       }
-      button {
-        width: 25%;
+      .submit-btn {
+        width: 20%;
+        border-left: 1px solid;
       }
       .form-input {
-        height: 45px;
-        padding: 0px 7px;
+        padding: 7px 7px;
         background-color: white;
         border-radius: 5px;
       }
@@ -92,7 +94,7 @@ const Wrapper = styled.div`
     }
     form {
       visibility: visible;
-      width: 10em;
+      width: 100%;
       overflow: visible;
     }
   }

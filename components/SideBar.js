@@ -2,16 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Store } from "../store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import profileImage from "../public/icon.png";
 const SideBar = () => {
+  const router = useRouter();
   const { modalOpen, handleCloseModal } = Store();
+  const handleRoute = (url) => {
+    if (typeof url !== "string")
+      throw new Error(`the url ${url} is an invalid input or not a string`);
+    handleCloseModal();
+    router.push(url);
+  };
   return (
     <Wrapper modal={modalOpen} className="trans">
-      <div className="logo-con f align j-around">
+      <div className="header f align j-around">
         {true ? (
           <button type="button" className="profile-img">
             <Image src={profileImage} alt="profile image" />
@@ -32,22 +40,48 @@ const SideBar = () => {
           <TbPlaylistX />
         </button>
       </div>
-      <SearchBar />
-      <h1 className="mt20">welcome to SideBar</h1>
+      <section className="sidebar-content">
+        <h3 className="f align">
+          <span>Search</span>
+          <SearchBar />
+        </h3>
+        <button onClick={() => handleRoute("/")}>Home</button>
+        <button onClick={() => handleRoute("/shop")}>Shop</button>
+        <h3>Category</h3>
+        <button onClick={() => handleRoute("/shop/male-fashion")}>
+          Male Fashion
+        </button>
+        <button onClick={() => handleRoute("/shop/female-fashion")}>
+          Female fashion
+        </button>
+        <button onClick={() => handleRoute("/shop/unisex-shoes")}>
+          Unisex shoes
+        </button>
+        <button onClick={() => handleRoute("/shop/smart-gadgets")}>
+          Smart gadgets
+        </button>
+        <h3>Account</h3>
+        <button onClick={() => handleRoute("/cart")}>Cart</button>
+        <button onClick={() => handleRoute("/login/profile")}>Profile</button>
+        <button onClick={() => handleRoute("/login")}>Login</button>
+        <h3>Contact</h3>
+        <button onClick={() => handleRoute("/about")}>About</button>
+        <button onClick={() => handleRoute("/admin")}>Admin</button>
+      </section>
     </Wrapper>
   );
 };
 
 export default SideBar;
-const Wrapper = styled.section`
+const Wrapper = styled.main`
   position: fixed;
   background-color: var(--pink-light);
   z-index: 10;
-  margin-top: -70px;
-  min-height: calc(100vh + 70px);
+  top: 0;
+  min-height: calc(100vh);
   max-width: 465px;
   width: 100%;
-  .logo-con {
+  .header {
     padding: 20px 10px;
     text-align: center;
     font-family: "Lobster", cursive;
@@ -60,12 +94,36 @@ const Wrapper = styled.section`
         border-radius: 50%;
       }
     }
+    .close-btn {
+      font-size: 30px;
+    }
+    .user-btn {
+      font-size: 25px;
+    }
   }
-  .close-btn {
-    font-size: 30px;
+  .sidebar-content {
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    padding: 10px;
+    h3 {
+      background-color: var(--blue);
+      padding: 10px;
+      color: white;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+    span {
+      padding-right: 10px;
+    }
   }
-  .user-btn {
-    font-size: 25px;
+  .sidebar-content button {
+    font-size: 16px;
+    display: block;
+    margin-top: 20px;
+    color: var(--blue);
+    padding: 5px 20px;
+    border-radius: 10px;
+    text-decoration: underline;
   }
   transform: ${(props) =>
     props.modal ? "translateX(0)" : "translateX(-110%)"};
