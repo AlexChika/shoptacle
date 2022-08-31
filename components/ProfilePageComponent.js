@@ -278,6 +278,7 @@ const Wrapper = styled.main`
     .content {
       max-height: 600px;
       overflow: hidden;
+      padding: 0px 10px;
       .empty {
         min-height: 30vh;
         color: var(--gray);
@@ -369,7 +370,7 @@ const Wrapper = styled.main`
   }
   .btns {
     max-width: 650px;
-    padding: 30px 0px;
+    padding: 30px 10px;
     flex-wrap: wrap;
     button {
       background-color: red;

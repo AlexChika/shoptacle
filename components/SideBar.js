@@ -43,30 +43,58 @@ const SideBar = () => {
       <section className="sidebar-content">
         <h3 className="f align">
           <span>Search</span>
-          <SearchBar />
+          <span>
+            <SearchBar />
+          </span>
         </h3>
-        <button onClick={() => handleRoute("/")}>Home</button>
-        <button onClick={() => handleRoute("/shop")}>Shop</button>
+        <button className="link" onClick={() => handleRoute("/")}>
+          Home
+        </button>{" "}
+        <button className="link" onClick={() => handleRoute("/shop")}>
+          Shop
+        </button>
         <h3>Category</h3>
-        <button onClick={() => handleRoute("/shop/male-fashion")}>
+        <button
+          className="link"
+          onClick={() => handleRoute("/shop/male-fashion")}
+        >
           Male Fashion
         </button>
-        <button onClick={() => handleRoute("/shop/female-fashion")}>
+        <button
+          className="link"
+          onClick={() => handleRoute("/shop/female-fashion")}
+        >
           Female fashion
         </button>
-        <button onClick={() => handleRoute("/shop/unisex-shoes")}>
+        <button
+          className="link"
+          onClick={() => handleRoute("/shop/unisex-shoes")}
+        >
           Unisex shoes
         </button>
-        <button onClick={() => handleRoute("/shop/smart-gadgets")}>
+        <button
+          className="link"
+          onClick={() => handleRoute("/shop/smart-gadgets")}
+        >
           Smart gadgets
         </button>
         <h3>Account</h3>
-        <button onClick={() => handleRoute("/cart")}>Cart</button>
-        <button onClick={() => handleRoute("/login/profile")}>Profile</button>
-        <button onClick={() => handleRoute("/login")}>Login</button>
+        <button className="link" onClick={() => handleRoute("/cart")}>
+          Cart
+        </button>
+        <button className="link" onClick={() => handleRoute("/login/profile")}>
+          Profile
+        </button>
+        <button className="link" onClick={() => handleRoute("/login")}>
+          Login
+        </button>
         <h3>Contact</h3>
-        <button onClick={() => handleRoute("/about")}>About</button>
-        <button onClick={() => handleRoute("/admin")}>Admin</button>
+        <button className="link" onClick={() => handleRoute("/about")}>
+          About
+        </button>
+        <button className="link" onClick={() => handleRoute("/admin")}>
+          Admin
+        </button>
       </section>
     </Wrapper>
   );
@@ -104,7 +132,7 @@ const Wrapper = styled.main`
   .sidebar-content {
     height: calc(100vh - 80px);
     overflow-y: auto;
-    padding: 10px;
+    padding: 30px 10px;
     h3 {
       background-color: var(--blue);
       padding: 10px;
@@ -114,16 +142,17 @@ const Wrapper = styled.main`
     }
     span {
       padding-right: 10px;
+      color: white;
     }
-  }
-  .sidebar-content button {
-    font-size: 16px;
-    display: block;
-    margin-top: 20px;
-    color: var(--blue);
-    padding: 5px 20px;
-    border-radius: 10px;
-    text-decoration: underline;
+    .link {
+      font-size: 16px;
+      display: block;
+      margin-top: 20px;
+      color: var(--blue);
+      padding: 5px 20px;
+      border-radius: 10px;
+      text-decoration: underline;
+    }
   }
   transform: ${(props) =>
     props.modal ? "translateX(0)" : "translateX(-110%)"};
