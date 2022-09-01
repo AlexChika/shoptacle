@@ -20,7 +20,7 @@ const HeroBar = () => {
   }
   return (
     <Wrapper className="f align center mt30">
-      <div className="content center">
+      <div className="hero-content center">
         <h3 className="capitalize">
           <Link href={pathNames(preRoute).path}>
             <span className="trans">{pathNames(preRoute).pageName}&nbsp;</span>
@@ -36,9 +36,8 @@ const Wrapper = styled.section`
   background: var(--blue-light);
   width: 100%;
   min-height: 18vh;
-  /* max-width: 1170px; */
   color: white;
-  .content {
+  .hero-content {
     width: 100%;
     max-width: 1170px;
     padding: 0px 10px;

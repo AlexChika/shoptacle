@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 import Logo from "../public/icon.png";
 import Paginate from "./Paginate";
 import { FaUserEdit } from "react-icons/fa";
@@ -9,10 +10,13 @@ import { formatPrice, paginateFn, displayStar } from "../utils/functions";
 const ProfilePageComponent = () => {
   const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   // const array = [];
-  const [tabs, setTabs] = useState(0);
+  // refs
   const orderRef = useRef(null);
   const reviewRef = useRef(null);
+  const tabRef = useRef(null);
 
+  // states
+  const [tabs, setTabs] = useState(0);
   const [orderState, setOrderState] = useState({
     paginateOrders: paginateFn(array, 7).items,
     currentBtn: 0,
@@ -21,6 +25,8 @@ const ProfilePageComponent = () => {
     paginateReviews: paginateFn(array, 5).items,
     currentBtn: 0,
   });
+
+  // handlers
   const handlePaginateOrder = (val) => {
     const newItems = paginateFn(array, 7, val).items;
     setOrderState({
@@ -36,6 +42,10 @@ const ProfilePageComponent = () => {
       currentBtn: val,
     });
     reviewRef.current.scrollTo(0, 0);
+  };
+  const handleSwitchTabs = (index) => {
+    setTabs(index);
+    window.scrollTo(0, Number(tabRef.current.offsetTop));
   };
   const handleEditDetail = (e) => {
     e.preventDefault();
@@ -63,7 +73,7 @@ const ProfilePageComponent = () => {
           ipsa tenetur nulla magnam culpa.`}
         </p>
       </article>
-      <section className="tabs-con center mt30">
+      <section ref={tabRef} className="tabs-con center mt30">
         {/* tabs navigation */}
         <div className="nav f j-between" aria-roledescription="nav">
           {[
@@ -75,7 +85,7 @@ const ProfilePageComponent = () => {
               <span
                 key={index}
                 onClick={() => {
-                  setTabs(index);
+                  handleSwitchTabs(index);
                 }}
                 className={`f fcenter trans ${tabs === index ? "active" : ""}`}
               >
@@ -200,9 +210,15 @@ const ProfilePageComponent = () => {
         </article>
       </section>
       <div className="btns center f j-around">
-        <button>Go to cart</button>
-        <button>Continue shopping</button>
-        <button>Home</button>
+        <Link href="/cart">
+          <button>Go to cart</button>
+        </Link>
+        <Link href="/shop">
+          <button>Continue shopping</button>
+        </Link>
+        <Link href="/">
+          <button>Home</button>
+        </Link>
       </div>
     </Wrapper>
   );

@@ -3,9 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import Icon from "../public/icon.png";
-const Footer = () => {
+const Footer = ({ hide }) => {
   return (
-    <Wrapper className="layout">
+    <Wrapper hide={hide} className="layout">
       <section className="headerWrapper f center">
         <div className="shoptacle f col">
           <Link href="/">
@@ -68,6 +68,7 @@ const Footer = () => {
 
 export default Footer;
 const Wrapper = styled.footer`
+  display: ${({ hide }) => (hide ? "none" : "block")};
   background: var(--blue);
   color: var(--blue);
   padding: 40px 20px 10px 20px;

@@ -4,7 +4,7 @@ import { BsStarFill, BsStar } from "react-icons/bs";
 import { calculateStars, displayStar, paginateFn } from "../utils/functions";
 import Paginate from "./Paginate";
 const UserReviews = ({ rating, name }) => {
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  const array = [];
   const [selectStarRating, setSelectStarRating] = useState(0);
   const [currentBtn, setCurrentBtn] = useState(0);
   const reviewRef = useRef(null);
@@ -127,6 +127,7 @@ const Wrapper = styled.section`
     h1 {
       font-family: "Libre Baskerville", serif;
       letter-spacing: 0.12rem;
+      font-size: 20px;
     }
     p {
       color: var(--pink);
@@ -216,6 +217,9 @@ const Wrapper = styled.section`
   @media screen and (min-width: 768px) {
     .heading {
       width: 100%;
+      h1 {
+        font-size: 25px;
+      }
     }
     .content {
       flex-direction: row;

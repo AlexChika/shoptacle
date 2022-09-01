@@ -13,7 +13,6 @@ const Index = () => {
     console.log("hello from login");
   };
   useEffect(() => {
-    // containerRef.current.focus();
     window.scrollTo(0, Number(containerRef.current.offsetTop) - 100);
   }, []);
 

@@ -1,24 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { Store } from "../../store/Context";
-import NavBar from "../../components/NavBar";
-import HeroBar from "../../components/HeroBar";
 import SideBar from "../../components/SideBar";
+import AdminDashboard from "../../components/AdminDashboard";
+import AdminWelcome from "../../components/AdminWelcome";
 const Products = () => {
+  const { dispatch } = Store();
+  let user = true;
   const { Logger } = Store();
   return (
     <Wrapper className="layout">
-      <NavBar page="admin" />
       <SideBar />
-      <HeroBar path="/" pre={"Home"} curr={"Admin"} />
-      <h1>everything will be functional thanks to Firebase</h1>
-      <button
-        onClick={() => {
-          Logger("testing the logger function", "error");
-        }}
-      >
-        Test Me{" "}
-      </button>
+      {user ? <AdminDashboard /> : <AdminWelcome />}
     </Wrapper>
   );
 };

@@ -5,11 +5,12 @@ import { useRouter } from "next/router";
 import reducer from "./Reducer";
 import * as actionTypes from "./actionTypes";
 const initialState = {
+  user: "hello",
   modalOpen: false,
   preRoute: "",
   currRoute: "",
 };
-const StoreProvider = ({ children }) => {
+const StoreProvider = ({ setHideFooter, children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [logger, setLogger] = useState({
@@ -56,6 +57,14 @@ const StoreProvider = ({ children }) => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
+  useEffect(() => {
+    if (state.user && state.currRoute === "/admin") {
+      setHideFooter(true);
+    } else {
+      setHideFooter(false);
+    }
+  }, [state.user, state.currRoute]);
+
   return (
     <AppContext.Provider
       value={{ ...state, handleCloseModal, dispatch, Logger }}
@@ -73,6 +82,7 @@ const StoreProvider = ({ children }) => {
 };
 export const Store = () => useContext(AppContext);
 export default StoreProvider;
+
 const Wrapper = styled.div`
   position: fixed;
   top: 0%;

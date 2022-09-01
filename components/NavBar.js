@@ -68,6 +68,7 @@ function NavBar({ page }) {
               type="button"
             >
               <BsCartFill />
+              <small>23</small>
             </button>
           </Link>
         </span>
@@ -129,9 +130,20 @@ const Wrapper = styled.nav`
     }
     button {
       font-size: 23px;
+      position: relative;
     }
     button.active {
       color: var(--pink);
+    }
+    small {
+      position: absolute;
+      top: -12px;
+      right: -10px;
+      background-color: var(--pink);
+      border-radius: 50%;
+      padding: 4px;
+      font-size: 11px;
+      color: white;
     }
     color: black;
   }
