@@ -2,10 +2,26 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Store } from "../store/Context";
+import AdminDashBoardHome from "./AdminDashBoardHome";
+import AdminAdd from "./AdminAdd";
+import AdminEdit from "./AdminEdit";
+import AdminSearch from "./AdminSearch";
 import Logo from "../public/icon.png";
 import Modal from "./Modal";
-// import { statusText } from "../utils/utils";
-const AdminDashboard = () => {
+// icons
+import {
+  BsArrowLeftCircleFill,
+  BsArrowRightCircleFill,
+  BsFillFileEarmarkPlusFill,
+  BsFillCheckCircleFill,
+} from "react-icons/bs";
+import { IoMdList } from "react-icons/io";
+import { MdDashboard, MdExitToApp } from "react-icons/md";
+import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
+
+// app
+const AdminDashboard = ({ user }) => {
+  const [currentTab, setCurrentTab] = useState(0);
   // const navigate = useNavigate();
   const router = useRouter();
   // const { logout, dispatch } = Store();
@@ -15,6 +31,10 @@ const AdminDashboard = () => {
   let isDashboard = false;
   const handleLogout = () => {
     console.log("hello");
+  };
+  const handleSetTab = (tab) => {
+    setCurrentTab(tab);
+    setSideBar(false);
   };
   // const handleLogout = async () => {
   //   setStatus({
@@ -46,51 +66,87 @@ const AdminDashboard = () => {
     <DashboardWrapper className="f">
       <section className={`sideBar trans ${sideBar ? "" : "close"}`}>
         <span onClick={() => setSideBar(!sideBar)} className="arrow">
-          {sideBar ? "left" : "right"}
+          {sideBar ? <BsArrowLeftCircleFill /> : <BsArrowRightCircleFill />}
         </span>
         <div className="linkCon">
           <button
-            onClick={() => setSideBar(false)}
-            className={isDashboard === "dashboard" ? "active" : ""}
+            className={currentTab == 0 ? "active" : ""}
+            onClick={() => handleSetTab(0)}
           >
-            <span className="icon">A</span>
-            <span className="text">Add Item</span>
-          </button>
-          <button onClick={() => setSideBar(false)}>
-            <span className="icon">E</span>
-            <span className="text">Edit Item</span>
-          </button>
-          <button onClick={() => setSideBar(false)} href="/dashboard/profile">
-            <span className="icon">D</span>
+            <span className="icon">
+              <MdDashboard />
+            </span>
             <span className="text">Dashboard</span>
           </button>
-          <button onClick={handleLogout}>
-            <span className="icon">L</span>
-            <span className="text">Exit</span>
+          <button
+            className={currentTab == 1 ? "active" : ""}
+            onClick={() => handleSetTab(1)}
+          >
+            <span className="icon">
+              <FaSearch />
+            </span>
+            <span className="text">Search</span>
           </button>
-          <button onClick={handleLogout}>
-            <span className="icon">L</span>
+          <button
+            className={currentTab == 2 ? "active" : ""}
+            onClick={() => handleSetTab(2)}
+          >
+            <span className="icon">
+              <BsFillFileEarmarkPlusFill />
+            </span>
+            <span className="text">Add</span>
+          </button>
+          <button
+            className={currentTab == 3 ? "active" : ""}
+            onClick={() => handleSetTab(3)}
+          >
+            <span className=" icon">
+              <FaEdit />
+            </span>
+            <span className="text">Edit</span>
+          </button>
+          <button
+            className={currentTab == 4 ? "active" : ""}
+            onClick={() => handleSetTab(4)}
+          >
+            <span className="icon">
+              <MdExitToApp />
+            </span>
             <span className="text">Log out</span>
-          </button>
-          <button onClick={handleLogout}>
-            <span className="icon">L</span>
-            <span className="text">etc</span>
           </button>
         </div>
       </section>
       <section className="content">
-        <button
-          onClick={() => setSideBar(!sideBar)}
-          className={`navigation ${sideBar ? "hide" : ""}`}
-        >
-          <span className="icon">
-            <i className="bi bi-list"></i>{" "}
-          </span>
-        </button>
-
-        <main>
-          everything here
-          {/* <Outlet /> */}
+        <div className="heading">
+          <button
+            onClick={() => setSideBar(!sideBar)}
+            className={`navigation ${sideBar ? "hide" : ""}`}
+          >
+            <span className="icon">
+              <IoMdList />
+            </span>{" "}
+          </button>
+          {user ? (
+            <h3 className="f align center">
+              <span style={{ color: "green" }}>
+                <BsFillCheckCircleFill />
+              </span>{" "}
+              &nbsp; Admin {"Alex"}
+            </h3>
+          ) : (
+            <h3 className="f align center">
+              <span style={{ color: "tomato" }}>
+                <FaTimes />
+              </span>{" "}
+              &nbsp; Admin {"Alex"}
+            </h3>
+          )}
+        </div>
+        <main className="mt10">
+          {currentTab == 0 && <AdminDashBoardHome />}
+          {currentTab == 1 && <AdminSearch />}
+          {currentTab == 2 && <AdminAdd />}
+          {currentTab == 3 && <AdminEdit />}
         </main>
       </section>
     </DashboardWrapper>
@@ -103,34 +159,7 @@ const DashboardWrapper = styled.main`
   color: var(--blue);
   min-height: 100vh;
   position: relative;
-  .icon {
-    font-size: 50px;
-    color: inherit;
-  }
-  .arrow {
-    padding: 10px;
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: 30px;
-    animation: blink 2s linear infinite;
-  }
-  .navigation {
-    position: fixed;
-    /* color: ${(props) => props.theme.color}; */
-    color: white;
-    top: 5px;
-    font-size: 30px;
-    color: chocolate;
-  }
-  .navigation.hide {
-    display: none;
-  }
-  @keyframes blink {
-    50% {
-      color: tomato;
-    }
-  }
+
   .sideBar {
     background: var(--pink);
     transform: translateX(0px);
@@ -142,41 +171,42 @@ const DashboardWrapper = styled.main`
     top: 0;
     left: 0;
     right: 0;
-    .heading {
-      .logo {
-        img {
-          display: block;
-          height: 6em;
-          margin: 0 auto;
-        }
-      }
+    .arrow {
+      color: var(--pink);
+      padding: 10px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 30px;
+      animation: blink 2s linear infinite;
     }
     .linkCon {
       padding-left: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      height: calc(100% - 212px);
-      margin-top: 50px;
-      color: var(--blue);
-      a,
-      div {
-        padding: 5px 10px;
-        display: block;
+      height: calc(100% - 110px);
+      color: white;
+
+      button {
         display: flex;
+        padding: 10px 0px 10px 20px;
+        text-align: justify;
         align-items: center;
-        justify-content: space-between;
+        transition: all 0.3s linear;
       }
       .text {
         font-size: 30px;
-        flex: 0.8;
       }
       .icon {
-        padding-left: 10px;
+        display: flex;
+        align-items: center;
+        padding-right: 40px;
+        font-size: 40px;
       }
       .active {
-        color: ${(props) => props.theme.color};
-        background-color: ${(props) => props.theme.bg};
+        color: var(--blue);
+        background-color: white;
         border-bottom-left-radius: 30px;
         border-top-left-radius: 30px;
       }
@@ -184,8 +214,7 @@ const DashboardWrapper = styled.main`
   }
   .sideBar.close {
     transform: translateX(-100%);
-    width: 120px;
-    min-width: 120px;
+    width: 100px;
     .linkCon {
       .text {
         display: none;
@@ -193,20 +222,35 @@ const DashboardWrapper = styled.main`
     }
   }
   .content {
-    padding: 50px 10px;
-    /* background: linear-gradient(
-      to right,
-      #a080a0,
-      ${(props) => props.theme.kodecamp}
-    ); */
+    padding: 0px 10px;
     // overflow-y: auto;
     width: 100%;
+    .heading {
+      padding: 5px;
+      h3 {
+        border-bottom: 1px solid var(--gray);
+        width: max-content;
+      }
+      .navigation {
+        position: fixed;
+        color: red;
+        font-size: 30px;
+      }
+      .navigation.hide {
+        display: none;
+      }
+      @keyframes blink {
+        50% {
+          color: white;
+        }
+      }
+    }
+    main {
+    }
   }
-  @media screen and (min-width: 548px) {
+  @media screen and (min-width: 320px) {
     .sideBar {
-      max-width: 500px;
-      width: 80%;
-      min-width: 300px;
+      width: 300px;
     }
   }
   @media screen and (min-width: 768px) {
@@ -214,20 +258,11 @@ const DashboardWrapper = styled.main`
       display: none;
     }
     .sideBar {
-      max-width: 500px;
-      width: 30%;
-      min-width: 300px;
       position: sticky;
+      width: 350px;
     }
     .sideBar.close {
       transform: translateX(0px);
-      width: 120px;
-      min-width: 120px;
-      .linkCon {
-        .text {
-          display: none;
-        }
-      }
     }
   }
 `;

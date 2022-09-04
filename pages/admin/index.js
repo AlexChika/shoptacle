@@ -11,7 +11,7 @@ const Products = () => {
   return (
     <Wrapper className="layout">
       <SideBar />
-      {user ? <AdminDashboard /> : <AdminWelcome />}
+      {user ? <AdminDashboard user={user} /> : <AdminWelcome />}
     </Wrapper>
   );
 };

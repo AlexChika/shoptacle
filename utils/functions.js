@@ -53,5 +53,22 @@ const paginateFn = (array, itemsPerPage, currentPage = 0) => {
   };
 };
 const fetcher = (url) => fetch(url).then((res) => res.json());
+const shuffler = (a) => {
+  let array = [...a];
+  const j = Math.floor(Math.random() * 6);
+  console.log(j);
 
-export { calculateStars, formatPrice, displayStar, paginateFn, fetcher };
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+export {
+  calculateStars,
+  formatPrice,
+  displayStar,
+  paginateFn,
+  shuffler,
+  fetcher,
+};
