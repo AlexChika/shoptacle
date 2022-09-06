@@ -128,7 +128,7 @@ const AdminDasnBoardHome = () => {
         {showForm && (
           <form className="f center mt30">
             <input
-              placeholder="Enter Brand or Category"
+              placeholder={`Enter ${tab} Name`}
               type="text"
               name=""
               id=""

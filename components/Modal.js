@@ -60,6 +60,7 @@ const ModalWrap = styled.div`
     font-size: 20px;
     padding: 0.5em 1em;
     /* color: white; */
+    z-index: 8;
     color: red;
     border: none;
     background: transparent;

@@ -19,7 +19,7 @@ import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 const AdminDashboard = ({ user }) => {
   const [currentTab, setCurrentTab] = useState(0);
   // const { logout, dispatch } = Store();
-  const [sideBar, setSideBar] = useState(true);
+  const [sideBar, setSideBar] = useState(false);
 
   // local funcs
   const handleLogout = () => {
@@ -137,7 +137,7 @@ const AdminDashboard = ({ user }) => {
         </div>
         <main className="mt10">
           {currentTab == 0 && <AdminDashBoardHome />}
-          {currentTab == 1 && <AdminSearch />}
+          {currentTab == 1 && <AdminSearch handleSetTab={handleSetTab} />}
           {currentTab == 2 && <AdminAdd />}
           {currentTab == 3 && <AdminEdit />}
         </main>
@@ -210,6 +210,7 @@ const DashboardWrapper = styled.main`
       }
     }
   }
+
   .sideBar.close {
     transform: translateX(-100%);
     width: 100px;
@@ -219,6 +220,7 @@ const DashboardWrapper = styled.main`
       }
     }
   }
+
   .content {
     padding: 0px 10px;
     width: 100%;
@@ -238,9 +240,8 @@ const DashboardWrapper = styled.main`
         display: none;
       }
     }
-    main {
-    }
   }
+
   @media screen and (min-width: 320px) {
     .sideBar {
       width: 300px;
