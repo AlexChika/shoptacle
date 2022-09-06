@@ -42,9 +42,9 @@ const AdminDasnBoardHome = () => {
     setTab(type);
     if (type === "Brand" || type === "Category") {
       setShowForm(true);
-      // seed =[];
       return;
     }
+    setShowForm(false);
     // call a firebase func to update our object.
   };
 
@@ -54,6 +54,10 @@ const AdminDasnBoardHome = () => {
   };
 
   // update state with firebase func
+  const getProducts = () => {
+    // call firebase
+    // update the state
+  };
 
   const handlePaginate = (val) => {
     let newItem = paginateFn(newData, 100, val).items;
@@ -63,7 +67,7 @@ const AdminDasnBoardHome = () => {
   return (
     <Wrapper className="opacity center">
       {/* counters */}
-      <section className="counters f j-between mt20">
+      <section className="counters f j-around mt20">
         <div>
           <h3>Total Products</h3>
           <h3>1000</h3>
@@ -85,31 +89,41 @@ const AdminDasnBoardHome = () => {
 
         <div className="tabs mt20">
           <span onClick={() => handleTabs("Male Fashion")}>
-            <h1 className="active">Male Fashion</h1>
+            <h1 className={tab == "Male Fashion" ? "active" : ""}>
+              Male Fashion
+            </h1>
           </span>
 
           <span onClick={() => handleTabs("Female Fashion")}>
-            <h1>Female Fashion</h1>
+            <h1 className={tab == "Female Fashion" ? "active" : ""}>
+              Female Fashion
+            </h1>
           </span>
 
           <span onClick={() => handleTabs("Unisex Shoes")}>
-            <h1>Unisex Shoes</h1>
+            <h1 className={tab == "Unisex Shoes" ? "active" : ""}>
+              Unisex Shoes
+            </h1>
           </span>
 
           <span onClick={() => handleTabs("Smart Gadgets")}>
-            <h1>Smart Gadgets</h1>
+            <h1 className={tab == "Smart Gadgets" ? "active" : ""}>
+              Smart Gadgets
+            </h1>
           </span>
 
           <span onClick={() => handleTabs("Brand")}>
-            <h1>Brand</h1>
+            <h1 className={tab == "Brand" ? "active" : ""}>Brand</h1>
           </span>
 
           <span onClick={() => handleTabs("Category")}>
-            <h1>Category</h1>
+            <h1 className={tab == "Category" ? "active" : ""}>Category</h1>
           </span>
         </div>
 
-        <h1 className="title mt30">{tab}</h1>
+        <h1 className="title mt30">
+          {tab} ({seed.length} Products )
+        </h1>
 
         {showForm && (
           <form className="f center mt30">
@@ -122,10 +136,18 @@ const AdminDasnBoardHome = () => {
             <button type="submit">Submit</button>
           </form>
         )}
+        {/* <div className="loading f fcenter mt30">
+          <div className="spinner"></div>
+          <h3 className="mt20">Please Wait...</h3>
+        </div>
+        <div className="loading f fcenter mt30">
+          <h2>There was an error</h2>
+          <h3 className="mt20">Please check parameters and try again</h3>
+        </div> */}
 
         {seed && (
           <>
-            <div className="table">
+            <div className="table mt30">
               <div className="row">
                 <p>No.</p>
                 <p>Name</p>
@@ -196,7 +218,7 @@ const Wrapper = styled.main`
 
     .tabs {
       display: grid;
-      grid-template-columns: repeat(6, minmax(160px, 1fr));
+      grid-template-columns: repeat(6, minmax(165px, 1fr));
       overflow-x: auto;
       gap: 0 10px;
 
@@ -207,18 +229,39 @@ const Wrapper = styled.main`
           color: white;
           padding: 10px;
           text-align: center;
-          font-size: 18px;
+          font-size: 17px;
+          border: 2px solid var(--blue);
+          transition: all 0.3s linear;
         }
         h1.active {
           background-color: white;
           color: var(--blue);
-          border: 2px solid var(--blue);
         }
       }
     }
 
     .title {
       text-align: center;
+    }
+
+    .loading {
+      flex-direction: column;
+      min-height: 40vh;
+      border: 2px solid gray;
+    }
+
+    form {
+      max-width: 600px;
+      input {
+        flex: 0.75;
+        border: 2px solid gray;
+        padding: 10px;
+      }
+      button {
+        flex: 0.25;
+        padding: 10px;
+        background-color: gray;
+      }
     }
 
     .table {
@@ -246,23 +289,8 @@ const Wrapper = styled.main`
         }
       }
 
-      .row:nth-of-type(odd) {
+      .row:nth-of-type(odd) .serial {
         background-color: var(--gray);
-      }
-    }
-
-    form {
-      max-width: 600px;
-      margin-bottom: 30px;
-      input {
-        flex: 0.75;
-        border: 2px solid gray;
-        padding: 10px;
-      }
-      button {
-        flex: 0.25;
-        padding: 10px;
-        background-color: gray;
       }
     }
   }
