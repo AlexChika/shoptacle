@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { Store } from "../store/Context";
 import AdminDashBoardHome from "./AdminDashBoardHome";
 import AdminAdd from "./AdminAdd";
 import AdminEdit from "./AdminEdit";
 import AdminSearch from "./AdminSearch";
-import Logo from "../public/icon.png";
-import Modal from "./Modal";
-// icons
 import {
   BsArrowLeftCircleFill,
   BsArrowRightCircleFill,
@@ -22,13 +18,10 @@ import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 // app
 const AdminDashboard = ({ user }) => {
   const [currentTab, setCurrentTab] = useState(0);
-  // const navigate = useNavigate();
-  const router = useRouter();
   // const { logout, dispatch } = Store();
   const [sideBar, setSideBar] = useState(true);
-  const [modal, setModal] = useState(false);
-  const [status, setStatus] = useState({ text1: "", text2: "" });
-  let isDashboard = false;
+
+  // local funcs
   const handleLogout = () => {
     console.log("hello");
   };
@@ -63,7 +56,7 @@ const AdminDashboard = ({ user }) => {
   //   dispatch({ type: "THEME" });
   // };
   return (
-    <DashboardWrapper className="f">
+    <DashboardWrapper className="f opacity">
       <section className={`sideBar trans ${sideBar ? "" : "close"}`}>
         <span onClick={() => setSideBar(!sideBar)} className="arrow">
           {sideBar ? <BsArrowLeftCircleFill /> : <BsArrowRightCircleFill />}
@@ -161,7 +154,7 @@ const DashboardWrapper = styled.main`
   position: relative;
 
   .sideBar {
-    background: var(--pink);
+    background: var(--blue);
     transform: translateX(0px);
     border-top-right-radius: 50px;
     width: 100%;
@@ -172,13 +165,18 @@ const DashboardWrapper = styled.main`
     left: 0;
     right: 0;
     .arrow {
-      color: var(--pink);
+      color: var(--blue);
       padding: 10px;
       display: block;
       width: 100%;
       text-align: center;
       font-size: 30px;
       animation: blink 2s linear infinite;
+    }
+    @keyframes blink {
+      50% {
+        color: white;
+      }
     }
     .linkCon {
       padding-left: 20px;
@@ -223,8 +221,8 @@ const DashboardWrapper = styled.main`
   }
   .content {
     padding: 0px 10px;
-    // overflow-y: auto;
     width: 100%;
+    overflow-y: auto;
     .heading {
       padding: 5px;
       h3 {
@@ -238,11 +236,6 @@ const DashboardWrapper = styled.main`
       }
       .navigation.hide {
         display: none;
-      }
-      @keyframes blink {
-        50% {
-          color: white;
-        }
       }
     }
     main {

@@ -61,6 +61,17 @@ a {
     transform: rotate(360deg);
   }
 }
+.opacity {
+  animation: opacity 1s linear;
+}
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .capitalize {
   text-transform: capitalize;
 }

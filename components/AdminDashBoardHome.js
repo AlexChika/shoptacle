@@ -1,122 +1,229 @@
-import React from "react";
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import Paginate from "./Paginate";
+import { paginateFn } from "../utils/functions";
+const seed = [
+  {
+    name: "hello wrold and people and name is long",
+    price: 120000,
+    quantity: 34,
+    brand: "samsung",
+  },
+  { name: "world", price: 120000, quantity: 34, brand: "thermacool" },
+  { name: "people", price: 120000, quantity: 34, brand: "lg lg" },
+  { name: "Jesus", price: 120000, quantity: 34, brand: "logo m" },
+  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
+];
+// app
 const AdminDasnBoardHome = () => {
+  //  add no property to our data
+  let newData = seed.map((seed, index) => {
+    return {
+      ...seed,
+      no: index,
+    };
+  });
+
+  // states
+  const [currentBtn, setCurrentBtn] = useState(0);
+  const [paginateProducts, setPaginateProducts] = useState(
+    paginateFn(newData, 100).items
+  );
+
+  // funcs
+  const handlePaginate = (val) => {
+    let newItem = paginateFn(newData, 100, val).items;
+    setPaginateProducts(newItem);
+    setCurrentBtn(val);
+  };
   return (
-    <div>
-      <h3>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores
-        sapiente obcaecati dolore sequi? Consequatur veritatis quas ipsam
-        adipisci rem quia est! Numquam voluptatem tempore accusantium illo
-        excepturi libero eius nisi. Ratione officiis similique fugit rem ab enim
-        iusto saepe. Odit temporibus eius quasi labore, in ad voluptates eveniet
-        delectus totam, sed tenetur fuga, ipsam provident quam quaerat corrupti
-        et voluptate facere possimus mollitia assumenda? Repellendus debitis
-        nesciunt iusto quos facere qui inventore omnis id delectus. Aut
-        excepturi laudantium provident est? Autem necessitatibus modi ipsam
-        velit quidem, deserunt architecto nisi inventore fugit repellat impedit,
-        facere dicta iste explicabo magni deleniti tempora neque ipsa
-        consectetur? Velit commodi accusamus laboriosam eaque similique?
-        Excepturi harum ducimus maiores? Voluptatibus, cupiditate error
-        excepturi, expedita quod dolore esse beatae molestiae illo nemo
-        laboriosam quisquam repellendus odio rerum nesciunt, explicabo dolor
-        quaerat quae dolorum magni sequi laborum nulla nam. Exercitationem
-        praesentium ipsum at quae suscipit, magnam ratione nulla! Quibusdam,
-        itaque cum incidunt impedit tempora facere sed. Odit, maiores laborum
-        voluptatum ducimus magni nobis quod dolorem adipisci dolores alias nemo
-        dolor libero, fugit quae, veniam autem modi rem repellat tempore! Nisi
-        debitis sed quibusdam optio labore rerum rem ipsam tempore mollitia?
-        Consequatur aperiam tempora esse ab. Nisi voluptatum ab illo mollitia
-        aspernatur quam amet deserunt, quod, veritatis laboriosam omnis deleniti
-        quaerat fugiat pariatur illum! Incidunt provident quia adipisci
-        consequatur quas earum quos deleniti veritatis fugit at deserunt
-        distinctio sunt officiis iste nam quam itaque omnis, officia ea
-        voluptates necessitatibus? Maxime veniam tempora ex harum, officia nemo.
-        Eligendi, error doloribus amet deserunt dolorum delectus itaque eius,
-        aspernatur quaerat aliquam maxime culpa, adipisci dolore esse minus nisi
-        odit quas. Doloribus culpa odit, ipsa perspiciatis fugiat vel
-        consequuntur vero ex voluptates veritatis temporibus autem
-        exercitationem praesentium! Eius et magnam vel aspernatur, ipsum
-        nesciunt iusto iure deleniti, quas excepturi facere incidunt animi omnis
-        voluptatum hic. Voluptates iure dolorum autem illo nobis labore
-        laboriosam cum, veniam praesentium repellendus dolorem libero quod illum
-        corporis, odio, error perspiciatis harum sunt velit dolores placeat?
-        Perferendis eius tenetur repellendus provident eaque esse, fuga, a quo
-        qui numquam veniam obcaecati illum doloribus inventore dolorem
-        voluptatibus exercitationem, consequatur rerum commodi. Non ullam
-        quaerat veniam eaque minima nostrum pariatur debitis id nulla neque?
-        Illum maiores, architecto facere nulla at nobis in, inventore voluptate
-        officia ipsum veritatis laborum voluptates temporibus eius. Nihil
-        sapiente illo similique obcaecati placeat, consequuntur soluta incidunt
-        iusto, blanditiis veniam quibusdam sunt praesentium dicta voluptatibus
-        corporis nam possimus minima ab error sint tenetur, nulla ad. Deserunt,
-        architecto repudiandae. Nostrum minus, vitae optio suscipit ipsum quo
-        fugit aperiam voluptatibus temporibus impedit ipsam porro provident.
-        Architecto natus maiores cumque illo, eveniet, debitis iure fugit facere
-        magnam placeat officiis odit. Eligendi, recusandae excepturi debitis
-        nostrum blanditiis rem ipsam laudantium labore quasi ducimus deserunt
-        nesciunt ex quisquam nisi? Autem magnam explicabo nostrum velit
-        voluptate voluptatibus deserunt delectus enim modi eligendi, assumenda
-        obcaecati quidem cumque amet error, expedita, natus quos! Culpa
-        veritatis nulla maiores natus doloremque eaque eius ab, quis eligendi,
-        fugiat consequatur distinctio adipisci id illo odio voluptatum minima
-        repudiandae facere non placeat iure quos aperiam libero. Temporibus sed
-        repudiandae, eum commodi facilis voluptas! Repellat cumque repellendus
-        itaque dolorum fuga doloribus, neque possimus officia, ea delectus iure.
-        Sint repellat unde veniam, non aliquid perferendis ex molestias iusto,
-        illum atque eligendi possimus voluptatibus aperiam harum laborum
-        doloribus mollitia nulla impedit architecto provident nisi dolor
-        expedita minima. Quaerat ex nam quo deserunt dolores voluptatibus libero
-        sunt ullam. Quibusdam culpa officia eos explicabo illo omnis molestiae
-        maiores minima accusantium voluptatem alias illum repellendus, aperiam
-        eaque delectus voluptate exercitationem officiis similique unde
-        reiciendis consequuntur nostrum. Ea culpa earum ab quos, dolore soluta
-        dolores rerum reiciendis fuga? Molestias sed incidunt necessitatibus,
-        sequi, unde tempore porro quidem illum omnis distinctio enim magni dicta
-        fugit recusandae harum hic ipsam vero molestiae saepe asperiores, natus
-        sit expedita! Doloribus deleniti pariatur optio nulla exercitationem
-        debitis aliquid nostrum, doloremque, repellendus tempora libero. Error
-        aspernatur, tempora ut vero, unde sequi accusamus maiores eveniet sint
-        natus est consectetur. Similique tempore maiores consectetur error
-        molestias adipisci ex culpa ea, alias in quos aperiam doloribus
-        veritatis numquam porro suscipit a iste soluta maxime! Corrupti harum
-        dolore delectus impedit alias quod placeat deleniti eum veritatis unde,
-        nemo consectetur perferendis dolorum similique a perspiciatis ipsum
-        doloremque modi expedita cum culpa consequuntur. Amet quibusdam optio
-        sequi. Quisquam, dolore ut, cupiditate ex facilis aut maxime molestiae
-        veritatis blanditiis eveniet modi nobis. Error voluptas asperiores quae
-        possimus, a cum placeat autem, minus earum amet distinctio corrupti nam
-        nihil sint tempora provident cumque laborum, minima labore rem. Soluta,
-        ipsam id? Et eveniet tempore iste, blanditiis dignissimos deleniti odio
-        quam a id alias debitis provident reprehenderit dolorum cumque deserunt?
-        Repellat unde enim esse dolores eveniet aperiam commodi maiores animi
-        eligendi quia voluptatibus quod voluptates nulla asperiores quis nam ut
-        modi tenetur, laboriosam labore! Laudantium recusandae magnam deleniti,
-        nisi possimus praesentium adipisci alias dolores. Suscipit debitis,
-        architecto reiciendis quia excepturi earum sequi voluptas alias
-        quisquam, iusto itaque modi ipsa aspernatur, aliquam quidem ipsam eaque
-        quae quos ducimus? Debitis dolores iusto beatae temporibus maxime
-        tempora vel odio, necessitatibus accusamus rerum officiis iste optio
-        recusandae eaque est unde quod fugiat! Voluptatem nemo eligendi dicta.
-        Ipsa saepe minus iure aspernatur? Labore iusto natus explicabo obcaecati
-        laborum, amet asperiores delectus, architecto accusantium eius pariatur
-        quibusdam error tempora animi dolores velit, deleniti nemo a? Tenetur,
-        accusantium recusandae. Voluptatem consectetur, esse quos earum,
-        reiciendis vero ab nostrum modi dolore placeat hic inventore in mollitia
-        maxime natus aspernatur incidunt minima perferendis facere ad corporis
-        nesciunt, iusto porro. Pariatur sed sapiente, impedit quae velit
-        voluptatibus iusto placeat fuga autem inventore aut sunt earum, nemo sit
-        reiciendis commodi necessitatibus quasi corrupti laboriosam facere
-        fugiat consequuntur harum officia. Cupiditate sunt optio, exercitationem
-        laboriosam perferendis dignissimos earum, eaque est iusto deleniti
-        aspernatur debitis odio assumenda facere sequi repellendus accusantium
-        quidem iure placeat. Provident, non repellendus, eligendi nulla eius nam
-        eveniet tempora, fuga ducimus inventore qui dolores soluta repudiandae
-        excepturi recusandae. Fuga nulla, dolor voluptatem et quae fugit, itaque
-        cum consequatur non accusamus placeat. Minus nam animi nesciunt neque
-        perspiciatis. Delectus porro pariatur ipsam dignissimos quo labore.
-      </h3>
-    </div>
+    <Wrapper className="opacity center">
+      {/* counters */}
+      <section className="counters f j-around mt20">
+        <div>
+          <h3>Total Products</h3>
+          <h3>1000</h3>
+        </div>
+        <div>
+          <h3>Out of Stock</h3>
+          <h3>1000</h3>
+        </div>
+        <div>
+          <h3>Total Customers </h3>
+          <h3>1000</h3>
+        </div>
+      </section>
+      {/* table-con */}
+      <section className="table-con mt30">
+        <div className="header">
+          <h3>All Products</h3>
+        </div>
+
+        <div className="tabs mt20">
+          <span>
+            <h1 className="active">Male Fashion</h1>
+          </span>
+
+          <span>
+            <h1>Female Fashion</h1>
+          </span>
+
+          <span>
+            <h1>Unisex Shoes</h1>
+          </span>
+
+          <span>
+            <h1>Smart Gadgets</h1>
+          </span>
+
+          <span>
+            <h1>Brand</h1>
+          </span>
+
+          <span>
+            <h1>Category</h1>
+          </span>
+        </div>
+
+        <h1 className="title mt30">NAME OF TAB</h1>
+
+        <div className="table">
+          <div className="row">
+            <p>No.</p>
+            <p>Name</p>
+            <p>Price</p>
+            <p>Brand</p>
+            <p>Qty</p>
+          </div>
+
+          {paginateProducts.map((seed, index) => {
+            return (
+              <div key={index} className="row">
+                <span>{seed.no + 1}.</span>
+                <span>{seed.name}</span>
+                <span>{seed.price}</span>
+                <span>{seed.brand}</span>
+                <span>{seed.quantity}</span>
+              </div>
+            );
+          })}
+        </div>
+        <Paginate
+          paginateFn={paginateFn}
+          currentBtn={currentBtn}
+          handlePaginate={handlePaginate}
+          itemsPerPage={100}
+          array={seed}
+        />
+      </section>
+    </Wrapper>
   );
 };
-
 export default AdminDasnBoardHome;
+
+const Wrapper = styled.main`
+  max-width: 1170px;
+  .counters {
+    div {
+      background-color: var(--gray);
+      padding: 10px;
+      margin: 0px 5px;
+      text-align: center;
+      border-radius: 10px;
+      color: white;
+    }
+    div:nth-of-type(1) {
+      background-color: skyblue;
+    }
+    div:nth-of-type(2) {
+      background-color: tomato;
+    }
+    div:nth-of-type(3) {
+      background-color: green;
+    }
+    h3 {
+      font-size: 14px;
+    }
+  }
+
+  .table-con {
+    width: 100%;
+
+    .header {
+      text-align: center;
+      color: gray;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      overflow-x: auto;
+      gap: 0 10px;
+
+      span {
+        h1 {
+          background-color: var(--blue);
+          color: white;
+          padding: 10px;
+          text-align: center;
+        }
+        h1.active {
+          background-color: white;
+          color: var(--blue);
+          border: 2px solid var(--blue);
+        }
+      }
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .table {
+      overflow-x: auto;
+      padding: 10px;
+      .row {
+        display: grid;
+        grid-template-columns:
+          minmax(50px, 100px) minmax(200px, 1fr) minmax(200px, 1fr) minmax(
+            200px,
+            1fr
+          )
+          minmax(50px, 150px);
+        p {
+          border: 1px solid gray;
+          padding: 10px;
+          text-align: center;
+          border-bottom: 3px solid;
+        }
+        span {
+          border: 1px solid gray;
+          padding: 10px;
+        }
+      }
+    }
+
+    .brandcategory {
+    }
+  }
+  @media screen and (min-width: 375px) {
+    .counters {
+      div {
+        padding: 20px;
+      }
+      h3 {
+        font-size: 16px;
+      }
+    }
+  }
+  @media screen and (min-width: 600px) {
+    .counters {
+      div {
+        padding: 30px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+    }
+  }
+`;
