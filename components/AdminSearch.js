@@ -19,7 +19,7 @@ const AdminSearch = ({ handleSetTab }) => {
 
   return (
     <Wrapper className="opacity center">
-      <form className="f center">
+      <form className="f center mt20">
         <input placeholder="Search product by name" type="text" name="" id="" />
         <button type="submit">Submit</button>
       </form>
@@ -96,7 +96,6 @@ const AdminSearch = ({ handleSetTab }) => {
           </article>
         </section>
       </Modal>
-      <div className="product"></div>
     </Wrapper>
   );
 };
@@ -116,7 +115,8 @@ const Wrapper = styled.main`
     button {
       flex: 0.25;
       padding: 10px;
-      background-color: gray;
+      background-color: var(--blue);
+      color: white;
     }
   }
 
