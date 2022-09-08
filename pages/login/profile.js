@@ -1,5 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import styled from "styled-components";
+import { Store } from "../../store/Context";
 import { useRouter } from "next/router";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
