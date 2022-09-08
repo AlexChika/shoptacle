@@ -5,9 +5,7 @@ import SideBar from "../../components/SideBar";
 import AdminDashboard from "../../components/AdminDashboard";
 import AdminWelcome from "../../components/AdminWelcome";
 const Products = () => {
-  const { dispatch } = Store();
-  let user = true;
-  const { Logger } = Store();
+  const { user } = Store();
   return (
     <Wrapper className="layout">
       <SideBar />

@@ -30,6 +30,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
     showLogger: false,
     timeoutId: "",
   });
+  console.log(state.user);
   function handleCloseModal() {
     dispatch({ type: actionTypes.HANDLE_MODAL });
   }

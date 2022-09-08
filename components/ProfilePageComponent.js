@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,17 +6,20 @@ import { Store } from "../store/Context";
 import { useRouter } from "next/router";
 import Logo from "../public/icon.png";
 import Paginate from "./Paginate";
+import Navigate from "./Navigate";
 import { FaUserEdit } from "react-icons/fa";
 import { BsChatSquareText, BsCartFill } from "react-icons/bs";
 import { formatPrice, paginateFn, displayStar } from "../utils/functions";
 
 // firebase imports
-import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
-
+import { auth, app } from "../utils/firebase";
+import { getAuth, signOut } from "firebase/auth";
+// import { getDoc } from "firebase/firestore";
 // app
 const ProfilePageComponent = () => {
   const router = useRouter();
+  const { user } = Store();
+
   const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   // const array = [];
   // refs
@@ -74,19 +77,17 @@ const ProfilePageComponent = () => {
             <Image src={Logo} layout="fill" alt="profile image"></Image>
           </span>
           <div>
-            <h1>Chinazaram C.</h1>
+            <h1>
+              {user.firstName} {user.lastName.charAt(0).toUpperCase()}.
+            </h1>
             <button onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </article>
-      <p className="email mt10">mcluckey1@gmail.com</p>
+      <p className="email mt10">{user.email}</p>
       <article className="address center mt20">
         <h1>Address</h1>
-        <p className="mt10">
-          {false ||
-            `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum libero
-          ipsa tenetur nulla magnam culpa.`}
-        </p>
+        <p className="mt10">{user.address}</p>
       </article>
       <section ref={tabRef} className="tabs-con center mt30">
         {/* tabs navigation */}

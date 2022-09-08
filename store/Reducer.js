@@ -28,15 +28,12 @@ function reducer(state, action) {
   // sets user
   if (action.type === actionTypes.SET_USER) {
     const user = action.payload;
-    localStorage.setItem("user", JSON.stringify(user));
     return {
       ...state,
       user: user,
     };
   }
   if (action.type === actionTypes.NO_USER) {
-    localStorage.removeItem("user");
-
     return {
       ...state,
       user: "",

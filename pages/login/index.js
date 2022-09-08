@@ -19,9 +19,8 @@ import { setDoc } from "firebase/firestore";
 
 // app
 const Index = () => {
-  const { Logger } = Store();
+  const { Logger, user } = Store();
   const router = useRouter();
-
   // states
   const containerRef = useRef(null);
   const [signin, setSignIn] = useState(true);
@@ -132,9 +131,7 @@ const Index = () => {
       setLoading(true);
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        setLoading(false);
-        router.push("/login/profile");
-        await Logger("Login successful", "success", 500);
+        Logger("Login successful", "success");
       } catch (error) {
         setLoading(false);
         Logger(error.message, "error");
@@ -176,8 +173,7 @@ const Index = () => {
         try {
           await setDoc(customerDocRef, userData);
           setLoading(false);
-          Logger("Please Login Now", "success");
-          setSignIn(true);
+          Logger("Sign Up succesful, please wait", "success");
         } catch (error) {
           setLoading(false);
           Logger(error.message, "error");
@@ -194,6 +190,11 @@ const Index = () => {
     window.scrollTo(0, Number(containerRef.current.offsetTop) - 100);
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      router.push("/login/profile");
+    }
+  }, [user]);
   return (
     <Wrapper className="layout">
       <NavBar />
