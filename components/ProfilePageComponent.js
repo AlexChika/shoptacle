@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
+import { Store } from "../store/Context";
 import { useRouter } from "next/router";
 import Logo from "../public/icon.png";
 import Paginate from "./Paginate";

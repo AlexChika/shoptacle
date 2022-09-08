@@ -7,13 +7,18 @@ import HeroBar from "../../components/HeroBar";
 import ProfilePageComponent from "../../components/ProfilePageComponent";
 
 const Index = () => {
-  const router = useRouter();
-  useLayoutEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      router.push("/login");
-    }
-  }, []);
+  const { user } = Store();
+  if (!user) {
+    router.push("/login");
+  }
+  // const router = useRouter();
+  // useLayoutEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   if (!user) {
+  //     router.push("/login");
+  //   }
+  // }, []);
+
   return (
     <Wrapper className="layout">
       <NavBar page={"profile"} />
