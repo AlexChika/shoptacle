@@ -1,3 +1,5 @@
 export const HANDLE_MODAL = "HANDLE_MODAL";
 export const ROUTE_CHANGE = "ROUTE_CHANGE";
 export const SET_CURRENT_ROUTE = "SET_CURRENT_ROUTE";
+export const SET_USER = "SET_USER";
+export const NO_USER = "NO_USER";

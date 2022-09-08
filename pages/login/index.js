@@ -1,17 +1,195 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/dist/client/router";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
 import Logo from "../../public/icon.png";
+import { Store } from "../../store/Context";
+import { Validate } from "../../utils/functions";
+import { auth, getCustomerDocRef } from "../../utils/firebase";
+
+// firebase imports
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { setDoc } from "firebase/firestore";
+
+// app
 const Index = () => {
+  const { Logger } = Store();
+  const router = useRouter();
+
+  // states
   const containerRef = useRef(null);
   const [signin, setSignIn] = useState(true);
-  const handleUserLogIn = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [loginDetails, setLoginDetails] = useState({
+    email: {
+      valid: false,
+      value: "",
+    },
+    password: {
+      valid: false,
+      value: "",
+    },
+  });
+  const [signUpDetails, setSignUpDetails] = useState({
+    ["first name"]: {
+      valid: false,
+      value: "",
+    },
+    ["last name"]: {
+      valid: false,
+      value: "",
+    },
+    email: {
+      valid: false,
+      value: "",
+    },
+    password: {
+      valid: false,
+      value: "",
+    },
+  });
+
+  const validate = new Validate();
+  // funcs
+  function logError(value, type, element, min, max, name) {
+    if (type == "equal") throw new Error(`check type equal directly`);
+    let { valid, msg } = validate[type](value, min, max, name);
+    if (valid == false) {
+      element.nextSibling.textContent = msg;
+    } else {
+      element.nextSibling.textContent = "";
+    }
+    return valid;
+  }
+
+  function loginOnchange(e) {
+    const name = e.target.name;
+    let value = e.target.value;
+    if (name == "email") {
+      let valid = logError(value, "email", e.target);
+      setLoginDetails({
+        ...loginDetails,
+        [name]: { ...loginDetails[name], valid, value },
+      });
+    }
+    if (name == "password") {
+      let valid = logError(value, "text", e.target, 6, 15, "password");
+      setLoginDetails({
+        ...loginDetails,
+        [name]: { ...loginDetails[name], valid, value },
+      });
+    }
+  }
+
+  function signUpOnchange(e) {
+    const name = e.target.name;
+    let value = e.target.value;
+    if (name == "first name") {
+      let valid = logError(value, "text", e.target);
+      setSignUpDetails({
+        ...signUpDetails,
+        [name]: { ...signUpDetails[name], valid, value },
+      });
+    }
+    if (name == "last name") {
+      let valid = logError(value, "text", e.target);
+      setSignUpDetails({
+        ...signUpDetails,
+        [name]: { ...signUpDetails[name], valid, value },
+      });
+    }
+    if (name == "email") {
+      let valid = logError(value, "email", e.target);
+      setSignUpDetails({
+        ...signUpDetails,
+        [name]: { ...signUpDetails[name], valid, value },
+      });
+    }
+    if (name == "password") {
+      let valid = logError(value, "text", e.target, 6, 15, "password");
+      setSignUpDetails({
+        ...signUpDetails,
+        [name]: { ...signUpDetails[name], valid, value },
+      });
+    }
+  }
+
+  const handleUserLogIn = async (e) => {
     e.preventDefault();
-    console.log("hello from login");
+    for (const key in loginDetails) {
+      if (loginDetails[key].valid == false) {
+        Logger("Invalid entries, Please try again", "error");
+        return;
+      }
+      const email = loginDetails.email.value;
+      const password = loginDetails.password.value;
+      setLoading(true);
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        setLoading(false);
+        router.push("/login/profile");
+        await Logger("Login successful", "success", 500);
+      } catch (error) {
+        setLoading(false);
+        Logger(error.message, "error");
+      }
+    }
   };
+
+  const handleUserSignUp = async (e) => {
+    e.preventDefault();
+
+    for (const key in signUpDetails) {
+      if (signUpDetails[key].valid == false) {
+        Logger("Invalid entries, Please try again", "error");
+        return;
+      }
+    }
+
+    const email = signUpDetails.email.value;
+    const password = signUpDetails.password.value;
+
+    const userData = {
+      firstName: signUpDetails["first name"].value,
+      lastName: signUpDetails["last name"].value,
+      address:
+        "You have not updated your profile, Edit profile to add your full address",
+      email,
+    };
+
+    try {
+      setLoading(true);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = response.user;
+      if (user) {
+        const customerDocRef = getCustomerDocRef(email);
+        try {
+          await setDoc(customerDocRef, userData);
+          setLoading(false);
+          Logger("Please Login Now", "success");
+          setSignIn(true);
+        } catch (error) {
+          setLoading(false);
+          Logger(error.message, "error");
+          return;
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      Logger(error.message, "error");
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, Number(containerRef.current.offsetTop) - 100);
   }, []);
@@ -45,23 +223,28 @@ const Index = () => {
               <form onSubmit={handleUserLogIn} className="f align j-around">
                 <div className="inputCon f mt20">
                   <input
+                    value={loginDetails.email.value}
+                    onChange={loginOnchange}
                     type="email"
                     placeholder="Enter your email address"
-                    name=""
-                    id="signin-email"
+                    name="email"
                   />
-                  <code className="status"></code>
+                  <small className="status mt10"></small>
                 </div>
                 <div className="inputCon f mt20">
                   <input
+                    value={loginDetails.password.value}
+                    onChange={loginOnchange}
                     type="text"
                     placeholder="Enter your password"
-                    name=""
-                    id="signin-pass"
+                    name="password"
                   />
-                  <code className="status"></code>
+                  <small className="status mt10"></small>
                 </div>
-
+                <div
+                  style={{ display: loading ? "block" : "none" }}
+                  className="spinner mt10"
+                ></div>
                 <button className="mt30" type="submit">
                   Login
                 </button>
@@ -84,41 +267,60 @@ const Index = () => {
                 <p className="mt10">Welcome to Shoptacle</p>
                 <h3 className="mt20">Create an account for free</h3>
               </div>
-              <form onSubmit={handleUserLogIn} className="f j-around align">
+              <form onSubmit={handleUserSignUp} className="f j-around align">
                 {/* name */}
                 <div className="inputCon f mt20">
-                  <input type="text" placeholder="First Name" name="" id="" />
-                  <code className="status"></code>
+                  <input
+                    value={signUpDetails["first name"].value}
+                    onChange={signUpOnchange}
+                    type="text"
+                    placeholder="First Name"
+                    name="first name"
+                    id=""
+                  />
+                  <small className="status"></small>
                 </div>
                 {/* last name */}
                 <div className="inputCon f mt20">
-                  <input type="text" placeholder="Last Name" name="" id="" />
-                  <code className="status"></code>
+                  <input
+                    value={signUpDetails["last name"].value}
+                    onChange={signUpOnchange}
+                    type="text"
+                    placeholder="Last Name"
+                    name="last name"
+                    id=""
+                  />
+                  <small className="status"></small>
                 </div>
                 {/* email */}
                 <div className="inputCon f mt20">
-                  <input type="email" placeholder="Your Email" name="" id="" />
-                  <code className="status"></code>
+                  <input
+                    value={signUpDetails.email.value}
+                    onChange={signUpOnchange}
+                    type="email"
+                    placeholder="Your Email"
+                    name="email"
+                  />
+                  <small className="status"></small>
                 </div>
                 {/* password */}
                 <div className="inputCon f mt20">
                   <input
+                    value={signUpDetails.password.value}
+                    onChange={signUpOnchange}
                     type="text"
                     placeholder="Enter your pasword"
-                    name=""
+                    name="password"
                     id=""
                   />
-                  <code className="status"></code>
+                  <small className="status"></small>
                 </div>
-                <div className="inputCon f mt20">
-                  <input
-                    type="text"
-                    placeholder="verify your password "
-                    name=""
-                    id=""
-                  />
-                  <code className="status"></code>
-                </div>
+
+                <div
+                  style={{ display: loading ? "block" : "none" }}
+                  className="spinner mt10"
+                ></div>
+
                 <button className="mt20" type="submit">
                   Sign up
                 </button>
@@ -222,6 +424,11 @@ const Wrapper = styled.main`
       text-align: center;
       font-style: italic;
     }
+    input {
+      border-bottom: 1px solid var(--blue);
+      padding: 10px 0px 5px 0px;
+    }
+
     input::placeholder {
       color: gray;
     }
@@ -229,10 +436,13 @@ const Wrapper = styled.main`
       text-decoration: underline;
       cursor: pointer;
     }
+
+    small {
+      color: red;
+    }
+
     .inputCon {
       width: 100%;
-      padding: 10px 0px 5px 0px;
-      border-bottom: 1px solid var(--blue);
       flex-direction: column;
     }
     button {

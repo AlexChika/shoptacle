@@ -2,12 +2,20 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Logo from "../public/icon.png";
 import Paginate from "./Paginate";
 import { FaUserEdit } from "react-icons/fa";
 import { BsChatSquareText, BsCartFill } from "react-icons/bs";
 import { formatPrice, paginateFn, displayStar } from "../utils/functions";
+
+// firebase imports
+import { auth } from "../utils/firebase";
+import { signOut } from "firebase/auth";
+
+// app
 const ProfilePageComponent = () => {
+  const router = useRouter();
   const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   // const array = [];
   // refs
@@ -27,6 +35,11 @@ const ProfilePageComponent = () => {
   });
 
   // handlers
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push("/login");
+  };
+
   const handlePaginateOrder = (val) => {
     const newItems = paginateFn(array, 7, val).items;
     setOrderState({
@@ -43,6 +56,7 @@ const ProfilePageComponent = () => {
     });
     reviewRef.current.scrollTo(0, 0);
   };
+
   const handleSwitchTabs = (index) => {
     setTabs(index);
     window.scrollTo(0, Number(tabRef.current.offsetTop));
@@ -54,17 +68,17 @@ const ProfilePageComponent = () => {
     <Wrapper className="center mt30">
       <h3 className="title">My Profile</h3>
       <article className="header center">
-        <div className="f j-between">
+        <div className="f ">
           <span className="profile-image">
             <Image src={Logo} layout="fill" alt="profile image"></Image>
           </span>
           <div>
             <h1>Chinazaram C.</h1>
-            <button>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
         </div>
-        <p className="mt10">mcluckey1@gmail.com</p>
       </article>
+      <p className="email mt10">mcluckey1@gmail.com</p>
       <article className="address center mt20">
         <h1>Address</h1>
         <p className="mt10">
@@ -246,18 +260,14 @@ const Wrapper = styled.main`
       height: 80px;
       min-width: 80px;
       border-radius: 50%;
+      margin-right: 15px;
     }
     div {
-      align-self: flex-end;
+      align-self: center;
     }
     h1 {
       color: var(--blue);
       font-style: italic;
-    }
-    p {
-      word-break: break-all;
-      color: var(--gray);
-      text-align: center;
     }
     button {
       width: 100%;
@@ -265,6 +275,12 @@ const Wrapper = styled.main`
       text-decoration: underline;
     }
   }
+
+  .email {
+    color: var(--gray);
+    text-align: center;
+  }
+
   .address {
     padding: 10px;
     text-align: center;
@@ -275,7 +291,6 @@ const Wrapper = styled.main`
     }
   }
   .tabs-con {
-    box-shadow: 2px 2px 5px var(--gray), -2px -2px 5px var(--gray);
     max-width: 650px;
     .nav {
       span {
@@ -292,6 +307,8 @@ const Wrapper = styled.main`
       }
     }
     .content {
+      border: 1px solid gray;
+
       max-height: 600px;
       overflow: hidden;
       padding: 0px 10px;
@@ -302,7 +319,6 @@ const Wrapper = styled.main`
     }
     .order {
       overflow-y: auto;
-      background-color: var(--gray);
       max-height: 530px;
       .order-item {
         padding: 10px;
