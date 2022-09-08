@@ -8,6 +8,7 @@ import HeroBar from "../../components/HeroBar";
 import ProfilePageComponent from "../../components/ProfilePageComponent";
 
 const Index = () => {
+  const router = useRouter();
   const { user } = Store();
   if (!user) {
     router.push("/login");
