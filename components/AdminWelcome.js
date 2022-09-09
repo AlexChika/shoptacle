@@ -29,9 +29,17 @@ const AdminWelcome = () => {
           for admin access
         </span>
 
-        <button>
-          <Link href="/login">Continue to Login</Link>
-        </button>
+        <span>
+          We are eager to receive your reviews. Please report issues / errors or
+          get in contact{" "}
+          <a href="mailto:i.am.alex.chika@gmail.com">
+            here (i.am.alex.chika@gmail.com){" "}
+          </a>
+        </span>
+
+        <Link href="/login" passHref>
+          <a className="btn">Continue to Login</a>
+        </Link>
       </section>
     </Wrapper>
   );
@@ -45,7 +53,7 @@ const Wrapper = styled.main`
   .section {
     flex-direction: column;
     max-width: 1170px;
-    min-height: 70vh;
+    min-height: 75vh;
     padding: 20px;
 
     h1 {
@@ -53,8 +61,7 @@ const Wrapper = styled.main`
     }
     p,
     span,
-    a,
-    button {
+    a {
       font-size: 16px;
       max-width: 400px;
     }
@@ -71,8 +78,7 @@ const Wrapper = styled.main`
     a {
       color: purple;
     }
-
-    button {
+    a.btn {
       border: 2px solid purple;
       padding: 10px;
     }

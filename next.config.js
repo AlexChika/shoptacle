@@ -7,7 +7,7 @@ const nextConfig = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["cdn.pixabay.com"],
+    domains: ["firebasestorage.googleapis.com"],
   },
 };
 

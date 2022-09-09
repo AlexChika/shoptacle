@@ -1,7 +1,14 @@
 // imports
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, doc } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRDLu2rHp703rAf8OLDb57QYvvEOCnZGQ",
@@ -16,6 +23,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); //auth
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // main collection refs
 const productsColRef = collection(db, "products");
@@ -23,14 +31,8 @@ const customersColRef = collection(db, "customers");
 const adminsColRef = collection(db, "admins");
 
 // sub collection refs
-function getRatingsColRef(id) {
-  return collection(db, `products/${id}/ratings`);
-}
-function getOrdersColRef(id) {
-  return collection(db, `customers/${id}/orders`);
-}
-function getReviewsColRef(id) {
-  return collection(db, `customers/${id}/reviews`);
+function getSubColRef(mainCol, id, subCol) {
+  return collection(db, `${mainCol}/${id}/${subCol}`);
 }
 
 // doc Refs
@@ -41,9 +43,36 @@ function getProductDocRef(id) {
   return doc(productsColRef, id);
 }
 
-// const storage =
+// funcs
+// get documents of a sub collection
+async function getSubDocs(mainCol, id, subCol) {
+  const ref = getSubColRef(mainCol, id, subCol);
+  const snapshot = await getDocs(ref);
+  let data = [];
+  snapshot.forEach((doc) => {
+    data.push({
+      ...doc.data(),
+      id: doc.id,
+    });
+  });
+  return data;
+}
+
+// get updated cart items
+async function getCartItem(cart) {
+  let cartItems = [];
+  for (let i = 0; i < cart.length; i++) {
+    const { id, amount } = cart[i];
+    const ref = getProductDocRef(id);
+    const snapshot = await getDoc(ref);
+    const data = snapshot.data();
+    cartItems.push({ ...data, amount });
+  }
+  return cartItems;
+}
 export {
   app,
+  storage,
   auth,
   db,
   productsColRef,
@@ -51,7 +80,6 @@ export {
   adminsColRef,
   getProductDocRef,
   getCustomerDocRef,
-  getRatingsColRef,
-  getOrdersColRef,
-  getReviewsColRef,
+  getSubDocs,
+  getCartItem,
 };

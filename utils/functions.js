@@ -36,9 +36,8 @@ const formatPrice = (price) => {
   }).format(price / 100);
   return newNumber;
 };
-const paginateFn = (array, itemsPerPage, currentPage = 0) => {
-  if (!array || !itemsPerPage)
-    throw new Error("check parameters at paginateFn");
+const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
+  if (!itemsPerPage) throw new Error("check parameters at paginateFn");
 
   let pageNumber = Math.ceil(array.length / itemsPerPage);
   let startIndex = currentPage * itemsPerPage;
@@ -70,6 +69,7 @@ const sampleUser = {
   lastName: "",
   address: "",
   email: "",
+  cart: [],
   reviews: {
     title: "title",
     experience: "whatever fuck you think",
@@ -108,7 +108,7 @@ class Validate {
     let valid = true;
     let msg = `input is valid`;
     if (input.trim().length < min) {
-      msg = `${name} cannot be less than ${min}`;
+      msg = `${name} cannot be less than ${min} characters`;
       valid = false;
     }
     if (input.length > max) {
@@ -161,7 +161,6 @@ class Validate {
     }
   }
 }
-
 export {
   calculateStars,
   formatPrice,

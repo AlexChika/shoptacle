@@ -11,7 +11,7 @@ import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
 import { paginateFn, formatPrice } from "../utils/functions";
-const CartPageComponent = ({ cart }) => {
+const CartPageComponent = ({ cart, recent, loading }) => {
   const { Logger } = Store();
   const cartRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
@@ -31,6 +31,7 @@ const CartPageComponent = ({ cart }) => {
   const handleSelectCheckout = () => {
     Logger("Checkout would be the last implementation", "success");
   };
+
   return (
     <Wrapper className="center mt30">
       <Modal modal={modal} setModal={setModal}>
@@ -50,6 +51,16 @@ const CartPageComponent = ({ cart }) => {
           </div>
         </div>
       </Modal>
+      <main>
+        {loading ? (
+          <div style={{ backgroundColor: "white", paddingTop: "20px" }}>
+            <div className="spinner center"></div>
+          </div>
+        ) : (
+          ""
+        )}
+      </main>
+
       {cart.length < 1 ? (
         <section className="cart-empty">
           <div className="icon center f fcenter">
@@ -112,8 +123,10 @@ const CartPageComponent = ({ cart }) => {
           </div>
         </section>
       )}
+
       <section className="recently-viewed mt30">
         <ProductRow
+          array={recent}
           color={`white`}
           collection={{ name: "Recently Viewed", blob: `cart` }}
         />

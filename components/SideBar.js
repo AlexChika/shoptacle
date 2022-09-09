@@ -10,7 +10,7 @@ import SearchBar from "./SearchBar";
 import profileImage from "../public/icon.png";
 const SideBar = () => {
   const router = useRouter();
-  const { modalOpen, handleCloseModal } = Store();
+  const { modalOpen, handleCloseModal, user } = Store();
   const handleRoute = (url) => {
     if (typeof url !== "string")
       throw new Error(`the url ${url} is an invalid input or not a string`);
@@ -20,9 +20,15 @@ const SideBar = () => {
   return (
     <Wrapper modal={modalOpen} className="trans">
       <div className="header f align j-around">
-        {true ? (
-          <button type="button" className="profile-img">
-            <Image src={profileImage} alt="profile image" />
+        {user && user.url ? (
+          <button
+            onClick={() => {
+              handleRoute("/");
+            }}
+            type="button"
+            className="profile-img"
+          >
+            <Image layout="fill" src={user.url} alt="profile image" />
           </button>
         ) : (
           <button className="user-btn" type="button">
@@ -115,6 +121,7 @@ const Wrapper = styled.main`
     font-family: "Lobster", cursive;
     box-shadow: 0px 1px 5px rgba(154, 148, 137, 0.4);
     .profile-img {
+      position: relative;
       width: 30px;
       height: 30px;
       border-radius: 50%;

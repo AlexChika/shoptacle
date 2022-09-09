@@ -17,6 +17,7 @@ const initialState = {
   modalOpen: false,
   preRoute: "",
   currRoute: "",
+  cart: [],
 };
 
 // app

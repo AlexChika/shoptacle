@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { Store } from "../store/Context";
 import { FaUser } from "react-icons/fa";
 import { BsCartFill } from "react-icons/bs";
 import { IoMdList } from "react-icons/io";
 function NavBar({ page }) {
-  const { handleCloseModal } = Store();
+  const { handleCloseModal, user, cart } = Store();
 
   return (
     <Wrapper page={page} className="f align center">
@@ -47,9 +48,12 @@ function NavBar({ page }) {
       </div>
       <div className="navCart-con f fcenter">
         <span>
-          {false ? (
-            // <Image src="" />
-            <div></div>
+          {user && user.url ? (
+            <Link href="/login/profile">
+              <div className="image">
+                <Image src={user.url} layout="fill" />
+              </div>
+            </Link>
           ) : (
             <Link href="/login/profile">
               <button
@@ -68,7 +72,7 @@ function NavBar({ page }) {
               type="button"
             >
               <BsCartFill />
-              <small>23</small>
+              <small>{cart.length}</small>
             </button>
           </Link>
         </span>
@@ -128,8 +132,16 @@ const Wrapper = styled.nav`
     span {
       margin: 0px 7px;
     }
+    .image {
+      position: relative;
+      width: 25px;
+      height: 25px;
+      img {
+        border-radius: 50%;
+      }
+    }
     button {
-      font-size: 23px;
+      font-size: 24px;
       position: relative;
     }
     button.active {

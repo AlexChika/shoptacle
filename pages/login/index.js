@@ -159,6 +159,7 @@ const Index = () => {
         "You have not updated your profile, Edit profile to add your full address",
       email,
     };
+    // cart:[],
 
     try {
       setLoading(true);
@@ -348,6 +349,7 @@ export default Index;
 const Wrapper = styled.main`
   background-color: var(--pink-light);
   padding-bottom: 30px;
+  color: var(--blue);
   .body {
     padding: 30px 0px;
     /* margin-bottom: 30px; */
@@ -397,8 +399,6 @@ const Wrapper = styled.main`
   .login-card {
     overflow: hidden;
     background-color: white;
-    /* background-color: rgba(255, 255, 255, 0.3); */
-
     position: relative;
   }
   .login-card.active .signup,
@@ -414,9 +414,8 @@ const Wrapper = styled.main`
   }
   .login-card .card {
     flex-direction: column;
-    color: gray;
     h1 {
-      color: var(--blue);
+      color: var(--pink);
       text-align: center;
       font-family: "Lobster", cursive;
       font-size: 25px;
@@ -431,7 +430,7 @@ const Wrapper = styled.main`
     }
 
     input::placeholder {
-      color: gray;
+      color: var(--pink);
     }
     span {
       text-decoration: underline;
@@ -447,7 +446,7 @@ const Wrapper = styled.main`
       flex-direction: column;
     }
     button {
-      background-color: gray;
+      background-color: var(--blue);
       width: 10em;
       padding: 10px 20px;
       border-radius: 20px;
@@ -470,9 +469,6 @@ const Wrapper = styled.main`
       background-color: whitesmoke;
       color: black;
       padding: 10px;
-    }
-    input::placeholder {
-      color: gray;
     }
   }
 

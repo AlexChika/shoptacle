@@ -3,25 +3,35 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import { Store } from "../store/Context";
+import { UPDATE_USER, SET_USER } from "../store/actionTypes";
 import { useRouter } from "next/router";
 import Logo from "../public/icon.png";
 import Paginate from "./Paginate";
-import Navigate from "./Navigate";
 import { FaUserEdit } from "react-icons/fa";
 import { BsChatSquareText, BsCartFill } from "react-icons/bs";
-import { formatPrice, paginateFn, displayStar } from "../utils/functions";
+import {
+  formatPrice,
+  paginateFn,
+  displayStar,
+  Validate,
+} from "../utils/functions";
 
 // firebase imports
-import { auth, app } from "../utils/firebase";
-import { getAuth, signOut } from "firebase/auth";
-// import { getDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
+import { getDoc, updateDoc } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  auth,
+  storage,
+  getSubDocs,
+  getCustomerDocRef,
+} from "../utils/firebase";
+
 // app
 const ProfilePageComponent = () => {
   const router = useRouter();
-  const { user } = Store();
-
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  // const array = [];
+  const { user, Logger, dispatch } = Store();
+  console.log(user.url);
   // refs
   const orderRef = useRef(null);
   const reviewRef = useRef(null);
@@ -29,14 +39,47 @@ const ProfilePageComponent = () => {
 
   // states
   const [tabs, setTabs] = useState(0);
+  const reviews = user.reviews || [];
+  const orders = user.orders || [];
+  const [loading, setLoading] = useState(false);
   const [orderState, setOrderState] = useState({
-    paginateOrders: paginateFn(array, 7).items,
+    paginateOrders: paginateFn(orders, 7).items,
     currentBtn: 0,
   });
   const [reviewState, setReviewState] = useState({
-    paginateReviews: paginateFn(array, 5).items,
+    paginateReviews: paginateFn(reviews, 5).items,
     currentBtn: 0,
   });
+  const [formInput, setFormInput] = useState({
+    firstName: {
+      valid: false,
+      value: "",
+    },
+    lastName: {
+      valid: false,
+      value: "",
+    },
+    address: {
+      valid: false,
+      value: "",
+    },
+    url: {
+      valid: false,
+      value: "",
+    },
+  });
+
+  useEffect(() => {
+    setOrderState({
+      paginateOrders: paginateFn(orders, 5).items,
+      currentBtn: 0,
+    });
+    console.log(reviews);
+    setReviewState({
+      paginateReviews: paginateFn(reviews, 5).items,
+      currentBtn: 0,
+    });
+  }, [user]);
 
   // handlers
   const handleLogout = async () => {
@@ -45,15 +88,16 @@ const ProfilePageComponent = () => {
   };
 
   const handlePaginateOrder = (val) => {
-    const newItems = paginateFn(array, 7, val).items;
+    const newItems = paginateFn(orders, 7, val).items;
     setOrderState({
       paginateOrders: newItems,
       currentBtn: val,
     });
     orderRef.current.scrollTo(0, 0);
   };
+
   const handlePaginateReviews = (val) => {
-    const newItems = paginateFn(array, 5, val).items;
+    const newItems = paginateFn(reviews, 5, val).items;
     setReviewState({
       paginateReviews: newItems,
       currentBtn: val,
@@ -65,17 +109,158 @@ const ProfilePageComponent = () => {
     setTabs(index);
     window.scrollTo(0, Number(tabRef.current.offsetTop));
   };
-  const handleEditDetail = (e) => {
+
+  const validate = new Validate();
+  function logError(value, type, element, min, max, name) {
+    if (type == "equal") throw new Error(`check type equal directly`);
+    let { valid, msg } = validate[type](value, min, max, name);
+    if (valid == false) {
+      element.nextSibling.textContent = msg;
+    } else {
+      element.nextSibling.textContent = "";
+    }
+    return valid;
+  }
+
+  function formOnchange(e) {
+    const name = e.target.name;
+    let value = e.target.value;
+
+    if (name == "firstName") {
+      let valid = logError(value, "text", e.target);
+      setFormInput({
+        ...formInput,
+        [name]: { ...formInput[name], valid, value },
+      });
+    }
+
+    if (name == "lastName") {
+      let valid = logError(value, "text", e.target);
+      setFormInput({
+        ...formInput,
+        [name]: { ...formInput[name], valid, value },
+      });
+    }
+
+    if (name == "address") {
+      let valid = logError(value, "text", e.target, 12, Infinity, "Address");
+      setFormInput({
+        ...formInput,
+        [name]: { ...formInput[name], valid, value },
+      });
+    }
+
+    if (name == "url") {
+      e.preventDefault();
+      const file = e.target.files[0];
+      if (!file) {
+        return;
+      }
+      // Check if the file is an image.
+      if (!file.type.match("image.*")) {
+        e.target.nextSibling.textContent = "file must be an image";
+        Logger("Only Image Uploads is allowed", "error");
+        e.target.value = "";
+        return;
+      }
+      setFormInput({
+        ...formInput,
+        [name]: { ...formInput[name], valid: true, value: file },
+      });
+    }
+  }
+
+  const handleEditDetail = async (e) => {
     e.preventDefault();
+
+    // check for non validated inputs
+    for (const key in formInput) {
+      if (formInput[key].valid == false) {
+        Logger("Invalid entries, Please try again", "error");
+        return;
+      }
+    }
+
+    try {
+      // upload image first
+      setLoading(true);
+      const file = formInput.url.value;
+      const filePath = `customers/${user.email}`;
+      const imageRef = ref(storage, filePath);
+      const fileSnapshot = await uploadBytesResumable(imageRef, file);
+      console.log(fileSnapshot);
+      // then get image url
+      const url = await getDownloadURL(imageRef);
+
+      // uppdate user data
+      const docRef = getCustomerDocRef(user.email);
+      const newUserDetails = {
+        firstName: formInput.firstName.value,
+        lastName: formInput.lastName.value,
+        address: formInput.address.value,
+        url: url,
+      };
+      await updateDoc(docRef, newUserDetails);
+      const snapshot = await getDoc(docRef);
+      dispatch({
+        type: SET_USER,
+        payload: snapshot.data(),
+      });
+      Logger("Profile updated successfully", "success");
+      setFormInput({
+        firstName: {
+          valid: false,
+          value: "",
+        },
+        lastName: {
+          valid: false,
+          value: "",
+        },
+        address: {
+          valid: false,
+          value: "",
+        },
+        url: {
+          valid: false,
+          value: "",
+        },
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      Logger(error.message, "error");
+    }
   };
+
+  useEffect(() => {
+    if (!user || user.reviews) return;
+    async function updateUser() {
+      try {
+        const reviews = await getSubDocs("customers", user.email, "reviews");
+        const orders = await getSubDocs("customers", user.email, "orders");
+        dispatch({ type: UPDATE_USER, payload: { reviews, orders } });
+      } catch (error) {
+        Logger("Couldn't fetch Details, Please try again", "error");
+      }
+    }
+    updateUser();
+  }, []);
+
   return (
     <Wrapper className="center mt30">
       <h3 className="title">My Profile</h3>
       <article className="header center">
         <div className="f ">
-          <span className="profile-image">
-            <Image src={Logo} layout="fill" alt="profile image"></Image>
-          </span>
+          {user.url ? (
+            <span className="profile-image">
+              <Image src={user.url} layout="fill" alt="profile image"></Image>
+            </span>
+          ) : (
+            <span className="profile-image">
+              <Image src={Logo} layout="fill" alt="profile image"></Image>
+            </span>
+          )}
+
           <div>
             <h1>
               {user.firstName} {user.lastName.charAt(0).toUpperCase()}.
@@ -136,7 +321,7 @@ const ProfilePageComponent = () => {
               </div>
               <Paginate
                 paginateFn={paginateFn}
-                array={array}
+                array={orders}
                 itemsPerPage={7}
                 currentBtn={orderState.currentBtn}
                 handlePaginate={handlePaginateOrder}
@@ -158,7 +343,7 @@ const ProfilePageComponent = () => {
                         </div>
                         <h3 className="mt10">
                           {"Excellent Product"}
-                          {review}
+                          {review.id}
                         </h3>
                         <p className="text mt10">
                           Lorem ipsum dolor, sit amet consectetur adipisicing
@@ -180,7 +365,7 @@ const ProfilePageComponent = () => {
               </div>
               <Paginate
                 paginateFn={paginateFn}
-                array={array}
+                array={reviews}
                 itemsPerPage={5}
                 currentBtn={reviewState.currentBtn}
                 handlePaginate={handlePaginateReviews}
@@ -196,27 +381,49 @@ const ProfilePageComponent = () => {
                 onSubmit={handleEditDetail}
               >
                 <div className="inputCon f mt20">
-                  <input type="text" placeholder="First Name" name="" id="" />
-                  <code className="status"></code>
+                  <input
+                    value={formInput.firstName.value}
+                    onChange={formOnchange}
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                  />
+                  <small className="status"></small>
                 </div>
                 <div className="inputCon f mt20">
-                  <input type="text" placeholder="Last Name" name="" id="" />
-                  <code className="status"></code>
+                  <input
+                    value={formInput.lastName.value}
+                    onChange={formOnchange}
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                  />
+                  <small className="status"></small>
                 </div>
                 <div className="inputCon f mt20">
                   <textarea
                     placeholder="Your Address"
-                    name=""
-                    id=""
+                    name="address"
+                    value={formInput.address.value}
+                    onChange={formOnchange}
                     cols="30"
                     rows="10"
                   ></textarea>
-                  <code className="status"></code>
+                  <small className="status"></small>
                 </div>
                 <div className="inputCon f mt20">
-                  <input type="file" name="" id="" />
-                  <code className="status"></code>
+                  <input
+                    onChange={formOnchange}
+                    accept="image/*"
+                    type="file"
+                    name="url"
+                  />
+                  <small className="status"></small>
                 </div>
+                <div
+                  style={{ display: loading == true ? "block" : "none" }}
+                  className="spinner mt20"
+                ></div>
                 <button className="mt20" type="submit">
                   Submit
                 </button>
@@ -359,6 +566,7 @@ const Wrapper = styled.main`
       }
       p {
         line-height: 30px;
+        font-size: 15px;
       }
     }
     .edit {
@@ -393,6 +601,10 @@ const Wrapper = styled.main`
       input::placeholder {
         color: gray;
       }
+      small {
+        color: red;
+        font-size: 14px;
+      }
       button {
         background-color: var(--pink);
         width: 100%;
@@ -419,7 +631,7 @@ const Wrapper = styled.main`
       background-color: var(--blue);
     }
     button:nth-of-type(2) {
-      background-color: var(--gray);
+      background-color: teal;
     }
     button:nth-of-type(3) {
       background-color: var(--pink);

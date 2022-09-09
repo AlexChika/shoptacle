@@ -40,6 +40,13 @@ function reducer(state, action) {
     };
   }
 
+  // update user
+  if (action.type === actionTypes.UPDATE_USER) {
+    return {
+      ...state,
+      user: { ...state.user, ...action.payload },
+    };
+  }
   return state;
 }
 
