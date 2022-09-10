@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Store } from "../store/Context";
 import { UPDATE_USER, SET_USER } from "../store/actionTypes";
-import { useRouter } from "next/router";
 import Logo from "../public/icon.png";
 import Paginate from "./Paginate";
 import { FaUserEdit } from "react-icons/fa";
@@ -22,16 +21,14 @@ import { getDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   auth,
-  storage,
+  uploadImage,
   getSubDocs,
   getCustomerDocRef,
 } from "../utils/firebase";
 
 // app
 const ProfilePageComponent = () => {
-  const router = useRouter();
   const { user, Logger, dispatch } = Store();
-  console.log(user.url);
   // refs
   const orderRef = useRef(null);
   const reviewRef = useRef(null);
@@ -84,7 +81,6 @@ const ProfilePageComponent = () => {
   // handlers
   const handleLogout = async () => {
     await signOut(auth);
-    router.push("/login");
   };
 
   const handlePaginateOrder = (val) => {
@@ -122,52 +118,50 @@ const ProfilePageComponent = () => {
     return valid;
   }
 
+  function updateState(name, valid, value) {
+    setFormInput({
+      ...formInput,
+      [name]: { ...formInput[name], valid, value },
+    });
+  }
+
   function formOnchange(e) {
     const name = e.target.name;
     let value = e.target.value;
+    let valid;
 
     if (name == "firstName") {
-      let valid = logError(value, "text", e.target);
-      setFormInput({
-        ...formInput,
-        [name]: { ...formInput[name], valid, value },
-      });
+      valid = logError(value, "text", e.target);
     }
 
     if (name == "lastName") {
-      let valid = logError(value, "text", e.target);
-      setFormInput({
-        ...formInput,
-        [name]: { ...formInput[name], valid, value },
-      });
+      valid = logError(value, "text", e.target);
     }
 
     if (name == "address") {
-      let valid = logError(value, "text", e.target, 12, Infinity, "Address");
-      setFormInput({
-        ...formInput,
-        [name]: { ...formInput[name], valid, value },
-      });
+      valid = logError(value, "text", e.target, 12, Infinity, "Address");
     }
 
     if (name == "url") {
-      e.preventDefault();
       const file = e.target.files[0];
       if (!file) {
-        return;
+        valid = false;
+        value = "";
+        e.target.nextSibling.textContent = "No images was detected";
+      } else {
+        // Check if the file is an image.
+        if (!file.type.match("image.*")) {
+          e.target.nextSibling.textContent = "file must be an image";
+          valid = false;
+          value = "";
+        } else {
+          e.target.nextSibling.textContent = "";
+          valid = true;
+          value = file;
+        }
       }
-      // Check if the file is an image.
-      if (!file.type.match("image.*")) {
-        e.target.nextSibling.textContent = "file must be an image";
-        Logger("Only Image Uploads is allowed", "error");
-        e.target.value = "";
-        return;
-      }
-      setFormInput({
-        ...formInput,
-        [name]: { ...formInput[name], valid: true, value: file },
-      });
     }
+    updateState(name, valid, value);
   }
 
   const handleEditDetail = async (e) => {
@@ -186,11 +180,7 @@ const ProfilePageComponent = () => {
       setLoading(true);
       const file = formInput.url.value;
       const filePath = `customers/${user.email}`;
-      const imageRef = ref(storage, filePath);
-      const fileSnapshot = await uploadBytesResumable(imageRef, file);
-      console.log(fileSnapshot);
-      // then get image url
-      const url = await getDownloadURL(imageRef);
+      const url = await uploadImage(file, filePath);
 
       // uppdate user data
       const docRef = getCustomerDocRef(user.email);
@@ -263,7 +253,7 @@ const ProfilePageComponent = () => {
 
           <div>
             <h1>
-              {user.firstName} {user.lastName.charAt(0).toUpperCase()}.
+              {user?.firstName} {user?.lastName.charAt(0).toUpperCase()}.
             </h1>
             <button onClick={handleLogout}>Logout</button>
           </div>
@@ -420,10 +410,7 @@ const ProfilePageComponent = () => {
                   />
                   <small className="status"></small>
                 </div>
-                <div
-                  style={{ display: loading == true ? "block" : "none" }}
-                  className="spinner mt20"
-                ></div>
+                <div className={`spinner mt20 ${loading ? "" : "stop"}`}></div>
                 <button className="mt20" type="submit">
                   Submit
                 </button>

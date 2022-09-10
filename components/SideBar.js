@@ -7,16 +7,24 @@ import { Store } from "../store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
 import SearchBar from "./SearchBar";
-import profileImage from "../public/icon.png";
+import { signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
 const SideBar = () => {
   const router = useRouter();
   const { modalOpen, handleCloseModal, user } = Store();
+
   const handleRoute = (url) => {
     if (typeof url !== "string")
       throw new Error(`the url ${url} is an invalid input or not a string`);
     handleCloseModal();
     router.push(url);
   };
+
+  const handleLogout = async () => {
+    handleCloseModal();
+    await signOut(auth);
+  };
+
   return (
     <Wrapper modal={modalOpen} className="trans">
       <div className="header f align j-around">
@@ -88,12 +96,18 @@ const SideBar = () => {
         <button className="link" onClick={() => handleRoute("/cart")}>
           Cart
         </button>
-        <button className="link" onClick={() => handleRoute("/login/profile")}>
+        <button className="link" onClick={() => handleRoute("/profile")}>
           Profile
         </button>
-        <button className="link" onClick={() => handleRoute("/login")}>
-          Login
-        </button>
+        {user ? (
+          <button className="link" onClick={handleLogout}>
+            Log out
+          </button>
+        ) : (
+          <button className="link" onClick={() => handleRoute("/profile")}>
+            Login
+          </button>
+        )}
         <h3>Contact</h3>
         <button className="link" onClick={() => handleRoute("/about")}>
           About

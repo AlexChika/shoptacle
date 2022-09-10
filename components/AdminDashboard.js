@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Store } from "../store/Context";
+import { useRouter } from "next/router";
 import AdminDashBoardHome from "./AdminDashBoardHome";
 import AdminAdd from "./AdminAdd";
 import AdminEdit from "./AdminEdit";
@@ -16,45 +16,19 @@ import { MdDashboard, MdExitToApp } from "react-icons/md";
 import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 
 // app
-const AdminDashboard = ({ user }) => {
+const AdminDashboard = ({ user, isAdmin }) => {
+  const router = useRouter();
   const [currentTab, setCurrentTab] = useState(0);
-  // const { logout, dispatch } = Store();
   const [sideBar, setSideBar] = useState(false);
 
   // local funcs
   const handleLogout = () => {
-    console.log("hello");
+    router.push("/shop");
   };
   const handleSetTab = (tab) => {
     setCurrentTab(tab);
     setSideBar(false);
   };
-  // const handleLogout = async () => {
-  //   setStatus({
-  //     text1: statusText.logoutWaiting1,
-  //     text2: "",
-  //   });
-  //   setModal(true);
-  //   try {
-  //     await logout();
-  //     dispatch({ type: "NO_USER" });
-  //     setModal(true);
-  //     setStatus({
-  //       text1: statusText.logoutSuccess1,
-  //       text2: "",
-  //     });
-  //     navigate("/");
-  //   } catch (error) {
-  //     setStatus({
-  //       text1: error.message,
-  //       text2: "Please Try Again",
-  //     });
-  //     setModal(true);
-  //   }
-  // };
-  // const handleTheme = () => {
-  //   dispatch({ type: "THEME" });
-  // };
   return (
     <DashboardWrapper className="f opacity">
       <section className={`sideBar trans ${sideBar ? "" : "close"}`}>
@@ -100,12 +74,12 @@ const AdminDashboard = ({ user }) => {
           </button>
           <button
             className={currentTab == 4 ? "active" : ""}
-            onClick={() => handleSetTab(4)}
+            onClick={handleLogout}
           >
             <span className="icon">
               <MdExitToApp />
             </span>
-            <span className="text">Log out</span>
+            <span className="text">Exit</span>
           </button>
         </div>
       </section>
@@ -119,19 +93,19 @@ const AdminDashboard = ({ user }) => {
               <IoMdList />
             </span>{" "}
           </button>
-          {user ? (
-            <h3 className="f align center">
+          {isAdmin ? (
+            <h3 className="f align center capitalize">
               <span style={{ color: "green" }}>
                 <BsFillCheckCircleFill />
               </span>{" "}
-              &nbsp; Admin {"Alex"}
+              &nbsp; Admin {user.firstName}
             </h3>
           ) : (
-            <h3 className="f align center">
+            <h3 className="f align center capitalize">
               <span style={{ color: "tomato" }}>
                 <FaTimes />
               </span>{" "}
-              &nbsp; Admin {"Alex"}
+              &nbsp;Admin {user.firstName}
             </h3>
           )}
         </div>

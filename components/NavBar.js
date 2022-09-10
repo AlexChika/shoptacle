@@ -49,13 +49,13 @@ function NavBar({ page }) {
       <div className="navCart-con f fcenter">
         <span>
           {user && user.url ? (
-            <Link href="/login/profile">
+            <Link href="/profile">
               <div className="image">
                 <Image src={user.url} layout="fill" />
               </div>
             </Link>
           ) : (
-            <Link href="/login/profile">
+            <Link href="/profile">
               <button
                 className={`trans ${page === "profile" ? "active" : ""}`}
                 type="button"

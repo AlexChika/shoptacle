@@ -37,7 +37,7 @@ const AdminWelcome = () => {
           </a>
         </span>
 
-        <Link href="/login" passHref>
+        <Link href="/profile" passHref>
           <a className="btn">Continue to Login</a>
         </Link>
       </section>
@@ -49,12 +49,14 @@ export default AdminWelcome;
 const Wrapper = styled.main`
   background: var(--pink-light);
   color: var(--blue);
-
+  padding-bottom: 40px;
   .section {
     flex-direction: column;
     max-width: 1170px;
-    min-height: 75vh;
+    min-height: 80vh;
     padding: 20px;
+    margin-top: 40px;
+    background-color: white;
 
     h1 {
       text-align: center;
@@ -62,11 +64,11 @@ const Wrapper = styled.main`
     p,
     span,
     a {
-      font-size: 16px;
+      font-size: 18px;
       max-width: 400px;
     }
     p {
-      color: red;
+      color: tomato;
       text-align: center;
     }
 

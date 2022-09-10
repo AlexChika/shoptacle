@@ -41,6 +41,9 @@ a {
   border-radius: 50%;
   animation: spinner 0.3s linear infinite;
 }
+.spinner.stop {
+  display: none;
+}
 @-moz-keyframes spinner {
   100% {
     transform: rotate(360deg);

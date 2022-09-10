@@ -5,19 +5,23 @@ import { useRouter } from "next/router";
 import reducer from "./Reducer";
 import * as actionTypes from "./actionTypes";
 import * as firebase from "../utils/firebase";
-import { getCustomerDocRef } from "../utils/firebase";
 
 // firebase imports
 import { onAuthStateChanged } from "firebase/auth";
-import { getDoc } from "firebase/firestore";
+import { getDoc, getDocs, query, where } from "firebase/firestore";
+import { getCustomerDocRef, getSubDocs, adminsColRef } from "../utils/firebase";
 
 // initial state...
 const initialState = {
   user: "",
+  isAdmin: "",
   modalOpen: false,
   preRoute: "",
   currRoute: "",
   cart: [],
+  products: [],
+  Users: [],
+  outOfStock: [],
 };
 
 // app
@@ -31,7 +35,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
     showLogger: false,
     timeoutId: "",
   });
-  console.log(state.user);
+
   function handleCloseModal() {
     dispatch({ type: actionTypes.HANDLE_MODAL });
   }
@@ -59,6 +63,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
   };
 
   // useEffects
+  // monitor route change
   useEffect(() => {
     dispatch({
       type: actionTypes.SET_CURRENT_ROUTE,
@@ -73,6 +78,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
     };
   }, []);
 
+  // removes the navbar when current page is admin page
   useEffect(() => {
     if (state.user && state.currRoute === "/admin") {
       setHideFooter(true);
@@ -81,6 +87,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
     }
   }, [state.user, state.currRoute]);
 
+  // monitors auth state and fetches user data
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebase.auth, (user) => {
       if (user) {
@@ -99,40 +106,34 @@ const StoreProvider = ({ setHideFooter, children }) => {
     return unsubscribe;
   }, []);
 
-  //  const provider = new GoogleAuthProvider();
-  //............ functions ...
+  // get cart from firestore
+  useEffect(() => {
+    let cart;
+    if (state.user) {
+      async function getCart() {
+        cart = await getSubDocs("products", state.user.email, "cart");
+      }
+      getCart();
+    } else {
+      cart = JSON.parse(localStorage.getItem("cart")) || [];
+    }
+    dispatch({ type: actionTypes.GET_CART, payload: cart });
+  }, [state.user]);
 
-  // Auth funcs
-  //  const signup = (email, password) => {
-  //    return createUserWithEmailAndPassword(auth, email, password);
-  //  };
-  //  const login = (email, password) => {
-  //    return signInWithEmailAndPassword(auth, email, password);
-  //  };
-  //  const logout = () => {
-  //    return signOut(auth);
-  //  };
-  //  const googleSignin = () => {
-  //    return signInWithPopup(auth, provider);
-  //  };
+  // checks if logged in user is admin
+  useEffect(() => {
+    if (!state.user) return;
+    const q = query(adminsColRef, where("email", "==", state.user.email));
+    getDocs(q).then((snapshot) => {
+      if (snapshot.docs.length > 0) {
+        dispatch({ type: actionTypes.SET_ADMIN, payload: true });
+      } else {
+        dispatch({ type: actionTypes.SET_ADMIN, payload: false });
+      }
+      // console.log(snapshot.docs[0].data());
+    });
+  }, [state.user]);
 
-  //  // firestore funcs
-  //  const createUser = (data) => {
-  //    return addDoc(colRef, data);
-  //  };
-  //  const overRideUserData = (id, data) => {
-  //    const docref = docRef(id);
-  //    return setDoc(docref, data);
-  //  };
-  //  const getUser = (email) => {
-  //    const q = query(colRef, where("email", "==", `${email}`));
-  //    return getDocs(q);
-  //  };
-  //  useEffect(() => {
-  //    isUser(appState.currentUser.email, getUser, dispatch);
-  //  }, [appState.currentUser]);
-
-  //
   return (
     <AppContext.Provider
       value={{ ...state, handleCloseModal, dispatch, Logger }}
@@ -158,7 +159,7 @@ const Wrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   font-weight: 500;
-  min-height: 80px;
+  min-height: 70px;
   text-align: center;
   padding: 10px;
   font-size: 20px;

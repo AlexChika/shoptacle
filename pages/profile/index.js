@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Image from "next/image";
 import styled from "styled-components";
-import { Store } from "../../store/Context";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
-import Navigate from "../../components/Navigate";
-import ProfilePageComponent from "../../components/ProfilePageComponent";
-
+import Profile from "../../components/ProfilePageComponent";
+import Login from "../../components/Login";
+import { Store } from "../../store/Context";
 const Index = () => {
   const { user } = Store();
   return (
@@ -14,7 +14,7 @@ const Index = () => {
       <NavBar page={"profile"} />
       <SideBar />
       <HeroBar />
-      {user ? <ProfilePageComponent /> : <Navigate path="/login" />}
+      {user ? <Profile /> : <Login />}
     </Wrapper>
   );
 };
@@ -23,4 +23,5 @@ export default Index;
 const Wrapper = styled.main`
   background-color: var(--pink-light);
   padding-bottom: 30px;
+  color: var(--blue);
 `;

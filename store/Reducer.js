@@ -47,6 +47,14 @@ function reducer(state, action) {
       user: { ...state.user, ...action.payload },
     };
   }
+
+  // set Admin
+  if (action.type === actionTypes.SET_ADMIN) {
+    return {
+      ...state,
+      isAdmin: action.payload,
+    };
+  }
   return state;
 }
 

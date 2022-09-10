@@ -1,14 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/dist/client/router";
 import styled from "styled-components";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
-import HeroBar from "../../components/HeroBar";
-import Logo from "../../public/icon.png";
-import { Store } from "../../store/Context";
-import { Validate } from "../../utils/functions";
-import { auth, getCustomerDocRef } from "../../utils/firebase";
+import Logo from "../public/icon.png";
+import { Store } from "../store/Context";
+import { Validate } from "../utils/functions";
+import { auth, getCustomerDocRef } from "../utils/firebase";
 
 // firebase imports
 import {
@@ -19,8 +15,8 @@ import { setDoc } from "firebase/firestore";
 
 // app
 const Index = () => {
-  const { Logger, user } = Store();
-  const router = useRouter();
+  const { Logger } = Store();
+
   // states
   const containerRef = useRef(null);
   const [signin, setSignIn] = useState(true);
@@ -159,7 +155,6 @@ const Index = () => {
         "You have not updated your profile, Edit profile to add your full address",
       email,
     };
-    // cart:[],
 
     try {
       setLoading(true);
@@ -191,16 +186,8 @@ const Index = () => {
     window.scrollTo(0, Number(containerRef.current.offsetTop) - 100);
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/login/profile");
-    }
-  }, [user]);
   return (
     <Wrapper className="layout">
-      <NavBar />
-      <SideBar />
-      <HeroBar />
       <main className="body f fcenter center mt30">
         <section ref={containerRef} className="container f center">
           {/* side banner display */}
@@ -347,12 +334,8 @@ const Index = () => {
 
 export default Index;
 const Wrapper = styled.main`
-  background-color: var(--pink-light);
-  padding-bottom: 30px;
-  color: var(--blue);
   .body {
     padding: 30px 0px;
-    /* margin-bottom: 30px; */
     max-width: 1170px;
   }
   .body .container {

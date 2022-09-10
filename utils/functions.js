@@ -69,7 +69,6 @@ const sampleUser = {
   lastName: "",
   address: "",
   email: "",
-  cart: [],
   reviews: {
     title: "title",
     experience: "whatever fuck you think",

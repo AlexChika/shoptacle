@@ -1,13 +1,21 @@
 // imports
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import {
   getFirestore,
   collection,
   doc,
   getDocs,
   getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -44,6 +52,21 @@ function getProductDocRef(id) {
 }
 
 // funcs
+async function addProduct(data) {
+  const resp = await addDoc(productsColRef, data);
+  console.log(resp);
+}
+
+async function updateProduct(productId, data) {
+  const ref = getProductDocRef(productId);
+  await updateDoc(ref, data);
+}
+
+async function deleteProduct(productId) {
+  const ref = getProductDocRef(productId);
+  await deleteDoc(ref);
+}
+
 // get documents of a sub collection
 async function getSubDocs(mainCol, id, subCol) {
   const ref = getSubColRef(mainCol, id, subCol);
@@ -70,9 +93,17 @@ async function getCartItem(cart) {
   }
   return cartItems;
 }
+
+async function uploadImage(file, path) {
+  const imageRef = ref(storage, path);
+  const fileSnapshot = await uploadBytesResumable(imageRef, file);
+  // then get image url
+  const url = await getDownloadURL(imageRef);
+  return url;
+}
+
 export {
   app,
-  storage,
   auth,
   db,
   productsColRef,
@@ -82,4 +113,8 @@ export {
   getCustomerDocRef,
   getSubDocs,
   getCartItem,
+  addProduct,
+  uploadImage,
+  updateProduct,
+  deleteProduct,
 };

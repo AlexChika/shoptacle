@@ -16,6 +16,10 @@ const AdminSearch = ({ handleSetTab }) => {
   const handleViewBtn = () => {
     setModal(true);
   };
+  const handleDeleteBtn = () => {
+    // setModal(true);
+    console.log("hello");
+  };
 
   return (
     <Wrapper className="opacity center">
@@ -53,6 +57,9 @@ const AdminSearch = ({ handleSetTab }) => {
                   </button>
                   <button onClick={handleEditBtn} type="button">
                     EDIT
+                  </button>
+                  <button onClick={handleDeleteBtn} type="button">
+                    Delete
                   </button>
                 </div>
               </article>
@@ -144,6 +151,9 @@ const Wrapper = styled.main`
       }
       button:nth-of-type(2) {
         background-color: var(--pink);
+      }
+      button:nth-of-type(3) {
+        background-color: tomato;
       }
     }
     .result:nth-of-type(odd) {

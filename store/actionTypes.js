@@ -4,3 +4,7 @@ export const SET_CURRENT_ROUTE = "SET_CURRENT_ROUTE";
 export const SET_USER = "SET_USER";
 export const NO_USER = "NO_USER";
 export const UPDATE_USER = "UPDATE_USER";
+export const GET_CART = "GET_CART";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_CART = "REMOVE_CART";
+export const SET_ADMIN = "SET_ADMIN";

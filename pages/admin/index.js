@@ -5,11 +5,15 @@ import SideBar from "../../components/SideBar";
 import AdminDashboard from "../../components/AdminDashboard";
 import AdminWelcome from "../../components/AdminWelcome";
 const Products = () => {
-  const { user } = Store();
+  const { user, isAdmin } = Store();
   return (
     <Wrapper className="layout">
       <SideBar />
-      {user ? <AdminDashboard user={user} /> : <AdminWelcome />}
+      {user ? (
+        <AdminDashboard isAdmin={isAdmin} user={user} />
+      ) : (
+        <AdminWelcome />
+      )}
     </Wrapper>
   );
 };
