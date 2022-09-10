@@ -16,6 +16,8 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -54,7 +56,6 @@ function getProductDocRef(id) {
 // funcs
 async function addProduct(data) {
   const resp = await addDoc(productsColRef, data);
-  console.log(resp);
 }
 
 async function updateProduct(productId, data) {
@@ -65,6 +66,34 @@ async function updateProduct(productId, data) {
 async function deleteProduct(productId) {
   const ref = getProductDocRef(productId);
   await deleteDoc(ref);
+}
+
+async function searchProduct(variable, value) {
+  let array = [];
+  const q = query(productsColRef, where(variable, "==", value));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    array.push({ ...doc.data(), id: doc.id });
+  });
+  return array;
+}
+
+async function getAllProcuts() {
+  const snapshot = await getDocs(productsColRef);
+  let data = [];
+  snapshot.forEach((doc) => {
+    data.push({ ...doc.data(), id: doc.id });
+  });
+  return data;
+}
+
+async function getAllCustomers() {
+  const snapshot = await getDocs(customersColRef);
+  let data = [];
+  snapshot.forEach((doc) => {
+    data.push({ ...doc.data(), id: doc.id });
+  });
+  return data;
 }
 
 // get documents of a sub collection
@@ -117,4 +146,7 @@ export {
   uploadImage,
   updateProduct,
   deleteProduct,
+  searchProduct,
+  getAllProcuts,
+  getAllCustomers,
 };

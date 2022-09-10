@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
 import { useRouter } from "next/router";
 import AdminDashBoardHome from "./AdminDashBoardHome";
 import AdminAdd from "./AdminAdd";
@@ -16,10 +17,13 @@ import { MdDashboard, MdExitToApp } from "react-icons/md";
 import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 
 // app
-const AdminDashboard = ({ user, isAdmin }) => {
+const AdminDashboard = ({ data }) => {
+  const { products, customers } = data;
+  const { isAdmin, user } = Store();
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState(0);
   const [sideBar, setSideBar] = useState(false);
+  const [id, setId] = useState("");
 
   // local funcs
   const handleLogout = () => {
@@ -109,11 +113,14 @@ const AdminDashboard = ({ user, isAdmin }) => {
             </h3>
           )}
         </div>
+
         <main className="mt10">
-          {currentTab == 0 && <AdminDashBoardHome />}
-          {currentTab == 1 && <AdminSearch handleSetTab={handleSetTab} />}
+          {currentTab == 0 && <AdminDashBoardHome data={data} />}
+          {currentTab == 1 && (
+            <AdminSearch data={{ handleSetTab, setId, products }} />
+          )}
           {currentTab == 2 && <AdminAdd />}
-          {currentTab == 3 && <AdminEdit />}
+          {currentTab == 3 && <AdminEdit data={{ id, products }} />}
         </main>
       </section>
     </DashboardWrapper>

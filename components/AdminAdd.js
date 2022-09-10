@@ -6,7 +6,6 @@ import Modal from "./Modal";
 
 // firebase imports
 import { addProduct, uploadImage } from "../utils/firebase";
-import { addDoc } from "firebase/firestore";
 // app
 const AdminAdd = () => {
   const { Logger, isAdmin, user } = Store();
@@ -14,6 +13,7 @@ const AdminAdd = () => {
 
   // states
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formInput, setFormInput] = useState({
     name: { value: "", valid: false },
     collection: { value: "", valid: false },
@@ -57,10 +57,12 @@ const AdminAdd = () => {
       status = validate.text(value, ...[,], ...[,], "Collection");
     }
     if (name == "price") {
-      status = validate.number(Number(value), 100, ...[,], "Price in Kobo");
+      value = Number(value);
+      status = validate.number(value, 100, ...[,], "Price in Kobo");
     }
     if (name == "quantity") {
-      status = validate.number(Number(value), 1, ...[,], "Quantity");
+      value = Number(value);
+      status = validate.number(value, 1, ...[,], "Quantity");
     }
     if (name == "brand") {
       status = validate.text(value, ...[,], ...[,], "Brand");
@@ -129,6 +131,7 @@ const AdminAdd = () => {
     }
 
     try {
+      setLoading(true);
       const name = formInput.name.value;
       const file = formInput.mainUrl.value;
       const filePath = `products/${name}/imgone`;
@@ -143,8 +146,16 @@ const AdminAdd = () => {
         desc: formInput.desc.value,
         mainUrl: url,
         images: [],
+        rating: {
+          five: 0,
+          four: 0,
+          three: 0,
+          two: 0,
+          one: 0,
+        },
       };
       const snapshot = await addProduct(productData);
+      document.querySelector("[data-id = image]").style.display = "none";
       setFormInput({
         name: { value: "", valid: false },
         collection: { value: "", valid: false },
@@ -155,10 +166,11 @@ const AdminAdd = () => {
         desc: { value: "", valid: false },
         mainUrl: { value: "", valid: false },
       });
+      setLoading(false);
       Logger("Product was added succefully", "success");
     } catch (error) {
-      Logger(error.message, "error");
-      // Logger("There was an error, Please try again", "error");
+      setLoading(true);
+      Logger("There was an error, Please try again", "error");
     }
   }
 
@@ -296,7 +308,9 @@ const AdminAdd = () => {
           <p data-id="mainUrl" className="status"></p>
         </div>
 
-        <div className="fullwrap">
+        <div className={`spinner mt20 center ${loading ? "" : "stop"}`}></div>
+
+        <div className="fullwrap mt10">
           <button type="submit">ADD PRODUCT</button>
         </div>
       </form>

@@ -20,7 +20,8 @@ let seed = [
   { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
 ];
 // app
-const AdminDasnBoardHome = () => {
+const AdminDasnBoardHome = ({ data }) => {
+  const { customers, products } = data;
   //  add no property to our data
   let newData = seed.map((seed, index) => {
     return {
@@ -70,7 +71,7 @@ const AdminDasnBoardHome = () => {
       <section className="counters f j-around mt20">
         <div>
           <h3>Total Products</h3>
-          <h3>1000</h3>
+          <h3>{products.length}</h3>
         </div>
         <div>
           <h3>Out of Stock</h3>
@@ -78,7 +79,7 @@ const AdminDasnBoardHome = () => {
         </div>
         <div>
           <h3>Total Customers </h3>
-          <h3>1000</h3>
+          <h3>{customers.length}</h3>
         </div>
       </section>
       {/* table-con */}

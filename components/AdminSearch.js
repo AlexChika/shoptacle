@@ -2,20 +2,41 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Modal from "./Modal";
-import Logo from "../public/ada.png";
-const AdminSearch = ({ handleSetTab }) => {
+import { FiSearch } from "react-icons/fi";
+import { formatPrice } from "../utils/functions";
+const AdminSearch = ({ data }) => {
+  const { handleSetTab, products, setId } = data;
   // states
   const [modal, setModal] = useState(false);
+  const [viewProduct, setViewProduct] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredproducts, setFilteredProducts] = useState([]);
   // funcs
-  const handleEditBtn = (id) => {
-    // go to edit page
-    handleSetTab(3);
-    // get item object and set it
-  };
+  // the search handler
+  async function handleSearch(e) {
+    const text = e.target.value.toLowerCase();
+    let filtered = [...products].filter((item) => {
+      if (!text) return false;
+      if (item.name.toLowerCase().includes(text)) {
+        return item;
+      }
+    });
+    setSearchValue(text);
+    setFilteredProducts(filtered);
+  }
 
-  const handleViewBtn = () => {
+  const handleViewBtn = (id) => {
+    const current = [...filteredproducts].filter((item) => item.id === id);
+    setViewProduct(current);
     setModal(true);
   };
+
+  const handleEditBtn = (id) => {
+    // go to edit page
+    setId(id);
+    handleSetTab(3);
+  };
+
   const handleDeleteBtn = () => {
     // setModal(true);
     console.log("hello");
@@ -24,84 +45,93 @@ const AdminSearch = ({ handleSetTab }) => {
   return (
     <Wrapper className="opacity center">
       <form className="f center mt20">
-        <input placeholder="Search product by name" type="text" name="" id="" />
-        <button type="submit">Submit</button>
+        <input
+          onChange={handleSearch}
+          placeholder="Search product by name"
+          type="text"
+          value={searchValue}
+          id="search"
+        />
+        <label htmlFor="search" className="f fcenter">
+          <FiSearch />
+        </label>
       </form>
 
       <section className="result-con mt30 ">
         <h1 className="title">Search Results</h1>
 
         <div>
-          {false && (
+          {filteredproducts.length < 1 ? (
             <div className="no-result center f fcenter mt30">
               <h3>No products found</h3>
             </div>
+          ) : (
+            filteredproducts.slice(0, 20).map((product) => {
+              const { id, name, price } = product;
+              return (
+                <article key={product.id} className="result center mt20">
+                  <div>
+                    <h3>{name}</h3>
+                  </div>
+                  <div className="f">
+                    <p>
+                      ID: <span>{id}</span>
+                    </p>
+                    <p>
+                      PRICE: <span>{formatPrice(Number(price))}</span>
+                    </p>
+                  </div>
+                  <div>
+                    <button onClick={() => handleViewBtn(id)} type="button">
+                      VIEW
+                    </button>
+                    <button onClick={() => handleEditBtn(id)} type="button">
+                      EDIT
+                    </button>
+                    <button onClick={() => handleDeleteBtn(id)} type="button">
+                      Delete
+                    </button>
+                  </div>
+                </article>
+              );
+            })
           )}
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, 20).map((result, index) => {
-            return (
-              <article key={index} className="result center mt20">
-                <div>
-                  <h3>name of product here and also long name</h3>
-                </div>
-                <div className="f">
-                  <p>
-                    ID: <span>id of product</span>
-                  </p>
-                  <p>
-                    PRICE: <span>30000</span>
-                  </p>
-                </div>
-                <div>
-                  <button onClick={handleViewBtn} type="button">
-                    VIEW
-                  </button>
-                  <button onClick={handleEditBtn} type="button">
-                    EDIT
-                  </button>
-                  <button onClick={handleDeleteBtn} type="button">
-                    Delete
-                  </button>
-                </div>
-              </article>
-            );
-          })}
         </div>
       </section>
       <Modal modal={modal} setModal={setModal}>
-        <section className="modal mt10">
-          <div className="image mt30">
-            <Image layout="fill" alt="product image" src={Logo}></Image>
-          </div>
-          <article>
-            <h1>Name of product</h1>
-            <h5>
-              QTY: &nbsp;<span>30</span>
-            </h5>
-            <h5>
-              BRAND: &nbsp;<span>brand of item</span>
-            </h5>
-            <h5>
-              CATEGORY: &nbsp;<span>category of item</span>
-            </h5>
-            <h5>
-              PRICE: &nbsp;<span>proce of item</span>
-            </h5>
-            <h5>
-              ID: &nbsp;<span>item id</span>
-            </h5>
-            <h5>
-              DESC: &nbsp;
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-                quis cumque exercitationem laboriosam sequi, temporibus
-                architecto perferendis velit iste aliquam. Accusamus aspernatur
-                saepe nobis excepturi enim culpa, magni nemo beatae quibusdam
-                eum natus sit quidem voluptatem ex numquam rerum quam! Eius,
-                velit esse nisi quia odio vero suscipit quae repellat.
-              </span>
-            </h5>
-          </article>
-        </section>
+        {viewProduct.map((product) => {
+          const { mainUrl, price, name, id, quantity, category, brand, desc } =
+            product;
+          return (
+            <section key={id} className="modal mt10">
+              <div className="image mt30">
+                <Image layout="fill" alt="product image" src={mainUrl}></Image>
+              </div>
+              <article>
+                <h1>{name}</h1>
+                <h5>
+                  QTY: &nbsp;<span>{quantity}</span>
+                </h5>
+                <h5>
+                  BRAND: &nbsp;<span>{brand}</span>
+                </h5>
+                <h5>
+                  CATEGORY: &nbsp;<span>{category}</span>
+                </h5>
+                <h5>
+                  PRICE: &nbsp;<span>{formatPrice(Number(price))}</span>
+                </h5>
+                <h5>
+                  ID: &nbsp;<span>{id}</span>
+                </h5>
+                <h5>
+                  DESC: &nbsp;
+                  <span>{desc}</span>
+                </h5>
+              </article>
+            </section>
+          );
+        })}
       </Modal>
     </Wrapper>
   );
@@ -114,16 +144,16 @@ const Wrapper = styled.main`
 
   form {
     max-width: 600px;
+    border: 2px solid var(--blue);
     input {
-      flex: 0.75;
-      border: 2px solid gray;
+      flex: 0.8;
       padding: 10px;
+      font-size: 16px;
     }
-    button {
-      flex: 0.25;
-      padding: 10px;
-      background-color: var(--blue);
-      color: white;
+    label {
+      flex: 0.2;
+      font-size: 30px;
+      color: gray;
     }
   }
 
@@ -175,7 +205,7 @@ const Wrapper = styled.main`
     color: var(--blue);
     .image {
       position: relative;
-      height: 250px;
+      aspect-ratio: 4/3;
       width: 100%;
     }
     h5 {
