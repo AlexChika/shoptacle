@@ -19,8 +19,6 @@ const initialState = {
   preRoute: "",
   currRoute: "",
   cart: [],
-  products: [],
-  Users: [],
   outOfStock: [],
 };
 

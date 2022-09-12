@@ -78,7 +78,7 @@ async function searchProduct(variable, value) {
   return array;
 }
 
-async function getAllProcuts() {
+async function getAllProducts() {
   const snapshot = await getDocs(productsColRef);
   let data = [];
   snapshot.forEach((doc) => {
@@ -147,6 +147,6 @@ export {
   updateProduct,
   deleteProduct,
   searchProduct,
-  getAllProcuts,
+  getAllProducts,
   getAllCustomers,
 };

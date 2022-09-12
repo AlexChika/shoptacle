@@ -177,4 +177,40 @@ const team = [
     desc: "‘’I love fashion and love helping people look good, I have a degree in Art and design’’",
   },
 ];
-export { seedData, collections, testimony, team };
+const _category = {
+  ["Male Fashion"]: [
+    "shoes",
+    "sandals",
+    "shirts",
+    "suits",
+    "trousers",
+    "hoodies",
+    "sweaters",
+    "boxers",
+    "short sleeves",
+    "long sleeves",
+  ],
+  ["Female Fashion"]: [
+    "shoes",
+    "sandals",
+    "heels",
+    "gowns",
+    "blouse",
+    "shirts",
+    "trousers",
+    "bra",
+    "pants",
+    "mini skirts",
+    "high waist",
+  ],
+  ["Smart Gadgets"]: [
+    "smart phones",
+    "basic phones",
+    "laptops",
+    "chargers",
+    "home appliance",
+    "consoles",
+  ],
+  ["Unisex Shoes"]: ["sneakers", "boots", "crocs", "flip flops"],
+};
+export { seedData, collections, testimony, team, _category };

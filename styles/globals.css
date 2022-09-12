@@ -41,6 +41,10 @@ a {
   border-radius: 50%;
   animation: spinner 0.3s linear infinite;
 }
+.spinner.sm {
+  width: 30px;
+  height: 30px;
+}
 .spinner.stop {
   display: none;
 }

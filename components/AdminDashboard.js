@@ -17,13 +17,11 @@ import { MdDashboard, MdExitToApp } from "react-icons/md";
 import { FaSearch, FaEdit, FaTimes } from "react-icons/fa";
 
 // app
-const AdminDashboard = ({ data }) => {
-  const { products, customers } = data;
+const AdminDashboard = () => {
   const { isAdmin, user } = Store();
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState(0);
   const [sideBar, setSideBar] = useState(false);
-  const [id, setId] = useState("");
 
   // local funcs
   const handleLogout = () => {
@@ -115,12 +113,10 @@ const AdminDashboard = ({ data }) => {
         </div>
 
         <main className="mt10">
-          {currentTab == 0 && <AdminDashBoardHome data={data} />}
-          {currentTab == 1 && (
-            <AdminSearch data={{ handleSetTab, setId, products }} />
-          )}
+          {currentTab == 0 && <AdminDashBoardHome />}
+          {currentTab == 1 && <AdminSearch handleSetTab={handleSetTab} />}
           {currentTab == 2 && <AdminAdd />}
-          {currentTab == 3 && <AdminEdit data={{ id, products }} />}
+          {currentTab == 3 && <AdminEdit />}
         </main>
       </section>
     </DashboardWrapper>

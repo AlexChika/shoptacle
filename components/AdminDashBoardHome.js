@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { AdminStore } from "../pages/admin";
 import Paginate from "./Paginate";
 import { paginateFn } from "../utils/functions";
 let seed = [
@@ -20,8 +21,9 @@ let seed = [
   { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
 ];
 // app
-const AdminDasnBoardHome = ({ data }) => {
-  const { customers, products } = data;
+const AdminDasnBoardHome = () => {
+  const { products, customers } = AdminStore();
+
   //  add no property to our data
   let newData = seed.map((seed, index) => {
     return {
@@ -46,6 +48,7 @@ const AdminDasnBoardHome = ({ data }) => {
       return;
     }
     setShowForm(false);
+
     // call a firebase func to update our object.
   };
 

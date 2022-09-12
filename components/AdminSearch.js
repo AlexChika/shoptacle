@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
+import { AdminStore } from "../pages/admin";
 import Image from "next/image";
 import Modal from "./Modal";
 import { FiSearch } from "react-icons/fi";
 import { formatPrice } from "../utils/functions";
-const AdminSearch = ({ data }) => {
-  const { handleSetTab, products, setId } = data;
+import { ADMIN_SET_ID, ADMIN_REFRESH_STATE } from "../store/actionTypes";
+import { deleteProduct } from "../utils/firebase";
+const AdminSearch = ({ handleSetTab }) => {
+  const { Logger } = Store();
+  const { products, dispatch } = AdminStore();
+
   // states
   const [modal, setModal] = useState(false);
   const [viewProduct, setViewProduct] = useState([]);
@@ -33,18 +39,30 @@ const AdminSearch = ({ data }) => {
 
   const handleEditBtn = (id) => {
     // go to edit page
-    setId(id);
+    dispatch({ type: ADMIN_SET_ID, payload: id });
     handleSetTab(3);
   };
 
-  const handleDeleteBtn = () => {
-    // setModal(true);
-    console.log("hello");
+  const handleDeleteBtn = async (e, id) => {
+    const spinner =
+      e.target.parentElement.parentElement.querySelector(".spinner");
+    spinner.style.display = "block";
+    try {
+      // delete the item from db
+      await deleteProduct(id);
+      setFilteredProducts(filteredproducts.filter((item) => item.id !== id));
+      spinner.style.display = "none";
+      dispatch({ type: ADMIN_REFRESH_STATE });
+      Logger("Item deleted succesfully", "success");
+    } catch (error) {
+      spinner.style.display = "none";
+      Logger("There was an error deleting this item", "error");
+    }
   };
 
   return (
     <Wrapper className="opacity center">
-      <form className="f center mt20">
+      <form onSubmit={(e) => e.preventDefault()} className="f center mt20">
         <input
           onChange={handleSearch}
           placeholder="Search product by name"
@@ -70,6 +88,7 @@ const AdminSearch = ({ data }) => {
               const { id, name, price } = product;
               return (
                 <article key={product.id} className="result center mt20">
+                  <div className={`spinner sm center stop`}></div>
                   <div>
                     <h3>{name}</h3>
                   </div>
@@ -88,7 +107,10 @@ const AdminSearch = ({ data }) => {
                     <button onClick={() => handleEditBtn(id)} type="button">
                       EDIT
                     </button>
-                    <button onClick={() => handleDeleteBtn(id)} type="button">
+                    <button
+                      onClick={(e) => handleDeleteBtn(e, id)}
+                      type="button"
+                    >
                       Delete
                     </button>
                   </div>
@@ -100,12 +122,12 @@ const AdminSearch = ({ data }) => {
       </section>
       <Modal modal={modal} setModal={setModal}>
         {viewProduct.map((product) => {
-          const { mainUrl, price, name, id, quantity, category, brand, desc } =
+          const { imgOne, price, name, id, quantity, category, brand, desc } =
             product;
           return (
             <section key={id} className="modal mt10">
               <div className="image mt30">
-                <Image layout="fill" alt="product image" src={mainUrl}></Image>
+                <Image layout="fill" alt="product image" src={imgOne}></Image>
               </div>
               <article>
                 <h1>{name}</h1>

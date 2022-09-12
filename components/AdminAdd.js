@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Store } from "../store/Context";
+import { AdminStore } from "../pages/admin";
 import { Validate } from "../utils/functions";
 import Modal from "./Modal";
-
+import { ADMIN_REFRESH_STATE } from "../store/actionTypes";
+import { _category } from "../utils/data";
 // firebase imports
 import { addProduct, uploadImage } from "../utils/firebase";
 // app
 const AdminAdd = () => {
   const { Logger, isAdmin, user } = Store();
+  const { dispatch } = AdminStore();
   const validate = new Validate();
 
   // states
   const [modal, setModal] = useState(false);
+  const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [formInput, setFormInput] = useState({
     name: { value: "", valid: false },
@@ -25,7 +29,6 @@ const AdminAdd = () => {
     mainUrl: { value: "", valid: false },
   });
 
-  // local funcs
   // logs invalid input errot to ui
   function logError(status, el) {
     const { valid, msg } = status;
@@ -47,6 +50,7 @@ const AdminAdd = () => {
   function inputsOnchange(e) {
     const name = e.target.name;
     let value = e.target.value;
+    console.log(value);
     let status;
     const statusEl = document.querySelector(`[data-id=${name}]`);
 
@@ -57,11 +61,11 @@ const AdminAdd = () => {
       status = validate.text(value, ...[,], ...[,], "Collection");
     }
     if (name == "price") {
-      value = Number(value);
+      value = parseInt(value);
       status = validate.number(value, 100, ...[,], "Price in Kobo");
     }
     if (name == "quantity") {
-      value = Number(value);
+      value = parseInt(value);
       status = validate.number(value, 1, ...[,], "Quantity");
     }
     if (name == "brand") {
@@ -144,8 +148,7 @@ const AdminAdd = () => {
         brand: formInput.brand.value,
         category: formInput.category.value,
         desc: formInput.desc.value,
-        mainUrl: url,
-        images: [],
+        imgOne: url,
         rating: {
           five: 0,
           four: 0,
@@ -156,6 +159,7 @@ const AdminAdd = () => {
       };
       const snapshot = await addProduct(productData);
       document.querySelector("[data-id = image]").style.display = "none";
+      e.target.reset();
       setFormInput({
         name: { value: "", valid: false },
         collection: { value: "", valid: false },
@@ -168,6 +172,7 @@ const AdminAdd = () => {
       });
       setLoading(false);
       Logger("Product was added succefully", "success");
+      dispatch({ type: ADMIN_REFRESH_STATE });
     } catch (error) {
       setLoading(true);
       Logger("There was an error, Please try again", "error");
@@ -199,7 +204,10 @@ const AdminAdd = () => {
             <label htmlFor="collection">Collection</label>
             <select
               value={formInput.collection.value}
-              onChange={inputsOnchange}
+              onChange={(e) => {
+                inputsOnchange(e);
+                setCategory(_category[e.target.value]);
+              }}
               name="collection"
               id="collection"
             >
@@ -264,14 +272,23 @@ const AdminAdd = () => {
           <div className="halfwrap">
             <div className="formInput f mt10">
               <label htmlFor="category">Category</label>
-              <input
+              <select
                 onChange={inputsOnchange}
                 value={formInput.category.value}
                 name="category"
-                type="text"
                 id="category"
-                placeholder="Eg Men Suits"
-              />
+              >
+                <option disabled value="">
+                  Select a category
+                </option>
+                {category.map((category, index) => {
+                  return (
+                    <option className="capitalize" key={index} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <p data-id="category" className="status"></p>
           </div>

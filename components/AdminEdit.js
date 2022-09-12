@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Store } from "../store/Context";
+import { AdminStore } from "../pages/admin";
 import styled from "styled-components";
-const AdminEdit = ({ data }) => {
-  const { id, products } = data;
-  const { Logger } = Store();
-  const [loading, setLoading] = useState(true);
-  const [searchValue, setSearchValue] = useState(id);
+import Modal from "./Modal";
+import { ADMIN_REFRESH_STATE } from "../store/actionTypes";
+import { Validate } from "../utils/functions";
+import { _category } from "../utils/data";
+import { updateProduct, uploadImage } from "../utils/firebase";
+
+const AdminEdit = () => {
+  const { editId, products, dispatch } = AdminStore();
+  const { Logger, user, isAdmin } = Store();
+  // local state
+  const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [searchValue, setSearchValue] = useState(editId);
   const [editProduct, setEditProduct] = useState(null);
   const [formInput, setFormInput] = useState({
     name: { value: "", valid: false },
@@ -15,60 +25,59 @@ const AdminEdit = ({ data }) => {
     brand: { value: "", valid: false },
     category: { value: "", valid: false },
     desc: { value: "", valid: false },
-    mainUrl: { value: "", valid: false },
   });
 
-  // update input field to contain product details to be edited
-  useEffect(() => {
+  // update input fields to contain product details to be edited
+  function fillForms(product) {
     setFormInput({
-      name: { value: editProduct?.name, valid: false },
-      collection: { value: "", valid: false },
-      price: { value: "", valid: false },
-      quantity: { value: "", valid: false },
-      brand: { value: "", valid: false },
-      category: { value: "", valid: false },
-      desc: { value: "", valid: false },
-      mainUrl: { value: "", valid: false },
+      name: { value: product.name, valid: true },
+      collection: { value: product.collection, valid: true },
+      price: { value: Number(product.price), valid: true },
+      quantity: { value: Number(product.quantity), valid: true },
+      brand: { value: product.brand, valid: true },
+      category: { value: product.category, valid: true },
+      desc: { value: product.desc, valid: true },
     });
-  }, [editProduct]);
+    setCategory(_category[product.collection]);
+    document.querySelectorAll(".editForm .status").forEach((el) => {
+      el.textContent = "";
+    });
+  }
 
-  // local funcs
   const handleSearch = (e) => {
     e.preventDefault();
     const product = products.find((item) => item.id === searchValue);
     if (product) {
       setEditProduct(product);
+      fillForms(product);
     } else {
+      setEditProduct("");
       Logger("Product not found or Id is incorrect", "error");
     }
   };
 
-  function handleEditProduct(e) {
-    e.preventDefault();
-    if (!editProduct)
-      return Logger("Product not found or Id is incorrect", "error");
-  }
-
-  // logs invalid input errot to ui
-  function logError(status, el) {
-    const { valid, msg } = status;
-    if (valid) {
-      el.textContent = "";
-    } else {
-      el.textContent = msg;
-    }
-  }
-  // helper func to update inputs state
-  function updateState(name, status) {
-    const { valid, value } = status;
-    setFormInput({
-      ...formInput,
-      [name]: { ...formInput[name], valid, value },
-    });
-  }
   // inputs onChange handler
+  const validate = new Validate();
   function inputsOnchange(e) {
-    return;
+    // helper func to update inputs state
+    function updateState(name, status) {
+      const { valid, value } = status;
+      setFormInput({
+        ...formInput,
+        [name]: { ...formInput[name], valid, value },
+      });
+    }
+
+    // logs invalid input errot to ui
+    function logError(status, el) {
+      const { valid, msg } = status;
+      if (valid) {
+        el.textContent = "";
+      } else {
+        el.textContent = msg;
+      }
+    }
+
     const name = e.target.name;
     let value = e.target.value;
     let status;
@@ -81,11 +90,11 @@ const AdminEdit = ({ data }) => {
       status = validate.text(value, ...[,], ...[,], "Collection");
     }
     if (name == "price") {
-      value = Number(value);
+      value = parseInt(value);
       status = validate.number(value, 100, ...[,], "Price in Kobo");
     }
     if (name == "quantity") {
-      value = Number(value);
+      value = parseInt(value);
       status = validate.number(value, 1, ...[,], "Quantity");
     }
     if (name == "brand") {
@@ -97,51 +106,16 @@ const AdminEdit = ({ data }) => {
     if (name == "desc") {
       status = validate.text(value, 100, ...[,], "Detail");
     }
-    if (name == "mainUrl") {
-      const file = e.target.files[0];
-      const image = document.querySelector(`[data-id=image]`);
-      image.style.display = "none";
-      // check if file exists
-      if (!file) {
-        status = {
-          msg: "No images detected",
-          valid: false,
-        };
-        value = "";
-        image.setAttribute("src", "");
-      } else {
-        // Check if the file is an image.
-        if (!file.type.match("image.*")) {
-          status = {
-            msg: "Only Image Uploads is allowed",
-            valid: false,
-          };
-          value = "";
-          image.setAttribute("src", "");
-        } else {
-          value = file;
-          status = {
-            valid: true,
-            msg: "Image is Valid",
-          };
-          const fileReader = new FileReader();
-          fileReader.readAsDataURL(file);
-          fileReader.addEventListener("load", function () {
-            image.setAttribute("src", this.result);
-            image.style.display = "block";
-          });
-        }
-      }
-    }
-
     updateState(name, { ...status, value });
     logError(status, statusEl);
   }
 
-  async function handleAddProduct(e) {
+  async function handleEditProduct(e) {
     e.preventDefault();
+    if (!editProduct)
+      return Logger("Product not found or Id is incorrect", "error");
 
-    // check if all inputs are valid
+    //  check to see if all input is valid
     for (const key in formInput) {
       if (formInput[key].valid == false) {
         Logger("Invalid entries, Please try again", "error");
@@ -149,6 +123,7 @@ const AdminEdit = ({ data }) => {
       }
     }
 
+    // check to see if user is an admin
     if (!isAdmin) {
       setModal(true);
       return;
@@ -156,10 +131,6 @@ const AdminEdit = ({ data }) => {
 
     try {
       setLoading(true);
-      const name = formInput.name.value;
-      const file = formInput.mainUrl.value;
-      const filePath = `products/${name}/imgone`;
-      const url = await uploadImage(file, filePath);
       const productData = {
         name: formInput.name.value,
         collection: formInput.collection.value,
@@ -168,18 +139,8 @@ const AdminEdit = ({ data }) => {
         brand: formInput.brand.value,
         category: formInput.category.value,
         desc: formInput.desc.value,
-        mainUrl: url,
-        images: [],
-        rating: {
-          five: 0,
-          four: 0,
-          three: 0,
-          two: 0,
-          one: 0,
-        },
       };
-      const snapshot = await addProduct(productData);
-      document.querySelector("[data-id = image]").style.display = "none";
+      const snapshot = await updateProduct(editProduct.id, productData);
       setFormInput({
         name: { value: "", valid: false },
         collection: { value: "", valid: false },
@@ -188,15 +149,79 @@ const AdminEdit = ({ data }) => {
         brand: { value: "", valid: false },
         category: { value: "", valid: false },
         desc: { value: "", valid: false },
-        mainUrl: { value: "", valid: false },
       });
       setLoading(false);
-      Logger("Product was added succefully", "success");
+      Logger("Product was Edited succefully", "success");
+      dispatch({ type: ADMIN_REFRESH_STATE });
     } catch (error) {
       setLoading(true);
       Logger("There was an error, Please try again", "error");
     }
   }
+
+  async function uploadImages(e) {
+    e.preventDefault();
+
+    if (!editProduct)
+      return Logger("Product not found or Id is incorrect", "error");
+
+    const form = e.target;
+    const inputEl = form.querySelector("input");
+    const inputName = inputEl.name;
+    const file = inputEl.files[0];
+
+    if (!file) {
+      Logger(`You have not selected any file at ${inputName}`, "error");
+      return;
+    }
+
+    if (!file.type.match("image.*")) {
+      Logger(`Only Image Uploads is allowed at ${inputName}`, "error");
+      return;
+    }
+
+    // check to see if user is an admin
+    if (!isAdmin) {
+      setModal(true);
+      return;
+    }
+
+    // convert name to pascal
+    let pascalName;
+    switch (inputName) {
+      case "image one":
+        pascalName = "imgOne";
+        break;
+      case "image two":
+        pascalName = "imgTwo";
+        break;
+      case "image three":
+        pascalName = "imgThree";
+        break;
+      case "image four":
+        pascalName = "imgFour";
+        break;
+      default:
+        throw new Error("Error image name type");
+    }
+
+    const filePath = `products/${formInput.name.value}/${pascalName}`;
+
+    try {
+      setLoading(true);
+      const url = await uploadImage(file, filePath);
+      const snapshot = await updateProduct(editProduct.id, {
+        [pascalName]: url,
+      });
+      Logger("Image was uploaded successfully", "success");
+      setLoading(false);
+      form.reset();
+    } catch (error) {
+      setLoading(false);
+      Logger(`Image Upload failed at ${inputName}`, "error");
+    }
+  }
+
   return (
     <Wrapper className="opacity center">
       <h1 className="title mt20">Edit Products</h1>
@@ -215,7 +240,7 @@ const AdminEdit = ({ data }) => {
         <button type="submit">Submit</button>
       </form>
 
-      <form onSubmit={handleEditProduct} className="center mt30">
+      <form onSubmit={handleEditProduct} className="editForm center mt30">
         <div className="fullwrap">
           <div className="formInput f mt10">
             <label htmlFor="name">Name</label>
@@ -236,7 +261,10 @@ const AdminEdit = ({ data }) => {
             <label htmlFor="collection">Collection</label>
             <select
               value={formInput.collection.value}
-              onChange={inputsOnchange}
+              onChange={(e) => {
+                inputsOnchange(e);
+                setCategory(_category[e.target.value]);
+              }}
               name="collection"
               id="collection"
             >
@@ -301,14 +329,23 @@ const AdminEdit = ({ data }) => {
           <div className="halfwrap">
             <div className="formInput f mt10">
               <label htmlFor="category">Category</label>
-              <input
+              <select
                 onChange={inputsOnchange}
                 value={formInput.category.value}
                 name="category"
-                type="text"
                 id="category"
-                placeholder="Eg Men Suits"
-              />
+              >
+                <option disabled value="">
+                  Select a category
+                </option>
+                {category.map((category, index) => {
+                  return (
+                    <option className="capitalize" key={index} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <p data-id="category" className="status"></p>
           </div>
@@ -331,26 +368,69 @@ const AdminEdit = ({ data }) => {
           <img data-id="image" src="" alt="product image" />
         </div>
 
-        <div className="fullwrap">
-          <div className="formInput f">
-            <label htmlFor="image">Image</label>
-            <input
-              onChange={inputsOnchange}
-              accept="image/*"
-              type="file"
-              name="mainUrl"
-              id="image"
-            />
-          </div>
-          <p data-id="mainUrl" className="status"></p>
-        </div>
-
         <div className={`spinner mt20 center ${loading ? "" : "stop"}`}></div>
 
         <div className="fullwrap mt10">
-          <button type="submit">ADD PRODUCT</button>
+          <button type="submit">EDIT PRODUCT</button>
         </div>
       </form>
+
+      {/* optional for image uploads */}
+      <h2 className="mt30">OPTIONAL</h2>
+      <form onSubmit={uploadImages} className="form f center mt20">
+        <input accept="image/*" type="file" name="image one" />
+        <button type="submit">Image One</button>
+      </form>
+      <form onSubmit={uploadImages} className="form f center mt20">
+        <input accept="image/*" type="file" name="image two" />
+        <button type="submit">Image Two</button>
+      </form>
+      <form onSubmit={uploadImages} className="form f center mt20">
+        <input accept="image/*" type="file" name="image three" />
+        <button type="submit">Image Three</button>
+      </form>
+      <form onSubmit={uploadImages} className="form f center mt20">
+        <input accept="image/*" type="file" name="image four" />
+        <button type="submit">Image Four</button>
+      </form>
+
+      <Modal modal={modal} setModal={setModal}>
+        <section className="modal">
+          <h1 className="mt20 capitalize">Hello {user.firstName}</h1>
+          <p className="mt10">
+            You are not an admin and cannot make changes to SHOPTACLE
+          </p>
+
+          <h4 className="mt10">
+            However, if you wish to make Edits and add Products to SHOPTACE or
+            to Test the app, please send a mail to &nbsp;
+            <a href="mailto:i.am.alex.chika@gmail.com">
+              i.am.alex.chika@gmail.com
+            </a>{" "}
+            &nbsp; for Admin access using your registered email
+          </h4>
+          <h3 className="mt10">OR</h3>
+          <small className="mt10">Submit the below form</small>
+          <form
+            action="https://formspree.io/f/xbjbdqbl"
+            method="post"
+            className="f mt10"
+          >
+            <input
+              defaultValue={user.email}
+              required
+              type="email"
+              name="Email"
+              id=""
+            />
+            <button type="submit">Submit</button>
+          </form>
+          <small>
+            Once we recieve your email, you will be notified as soon as you now
+            have admin access
+          </small>
+        </section>
+      </Modal>
     </Wrapper>
   );
 };
@@ -360,6 +440,11 @@ const Wrapper = styled.main`
   max-width: 1170px;
   color: var(--blue);
   padding-bottom: 30px;
+  text-align: center;
+  .title {
+    text-align: center;
+  }
+
   .form {
     max-width: 600px;
     input {
@@ -374,9 +459,6 @@ const Wrapper = styled.main`
       flex: 0.3;
       border-radius: 0;
     }
-  }
-  .title {
-    text-align: center;
   }
 
   form {
@@ -454,6 +536,41 @@ const Wrapper = styled.main`
       padding: 10px;
       color: white;
       border-radius: 10px;
+    }
+  }
+
+  .modal {
+    color: var(--blue);
+    text-align: center;
+    h1 {
+    }
+    h3 {
+      color: orange;
+    }
+    h4 {
+      color: skyblue;
+    }
+    p {
+      color: tomato;
+    }
+    a {
+      text-decoration: underline;
+      color: teal;
+    }
+    form {
+      width: 100%;
+    }
+    input {
+      width: 65%;
+      padding: 10px;
+      background-color: white;
+    }
+    button {
+      color: white;
+      width: 35%;
+
+      padding: 10px;
+      border-radius: 0;
     }
   }
   @media screen and (min-width: 600px) {
