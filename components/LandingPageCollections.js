@@ -12,11 +12,11 @@ const CollectionCard = ({ collection }) => {
         <div className="content">
           <h1>{collection.id}</h1>
           <h2 className="trans">
-            <Link href={`/shop/${collection.blob}`}>{collection.name}</Link>
+            <Link href={collection.blob}>{collection.name}</Link>
           </h2>
           <p className="mt20">{collection.desc}</p>
           <button className="mt30 center trans">
-            <Link href={`/shop/${collection.blob}`}>Shop Now</Link>
+            <Link href={collection.blob}>Shop Now</Link>
           </button>
         </div>
       </div>

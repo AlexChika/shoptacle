@@ -21,6 +21,7 @@ const AdminAdd = () => {
   const [formInput, setFormInput] = useState({
     name: { value: "", valid: false },
     collection: { value: "", valid: false },
+    arrival: { value: "", valid: false },
     price: { value: "", valid: false },
     quantity: { value: "", valid: false },
     brand: { value: "", valid: false },
@@ -60,9 +61,12 @@ const AdminAdd = () => {
     if (name == "collection") {
       status = validate.text(value, ...[,], ...[,], "Collection");
     }
+    if (name == "arrival") {
+      status = validate.text(value, ...[,], ...[,], "Arrival");
+    }
     if (name == "price") {
       value = parseInt(value);
-      status = validate.number(value, 100, ...[,], "Price in Kobo");
+      status = validate.number(value, 100, ...[,], "Price in Naira");
     }
     if (name == "quantity") {
       value = parseInt(value);
@@ -143,7 +147,8 @@ const AdminAdd = () => {
       const productData = {
         name: formInput.name.value,
         collection: formInput.collection.value,
-        price: formInput.price.value,
+        arrival: formInput.arrival.value,
+        price: formInput.price.value * 100,
         quantity: formInput.quantity.value,
         brand: formInput.brand.value,
         category: formInput.category.value,
@@ -163,6 +168,7 @@ const AdminAdd = () => {
       setFormInput({
         name: { value: "", valid: false },
         collection: { value: "", valid: false },
+        arrival: { value: "", valid: false },
         price: { value: "", valid: false },
         quantity: { value: "", valid: false },
         brand: { value: "", valid: false },
@@ -221,6 +227,25 @@ const AdminAdd = () => {
             </select>
           </div>
           <p data-id="collection" className="status"></p>
+        </div>
+
+        <div className="fullwrap">
+          <div className="formInput f">
+            <label htmlFor="arrival">Arrival</label>
+            <select
+              value={formInput.arrival.value}
+              onChange={inputsOnchange}
+              name="arrival"
+              id="arrival"
+            >
+              <option disabled value="">
+                Select action
+              </option>
+              <option value="New Arrival">New Arrival</option>
+              <option value="Not New Arrival">Not New Arrival</option>
+            </select>
+          </div>
+          <p data-id="arrival" className="status"></p>
         </div>
 
         <span className="f j-between">

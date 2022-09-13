@@ -58,6 +58,12 @@ async function addProduct(data) {
   const resp = await addDoc(productsColRef, data);
 }
 
+async function getProduct(id) {
+  const ref = getProductDocRef(id);
+  const snapshot = await getDoc(ref);
+  return snapshot.data();
+}
+
 async function updateProduct(productId, data) {
   const ref = getProductDocRef(productId);
   await updateDoc(ref, data);
@@ -97,6 +103,11 @@ async function getAllCustomers() {
 }
 
 // get documents of a sub collection
+async function addSubDocs(mainCol, id, subCol, data) {
+  const ref = getSubColRef(mainCol, id, subCol);
+  const resp = await addDoc(ref, data);
+}
+
 async function getSubDocs(mainCol, id, subCol) {
   const ref = getSubColRef(mainCol, id, subCol);
   const snapshot = await getDocs(ref);
@@ -149,4 +160,6 @@ export {
   searchProduct,
   getAllProducts,
   getAllCustomers,
+  addSubDocs,
+  getProduct,
 };

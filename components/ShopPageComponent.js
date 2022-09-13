@@ -3,11 +3,13 @@ import styled from "styled-components";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { seedData, collections } from "../utils/data";
+import { seedData } from "../utils/data";
 
-export const ProductRow = ({ collection, color, uniqueProduct }) => {
-  const { name, blob } = collection;
+export const ProductRow = ({ params, products }) => {
+  const { name, blob, color } = params;
+  let _products = products || [...seedData, ...seedData];
   let count = 0;
+
   const scrollForward = (e) => {
     const container = e.currentTarget.parentElement;
     const cardArray = [...container.querySelectorAll(".card")];
@@ -15,12 +17,14 @@ export const ProductRow = ({ collection, color, uniqueProduct }) => {
     if (count >= cardArray.length) {
       count = cardArray.length - 5;
     }
+    return console.log(cardArray.length);
     cardArray[count].scrollIntoView({
       behavior: "smooth",
       block: "nearest",
       inline: "start",
     });
   };
+
   const scrollBackward = (e) => {
     const container = e.currentTarget.parentElement;
     const cardArray = [...container.querySelectorAll(".card")];
@@ -34,24 +38,25 @@ export const ProductRow = ({ collection, color, uniqueProduct }) => {
       inline: "start",
     });
   };
+
   return (
     <ProductRowWrapper color={color}>
       <div className="header f align j-between">
-        <h1>
-          <Link href={`/shop/${blob}`}>{name}</Link>
-        </h1>
-        <Link href={`/shop/${blob}`}>
-          <button className="f fcenter">
-            See All{" "}
-            <span>
-              <FaAngleRight />
-            </span>
-          </button>
-        </Link>
+        <h1>{blob ? <Link href={blob}>{name}</Link> : name}</h1>
+        {blob && (
+          <Link href={blob}>
+            <button className="f fcenter">
+              See All{" "}
+              <span>
+                <FaAngleRight />
+              </span>
+            </button>
+          </Link>
+        )}
       </div>
       <div className="container">
         <div className="card-container center">
-          {[...seedData, ...seedData].map((product, index) => {
+          {_products.slice(0, 15).map((product, index) => {
             return (
               <article key={index} className="card">
                 <ProductCard product={product} />
@@ -78,11 +83,18 @@ export const ProductRow = ({ collection, color, uniqueProduct }) => {
   );
 };
 
-const ProductsPage = () => {
+const ProductsPage = ({ products }) => {
   return (
     <Wrapper className="center">
-      {collections.map((col, index) => {
-        return <ProductRow key={index} color={"#fee2cc"} collection={col} />;
+      {products.map((item, index) => {
+        let { name, blob, product } = item;
+        return (
+          <ProductRow
+            key={index}
+            params={{ name, blob, color: "#fee2cc" }}
+            products={product}
+          />
+        );
       })}
     </Wrapper>
   );

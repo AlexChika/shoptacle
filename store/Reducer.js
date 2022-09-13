@@ -55,6 +55,15 @@ function reducer(state, action) {
       isAdmin: action.payload,
     };
   }
+
+  // set recent
+  if (action.type === actionTypes.SET_RECENT) {
+    return {
+      ...state,
+      recent: action.payload,
+    };
+  }
+
   return state;
 }
 

@@ -10,12 +10,12 @@ const HeroBar = () => {
     if (path === "/shop/[productDetail]") {
       path = router.asPath;
     }
-    let pageName = path.split("/").at(-1);
+    let pageName = path.split("/").at(-1).split("_").at(0);
     path = pageName === "" ? "/" : path;
     pageName = pageName === "" ? "Home" : pageName.replace(/\d|[%-]/gi, " ");
     return {
       path: path,
-      pageName,
+      name: pageName.substring(0, 20),
     };
   }
   return (
@@ -23,9 +23,9 @@ const HeroBar = () => {
       <div className="hero-content center">
         <h3 className="capitalize">
           <Link href={pathNames(preRoute).path}>
-            <span className="trans">{pathNames(preRoute).pageName}&nbsp;</span>
+            <span className="trans">{pathNames(preRoute).name}&nbsp;</span>
           </Link>
-          /&nbsp;{pathNames(currRoute).pageName}
+          /&nbsp;{pathNames(currRoute).name}
         </h3>
       </div>
     </Wrapper>

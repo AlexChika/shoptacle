@@ -1,41 +1,162 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { Store } from "../store/Context";
 import { BsStarFill, BsStar } from "react-icons/bs";
 import { calculateStars, displayStar, paginateFn } from "../utils/functions";
 import Paginate from "./Paginate";
-const UserReviews = ({ rating, name }) => {
-  const array = [];
+import { addSubDocs, getProduct, updateProduct } from "../utils/firebase";
+
+// app
+const UserReviews = ({ data }) => {
+  const { Logger, user } = Store();
+  const { product, reviews, id, refresh, setRefresh } = data;
+  const { rating, name } = product;
+  const router = useRouter();
+  // local states
   const [selectStarRating, setSelectStarRating] = useState(0);
+  const [formInput, setFormInput] = useState({
+    title: "",
+    experience: "",
+  });
   const [currentBtn, setCurrentBtn] = useState(0);
   const reviewRef = useRef(null);
   const [paginateUserReviews, setPaginateUserReviews] = useState(
-    paginateFn(array, 5).items
+    paginateFn(reviews, 5).items.reverse()
   );
+
+  // local funcs
   const handlePaginate = (val) => {
-    const newItems = paginateFn(array, 5, val).items;
+    const newItems = paginateFn(reviews, 5, val).items.reverse();
     setPaginateUserReviews(newItems);
     setCurrentBtn(val);
     reviewRef.current.scrollTo(0, 0);
   };
+
+  function handleFormInput(e) {
+    let name = e.target.name;
+    let value = e.target.value;
+    const el = e.target;
+    if (value.length < 5) {
+      el.style.border = "2px solid red";
+    } else {
+      el.style.border = "2px solid green";
+    }
+    setFormInput({ ...formInput, [name]: value });
+  }
+
+  async function handleRateProduct(e) {
+    e.preventDefault();
+    const spinner = e.target.querySelector(".spinner");
+    const experience = formInput.experience.trim();
+    const title = formInput.title.trim();
+
+    // check for star rating
+    if (selectStarRating < 1) {
+      return Logger("Please select atleast one star", "error");
+    }
+
+    // check for inputs fields
+    if (experience.length < 5 || title.length < 5) {
+      return Logger("Please Fill Input Fields", "error");
+    }
+
+    // check if user is logged in
+    if (!user) {
+      Logger("You must be signed in to make reviews", "error");
+      router.push("/profile");
+      return;
+    }
+    // activate spinner
+    spinner.style.display = "block";
+
+    let type;
+    switch (selectStarRating) {
+      case 1:
+        type = "one";
+        break;
+      case 2:
+        type = "two";
+        break;
+      case 3:
+        type = "three";
+        break;
+      case 4:
+        type = "four";
+        break;
+      case 5:
+        type = "five";
+        break;
+      default:
+        break;
+    }
+
+    // review object to add to reviews collection
+    const review = {
+      name: `${user.firstName} ${user.lastName}`,
+      star: selectStarRating,
+      date: new Date().toDateString(),
+      title,
+      experience,
+    };
+    try {
+      // get current product rating
+      const product = await getProduct(id);
+
+      // new rating object
+      const newRating = {
+        rating: { ...product.rating, [type]: rating[type] + 1 },
+      };
+      await updateProduct(id, newRating);
+      await addSubDocs("products", id, "reviews", review);
+      await addSubDocs("customers", user.email, "reviews", review);
+      spinner.style.display = "none";
+
+      // clear form
+      setFormInput({
+        title: "",
+        experience: "",
+      });
+      setSelectStarRating(0);
+      Logger("We have added your review", "success");
+      // update product and reviews
+      setRefresh(refresh + 1);
+    } catch (error) {
+      spinner.style.display = "none";
+      Logger("We encountered an error, pls try again", "error");
+    }
+  }
+
+  // update paginate reviews in case reviews changes
+  useEffect(() => {
+    setPaginateUserReviews(paginateFn(reviews, 5).items.reverse());
+  }, [reviews]);
+
+  // values
+  const stars = calculateStars(rating).stars;
+  const totalRating = calculateStars(rating).totalRating;
+
+  // jsx
   return (
     <Wrapper className="mt30">
       <div className="heading center">
         <h1>Verified User Reviews</h1>
         <p className="f mt10">
-          <span>{calculateStars(rating).stars}/5</span>&nbsp;
+          <span>{stars}/5</span>&nbsp;
           <span>
-            {displayStar(calculateStars(rating).stars).map((star, index) => {
+            {displayStar(stars).map((star, index) => {
               return <span key={index}>{star}</span>;
             })}
           </span>
           &nbsp; &nbsp;
-          <span>{calculateStars(rating).totalRating}</span>&nbsp;
+          <span>{totalRating}</span>&nbsp;
           <span>verified ratings</span>
         </p>
       </div>
+
       <div className="content f">
         {/* form section */}
-        <form className="center f align j-around">
+        <form onSubmit={handleRateProduct} className="center f align j-around">
           <h2>Rate {name}</h2>
           <div className="star-con">
             {[1, 2, 3, 4, 5].map((btn) => {
@@ -53,45 +174,52 @@ const UserReviews = ({ rating, name }) => {
               );
             })}
           </div>
-          <input placeholder="Comment Title" type="text" />
+          <input
+            onChange={handleFormInput}
+            value={formInput.title}
+            placeholder="Comment Title"
+            type="text"
+            name="title"
+            required
+            data-id="title"
+          />
           <textarea
             placeholder="Describe Your Experience"
-            name=""
-            id=""
+            name="experience"
+            value={formInput.experience}
+            onChange={handleFormInput}
             cols="30"
             rows="10"
+            required
+            data-id="experience"
           ></textarea>
-          <button className="submit-btn mt30 center" type="button">
+          <div className="spinner stop mt20"></div>
+          <button className="submit-btn mt30 center" type="submit">
             Submit
           </button>
         </form>
+
         {/* reviews section */}
         <article className="review-con center">
           <p className="title capitalize">
-            {"435"} Reviews For {name}
+            {reviews.length} Reviews For {name}
           </p>
           <div ref={reviewRef} className="reviews">
             {paginateUserReviews.length > 0 ? (
-              paginateUserReviews.map((review, index) => {
+              paginateUserReviews.map((review) => {
+                const { experience, date, title, name, star, id } = review;
+
                 return (
-                  <div key={index} className="review-row">
+                  <div key={id} className="review-row">
                     <div className="star-con">
-                      {displayStar(5).map((star, index) => {
+                      {displayStar(star).map((star, index) => {
                         return <span key={index}>{star}</span>;
                       })}
                     </div>
-                    <h3 className="mt10">
-                      {"Excellent Product"}
-                      {review}
-                    </h3>
-                    <p className="text mt10">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Ipsam corporis voluptatum quia tempora deserunt
-                      consequatur aperiam, dolores eaque numquam ad.
-                    </p>
+                    <h3 className="mt10">{title}</h3>
+                    <p className="text mt10">{experience}</p>
                     <p className="mt10">
-                      <span>{"12 / 22 / 2022"}</span> &nbsp; by &nbsp;{" "}
-                      <span>{"Alex Chika"}</span>
+                      <span>{date}</span> &nbsp; by &nbsp; <span>{name}</span>
                     </p>
                   </div>
                 );
@@ -105,7 +233,7 @@ const UserReviews = ({ rating, name }) => {
 
           <Paginate
             paginateFn={paginateFn}
-            array={array}
+            array={reviews}
             itemsPerPage={5}
             currentBtn={currentBtn}
             handlePaginate={handlePaginate}
@@ -211,6 +339,7 @@ const Wrapper = styled.section`
       }
       p {
         line-height: 30px;
+        font-size: 16px;
       }
     }
   }

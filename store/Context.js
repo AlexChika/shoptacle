@@ -19,7 +19,7 @@ const initialState = {
   preRoute: "",
   currRoute: "",
   cart: [],
-  outOfStock: [],
+  recent: [], //recently viewed items
 };
 
 // app
@@ -34,9 +34,13 @@ const StoreProvider = ({ setHideFooter, children }) => {
     timeoutId: "",
   });
 
+  // funcs
+  // modal handler
   function handleCloseModal() {
     dispatch({ type: actionTypes.HANDLE_MODAL });
   }
+
+  // error or succes logger
   const Logger = (text, type, time = 4000) => {
     if (type === "success" || type === "error") {
       clearTimeout(logger.timeoutId);
@@ -59,6 +63,25 @@ const StoreProvider = ({ setHideFooter, children }) => {
     }
     throw new Error(`wrong type "${type}" at Logger`);
   };
+
+  //sets recently viewed to local storage
+  const setRecent = (product) => {
+    // first get localstorage
+    let recent = JSON.parse(localStorage.getItem("recent")) || [];
+    recent = recent.slice(0, 20);
+    //second check to see if product exists
+    let isAdded = recent.find((items) => items.id === product.id);
+    if (isAdded) return;
+    recent.unshift(product);
+    // update local storage
+    localStorage.setItem("recent", JSON.stringify(recent));
+    // update state
+    dispatch({ type: actionTypes.SET_RECENT, payload: recent });
+  };
+
+  // cart funcs
+  function addToCart() {}
+  function removeCart() {}
 
   // useEffects
   // monitor route change
@@ -104,18 +127,28 @@ const StoreProvider = ({ setHideFooter, children }) => {
     return unsubscribe;
   }, []);
 
-  // get cart from firestore
+  // get cart from firestore and recents from localstorage
   useEffect(() => {
+    // get cart
     let cart;
     if (state.user) {
       async function getCart() {
-        cart = await getSubDocs("products", state.user.email, "cart");
+        try {
+          cart = await getSubDocs("products", state.user.email, "cart");
+        } catch (error) {
+          cart = [];
+          console.log(error);
+        }
       }
       getCart();
     } else {
       cart = JSON.parse(localStorage.getItem("cart")) || [];
     }
+
+    // get recents
+    let recent = JSON.parse(localStorage.getItem("recent")) || [];
     dispatch({ type: actionTypes.GET_CART, payload: cart });
+    dispatch({ type: actionTypes.SET_RECENT, payload: recent });
   }, [state.user]);
 
   // checks if logged in user is admin
@@ -134,7 +167,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
 
   return (
     <AppContext.Provider
-      value={{ ...state, handleCloseModal, dispatch, Logger }}
+      value={{ ...state, handleCloseModal, dispatch, Logger, setRecent }}
     >
       <Wrapper
         show={logger.show}

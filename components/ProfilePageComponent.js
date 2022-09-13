@@ -323,26 +323,20 @@ const ProfilePageComponent = () => {
             <div>
               <div ref={reviewRef} className="review">
                 {reviewState.paginateReviews.length > 0 ? (
-                  reviewState.paginateReviews.map((review, index) => {
+                  reviewState.paginateReviews.map((review) => {
+                    const { name, star, experience, title, date, id } = review;
                     return (
-                      <div key={index} className="review-row">
+                      <div key={id} className="review-row">
                         <div className="star-con">
-                          {displayStar(5).map((star, index) => {
+                          {displayStar(star).map((star, index) => {
                             return <span key={index}>{star}</span>;
                           })}
                         </div>
-                        <h3 className="mt10">
-                          {"Excellent Product"}
-                          {review.id}
-                        </h3>
-                        <p className="text mt10">
-                          Lorem ipsum dolor, sit amet consectetur adipisicing
-                          elit. Ipsam corporis voluptatum quia tempora deserunt
-                          consequatur aperiam, dolores eaque numquam ad.
-                        </p>
+                        <h3 className="mt10">{title}</h3>
+                        <p className="text mt10">{experience}</p>
                         <p className="mt10">
                           <span>{"Rated on"}</span> &nbsp;
-                          <span>{"12 / 22 / 2022"}</span>
+                          <span>{date}</span>
                         </p>
                       </div>
                     );

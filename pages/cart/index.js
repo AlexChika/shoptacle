@@ -13,14 +13,6 @@ const Index = () => {
   // states
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
-  const [recent, setRecent] = useState();
-
-  //  get recently viewed items
-  useEffect(() => {
-    let recentItems = JSON.parse(localStorage.getItem("recent")) || [];
-    console.log(recentItems);
-    setRecent(recentItems);
-  }, []);
 
   // get updated cart items
   useEffect(() => {
@@ -44,7 +36,7 @@ const Index = () => {
       <NavBar page={"cart"} />
       <SideBar />
       <HeroBar />
-      <CartPageComponent recent={recent} loading={loading} cart={cartItems} />
+      <CartPageComponent loading={loading} cart={cartItems} />
     </Wrapper>
   );
 };

@@ -1,17 +1,15 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import NewArrivalCard from "./NewArrivalCard";
-import { seedData } from "../utils/data";
 import Paginate from "./Paginate";
 import { paginateFn } from "../utils/functions";
-const LandingPageNewArrival = () => {
+const LandingPageNewArrival = ({ product }) => {
   const pageRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
-  const [productList, setProductList] = useState(
-    paginateFn([...seedData, ...seedData], 6).items
-  );
+  const [productList, setProductList] = useState(paginateFn(product, 6).items);
+
   const handlePaginate = (val) => {
-    const newItems = paginateFn([...seedData, ...seedData], 6, val).items;
+    const newItems = paginateFn(product, 6, val).items;
     setProductList(newItems);
     setCurrentBtn(val);
     window.scrollTo(0, Number(pageRef.current.offsetTop));
@@ -26,9 +24,10 @@ const LandingPageNewArrival = () => {
           return <NewArrivalCard key={product.id} product={product} />;
         })}
       </section>
+
       <Paginate
         paginateFn={paginateFn}
-        array={[...seedData, ...seedData]}
+        array={product}
         itemsPerPage={6}
         currentBtn={currentBtn}
         handlePaginate={handlePaginate}

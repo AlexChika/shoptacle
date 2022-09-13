@@ -6,14 +6,14 @@ import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCard = ({ product }) => {
   const router = useRouter();
-  const { id, url, name, price, rating } = product;
+  const { id, url, name, price, rating, imgOne } = product;
   const handleNavigate = () => {
-    router.push(`/shop/${name}-${id}`);
+    router.push(`/shop/${name}_${id}`);
   };
   return (
     <Wrapper onClick={handleNavigate} className="f align">
       <div className="img">
-        <Image alt={name} layout="fill" src={url}></Image>
+        <Image alt={name} layout="fill" src={imgOne}></Image>
       </div>
       <div className="detail f align j-around">
         <h2>{name}</h2>

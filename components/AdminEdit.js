@@ -20,6 +20,7 @@ const AdminEdit = () => {
   const [formInput, setFormInput] = useState({
     name: { value: "", valid: false },
     collection: { value: "", valid: false },
+    arrival: { value: "", valid: false },
     price: { value: "", valid: false },
     quantity: { value: "", valid: false },
     brand: { value: "", valid: false },
@@ -32,6 +33,7 @@ const AdminEdit = () => {
     setFormInput({
       name: { value: product.name, valid: true },
       collection: { value: product.collection, valid: true },
+      arrival: { value: product.arrival, valid: true },
       price: { value: Number(product.price), valid: true },
       quantity: { value: Number(product.quantity), valid: true },
       brand: { value: product.brand, valid: true },
@@ -89,9 +91,12 @@ const AdminEdit = () => {
     if (name == "collection") {
       status = validate.text(value, ...[,], ...[,], "Collection");
     }
+    if (name == "arrival") {
+      status = validate.text(value, ...[,], ...[,], "Arrival");
+    }
     if (name == "price") {
       value = parseInt(value);
-      status = validate.number(value, 100, ...[,], "Price in Kobo");
+      status = validate.number(value, 100, ...[,], "Price in Naira");
     }
     if (name == "quantity") {
       value = parseInt(value);
@@ -134,7 +139,8 @@ const AdminEdit = () => {
       const productData = {
         name: formInput.name.value,
         collection: formInput.collection.value,
-        price: formInput.price.value,
+        arrival: formInput.arrival.value,
+        price: formInput.price.value * 100,
         quantity: formInput.quantity.value,
         brand: formInput.brand.value,
         category: formInput.category.value,
@@ -144,6 +150,7 @@ const AdminEdit = () => {
       setFormInput({
         name: { value: "", valid: false },
         collection: { value: "", valid: false },
+        arrival: { value: "", valid: false },
         price: { value: "", valid: false },
         quantity: { value: "", valid: false },
         brand: { value: "", valid: false },
@@ -278,6 +285,27 @@ const AdminEdit = () => {
             </select>
           </div>
           <p data-id="collection" className="status"></p>
+        </div>
+
+        <div className="fullwrap">
+          <div className="formInput f">
+            <label htmlFor="featured">Arrival</label>
+            <select
+              value={formInput.arrival.value}
+              onChange={(e) => {
+                inputsOnchange(e);
+              }}
+              name="arrival"
+              id="arrival"
+            >
+              <option disabled value="">
+                Select a action
+              </option>
+              <option value="New Arrival">New Arrival</option>
+              <option value="Not New Arrival">Not New Arrival</option>
+            </select>
+          </div>
+          <p data-id="arrival" className="status"></p>
         </div>
 
         <span className="f j-between">

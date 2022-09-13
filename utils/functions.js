@@ -4,8 +4,13 @@ function calculateStars(rating) {
   for (const key in rating) {
     totalRating = totalRating += rating[key];
   }
+
   const { five, four, three, two, one } = rating;
-  let stars = (five * 5 + four * 4 + three * 3 + two * 2 + one) / totalRating;
+  let stars = five * 5 + four * 4 + three * 3 + two * 2 + one;
+  if (totalRating == 0) {
+    return { totalRating, stars: stars.toFixed(1) };
+  }
+  stars = (five * 5 + four * 4 + three * 3 + two * 2 + one) / totalRating;
   stars = stars.toFixed(1);
   return { totalRating, stars };
 }

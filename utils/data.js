@@ -19,9 +19,9 @@ import teamAda from "../public/ada.png";
 import teamDan from "../public/dan.png";
 const seedData = [
   {
-    name: "Design Snickers",
+    name: "Design Snickers", //
     id: 1,
-    url: seedShoe,
+    imgOne: seedShoe,
     images: [seedLadyGown, seedShoe, seedHandBag],
     desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
     category: "gown",
@@ -35,9 +35,9 @@ const seedData = [
     },
   },
   {
-    name: "Designer Ball Gown ",
+    name: "Designer Ball Gown ", //
     id: 2,
-    url: seedLadyGown,
+    imgOne: seedLadyGown,
     images: [seedLadyGown, seedShoe, seedHandBag],
     desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
     category: "gown",
@@ -51,9 +51,9 @@ const seedData = [
     },
   },
   {
-    name: "Channel Bag",
+    name: "Channel Bag", //
     id: 3,
-    url: seedHandBag,
+    imgOne: seedHandBag,
     images: [seedLadyGown, seedShoe, seedHandBag],
     desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
     category: "gown",
@@ -67,9 +67,9 @@ const seedData = [
     },
   },
   {
-    name: "Apple Series Watch",
+    name: "Apple Series Watch", //
     id: 4,
-    url: seedWatch,
+    imgOne: seedWatch,
     images: [seedLadyGown, seedShoe, seedHandBag],
     category: "gown",
     desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
@@ -83,9 +83,9 @@ const seedData = [
     },
   },
   {
-    name: "Design Boots",
+    name: "Design Boots", //
     id: 5,
-    url: seedShoe2,
+    imgOne: seedShoe2,
     images: [seedLadyGown, seedShoe, seedHandBag],
     category: "gown",
     desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
@@ -99,9 +99,9 @@ const seedData = [
     },
   },
   {
-    name: "Versace Jacket",
+    name: "Versace Jacket", //
     id: 6,
-    url: seedJacket,
+    imgOne: seedJacket,
     images: [seedLadyGown, seedShoe, seedHandBag],
     category: "gown",
     desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
@@ -119,28 +119,28 @@ const collections = [
   {
     id: 1,
     name: "Male Fashion",
-    blob: "male-fashion",
+    blob: "/shop/male-fashion",
     img: CollectionMale,
     desc: "Here at Shoptacle we believe Fashion is a form of self-expression and autonomy in a specific context, of clothing. We have over ten thousand clothes available for you to choose from designer wears to your favorite small brands. We have clothes for fashionable men and women. ",
   },
   {
     id: 2,
     name: "Female Fashion",
-    blob: "female-fashion",
+    blob: "/shop/female-fashion",
     img: CollectionFemale,
     desc: "Explore different designer Shoes and bags that would be perfect for your clothes and fit the occasion. Enjoy two years warranty for any designer shoes or bag you buy with express delivery to anywhere in the country. Slay any day effortlessly with our trendy shoes and bags.",
   },
   {
     id: 3,
     name: "Unisex Shoes",
-    blob: "unisex-shoes",
+    blob: "/shop/unisex-shoes",
     img: CollectionShoe,
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
   {
     id: 4,
     name: "Smart Gadgets",
-    blob: "smart-gadgets",
+    blob: "/shop/smart-gadgets",
     img: CollectionGadget,
     desc: "Pick accessories to match what you are wearing. Here at Shoptacle, it is our priority to help you in any way we can and it is our greatest joy to see you slay. Our customer service agents are always available to help you look perfect in case you are not sure and all accessories are of high quality.",
   },
@@ -180,6 +180,7 @@ const team = [
 const _category = {
   ["Male Fashion"]: [
     "shoes",
+    "jackets",
     "sandals",
     "shirts",
     "suits",
@@ -199,12 +200,14 @@ const _category = {
     "shirts",
     "trousers",
     "bra",
+    "bags",
     "pants",
     "mini skirts",
     "high waist",
   ],
   ["Smart Gadgets"]: [
     "smart phones",
+    "smart watches",
     "basic phones",
     "laptops",
     "chargers",

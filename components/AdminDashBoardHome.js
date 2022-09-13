@@ -1,73 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
 import { AdminStore } from "../pages/admin";
 import Paginate from "./Paginate";
 import { paginateFn } from "../utils/functions";
-let seed = [
-  {
-    name: "hello wrold and people and name is long",
-    price: 120000,
-    quantity: 34,
-    brand: "samsung",
-  },
-  { name: "world", price: 120000, quantity: 34, brand: "thermacool" },
-  { name: "people", price: 120000, quantity: 34, brand: "lg lg" },
-  { name: "Jesus", price: 120000, quantity: 34, brand: "logo m" },
-  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
-  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
-  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
-  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
-  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
-  { name: "radio", price: 120000, quantity: 3400, brand: "tv and co" },
-];
+
 // app
 const AdminDasnBoardHome = () => {
   const { products, customers } = AdminStore();
-
-  //  add no property to our data
-  let newData = seed.map((seed, index) => {
-    return {
-      ...seed,
-      no: index,
-    };
-  });
+  const { Logger } = Store();
 
   // states
   const [tab, setTab] = useState("Male Fashion");
   const [showForm, setShowForm] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [currentBtn, setCurrentBtn] = useState(0);
+  const [tableProduct, setTableProduct] = useState(
+    filter("collection", "Male Fashion")
+  );
   const [paginateProducts, setPaginateProducts] = useState(
-    paginateFn(newData, 100).items
+    paginateFn(tableProduct, 50).items
   );
 
-  // funcs
-  const handleTabs = (type) => {
-    setTab(type);
-    if (type === "Brand" || type === "Category") {
+  // helper tp filter products
+  function filter(type, value) {
+    type = type.toLowerCase();
+    let newProducts = products.filter((product, index) => {
+      console.log(index);
+      if (product[type].toLowerCase() === value.toLowerCase()) {
+        return product;
+      }
+    });
+    return newProducts;
+  }
+
+  // funcs changes selected tabs and update table products
+  const handleTabs = (value) => {
+    setTab(value);
+    if (value === "Brand" || value === "Category") {
+      setTableProduct([]);
       setShowForm(true);
       return;
     }
     setShowForm(false);
-
-    // call a firebase func to update our object.
+    const product = filter("collection", value);
+    setTableProduct(product);
   };
 
-  const handleForm = () => {
-    // call firebase func with category/brand param
-    // set seed again
-  };
-
-  // update state with firebase func
-  const getProducts = () => {
-    // call firebase
-    // update the state
+  const handleForm = (e) => {
+    e.preventDefault();
+    if (!searchValue.trim())
+      return Logger(`The input field for ${tab} is empty`, "error");
+    const product = filter(tab, searchValue);
+    setTableProduct(product);
   };
 
   const handlePaginate = (val) => {
-    let newItem = paginateFn(newData, 100, val).items;
+    let newItem = paginateFn(tableProduct, 50, val).items;
     setPaginateProducts(newItem);
     setCurrentBtn(val);
   };
+
+  useEffect(() => {
+    setPaginateProducts(paginateFn(tableProduct, 50).items);
+  }, [tableProduct]);
+
   return (
     <Wrapper className="opacity center">
       {/* counters */}
@@ -78,7 +75,7 @@ const AdminDasnBoardHome = () => {
         </div>
         <div>
           <h3>Out of Stock</h3>
-          <h3>1000</h3>
+          <h3>0</h3>
         </div>
         <div>
           <h3>Total Customers </h3>
@@ -126,48 +123,49 @@ const AdminDasnBoardHome = () => {
         </div>
 
         <h1 className="title mt30">
-          {tab} ({seed.length} Products )
+          {tab} ({tableProduct.length} Products )
         </h1>
 
         {showForm && (
-          <form className="f center mt30">
+          <form onSubmit={handleForm} className="f center mt30">
             <input
               placeholder={`Enter ${tab} Name`}
               type="text"
               name=""
               id=""
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
             />
             <button type="submit">Submit</button>
           </form>
         )}
-        {/* <div className="loading f fcenter mt30">
-          <div className="spinner"></div>
-          <h3 className="mt20">Please Wait...</h3>
-        </div>
-        <div className="loading f fcenter mt30">
-          <h2>There was an error</h2>
-          <h3 className="mt20">Please check parameters and try again</h3>
-        </div> */}
-
-        {seed && (
+        {tableProduct.length < 1 ? (
+          <div className="empty f fcenter mt30">
+            <h2>No products found</h2>
+            {showForm && (
+              <h3 className="mt20">Please check parameters and try again</h3>
+            )}
+          </div>
+        ) : (
           <>
             <div className="table mt30">
               <div className="row">
                 <p>No.</p>
                 <p>Name</p>
-                <p>Price</p>
+                <p>Price (kB)</p>
                 <p>Brand</p>
                 <p>Qty</p>
               </div>
 
-              {paginateProducts.map((seed, index) => {
+              {paginateProducts.map((product, index) => {
+                console.log(product);
                 return (
                   <div key={index} className="row">
-                    <span className="serial">{seed.no + 1}.</span>
-                    <span>{seed.name}</span>
-                    <span>{seed.price}</span>
-                    <span>{seed.brand}</span>
-                    <span>{seed.quantity}</span>
+                    <span className="serial">{index + 1}.</span>
+                    <span>{product.name}</span>
+                    <span>{product.price}</span>
+                    <span>{product.brand}</span>
+                    <span>{product.quantity}</span>
                   </div>
                 );
               })}
@@ -176,8 +174,8 @@ const AdminDasnBoardHome = () => {
               paginateFn={paginateFn}
               currentBtn={currentBtn}
               handlePaginate={handlePaginate}
-              itemsPerPage={100}
-              array={seed}
+              itemsPerPage={50}
+              array={tableProduct}
             />
           </>
         )}
@@ -248,7 +246,7 @@ const Wrapper = styled.main`
       text-align: center;
     }
 
-    .loading {
+    .empty {
       flex-direction: column;
       min-height: 40vh;
       border: 2px solid gray;
@@ -278,18 +276,20 @@ const Wrapper = styled.main`
             200px,
             1fr
           )
-          minmax(50px, 150px);
+          minmax(60px, 150px);
 
         p {
           border: 1px solid gray;
           padding: 10px;
           text-align: center;
           border-bottom: 3px solid;
+          font-size: 20px;
         }
 
         span {
           border: 1px solid gray;
           padding: 10px;
+          font-size: 16px;
         }
       }
 

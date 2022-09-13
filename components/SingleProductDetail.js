@@ -8,19 +8,30 @@ import UserReviews from "./UserReviews";
 import { ProductRow } from "./ShopPageComponent";
 import { MdStarRate } from "react-icons/md";
 import { HiPlus, HiMinus } from "react-icons/hi";
-import { seedData } from "../utils/data";
 import { formatPrice, calculateStars } from "../utils/functions";
-const ProductDetail = ({ id }) => {
-  const { Logger } = Store();
-  const data = seedData.find((item) => item.id === Number(id));
-  const [currentImage, setCurrentImage] = useState(data.url);
+const ProductDetail = ({ data }) => {
+  const { Logger, recent } = Store();
+  const { product, relatedProducts } = data;
+  const [currentImage, setCurrentImage] = useState(product.imgOne);
+
+  const {
+    name,
+    category,
+    price,
+    desc,
+    brand,
+    imgOne,
+    imgTwo,
+    imgThree,
+    imgFour,
+    rating,
+  } = product;
+
   useEffect(() => {
-    setCurrentImage(url);
-  }, [id]);
-  if (!data) {
-    return <div className="spinner center mt30"></div>;
-  }
-  const { name, images, category, price, desc, url, rating } = data;
+    setCurrentImage(product.imgOne);
+  }, [product]);
+
+  const images = [imgOne, imgTwo, imgThree, imgFour];
   return (
     <Wrapper className="center">
       <section className="product-card f mt30">
@@ -28,17 +39,19 @@ const ProductDetail = ({ id }) => {
           <Image alt={name} src={currentImage} layout="fill"></Image>
           <div className="sub-image-con">
             {images.map((img, index) => {
-              return (
-                <div
-                  onClick={() => {
-                    setCurrentImage(img);
-                  }}
-                  className="sub-image"
-                  key={index}
-                >
-                  <Image alt={name} layout="fill" src={img} />
-                </div>
-              );
+              if (img) {
+                return (
+                  <div
+                    onClick={() => {
+                      setCurrentImage(img);
+                    }}
+                    className="sub-image"
+                    key={index}
+                  >
+                    <Image alt={name} layout="fill" src={img} />
+                  </div>
+                );
+              }
             })}
           </div>
           <div className="star-con f align">
@@ -47,6 +60,7 @@ const ProductDetail = ({ id }) => {
             </h1>
           </div>
         </article>
+
         <article className="detail-section f align center">
           <div className="content center">
             <div className="heading">
@@ -57,7 +71,7 @@ const ProductDetail = ({ id }) => {
                   reviews={calculateStars(rating).totalRating}
                 />
                 <p>
-                  Brand : <span>{"Gown"}</span>
+                  Brand : <span>{brand}</span>
                 </p>
               </div>
             </div>
@@ -99,17 +113,27 @@ const ProductDetail = ({ id }) => {
           </div>
         </article>
       </section>
-      <UserReviews rating={rating} name={name} />
+
+      <UserReviews data={data} />
+
       <section className="related-products mt30">
         <ProductRow
-          color={`var(--gray)`}
-          collection={{ name: "Related Products", blob: `${name}-${id}` }}
+          params={{
+            color: `var(--gray)`,
+            name: "Related Products",
+            blob: null,
+          }}
+          products={relatedProducts}
         />
       </section>
       <section className="recently-viewed mt30">
         <ProductRow
-          color={`var(--gray)`}
-          collection={{ name: "Recently Viewed", blob: `${name}-${id}` }}
+          params={{
+            color: "#b3d9b3",
+            name: "Recently Viewed",
+            blob: `/profile/recently-viewed`,
+          }}
+          products={recent}
         />
       </section>
     </Wrapper>
@@ -173,7 +197,11 @@ const Wrapper = styled.main`
   .detail-section {
     background-color: white;
     padding: 10px 0px;
+    max-height: 650px;
+
     .content {
+      max-height: 600px;
+      overflow-y: auto;
       width: 95%;
       padding: 20px 0px;
     }
@@ -243,7 +271,7 @@ const Wrapper = styled.main`
     .detail-section {
       .content {
         padding: 0px;
-        width: 75%;
+        width: 80%;
       }
     }
   }

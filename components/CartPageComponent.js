@@ -11,8 +11,8 @@ import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
 import { paginateFn, formatPrice } from "../utils/functions";
-const CartPageComponent = ({ cart, recent, loading }) => {
-  const { Logger } = Store();
+const CartPageComponent = ({ cart, loading }) => {
+  const { Logger, recent } = Store();
   const cartRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
   const [modal, setModal] = useState(false);
@@ -126,9 +126,12 @@ const CartPageComponent = ({ cart, recent, loading }) => {
 
       <section className="recently-viewed mt30">
         <ProductRow
-          array={recent}
-          color={`white`}
-          collection={{ name: "Recently Viewed", blob: `cart` }}
+          params={{
+            color: "#f2f9f9",
+            name: "Recently Viewed",
+            blob: `/profile/recently-viewed`,
+          }}
+          products={recent}
         />
       </section>
     </Wrapper>

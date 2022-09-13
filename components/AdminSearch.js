@@ -77,6 +77,7 @@ const AdminSearch = ({ handleSetTab }) => {
 
       <section className="result-con mt30 ">
         <h1 className="title">Search Results</h1>
+        <p className="title">To delete, Double click the delete button</p>
 
         <div>
           {filteredproducts.length < 1 ? (
@@ -108,7 +109,7 @@ const AdminSearch = ({ handleSetTab }) => {
                       EDIT
                     </button>
                     <button
-                      onClick={(e) => handleDeleteBtn(e, id)}
+                      onDoubleClick={(e) => handleDeleteBtn(e, id)}
                       type="button"
                     >
                       Delete
@@ -122,8 +123,17 @@ const AdminSearch = ({ handleSetTab }) => {
       </section>
       <Modal modal={modal} setModal={setModal}>
         {viewProduct.map((product) => {
-          const { imgOne, price, name, id, quantity, category, brand, desc } =
-            product;
+          const {
+            imgOne,
+            price,
+            name,
+            id,
+            quantity,
+            category,
+            brand,
+            desc,
+            arrival,
+          } = product;
           return (
             <section key={id} className="modal mt10">
               <div className="image mt30">
@@ -145,6 +155,9 @@ const AdminSearch = ({ handleSetTab }) => {
                 </h5>
                 <h5>
                   ID: &nbsp;<span>{id}</span>
+                </h5>
+                <h5>
+                  Arrival: &nbsp;<span>{arrival}</span>
                 </h5>
                 <h5>
                   DESC: &nbsp;
@@ -182,6 +195,7 @@ const Wrapper = styled.main`
   .result-con {
     .title {
       text-align: center;
+      color: var(--gray);
     }
     .result {
       max-width: 600px;
@@ -234,7 +248,7 @@ const Wrapper = styled.main`
       margin-top: 5px;
     }
     span {
-      letter-spacing: 0.1rem;
+      letter-spacing: 0.012rem;
       font-size: 15px;
       font-weight: 100;
     }

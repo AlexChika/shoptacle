@@ -5,10 +5,10 @@ import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const NewArrivalCard = ({ product }) => {
-  const { price, name, id, rating, url } = product;
+  const { price, name, id, rating, imgOne } = product;
   return (
     <Wrapper className="trans">
-      <Image src={url} alt={name} />
+      <Image width={720} height={960} src={imgOne} alt={name} />
       <div className="star-con f align">
         <h1 className="trans f align">
           <MdStarRate /> <span>{calculateStars(rating).stars}</span>
@@ -19,7 +19,7 @@ const NewArrivalCard = ({ product }) => {
         <div className="f align j-between">
           <span className="">{formatPrice(price)}</span>
           <button className="trans">
-            <Link href={`/shop/${name}-${id}`}>Add To Cart</Link>
+            <Link href={`/shop/${name}_${id}`}>Add To Cart</Link>
           </button>
         </div>
       </div>
@@ -32,6 +32,7 @@ const Wrapper = styled.article`
   position: relative;
   cursor: pointer;
   color: var(--blue);
+
   .star-con {
     position: absolute;
     top: 20px;
@@ -68,14 +69,14 @@ const Wrapper = styled.article`
       font-weight: 700;
     }
     h1 {
-      font-size: 18px;
+      font-size: 16px;
     }
     span {
-      font-size: 18px;
+      font-size: 16px;
     }
     button {
       border: 2px solid var(--blue);
-      padding: 10px;
+      padding: 5px 10px;
       font-size: 12px;
     }
   }
