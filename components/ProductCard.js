@@ -17,6 +17,7 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="detail f align j-around">
         <h2>{name}</h2>
+        {/* <h2>{name.substring(0, 20)}...</h2> */}
         <h2>{formatPrice(price)}</h2>
         <div className="star-con f j-around">
           <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
@@ -43,12 +44,13 @@ const Wrapper = styled.article`
     width: 100%;
   }
   .img {
-    height: 70%;
+    height: 65%;
     position: relative;
   }
   .detail {
     flex-direction: column;
-    height: 30%;
+    text-align: center;
+    height: 35%;
     padding: 5px;
     color: var(--blue);
     h2 {

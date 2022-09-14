@@ -15,9 +15,8 @@ export const ProductRow = ({ params, products }) => {
     const cardArray = [...container.querySelectorAll(".card")];
     count = count + 5;
     if (count >= cardArray.length) {
-      count = cardArray.length - 5;
+      count = count - 5;
     }
-    return console.log(cardArray.length);
     cardArray[count].scrollIntoView({
       behavior: "smooth",
       block: "nearest",
@@ -131,9 +130,10 @@ const ProductRowWrapper = styled.section`
     padding-bottom: 5px;
     max-width: 1160px;
     padding: 5px 0px;
-    white-space: nowrap;
+    white-space: nowrap; //this applies to all child elements
     background-color: white;
     .card {
+      white-space: normal; // must reset this
       width: 232px;
       height: 320px;
       display: inline-block;

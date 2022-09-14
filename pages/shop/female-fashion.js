@@ -5,17 +5,15 @@ import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
 import ProductPage from "../../components/ProductPage";
 import FilterProducts from "../../components/FilterProducts";
-import { seedData } from "../../utils/data";
-const FemaleFashion = () => {
+import { searchProduct } from "../../utils/firebase";
+const FemaleFashion = ({ products }) => {
   return (
     <Wrapper className="layout">
       <NavBar />
       <SideBar />
       <HeroBar path="/shop" pre="Shop" curr="Female fashion" />
       <FilterProducts />
-      <ProductPage
-        products={[...seedData, ...seedData, ...seedData, ...seedData]}
-      />
+      <ProductPage products={products} />
     </Wrapper>
   );
 };
@@ -24,3 +22,13 @@ export default FemaleFashion;
 const Wrapper = styled.main`
   background-color: var(--pink-light);
 `;
+
+export async function getStaticProps() {
+  // get new female  products
+  const products = await searchProduct("collection", "Female Fashion");
+  return {
+    props: {
+      products,
+    },
+  };
+}

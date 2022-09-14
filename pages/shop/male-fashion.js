@@ -6,16 +6,14 @@ import HeroBar from "../../components/HeroBar";
 import ProductPage from "../../components/ProductPage";
 import FilterProducts from "../../components/FilterProducts";
 import { seedData } from "../../utils/data";
-const MaleFashion = () => {
+const MaleFashion = ({ products }) => {
   return (
     <Wrapper className="layout">
       <NavBar />
       <SideBar />
       <HeroBar path="/shop" pre="Shop" curr="Male fashion" />
       <FilterProducts />
-      <ProductPage
-        products={[...seedData, ...seedData, ...seedData, ...seedData]}
-      />
+      <ProductPage products={products} />
     </Wrapper>
   );
 };
@@ -24,3 +22,13 @@ export default MaleFashion;
 const Wrapper = styled.main`
   background-color: var(--pink-light);
 `;
+
+export async function getStaticProps() {
+  // get new Male Fashion  products
+  const products = await searchProduct("collection", "Male Fashion");
+  return {
+    props: {
+      products,
+    },
+  };
+}
