@@ -157,9 +157,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
   }
 
   async function incDecCart(id, quantity, type) {
-    console.log(state.cart);
     let cartItem = [...state.cart].find((item) => item.docId == id);
-    console.log(cartItem);
     let newCartItem;
     if (type == "plus") {
       let newAmount = Math.min(cartItem.amount + 1, quantity);
