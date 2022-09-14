@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Store } from "../store/Context";
 import Image from "next/image";
@@ -14,6 +14,11 @@ const ProductDetail = ({ data }) => {
   const { product, relatedProducts } = data;
   const [currentImage, setCurrentImage] = useState(product.imgOne);
 
+  // funcs
+  const handleAddToCart = () => {
+    Logger("Add to cart functionality is yet to be implemented", "error");
+  };
+
   const {
     name,
     category,
@@ -26,10 +31,6 @@ const ProductDetail = ({ data }) => {
     imgFour,
     rating,
   } = product;
-
-  useEffect(() => {
-    setCurrentImage(product.imgOne);
-  }, [product]);
 
   const images = [imgOne, imgTwo, imgThree, imgFour];
   return (
@@ -96,15 +97,7 @@ const ProductDetail = ({ data }) => {
             <div className="desc mt30">
               <p>{desc}</p>
             </div>
-            <button
-              onClick={() => {
-                Logger(
-                  "Add to cart functionality is yet to be implemented",
-                  "error"
-                );
-              }}
-              className="cart-btn center mt30"
-            >
+            <button onClick={handleAddToCart} className="cart-btn center mt30">
               Add To Cart
             </button>
             <button className="btn center mt30">

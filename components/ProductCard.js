@@ -6,7 +6,7 @@ import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCard = ({ product }) => {
   const router = useRouter();
-  const { id, url, name, price, rating, imgOne } = product;
+  const { id, name, price, rating, imgOne } = product;
   const handleNavigate = () => {
     router.push(`/shop/${name}_${id}`);
   };
@@ -17,7 +17,6 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="detail f align j-around">
         <h2>{name}</h2>
-        {/* <h2>{name.substring(0, 20)}...</h2> */}
         <h2>{formatPrice(price)}</h2>
         <div className="star-con f j-around">
           <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>

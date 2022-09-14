@@ -81,7 +81,7 @@ const Wrapper = styled.article`
     }
   }
   :hover {
-    margin-top: -30px;
+    margin-top: -10px;
     color: white;
     .star-con {
       background-color: var(--pink);
