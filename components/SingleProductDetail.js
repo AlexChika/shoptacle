@@ -10,13 +10,23 @@ import { MdStarRate } from "react-icons/md";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductDetail = ({ data }) => {
-  const { Logger, recent } = Store();
-  const { product, relatedProducts } = data;
+  const { Logger, recent, addToCart } = Store();
+  const { product, relatedProducts, id } = data;
+  const [loading, setLoading] = useState(false);
   const [currentImage, setCurrentImage] = useState(product.imgOne);
 
   // funcs
-  const handleAddToCart = () => {
-    Logger("Add to cart functionality is yet to be implemented", "error");
+  const handleAddToCart = async () => {
+    try {
+      setLoading(true);
+      await addToCart(id);
+      setLoading(false);
+      Logger("we added your product to the cart", "success", 2000);
+    } catch (error) {
+      setLoading(false);
+      Logger("Couldn't add item to cart, please check your internet", "error");
+      console.log(error.message);
+    }
   };
 
   const {
@@ -97,6 +107,9 @@ const ProductDetail = ({ data }) => {
             <div className="desc mt30">
               <p>{desc}</p>
             </div>
+            <div
+              className={`spinner sm center mt20 ${loading ? "" : "stop"}`}
+            ></div>
             <button onClick={handleAddToCart} className="cart-btn center mt30">
               Add To Cart
             </button>
@@ -202,7 +215,8 @@ const Wrapper = styled.main`
       h1 {
         font-family: "Libre Baskerville", serif;
         letter-spacing: 0.12em;
-        font-size: 25px;
+        font-size: 20px;
+        text-align: center;
       }
       p {
         font-family: "Inter", sans-serif;

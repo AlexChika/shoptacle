@@ -13,6 +13,7 @@ import {
   doc,
   getDocs,
   getDoc,
+  setDoc,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -102,12 +103,29 @@ async function getAllCustomers() {
   return data;
 }
 
-// get documents of a sub collection
+// add documents to a sub collection
 async function addSubDocs(mainCol, id, subCol, data) {
   const ref = getSubColRef(mainCol, id, subCol);
   const resp = await addDoc(ref, data);
 }
+async function setSubDocs(mainCol, id, subCol, docId, data) {
+  const colRef = getSubColRef(mainCol, id, subCol);
+  const ref = doc(colRef, docId);
+  const resp = await setDoc(ref, data);
+}
 
+async function updateSubDocs(mainCol, id, subCol, docId, data) {
+  const colRef = getSubColRef(mainCol, id, subCol);
+  const ref = doc(colRef, docId);
+  await updateDoc(ref, data);
+}
+async function deleteSubDocs(mainCol, id, subCol, docId) {
+  const colRef = getSubColRef(mainCol, id, subCol);
+  const ref = doc(colRef, docId);
+  await deleteDoc(ref);
+}
+
+// get document of a sub document
 async function getSubDocs(mainCol, id, subCol) {
   const ref = getSubColRef(mainCol, id, subCol);
   const snapshot = await getDocs(ref);
@@ -125,11 +143,11 @@ async function getSubDocs(mainCol, id, subCol) {
 async function getCartItem(cart) {
   let cartItems = [];
   for (let i = 0; i < cart.length; i++) {
-    const { id, amount } = cart[i];
-    const ref = getProductDocRef(id);
+    const { docId, amount } = cart[i];
+    const ref = getProductDocRef(docId);
     const snapshot = await getDoc(ref);
     const data = snapshot.data();
-    cartItems.push({ ...data, amount });
+    cartItems.push({ ...data, amount, id: snapshot.id });
   }
   return cartItems;
 }
@@ -157,9 +175,12 @@ export {
   uploadImage,
   updateProduct,
   deleteProduct,
-  searchProduct,
   getAllProducts,
   getAllCustomers,
-  addSubDocs,
+  searchProduct,
   getProduct,
+  addSubDocs,
+  updateSubDocs,
+  deleteSubDocs,
+  setSubDocs,
 };

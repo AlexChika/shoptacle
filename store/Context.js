@@ -5,12 +5,19 @@ import { useRouter } from "next/router";
 import reducer from "./Reducer";
 import { FaInfoCircle } from "react-icons/fa";
 import * as actionTypes from "./actionTypes";
-import * as firebase from "../utils/firebase";
 
 // firebase imports
 import { onAuthStateChanged } from "firebase/auth";
 import { getDoc, getDocs, query, where } from "firebase/firestore";
-import { getCustomerDocRef, getSubDocs, adminsColRef } from "../utils/firebase";
+import {
+  getCustomerDocRef,
+  getSubDocs,
+  adminsColRef,
+  updateSubDocs,
+  setSubDocs,
+  deleteSubDocs,
+  auth,
+} from "../utils/firebase";
 
 // initial state...
 const initialState = {
@@ -20,6 +27,7 @@ const initialState = {
   preRoute: "",
   currRoute: "",
   cart: [],
+  cartTotal: 0,
   recent: [], //recently viewed items
 };
 
@@ -69,7 +77,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
   const setRecent = (product) => {
     // first get localstorage
     let recent = JSON.parse(localStorage.getItem("recent")) || [];
-    recent = recent.slice(0, 20);
+    recent = recent.slice(0, 19);
     //second check to see if product exists
     let isAdded = recent.find((items) => items.id === product.id);
     if (isAdded) return;
@@ -81,8 +89,110 @@ const StoreProvider = ({ setHideFooter, children }) => {
   };
 
   // cart funcs
-  function addToCart() {}
-  function removeCart() {}
+  async function addToCart(id) {
+    // check if item already exists in cart
+    const isAdded = state.cart.find((item) => item.docId === id);
+    // user
+    if (state.user) {
+      if (isAdded) {
+        // update cart in db
+        await updateSubDocs("customers", state.user.email, "cart", id, {
+          amount: isAdded.amount + 1,
+        });
+        let newCart = [
+          ...state.cart.map((item) => {
+            if (item.docId == id) {
+              item.amount = item.amount + 1;
+            }
+            return item;
+          }),
+        ];
+        dispatch({ type: actionTypes.ADD_TO_CART, payload: newCart });
+      } else {
+        let cartData = {
+          docId: id,
+          amount: 1,
+        };
+        // add cart to db
+        await setSubDocs("customers", state.user.email, "cart", id, cartData);
+        let newCart = [...state.cart];
+        newCart.unshift(cartData);
+        dispatch({
+          type: actionTypes.ADD_TO_CART,
+          payload: newCart,
+        });
+      }
+    }
+
+    // No user
+    else {
+      // add cart to local storage
+      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (isAdded) {
+        // update cart data
+        let newCart = existingCart.map((item) => {
+          if (item.docId === id) {
+            item.amount = item.amount + 1;
+          }
+          return item;
+        });
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        dispatch({ type: actionTypes.ADD_TO_CART, payload: newCart });
+      } else {
+        // step 3 add cart data
+        existingCart.unshift({
+          docId: id,
+          amount: 1,
+        });
+        localStorage.setItem("cart", JSON.stringify(existingCart));
+        dispatch({ type: actionTypes.ADD_TO_CART, payload: existingCart });
+      }
+    }
+  }
+
+  async function removeCart(id) {
+    await deleteSubDocs("customers", state.user.email, "cart", id);
+    const newCart = [...state.cart].filter((item) => item.docId !== id);
+    dispatch({ type: actionTypes.REMOVE_CART, payload: newCart });
+  }
+
+  async function incDecCart(id, quantity, type) {
+    console.log(state.cart);
+    let cartItem = [...state.cart].find((item) => item.docId == id);
+    console.log(cartItem);
+    let newCartItem;
+    if (type == "plus") {
+      let newAmount = Math.min(cartItem.amount + 1, quantity);
+      newCartItem = {
+        docId: cartItem.docId,
+        amount: newAmount,
+      };
+      updateSubDocs("customers", state.user.email, "cart", id, newCartItem);
+      let newCart = [...state.cart].map((item) => {
+        if (item.docId === id) {
+          let newAmount = Math.min(item.amount + 1, quantity);
+          item.amount = newAmount;
+        }
+        return item;
+      });
+      dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
+    }
+    if (type == "minus") {
+      let newAmount = Math.max(cartItem.amount - 1, 1);
+      newCartItem = {
+        docId: cartItem.docId,
+        amount: newAmount,
+      };
+      updateSubDocs("customers", state.user.email, "cart", id, newCartItem);
+      let newCart = [...state.cart].map((item) => {
+        if (item.docId === id) {
+          item.amount = newAmount;
+        }
+        return item;
+      });
+      dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
+    }
+  }
 
   // useEffects
   // monitor route change
@@ -111,7 +221,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
 
   // monitors auth state and fetches user data
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebase.auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         getDoc(getCustomerDocRef(user.email))
           .then((snapshot) => {
@@ -135,20 +245,20 @@ const StoreProvider = ({ setHideFooter, children }) => {
     if (state.user) {
       async function getCart() {
         try {
-          cart = await getSubDocs("products", state.user.email, "cart");
+          cart = await getSubDocs("customers", state.user.email, "cart");
         } catch (error) {
           cart = [];
           console.log(error);
         }
+        dispatch({ type: actionTypes.GET_CART, payload: cart });
       }
       getCart();
     } else {
       cart = JSON.parse(localStorage.getItem("cart")) || [];
+      dispatch({ type: actionTypes.GET_CART, payload: cart });
     }
-
     // get recents
     let recent = JSON.parse(localStorage.getItem("recent")) || [];
-    dispatch({ type: actionTypes.GET_CART, payload: cart });
     dispatch({ type: actionTypes.SET_RECENT, payload: recent });
   }, [state.user]);
 
@@ -168,7 +278,16 @@ const StoreProvider = ({ setHideFooter, children }) => {
 
   return (
     <AppContext.Provider
-      value={{ ...state, handleCloseModal, dispatch, Logger, setRecent }}
+      value={{
+        ...state,
+        handleCloseModal,
+        dispatch,
+        Logger,
+        setRecent,
+        addToCart,
+        removeCart,
+        incDecCart,
+      }}
     >
       <Wrapper show={logger.show} success={logger.success}>
         <div className={`box center trans ${logger.show ? "show" : ""}`}>

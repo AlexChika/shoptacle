@@ -64,6 +64,35 @@ function reducer(state, action) {
     };
   }
 
+  // cart
+  if (action.type === actionTypes.GET_CART) {
+    console.log(action.payload);
+    return {
+      ...state,
+      cart: action.payload,
+    };
+  }
+
+  if (action.type === actionTypes.ADD_TO_CART) {
+    return {
+      ...state,
+      cart: action.payload,
+    };
+  }
+
+  if (action.type === actionTypes.REMOVE_CART) {
+    return {
+      ...state,
+      cart: action.payload,
+    };
+  }
+  if (action.type === actionTypes.INC_DEC_CART) {
+    return {
+      ...state,
+      cart: action.payload,
+    };
+  }
+
   return state;
 }
 

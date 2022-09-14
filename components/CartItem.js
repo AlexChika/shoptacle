@@ -1,41 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
 import Image from "next/image";
 import Link from "next/link";
-import SampleImage from "../public/ada.png";
 import { FaTimes } from "react-icons/fa";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { formatPrice } from "../utils/functions";
 const CartItem = ({ cart }) => {
+  const { Logger, removeCart, incDecCart } = Store();
+
+  // local state
+
+  // local func
+  async function removeCartItem(id) {
+    try {
+      await removeCart(id);
+      Logger("Item removed successfully", "success", 1000);
+    } catch (error) {
+      Logger("Could not remove item", "success");
+    }
+  }
+
+  async function incDecCartItem(id, quantity, type) {
+    try {
+      await incDecCart(id, quantity, type);
+      Logger("Item updated successfully", "success", 1000);
+    } catch (error) {
+      Logger("Coul not update item", "success");
+    }
+  }
+
+  const { name, price, imgOne, amount, id, quantity } = cart;
+
   return (
     // <Link href={`/shop/${name}-${id}`}>
     // </Link>
     <Wrapper className="f">
       <div className="img">
-        <Image layout="fill" alt="cart item" src={SampleImage}></Image>
+        <Image layout="fill" alt="cart item" src={imgOne}></Image>
       </div>
-      <button className="rem-btn f align">
+      <button
+        onClick={() => removeCartItem(id)}
+        type="button"
+        className="rem-btn f align"
+      >
         <span>Remove</span>
         <FaTimes />
       </button>{" "}
       <div className="detail f j-around">
-        <h3 className="capitalize name">
-          name of dresss of dress dress {cart}
-        </h3>
+        <h3 className="capitalize name">{name}</h3>
+
         <div className="f j-around">
-          <p> {formatPrice(2450000)} * 1</p>
+          <p>
+            {" "}
+            {formatPrice(price)} * {amount}
+          </p>
           <div className="f">
-            <button type="button" className="btn f align">
+            <button
+              onClick={() => incDecCartItem(id, quantity, "plus")}
+              type="button"
+              className="btn f align"
+            >
               <HiPlus />
             </button>
-            <button type="button" className="btn f align">
+            <button
+              onClick={() => incDecCartItem(id, quantity, "minus")}
+              type="button"
+              className="btn f align"
+            >
               <HiMinus />
             </button>
           </div>
         </div>
+
         <div className="f align j-around">
           <p>Sub-Total</p>
-          <p>{formatPrice(24509000)}</p>
+          <p>{formatPrice(price * amount)}</p>
         </div>
       </div>
     </Wrapper>
@@ -70,7 +110,7 @@ const Wrapper = styled.article`
       /* text-align: center; */
     }
     .btn {
-      margin: 0px 5px;
+      margin: 0px 10px;
       background-color: var(--pink);
       color: white;
       font-size: 18px;

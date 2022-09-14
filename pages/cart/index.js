@@ -9,34 +9,71 @@ import CartPageComponent from "../../components/CartPageComponent";
 // firebase import
 import { getCartItem } from "../../utils/firebase";
 const Index = () => {
-  let { cart } = Store();
+  let { cart, Logger } = Store();
   // states
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
-
+  const [cartTotals, setCartTotals] = useState({
+    tax: 0,
+    delivery: 0,
+    subtotal: 0,
+    total: 0,
+  });
   // get updated cart items
   useEffect(() => {
+    let isSubscribed = true;
+
     async function getCart(cart) {
       try {
         setLoading(true);
         const newCartItems = await getCartItem(cart);
         setCartItems(newCartItems);
-        console.log(newCartItems);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        Logger(error.message, "error");
+        Logger(
+          "We could not fetch your cart, check your connection and try again",
+          "error"
+        );
       }
     }
-    getCart(cart);
+
+    if (isSubscribed) {
+      getCart(cart);
+    }
+
+    return () => {
+      isSubscribed = false;
+    };
   }, [cart]);
+
+  // update cartTotals
+  useEffect(() => {
+    let subtotal = 0;
+    cartItems.forEach((item) => {
+      subtotal += item.price * item.amount;
+    });
+    let tax = (subtotal * 2) / 100; //2% of subtotal
+    let delivery = (subtotal * 5) / 100; //5% of subtotal
+    let total = subtotal + tax + delivery;
+    setCartTotals({
+      tax,
+      delivery,
+      subtotal,
+      total,
+    });
+  }, [cartItems]);
 
   return (
     <Wrapper className="layout">
       <NavBar page={"cart"} />
       <SideBar />
       <HeroBar />
-      <CartPageComponent loading={loading} cart={cartItems} />
+      <CartPageComponent
+        data={{ loading, cart: cartItems, cartTotals }}
+        loading={loading}
+        cart={cartItems}
+      />
     </Wrapper>
   );
 };

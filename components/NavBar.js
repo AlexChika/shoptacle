@@ -9,75 +9,84 @@ import { BsCartFill } from "react-icons/bs";
 import { IoMdList } from "react-icons/io";
 function NavBar({ page }) {
   const { handleCloseModal, user, cart } = Store();
-
   return (
-    <Wrapper page={page} className="f align center">
-      <button onClick={handleCloseModal} className="side-modal-btn">
-        <IoMdList />
-      </button>
-      <div className="logo-name">
-        <Link href="/">
-          <h1>Shoptacle</h1>
-        </Link>
-      </div>
-      <div className="link-con f">
-        <Link href="/">
-          <span className={`trans ${page === "home" ? "active" : ""}`}>
-            {" "}
-            Home
+    <main
+      style={{
+        position: "sticky",
+        top: "0",
+        backgroundColor: "inherit",
+        zIndex: "1",
+      }}
+      className="layout"
+    >
+      <Wrapper page={page} className="f align center">
+        <button onClick={handleCloseModal} className="side-modal-btn">
+          <IoMdList />
+        </button>
+        <div className="logo-name">
+          <Link href="/">
+            <h1>Shoptacle</h1>
+          </Link>
+        </div>
+        <div className="link-con f">
+          <Link href="/">
+            <span className={`trans ${page === "home" ? "active" : ""}`}>
+              {" "}
+              Home
+            </span>
+          </Link>
+          <Link href="/shop">
+            <span className={`trans ${page === "shop" ? "active" : ""}`}>
+              Shop
+            </span>
+          </Link>
+          <Link href="/about">
+            <span className={`trans ${page === "about" ? "active" : ""}`}>
+              About
+            </span>
+          </Link>
+          <Link href="/admin">
+            <span className={`trans ${page === "admin" ? "active" : ""}`}>
+              Admin
+            </span>
+          </Link>
+        </div>
+        <div className="search-bar">
+          <SearchBar />
+        </div>
+        <div className="navCart-con f fcenter">
+          <span>
+            {user && user.url ? (
+              <Link href="/profile">
+                <div className="image">
+                  <Image src={user.url} layout="fill" />
+                </div>
+              </Link>
+            ) : (
+              <Link href="/profile">
+                <button
+                  className={`trans ${page === "profile" ? "active" : ""}`}
+                  type="button"
+                >
+                  <FaUser />
+                </button>
+              </Link>
+            )}
           </span>
-        </Link>
-        <Link href="/shop">
-          <span className={`trans ${page === "shop" ? "active" : ""}`}>
-            Shop
-          </span>
-        </Link>
-        <Link href="/about">
-          <span className={`trans ${page === "about" ? "active" : ""}`}>
-            About
-          </span>
-        </Link>
-        <Link href="/admin">
-          <span className={`trans ${page === "admin" ? "active" : ""}`}>
-            Admin
-          </span>
-        </Link>
-      </div>
-      <div className="search-bar">
-        <SearchBar />
-      </div>
-      <div className="navCart-con f fcenter">
-        <span>
-          {user && user.url ? (
-            <Link href="/profile">
-              <div className="image">
-                <Image src={user.url} layout="fill" />
-              </div>
-            </Link>
-          ) : (
-            <Link href="/profile">
+          <span>
+            <Link href="/cart">
               <button
-                className={`trans ${page === "profile" ? "active" : ""}`}
+                className={`trans ${page === "cart" ? "active" : ""}`}
                 type="button"
               >
-                <FaUser />
+                <BsCartFill />
+                <small>{cart.length}</small>
               </button>
             </Link>
-          )}
-        </span>
-        <span>
-          <Link href="/cart">
-            <button
-              className={`trans ${page === "cart" ? "active" : ""}`}
-              type="button"
-            >
-              <BsCartFill />
-              <small>{cart.length}</small>
-            </button>
-          </Link>
-        </span>
-      </div>
-    </Wrapper>
+          </span>
+        </div>
+      </Wrapper>
+    </main>
   );
 }
 
@@ -85,8 +94,6 @@ export default NavBar;
 
 const Wrapper = styled.nav`
   max-width: 1170px;
-  position: sticky;
-  top: 0;
   background-color: inherit;
   z-index: 1;
   width: 100%;

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Store } from "../store/Context";
 import Link from "next/link";
@@ -11,26 +11,36 @@ import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
 import { paginateFn, formatPrice } from "../utils/functions";
-const CartPageComponent = ({ cart, loading }) => {
+const CartPageComponent = ({ data }) => {
   const { Logger, recent } = Store();
+  const { cart, loading, cartTotals } = data;
   const cartRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
   const [modal, setModal] = useState(false);
   const [paginateCartItems, setPaginateCartItems] = useState(
     paginateFn(cart, 5).items
   );
+
+  // local funcs
   const handlePaginate = (val) => {
     const newItems = paginateFn(cart, 5, val).items;
     setPaginateCartItems(newItems);
     setCurrentBtn(val);
     window.scrollTo(0, Number(cartRef.current.offsetTop));
   };
+
   const handleCheckout = () => {
     setModal(true);
   };
+
   const handleSelectCheckout = () => {
     Logger("Checkout would be the last implementation", "success");
   };
+
+  // update paginate array
+  useEffect(() => {
+    setPaginateCartItems(paginateFn(cart, 5).items);
+  }, [cart]);
 
   return (
     <Wrapper className="center mt30">
@@ -51,14 +61,8 @@ const CartPageComponent = ({ cart, loading }) => {
           </div>
         </div>
       </Modal>
-      <main>
-        {loading ? (
-          <div style={{ backgroundColor: "white", paddingTop: "20px" }}>
-            <div className="spinner center"></div>
-          </div>
-        ) : (
-          ""
-        )}
+      <main className="loading">
+        {loading ? <div className="spinner center sm"></div> : ""}
       </main>
 
       {cart.length < 1 ? (
@@ -82,9 +86,8 @@ const CartPageComponent = ({ cart, loading }) => {
       ) : (
         <section ref={cartRef} className="cart f j-between">
           <div className="cart-items">
-            {paginateCartItems.map((cart, index) => {
-              // remember to change key from index to id
-              return <CartItem cart={cart} key={index} />;
+            {paginateCartItems.map((cart) => {
+              return <CartItem cart={cart} key={cart.id} />;
             })}
             <Paginate
               paginateFn={paginateFn}
@@ -99,21 +102,21 @@ const CartPageComponent = ({ cart, loading }) => {
               <article className="summary">
                 <div className="f j-between">
                   <p>Sub Total</p>
-                  <p>{formatPrice(877232)}</p>
+                  <p>{formatPrice(cartTotals.subtotal)}</p>
                 </div>
                 <div className="f j-between mt20">
                   <p>Delivery Fee</p>
-                  <p>{formatPrice(877232)}</p>
+                  <p>{formatPrice(cartTotals.delivery)}</p>
                 </div>
                 <div className="f j-between mt20">
                   <p>Tax Fee</p>
-                  <p>{formatPrice(877232)}</p>
+                  <p>{formatPrice(cartTotals.tax)}</p>
                 </div>
               </article>
               <article className="total">
                 <div className="f j-between mt20">
                   <h1>Total</h1>
-                  <h1>{formatPrice(877232555)}</h1>
+                  <h1>{formatPrice(cartTotals.total)}</h1>
                 </div>
               </article>
             </div>
@@ -154,6 +157,11 @@ const Wrapper = styled.main`
       border-radius: 10px;
     }
   }
+
+  .loading {
+    height: 30px;
+  }
+
   .cart {
     flex-direction: column;
     padding: 10px;
@@ -181,6 +189,7 @@ const Wrapper = styled.main`
       }
     }
   }
+
   .cart-empty {
     flex-direction: column;
     padding: 30px 0px;
@@ -207,6 +216,7 @@ const Wrapper = styled.main`
       font-size: 16px;
     }
   }
+
   @media screen and (min-width: 768px) {
     .cart {
       flex-direction: row;

@@ -10,6 +10,7 @@ export const SET_ADMIN = "SET_ADMIN";
 export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_CART = "REMOVE_CART";
+export const INC_DEC_CART = "INC_DEC_CART";
 // recent
 export const SET_RECENT = "SET_RECENT";
 //Admin products
