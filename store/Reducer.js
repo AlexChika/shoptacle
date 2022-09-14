@@ -66,7 +66,6 @@ function reducer(state, action) {
 
   // cart
   if (action.type === actionTypes.GET_CART) {
-    console.log(action.payload);
     return {
       ...state,
       cart: action.payload,

@@ -71,7 +71,6 @@ const ProfilePageComponent = () => {
       paginateOrders: paginateFn(orders, 5).items,
       currentBtn: 0,
     });
-    console.log(reviews);
     setReviewState({
       paginateReviews: paginateFn(reviews, 5).items,
       currentBtn: 0,
@@ -103,7 +102,7 @@ const ProfilePageComponent = () => {
 
   const handleSwitchTabs = (index) => {
     setTabs(index);
-    window.scrollTo(0, Number(tabRef.current.offsetTop));
+    window.scrollTo(0, Number(tabRef.current.offsetTop) - 60);
   };
 
   const validate = new Validate();
