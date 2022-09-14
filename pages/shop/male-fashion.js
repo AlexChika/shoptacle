@@ -27,6 +27,7 @@ export async function getStaticProps() {
   // get new Male Fashion  products
   const products = await searchProduct("collection", "Male Fashion");
   return {
+    revalidate: 60,
     props: {
       products,
     },

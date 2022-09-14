@@ -85,6 +85,7 @@ function reducer(state, action) {
       cart: action.payload,
     };
   }
+
   if (action.type === actionTypes.INC_DEC_CART) {
     return {
       ...state,

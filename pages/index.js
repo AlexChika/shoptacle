@@ -21,6 +21,7 @@ export async function getStaticProps() {
   // get new arrival products
   const product = await searchProduct("arrival", "New Arrival");
   return {
+    revalidate: 60,
     props: {
       product,
     },

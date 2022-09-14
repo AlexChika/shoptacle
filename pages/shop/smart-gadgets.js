@@ -27,6 +27,7 @@ export async function getStaticProps() {
   // get new Smart Gadgets  products
   const products = await searchProduct("collection", "Smart Gadgets");
   return {
+    revalidate: 60,
     props: {
       products,
     },

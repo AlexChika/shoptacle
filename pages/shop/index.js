@@ -26,6 +26,7 @@ export async function getStaticProps() {
   const unisexShoes = await searchProduct("collection", "Unisex Shoes");
   const smartGadgets = await searchProduct("collection", "Smart Gadgets");
   return {
+    revalidate: 60,
     props: {
       products: [
         {
