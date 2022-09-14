@@ -5,7 +5,7 @@ import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
 import ProductPage from "../../components/ProductPage";
 import FilterProducts from "../../components/FilterProducts";
-import { seedData } from "../../utils/data";
+import { searchProduct } from "../../utils/firebase";
 const MaleFashion = ({ products }) => {
   return (
     <Wrapper className="layout">
