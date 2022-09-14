@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";

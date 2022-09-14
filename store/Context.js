@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect, useReducer } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import reducer from "./Reducer";
+import { FaInfoCircle } from "react-icons/fa";
 import * as actionTypes from "./actionTypes";
 import * as firebase from "../utils/firebase";
 
@@ -30,7 +31,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
   const [logger, setLogger] = useState({
     text: "",
     success: true,
-    showLogger: false,
+    show: false,
     timeoutId: "",
   });
 
@@ -50,10 +51,10 @@ const StoreProvider = ({ setHideFooter, children }) => {
           ...logger,
           text: "",
           show: false,
+          success,
         });
       }, time);
       setLogger({
-        ...logger,
         text,
         show: true,
         success,
@@ -169,12 +170,13 @@ const StoreProvider = ({ setHideFooter, children }) => {
     <AppContext.Provider
       value={{ ...state, handleCloseModal, dispatch, Logger, setRecent }}
     >
-      <Wrapper
-        show={logger.show}
-        success={logger.success}
-        className="center f align"
-      >
-        <p>{logger.text}</p>
+      <Wrapper show={logger.show} success={logger.success}>
+        <div className={`box center trans ${logger.show ? "show" : ""}`}>
+          <span>
+            <FaInfoCircle />
+          </span>
+          <p>{logger.text}</p>
+        </div>
       </Wrapper>
       {children}
     </AppContext.Provider>
@@ -185,23 +187,31 @@ export const Store = () => useContext(AppContext);
 export default StoreProvider;
 
 const Wrapper = styled.div`
-  position: fixed;
-  top: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 500;
-  min-height: 70px;
-  text-align: center;
-  padding: 10px;
-  font-size: 20px;
-  background-color: ${({ success }) =>
-    success ? "rgba(47, 255, 0, 1)" : "rgba(253, 51, 91, 1)"};
-  color: white;
-  max-width: 600px;
-  width: 100%;
   z-index: 9;
-  visibility: ${({ show }) => (show ? "visible" : "collapse")};
-  p {
+  left: 0;
+  right: 0;
+  position: fixed;
+  visibility: ${(props) => (props.show ? "visible" : "hidden")};
+
+  .box {
+    color: white;
+    min-height: 70px;
+    text-align: center;
+    padding: 10px;
+    background-color: ${({ success }) =>
+      success ? "rgba(47, 255, 0, 1)" : "rgba(253, 51, 91, 1)"};
+    max-width: 600px;
     width: 100%;
+    border-radius: 15px;
+    box-shadow: -4px 0px var(--blue), -6px 0px skyblue, -8px 0px tomato;
+    border-bottom: 2px solid var(--blue);
+    transform: translateY(-110%);
+  }
+  .box.show {
+    transform: translateY(0%);
+  }
+  p {
+    font-weight: 500;
+    font-size: 20px;
   }
 `;

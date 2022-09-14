@@ -85,6 +85,11 @@ export default NavBar;
 
 const Wrapper = styled.nav`
   max-width: 1170px;
+  position: sticky;
+  top: 0;
+  background-color: inherit;
+  z-index: 1;
+  width: 100%;
   justify-content: space-between;
   color: ${({ page }) => (page === "home" ? "white" : "var(--blue)")};
   height: 60px;

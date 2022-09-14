@@ -6,7 +6,7 @@ import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCard = ({ product }) => {
   const router = useRouter();
-  const { id, url, name, price, rating, imgOne } = product;
+  const { id, name, price, rating, imgOne } = product;
   const handleNavigate = () => {
     router.push(`/shop/${name}_${id}`);
   };
@@ -43,12 +43,13 @@ const Wrapper = styled.article`
     width: 100%;
   }
   .img {
-    height: 70%;
+    height: 65%;
     position: relative;
   }
   .detail {
     flex-direction: column;
-    height: 30%;
+    text-align: center;
+    height: 35%;
     padding: 5px;
     color: var(--blue);
     h2 {

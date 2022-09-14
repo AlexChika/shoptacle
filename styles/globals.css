@@ -7,7 +7,7 @@
   --blue-light: #464463;
 }
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 a {
   color: inherit;

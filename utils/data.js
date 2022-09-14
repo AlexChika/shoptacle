@@ -19,7 +19,7 @@ import teamAda from "../public/ada.png";
 import teamDan from "../public/dan.png";
 const seedData = [
   {
-    name: "Design Snickers", //
+    name: "Classic Cooperate Office Ladies Gown", //
     id: 1,
     imgOne: seedShoe,
     images: [seedLadyGown, seedShoe, seedHandBag],
