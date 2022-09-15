@@ -9,10 +9,11 @@ import { formatPrice } from "../utils/functions";
 import { ADMIN_SET_ID, ADMIN_REFRESH_STATE } from "../store/actionTypes";
 import { deleteProduct } from "../utils/firebase";
 const AdminSearch = ({ handleSetTab }) => {
-  const { Logger, isAdmin } = Store();
+  const { Logger, isAdmin, user } = Store();
   const { products, dispatch } = AdminStore();
 
   // states
+  const [errModal, setErrModal] = useState(false);
   const [modal, setModal] = useState(false);
   const [viewProduct, setViewProduct] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -44,11 +45,7 @@ const AdminSearch = ({ handleSetTab }) => {
   };
 
   const handleDeleteBtn = async (e, id) => {
-    if (!isAdmin)
-      return Logger(
-        "You cannot delete this Item, please request Admin access",
-        "error"
-      );
+    if (!isAdmin) return setErrModal(true);
     const spinner =
       e.target.parentElement.parentElement.querySelector(".spinner");
     spinner.style.display = "block";
@@ -126,6 +123,7 @@ const AdminSearch = ({ handleSetTab }) => {
           )}
         </div>
       </section>
+
       <Modal modal={modal} setModal={setModal}>
         {viewProduct.map((product) => {
           const {
@@ -172,6 +170,44 @@ const AdminSearch = ({ handleSetTab }) => {
             </section>
           );
         })}
+      </Modal>
+
+      <Modal modal={errModal} setModal={setErrModal}>
+        <section className="errmodal">
+          <h1 className="mt20 capitalize">Hello {user.firstName}</h1>
+          <p className="mt10">
+            You are not an admin and cannot make changes to SHOPTACLE
+          </p>
+
+          <h4 className="mt10">
+            However, if you wish to make Edits and add Products to SHOPTACE or
+            to Test the app, please send a mail to &nbsp;
+            <a href="mailto:i.am.alex.chika@gmail.com">
+              i.am.alex.chika@gmail.com
+            </a>{" "}
+            &nbsp; for Admin access using your registered email
+          </h4>
+          <h3 className="mt10">OR</h3>
+          <small className="mt10">Submit the below form</small>
+          <form
+            action="https://formspree.io/f/xbjbdqbl"
+            method="post"
+            className="f mt10"
+          >
+            <input
+              defaultValue={user.email}
+              required
+              type="email"
+              name="Email"
+              id=""
+            />
+            <button type="submit">Submit</button>
+          </form>
+          <small>
+            Once we recieve your email, you will be notified as soon as you now
+            have admin access
+          </small>
+        </section>
       </Modal>
     </Wrapper>
   );
@@ -256,6 +292,35 @@ const Wrapper = styled.main`
       letter-spacing: 0.012rem;
       font-size: 15px;
       font-weight: 100;
+    }
+  }
+
+  .errmodal {
+    color: var(--blue);
+    text-align: center;
+    h1 {
+    }
+
+    p {
+      color: tomato;
+    }
+    a {
+      text-decoration: underline teal;
+    }
+    form {
+      width: 100%;
+    }
+    input {
+      width: 65%;
+      padding: 10px;
+      background-color: white;
+    }
+    button {
+      color: white;
+      width: 35%;
+
+      padding: 10px;
+      border-radius: 0;
     }
   }
 `;

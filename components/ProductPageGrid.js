@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "./ProductCard";
 import Paginate from "./Paginate";
 import { paginateFn } from "../utils/functions";
 const ProductPage = ({ products }) => {

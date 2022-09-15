@@ -29,6 +29,7 @@ const FemaleFashion = ({ products }) => {
   useEffect(() => {
     dispatch({ type: actions.SET_SORT, payload: "a-z" });
   }, []);
+
   return (
     <Wrapper className="layout">
       <NavBar />

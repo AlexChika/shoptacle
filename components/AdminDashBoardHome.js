@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Store } from "../store/Context";
 import { AdminStore } from "../pages/admin";
 import Paginate from "./Paginate";
-import { paginateFn } from "../utils/functions";
+import { formatPrice, paginateFn } from "../utils/functions";
 
 // app
 const AdminDasnBoardHome = () => {
@@ -11,7 +11,7 @@ const AdminDasnBoardHome = () => {
   const { Logger } = Store();
 
   // states
-  const [tab, setTab] = useState("Male Fashion");
+  const [tab, setTab] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [currentBtn, setCurrentBtn] = useState(0);
@@ -152,7 +152,7 @@ const AdminDasnBoardHome = () => {
               <div className="row">
                 <p>No.</p>
                 <p>Name</p>
-                <p>Price (kB)</p>
+                <p>Price </p>
                 <p>Brand</p>
                 <p>Qty</p>
               </div>
@@ -163,7 +163,7 @@ const AdminDasnBoardHome = () => {
                   <div key={index} className="row">
                     <span className="serial">{index + 1}.</span>
                     <span>{product.name}</span>
-                    <span>{product.price}</span>
+                    <span>{formatPrice(product.price)}</span>
                     <span>{product.brand}</span>
                     <span>{product.quantity}</span>
                   </div>

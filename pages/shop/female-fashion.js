@@ -25,7 +25,6 @@ const FemaleFashion = ({ products }) => {
   };
 
   const [state, dispatch] = useReducer(filterReducer, initialState);
-  console.log(state.filtered);
 
   useEffect(() => {
     dispatch({ type: actions.SET_SORT, payload: "a-z" });

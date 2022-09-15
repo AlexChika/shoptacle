@@ -41,40 +41,46 @@ const productsColRef = collection(db, "products");
 const customersColRef = collection(db, "customers");
 const adminsColRef = collection(db, "admins");
 
-// sub collection refs
+// func returns Col ref of a sub document
 function getSubColRef(mainCol, id, subCol) {
   return collection(db, `${mainCol}/${id}/${subCol}`);
 }
 
-// doc Refs
+// func returns a doc ref (customer)
 function getCustomerDocRef(id) {
   return doc(customersColRef, id);
 }
+
+// func returns a doc ref (product)
 function getProductDocRef(id) {
   return doc(productsColRef, id);
 }
 
-// funcs
+// add a document to a collection (product)
 async function addProduct(data) {
   const resp = await addDoc(productsColRef, data);
 }
 
+// get a document from a collecton (product)
 async function getProduct(id) {
   const ref = getProductDocRef(id);
   const snapshot = await getDoc(ref);
   return snapshot.data();
 }
 
+// update a document from a collecton (product)
 async function updateProduct(productId, data) {
   const ref = getProductDocRef(productId);
   await updateDoc(ref, data);
 }
 
+// delete document from a collection (product)
 async function deleteProduct(productId) {
   const ref = getProductDocRef(productId);
   await deleteDoc(ref);
 }
 
+// search for productssss
 async function searchProduct(variable, value) {
   let array = [];
   const q = query(productsColRef, where(variable, "==", value));
@@ -85,6 +91,7 @@ async function searchProduct(variable, value) {
   return array;
 }
 
+// get all documents from a main (customers) collection
 async function getAllProducts() {
   const snapshot = await getDocs(productsColRef);
   let data = [];
@@ -94,6 +101,7 @@ async function getAllProducts() {
   return data;
 }
 
+// get all documents from a main (customers) collection
 async function getAllCustomers() {
   const snapshot = await getDocs(customersColRef);
   let data = [];
@@ -108,24 +116,29 @@ async function addSubDocs(mainCol, id, subCol, data) {
   const ref = getSubColRef(mainCol, id, subCol);
   const resp = await addDoc(ref, data);
 }
+
+// set a document in a sub collection
 async function setSubDocs(mainCol, id, subCol, docId, data) {
   const colRef = getSubColRef(mainCol, id, subCol);
   const ref = doc(colRef, docId);
   const resp = await setDoc(ref, data);
 }
 
+// update a document from a sub collection
 async function updateSubDocs(mainCol, id, subCol, docId, data) {
   const colRef = getSubColRef(mainCol, id, subCol);
   const ref = doc(colRef, docId);
   await updateDoc(ref, data);
 }
+
+// delete a document from a sub collection
 async function deleteSubDocs(mainCol, id, subCol, docId) {
   const colRef = getSubColRef(mainCol, id, subCol);
   const ref = doc(colRef, docId);
   await deleteDoc(ref);
 }
 
-// get document of a sub document
+// get document of a sub document..
 async function getSubDocs(mainCol, id, subCol) {
   const ref = getSubColRef(mainCol, id, subCol);
   const snapshot = await getDocs(ref);
@@ -139,7 +152,7 @@ async function getSubDocs(mainCol, id, subCol) {
   return data;
 }
 
-// get updated cart items
+// get updated cart items..
 async function getCartItem(cart) {
   let cartItems = [];
   for (let i = 0; i < cart.length; i++) {
@@ -152,6 +165,7 @@ async function getCartItem(cart) {
   return cartItems;
 }
 
+// func for uploading...
 async function uploadImage(file, path) {
   const imageRef = ref(storage, path);
   const fileSnapshot = await uploadBytesResumable(imageRef, file);

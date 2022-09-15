@@ -318,7 +318,7 @@ const AdminEdit = () => {
                 name="price"
                 type="number"
                 id="price"
-                placeholder="Enter price in kobo"
+                placeholder="Enter price in Naira"
               />
             </div>
             <p data-id="price" className="status"></p>
@@ -572,18 +572,12 @@ const Wrapper = styled.main`
     text-align: center;
     h1 {
     }
-    h3 {
-      color: orange;
-    }
-    h4 {
-      color: skyblue;
-    }
+
     p {
       color: tomato;
     }
     a {
-      text-decoration: underline;
-      color: teal;
+      text-decoration: underline teal;
     }
     form {
       width: 100%;

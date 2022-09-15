@@ -6,9 +6,7 @@
   --blue: #323148;
   --blue-light: #464463;
 }
-html {
-  /* scroll-behavior: smooth; */
-}
+
 a {
   color: inherit;
   text-decoration: none;

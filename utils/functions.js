@@ -202,7 +202,6 @@ const filterReducer = (state, action) => {
       ...state,
       filtered: array,
       search: value,
-      grid: "",
       brand: "",
     };
   }
