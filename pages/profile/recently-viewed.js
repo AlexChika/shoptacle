@@ -4,7 +4,7 @@ import { Store } from "../../store/Context";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
-import ProductPage from "../../components/ProductPageGrid";
+import ProductPageGrid from "../../components/ProductPageGrid";
 const Recent = () => {
   const { recent } = Store();
 

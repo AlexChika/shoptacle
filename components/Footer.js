@@ -70,12 +70,8 @@ export default Footer;
 const Wrapper = styled.footer`
   display: ${({ hide }) => (hide ? "none" : "block")};
   background: var(--blue);
-  color: var(--blue);
+  color: white;
   padding: 40px 20px 10px 20px;
-  /* .headerWrapper,
-  .footerFooter {
-    max-width: 1170px;
-  } */
 
   .headerWrapper {
     flex-wrap: wrap;
@@ -87,12 +83,10 @@ const Wrapper = styled.footer`
       min-height: 100px;
       min-width: 220px;
       max-width: 320px;
-      background: rgba(255, 255, 255, 1);
       padding: 10px;
     }
   }
   h5 {
-    color: grey;
     padding: 5px 0;
   }
   .shoptacle {
@@ -114,6 +108,7 @@ const Wrapper = styled.footer`
   .info,
   .about {
     flex-direction: column;
+    align-items: center;
     justify-content: space-around;
   }
   .footerFooter {

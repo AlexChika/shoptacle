@@ -9,7 +9,7 @@ import { formatPrice } from "../utils/functions";
 import { ADMIN_SET_ID, ADMIN_REFRESH_STATE } from "../store/actionTypes";
 import { deleteProduct } from "../utils/firebase";
 const AdminSearch = ({ handleSetTab }) => {
-  const { Logger } = Store();
+  const { Logger, isAdmin } = Store();
   const { products, dispatch } = AdminStore();
 
   // states
@@ -44,6 +44,11 @@ const AdminSearch = ({ handleSetTab }) => {
   };
 
   const handleDeleteBtn = async (e, id) => {
+    if (!isAdmin)
+      return Logger(
+        "You cannot delete this Item, please request Admin access",
+        "error"
+      );
     const spinner =
       e.target.parentElement.parentElement.querySelector(".spinner");
     spinner.style.display = "block";

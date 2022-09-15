@@ -125,6 +125,7 @@ const Wrapper = styled.main`
     flex-direction: column;
     color: var(--blue);
     min-height: 80vh;
+    text-align: center;
 
     button {
       color: white;

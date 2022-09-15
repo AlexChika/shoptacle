@@ -63,7 +63,7 @@ export default Collections;
 const CollectionCardWrapper = styled.article`
   background-color: var(--blue);
   width: 95%;
-  max-width: 1170px;
+  /* max-width: 1170px; */
   margin-bottom: 40px;
   flex-direction: column;
   .image-con,
