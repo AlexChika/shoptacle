@@ -27,7 +27,6 @@ const initialState = {
   preRoute: "",
   currRoute: "",
   cart: [],
-  cartTotal: 0,
   recent: [], //recently viewed items
 };
 

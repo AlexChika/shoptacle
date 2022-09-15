@@ -4,7 +4,7 @@ import { Store } from "../../store/Context";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
-import ProductPage from "../../components/ProductPage";
+import ProductPage from "../../components/ProductPageGrid";
 const Recent = () => {
   const { recent } = Store();
 
@@ -14,7 +14,7 @@ const Recent = () => {
       <SideBar />
       <HeroBar />
       <div className="mt30">
-        <ProductPage products={recent} />
+        <ProductPageGrid products={recent} />
       </div>
     </Wrapper>
   );

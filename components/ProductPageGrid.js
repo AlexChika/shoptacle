@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import ProductCard from "../components/ProductCard";
 import Paginate from "./Paginate";
@@ -9,12 +9,19 @@ const ProductPage = ({ products }) => {
   const [productList, setProductList] = useState(
     paginateFn(products, 20).items
   );
+
   const handlePaginate = (val) => {
     const newItems = paginateFn(products, 20, val).items;
     setProductList(newItems);
     setCurrentBtn(val);
     window.scrollTo(0, Number(pageRef.current.offsetTop));
   };
+
+  useEffect(() => {
+    // updates prducts list
+    setProductList(paginateFn(products, 20).items);
+  }, [products]);
+
   return (
     <>
       <Wrapper ref={pageRef} className="center mt10">

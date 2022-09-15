@@ -1,19 +1,45 @@
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 import styled from "styled-components";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
 import FilterProducts from "../../components/FilterProducts";
-import ProductPage from "../../components/ProductPage";
+import ProductPageGrid from "../../components/ProductPageGrid";
+import ProductPageList from "../../components/ProductPageList";
 import { searchProduct } from "../../utils/firebase";
+import { filterReducer } from "../../utils/functions";
+import * as actions from "../../store/actionTypes";
+
 const FemaleFashion = ({ products }) => {
+  const initialState = {
+    filtered: [...products],
+    products: products,
+    brand: "",
+    category: "",
+    sort: "a-z",
+    search: "",
+    grid: true,
+    min: Math.min(...products.map((item) => item.price)),
+    max: Math.max(...products.map((item) => item.price)),
+    priceRange: Math.min(...products.map((item) => item.price)),
+  };
+
+  const [state, dispatch] = useReducer(filterReducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: actions.SET_SORT, payload: "a-z" });
+  }, []);
   return (
     <Wrapper className="layout">
       <NavBar />
       <SideBar />
       <HeroBar path="/shop" pre="Shop" curr="Smart Gadgets" />
-      <FilterProducts />
-      <ProductPage products={products} />
+      <FilterProducts data={{ dispatch, state }} />
+      {state.grid ? (
+        <ProductPageGrid products={state.filtered} />
+      ) : (
+        <ProductPageList products={state.filtered} />
+      )}
     </Wrapper>
   );
 };

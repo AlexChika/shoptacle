@@ -1,35 +1,126 @@
 import React from "react";
 import styled from "styled-components";
+import { Store } from "../store/Context";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaList } from "react-icons/fa";
 import { ImCheckboxChecked } from "react-icons/im";
-const FilterProducts = () => {
-  function handleThis() {
-    console.log("wahala");
+import * as actions from "../store/actionTypes";
+import { formatPrice } from "../utils/functions";
+// app
+const FilterProducts = ({ data }) => {
+  const { Logger } = Store();
+  const { dispatch, state } = data;
+  const {
+    products,
+    filtered,
+    category,
+    brand,
+    grid,
+    min,
+    max,
+    priceRange,
+    sort,
+    search,
+  } = state;
+
+  function filterOnchange(e) {
+    const name = e.target.name;
+    let value = e.target.value;
+
+    if (name === "category") {
+      dispatch({ type: actions.SET_CATEGORY, payload: value });
+    }
+
+    if (name === "brand") {
+      console.log("i was fired");
+      dispatch({ type: actions.SET_BRAND, payload: value });
+    }
+
+    if (name === "grid") {
+      dispatch({ type: actions.SET_GRID, payload: true });
+    }
+
+    if (name === "list") {
+      dispatch({ type: actions.SET_GRID, payload: false });
+    }
+
+    if (name === "price-range") {
+      dispatch({ type: actions.SET_PRICE_RANGE, payload: value });
+    }
+
+    if (name === "price-form") {
+      e.preventDefault();
+      let min = e.target.querySelector("#min-number").value;
+      let max = e.target.querySelector("#max-number").value;
+
+      // check for invalid inputs
+      if (!min || !max)
+        return Logger(
+          "Pls fill the Max and Min fields for maximum and minimum price ranges",
+          "error"
+        );
+
+      min = JSON.parse(min);
+      max = JSON.parse(max);
+
+      dispatch({ type: actions.SET_MIN_MAX_RANGE, payload: { min, max } });
+    }
+
+    if (name === "search") {
+      dispatch({ type: actions.SET_SEARCH, payload: value });
+    }
+
+    if (name === "sort") {
+      dispatch({ type: actions.SET_SORT, payload: value });
+    }
+
+    if (name === "clear") {
+      dispatch({ type: actions.CLEAR });
+      return;
+    }
   }
+
+  // Values...
+  const brands = [...new Set(filtered.map((item) => item.brand))];
+  const categories = [...new Set(products.map((item) => item.category))];
+
   return (
     <Wrapper className="center mt30">
       <article className="category-brand-bar f j-between">
         <div className="category">
           <h2 className="c-blue">Category</h2>
-          {[1, 2, 3, 4, 5].map((item, index) => {
+          {categories.map((item, index) => {
             return (
               <li key={index} className="f fcenter">
-                <button className={`${index == 0 ? "active" : ""}`}>
-                  {item + "Basic Phones"}
+                <button
+                  name="category"
+                  value={item}
+                  onClick={filterOnchange}
+                  className={`capitalize ${category == item ? "active" : ""}`}
+                >
+                  {item}
                 </button>
               </li>
             );
           })}
         </div>
+
         <h2 className="display">Filter Products</h2>
+
         <div className="brand">
           <h2 className="c-blue">Brand</h2>
-          {[1, 2, 3, 4, 5].map((item, index) => {
+          {brands.map((item, index) => {
             return (
               <li key={index} className="f fcenter">
-                <button>{"samsung"}</button>
-                <span className={index == 0 ? "active" : ""}>
+                <button
+                  className="capitalize"
+                  onClick={filterOnchange}
+                  name="brand"
+                  value={item}
+                >
+                  {item}
+                </button>
+                <span className={brand == item ? "active" : ""}>
                   <ImCheckboxChecked />
                 </span>
               </li>
@@ -37,64 +128,104 @@ const FilterProducts = () => {
           })}
         </div>
       </article>
+
       <article className="range f align j-between mt10">
         <div className="side-left">
           <h3>Price #</h3>
           <div className="f align j-between">
-            <h4>300 </h4>
+            <h4>{formatPrice(min)}</h4>
             <input
-              onChange={handleThis}
+              onChange={filterOnchange}
               type="range"
-              value={500}
-              min={40}
-              max={1000}
-              name=""
-              id=""
+              value={priceRange}
+              min={min}
+              max={max}
+              name="price-range"
             />
-            <h4>1000</h4>
+            <h4>{formatPrice(max)}</h4>
           </div>
-          <h3>500</h3>
+          <h3>{formatPrice(priceRange)}</h3>
         </div>
+
         <div className="side-right">
-          <div>
+          <form onSubmit={filterOnchange} name="price-form" value="price-form">
             <div className="f align j-between">
-              <span>Max :</span>
-              <input type="number" name="" id="" />
+              <label htmlFor="max-number">Max :</label>
+              <input
+                min={min / 100}
+                max={max / 100}
+                type="number"
+                name="max"
+                id="max-number"
+              />
             </div>
             <div className="f align j-between mt10">
-              <span>Min :</span>
-              <input type="number" name="" id="" />
+              <label htmlFor="min-number">Min :</label>
+              <input
+                min={min / 100}
+                max={max / 100}
+                type="number"
+                name="min"
+                id="min-number"
+              />
             </div>
-          </div>
-          <button className="mt10">apply</button>
+            <button type="submit" className="mt10">
+              apply
+            </button>
+          </form>
         </div>
       </article>
+
       <article className="search-sort-bar f align j-between mt10">
-        <form className="search-bar f align j-between">
-          <p>Search</p>
-          <input placeholder="search by name" type="text" name="" id="" />
-        </form>
-        <form className="sort-container f align">
-          <p>Sort By:</p>
-          <select name="" id="">
-            <option value="hey">Price Low to High</option>
-            <option value="hey">Price High to Low</option>
-            <option value="hey">Alphabet A-Z</option>
-            <option value="hey">Alphabet Z-A</option>
+        <div className="search-bar f align j-between">
+          <label htmlFor="search">Search</label>
+          <input
+            value={search}
+            onChange={filterOnchange}
+            placeholder="search by name"
+            type="text"
+            name="search"
+            id="search"
+          />
+        </div>
+        <div className="sort-container f align">
+          <label htmlFor="sort">Sort By:</label>
+          <select onChange={filterOnchange} value={sort} name="sort" id="sort">
+            <option value="low-high">Price Low to High</option>
+            <option value="high-low">Price High to Low</option>
+            <option value="a-z">Alphabet A-Z</option>
+            <option value="z-a">Alphabet Z-A</option>
           </select>
-        </form>
+        </div>
       </article>
+
       <article className="feedback-bar f align j-between mt10">
         <div className="view-container f align">
           <p>View :</p>
-          <button>
+          <button
+            name="grid"
+            value="grid"
+            onClick={filterOnchange}
+            className={grid ? "active" : ""}
+          >
             <BsFillGrid3X3GapFill />
           </button>
-          <button>
+          <button
+            name="list"
+            value="list"
+            onClick={filterOnchange}
+            className={grid ? "" : "active"}
+          >
             <FaList />
           </button>
         </div>
-        <p>{"23 products found"}</p>
+        <p>{filtered.length} products found</p>
+      </article>
+
+      <article className="clear mt10">
+        <button name="clear" value={"clear"} onClick={filterOnchange}>
+          clear all filters
+        </button>
       </article>
     </Wrapper>
   );
@@ -106,7 +237,8 @@ const Wrapper = styled.section`
   .range,
   .category-brand-bar,
   .search-sort-bar,
-  .feedback-bar {
+  .feedback-bar,
+  .clear {
     background-color: var(--gray);
     color: var(--pink-light);
     padding: 10px;
@@ -140,12 +272,11 @@ const Wrapper = styled.section`
       color: var(--pink);
     }
     button:hover + span,
-    button:focus + span,
-    button:hover,
-    button:focus {
+    button:hover {
       color: var(--pink);
     }
   }
+
   .search-sort-bar {
     flex-wrap: wrap;
     .search-bar,
@@ -161,7 +292,7 @@ const Wrapper = styled.section`
         background-color: white;
         color: var(--blue);
       }
-      p {
+      label {
         font-size: 18px;
         flex: 0.3;
         color: var(--pink-light);
@@ -174,12 +305,13 @@ const Wrapper = styled.section`
         background-color: white;
         color: var(--blue);
       }
-      p {
+      label {
         flex: 0.3;
         color: var(--pink-light);
       }
     }
   }
+
   .feedback-bar {
     .view-container {
       width: 50%;
@@ -194,15 +326,31 @@ const Wrapper = styled.section`
       button:hover {
         color: var(--pink);
       }
+      svg,
+      path {
+        user-select: none;
+        pointer-events: none;
+      }
     }
   }
+
   .range {
     text-align: center;
+    flex-direction: column;
     .side-left,
     .side-right {
-      width: 45%;
-      max-width: 300px;
+      width: 100%;
     }
+    .side-right {
+      margin-top: 30px;
+      label {
+        border: 1px solid var(--pink-light);
+        width: 6em;
+        color: gray;
+        background-color: var(--pink-light);
+      }
+    }
+
     input {
       background-color: white;
       width: 100%;
@@ -220,6 +368,18 @@ const Wrapper = styled.section`
       background-color: var(--gray);
     }
   }
+
+  .clear {
+    button {
+      width: 100%;
+      background-color: var(--pink);
+      padding: 10px;
+      text-transform: uppercase;
+      border-radius: 15px;
+      font-weight: 700;
+    }
+  }
+
   @media screen and (min-width: 425px) {
     .search-sort-bar {
       .search-bar,
@@ -227,6 +387,21 @@ const Wrapper = styled.section`
         width: 47%;
         max-width: 250px;
         margin-bottom: 0px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    .range {
+      flex-direction: row;
+      .side-left,
+      .side-right {
+        width: 45%;
+        max-width: 300px;
+      }
+
+      .side-right {
+        margin-top: 0px;
       }
     }
   }

@@ -18,3 +18,12 @@ export const ADMIN_FETCH_ALL_PRODUCTS = "ADMIN_FETCH_ALL_PRODUCTS";
 export const ADMIN_FETCH_ALL_CUSTOMERS = "ADMIN_FETCH_ALL_CUSTOMERS";
 export const ADMIN_SET_ID = "ADMIN_SET_ID";
 export const ADMIN_REFRESH_STATE = "ADMIN_REFRESH_STATE";
+// filter products component
+export const SET_CATEGORY = "SET_CATEGORY";
+export const SET_BRAND = "SET_BRAND";
+export const SET_SORT = "SET_SORT";
+export const SET_PRICE_RANGE = "SET_PRICE_RANGE";
+export const SET_MIN_MAX_RANGE = "SET_MIN_MAX_RANGE";
+export const CLEAR = "CLEAR";
+export const SET_GRID = "SET_GRID";
+export const SET_SEARCH = "SET_SEARCH";

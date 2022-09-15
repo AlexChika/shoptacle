@@ -1,4 +1,7 @@
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
+import * as actions from "../store/actionTypes";
+
+// global funcs
 function calculateStars(rating) {
   let totalRating = 0;
   for (const key in rating) {
@@ -57,6 +60,7 @@ const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
   };
 };
 const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const shuffler = (a) => {
   let array = [...a];
   const j = Math.floor(Math.random() * 6);
@@ -67,44 +71,6 @@ const shuffler = (a) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-};
-
-const sampleUser = {
-  firstName: "",
-  lastName: "",
-  address: "",
-  email: "",
-  reviews: {
-    title: "title",
-    experience: "whatever fuck you think",
-    star: 3,
-    date: "date",
-  },
-  orders: {
-    name: "name of product",
-    amount: 2,
-    price: 2000,
-    date: "date",
-  },
-};
-
-const sampleProduct = {
-  name: "name of product",
-  price: 200,
-  rating: {
-    five: 0,
-    four: 0,
-    three: 0,
-    two: 0,
-    one: 0,
-  },
-  brand: "brand name",
-  category: "category name",
-  collection: "collection name",
-  desc: "what the fuck ever you wanna say about this product",
-  quantity: 200,
-  url: "main image url",
-  images: ["array of other images url"],
 };
 
 class Validate {
@@ -165,6 +131,131 @@ class Validate {
     }
   }
 }
+
+// reducer function
+const filterReducer = (state, action) => {
+  if (action.type === actions.SET_CATEGORY) {
+    const category = action.payload;
+    const array = [
+      ...state.products.filter((item) => item.category == category),
+    ];
+    return {
+      ...state,
+      category,
+      brand: "",
+      filtered: array,
+    };
+  }
+
+  if (action.type === actions.SET_BRAND) {
+    const brand = action.payload;
+    const array = [...state.filtered.filter((item) => item.brand == brand)];
+    return {
+      ...state,
+      brand,
+      filtered: array,
+    };
+  }
+
+  if (action.type === actions.SET_GRID) {
+    return {
+      ...state,
+      grid: action.payload,
+    };
+  }
+
+  if (action.type === actions.SET_PRICE_RANGE) {
+    const array = [...state.products].filter(
+      (item) => item.price <= action.payload
+    );
+    return {
+      ...state,
+      priceRange: action.payload,
+      filtered: array,
+      category: "",
+      brand: "",
+    };
+  }
+
+  if (action.type === actions.SET_MIN_MAX_RANGE) {
+    const { min, max } = action.payload;
+    console.log(min, max);
+    const array = [...state.products].filter(
+      (item) => item.price <= max && item.price >= min
+    );
+    return {
+      ...state,
+      filtered: array,
+      category: "",
+      brand: "",
+    };
+  }
+
+  if (action.type === actions.SET_SEARCH) {
+    const value = action.payload.toLowerCase();
+    const array = [
+      ...state.products.filter((item) =>
+        item.name.toLowerCase().includes(value)
+      ),
+    ];
+    return {
+      ...state,
+      filtered: array,
+      search: value,
+      grid: "",
+      brand: "",
+    };
+  }
+
+  if (action.type === actions.SET_SORT) {
+    const value = action.payload;
+    console.log(value);
+    let array;
+    if (value == "a-z") {
+      array = [...state.filtered].sort((a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+        return 0;
+      });
+    }
+    if (value == "z-a") {
+      array = [...state.filtered].sort((a, b) => {
+        if (b.name.toLowerCase() < a.name.toLowerCase()) return -1;
+        if (b.name.toLowerCase() > a.name.toLowerCase()) return 1;
+        return 0;
+      });
+    }
+    if (value == "low-high") {
+      array = [...state.filtered].sort((a, b) => {
+        return a.price - b.price;
+      });
+    }
+    if (value == "high-low") {
+      array = [...state.filtered].sort((a, b) => {
+        return b.price - a.price;
+      });
+    }
+    return {
+      ...state,
+      filtered: array,
+      sort: value,
+    };
+  }
+
+  if (action.type === actions.CLEAR) {
+    return {
+      ...state,
+      filtered: [...state.products],
+      category: "",
+      brand: "",
+      priceRange: Math.min(...state.products.map((item) => item.price)),
+      grid: true,
+    };
+  }
+
+  return state;
+};
+
 export {
   calculateStars,
   formatPrice,
@@ -173,4 +264,5 @@ export {
   shuffler,
   fetcher,
   Validate,
+  filterReducer,
 };
