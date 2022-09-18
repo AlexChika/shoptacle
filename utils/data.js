@@ -1,10 +1,3 @@
-// seedData images
-import seedShoe from "../public/shoe.png";
-import seedJacket from "../public/jacket.png";
-import seedLadyGown from "../public/lady-gown.png";
-import seedWatch from "../public/watch.png";
-import seedShoe2 from "../public/shoe2.png";
-import seedHandBag from "../public/hand-bag.png";
 // collection images
 import CollectionMale from "../public/collectionMale.jpg";
 import CollectionFemale from "../public/collectionFemale.jpg";
@@ -17,104 +10,7 @@ import testimonyVickky from "../public/vickky.png";
 import teamJasmine from "../public/jasmine.png";
 import teamAda from "../public/ada.png";
 import teamDan from "../public/dan.png";
-const seedData = [
-  {
-    name: "Classic Cooperate Office Ladies Gown", //
-    id: 1,
-    imgOne: seedShoe,
-    images: [seedLadyGown, seedShoe, seedHandBag],
-    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
-    category: "gown",
-    price: 19800,
-    rating: {
-      five: 12,
-      four: 10,
-      three: 0,
-      two: 3,
-      one: 5,
-    },
-  },
-  {
-    name: "Designer Ball Gown ", //
-    id: 2,
-    imgOne: seedLadyGown,
-    images: [seedLadyGown, seedShoe, seedHandBag],
-    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
-    category: "gown",
-    price: 140000,
-    rating: {
-      five: 12,
-      four: 4,
-      three: 0,
-      two: 3,
-      one: 1,
-    },
-  },
-  {
-    name: "Channel Bag", //
-    id: 3,
-    imgOne: seedHandBag,
-    images: [seedLadyGown, seedShoe, seedHandBag],
-    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
-    category: "gown",
-    price: 40000,
-    rating: {
-      five: 12,
-      four: 0,
-      three: 7,
-      two: 3,
-      one: 15,
-    },
-  },
-  {
-    name: "Apple Series Watch", //
-    id: 4,
-    imgOne: seedWatch,
-    images: [seedLadyGown, seedShoe, seedHandBag],
-    category: "gown",
-    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
-    price: 85000,
-    rating: {
-      five: 12,
-      four: 0,
-      three: 0,
-      two: 30,
-      one: 5,
-    },
-  },
-  {
-    name: "Design Boots", //
-    id: 5,
-    imgOne: seedShoe2,
-    images: [seedLadyGown, seedShoe, seedHandBag],
-    category: "gown",
-    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
-    price: 23000,
-    rating: {
-      five: 12,
-      four: 0,
-      three: 10,
-      two: 3,
-      one: 5,
-    },
-  },
-  {
-    name: "Versace Jacket", //
-    id: 6,
-    imgOne: seedJacket,
-    images: [seedLadyGown, seedShoe, seedHandBag],
-    category: "gown",
-    desc: " This designer ball gown is one of the most formal female attire for social occasions. It is traditionally a full-skirted gown reaching the floor, made of luxurious fabric, delicately and exotically trimmed.",
-    price: 76000,
-    rating: {
-      five: 20,
-      four: 0,
-      three: 0,
-      two: 0,
-      one: 0,
-    },
-  },
-];
+
 const collections = [
   {
     id: 1,
@@ -216,4 +112,4 @@ const _category = {
   ],
   ["Unisex Shoes"]: ["sneakers", "boots", "crocs", "flip flops"],
 };
-export { seedData, collections, testimony, team, _category };
+export { collections, testimony, team, _category };

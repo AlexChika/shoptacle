@@ -11,9 +11,21 @@ import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
 import { paginateFn, formatPrice } from "../utils/functions";
-import { payWithPaystack } from "../paystack/paystack";
+import { SET_CART_AT_CHECKOUT } from "../store/actionTypes";
+
+// stripe imports
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { payWithPaystack } from "../payment/paystack";
+import StripeCheckout from "../payment/StripeCheckout";
+
+const stripePromise = loadStripe(
+  "pk_test_51LSLaZARITds5BKwN58CYKoe4agmffBx3LePJxcTChrtdlR1IHpB2kLVuNNeteSvahOWYIj7E3AQGvRH6gLo6Jdy00kfOKDDTY"
+);
+
 const CartPageComponent = ({ data }) => {
-  const { Logger, recent, user } = Store();
+  const { Logger, recent, user, dispatch } = Store();
+  const [clientSecret, setClientSecrete] = useState("");
   const { cart, loading, cartTotals, setRefresh, refresh } = data;
   const cartRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
@@ -21,6 +33,15 @@ const CartPageComponent = ({ data }) => {
   const [paginateCartItems, setPaginateCartItems] = useState(
     paginateFn(cart, 5).items
   );
+
+  // stripe
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
 
   // local funcs
   const handlePaginate = (val) => {
@@ -40,11 +61,11 @@ const CartPageComponent = ({ data }) => {
     const data = {
       email: user.email,
       amount: cartTotals.total,
-      cart,
       Logger,
     };
 
     try {
+      dispatch({ type: SET_CART_AT_CHECKOUT, payload: cart });
       await payWithPaystack(data);
       setModal(false);
     } catch (error) {
@@ -54,14 +75,21 @@ const CartPageComponent = ({ data }) => {
   };
 
   const handlePayWithStripe = async () => {
-    const details = {
-      amount: cartTotals.total,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-    };
+    try {
+      const res = await fetch("/api/stripe-create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: cartTotals.total }),
+      });
 
-    Logger("Checkout would be the last implementation", "success");
+      const { clientSecret } = await res.json();
+      setClientSecrete(clientSecret);
+      setModal(false);
+      dispatch({ type: SET_CART_AT_CHECKOUT, payload: cart });
+    } catch (error) {
+      Logger("There was an error", "error");
+      console.log(error.message);
+    }
   };
 
   // update paginate array
@@ -71,6 +99,12 @@ const CartPageComponent = ({ data }) => {
 
   return (
     <Wrapper className="center mt30">
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          <StripeCheckout />
+        </Elements>
+      )}
+
       <Modal modal={modal} setModal={setModal}>
         <div className="modal">
           <h2>Choose Your Payment Method</h2>
@@ -88,6 +122,7 @@ const CartPageComponent = ({ data }) => {
           </div>
         </div>
       </Modal>
+
       <main className="loading">
         {loading ? <div className="spinner center sm"></div> : ""}
       </main>

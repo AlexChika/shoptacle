@@ -3,11 +3,9 @@ import styled from "styled-components";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { seedData } from "../utils/data";
 
 export const ProductRow = ({ params, products }) => {
   const { name, blob, color } = params;
-  let _products = products || [...seedData, ...seedData];
   let count = 0;
 
   const scrollForward = (e) => {
@@ -55,7 +53,7 @@ export const ProductRow = ({ params, products }) => {
       </div>
       <div className="container">
         <div className="card-container center">
-          {_products.slice(0, 15).map((product, index) => {
+          {products.slice(0, 15).map((product, index) => {
             return (
               <article key={index} className="card">
                 <ProductCard product={product} />

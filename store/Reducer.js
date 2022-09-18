@@ -93,6 +93,13 @@ function reducer(state, action) {
     };
   }
 
+  if (action.type === actionTypes.SET_CART_AT_CHECKOUT) {
+    return {
+      ...state,
+      cartAtCheckOut: action.payload,
+    };
+  }
+
   return state;
 }
 

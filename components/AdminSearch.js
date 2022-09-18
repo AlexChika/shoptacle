@@ -309,16 +309,17 @@ const Wrapper = styled.main`
     }
     form {
       width: 100%;
+      border: 0px;
     }
     input {
-      width: 65%;
+      flex: 0.65;
       padding: 10px;
       background-color: white;
     }
     button {
       color: white;
-      width: 35%;
-
+      flex: 0.35;
+      background-color: var(--blue);
       padding: 10px;
       border-radius: 0;
     }

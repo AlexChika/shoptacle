@@ -27,3 +27,5 @@ export const SET_MIN_MAX_RANGE = "SET_MIN_MAX_RANGE";
 export const CLEAR = "CLEAR";
 export const SET_GRID = "SET_GRID";
 export const SET_SEARCH = "SET_SEARCH";
+// checkout actions
+export const SET_CART_AT_CHECKOUT = "SET_CART_AT_CHECKOUT";

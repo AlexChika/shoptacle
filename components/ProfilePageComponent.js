@@ -517,7 +517,7 @@ const Wrapper = styled.main`
       overflow: hidden;
       padding: 0px 10px;
       .empty {
-        min-height: 30vh;
+        height: 100%;
         color: var(--gray);
       }
     }
