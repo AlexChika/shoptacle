@@ -10,11 +10,7 @@ import { addSubDocs, updateProduct } from "../../utils/firebase";
 
 // app
 const Confirm = () => {
-<<<<<<< HEAD
-  const { user, dispatch, cartAtCheckOut } = Store();
-=======
   const { user, Logger } = Store();
->>>>>>> dev
   const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
