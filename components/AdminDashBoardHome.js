@@ -15,6 +15,7 @@ const AdminDasnBoardHome = () => {
   const [showForm, setShowForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [currentBtn, setCurrentBtn] = useState(0);
+  const [outOfStock, setOutOfStock] = useState([]);
   const [tableProduct, setTableProduct] = useState(
     filter("collection", "Male Fashion")
   );
@@ -22,11 +23,10 @@ const AdminDasnBoardHome = () => {
     paginateFn(tableProduct, 50).items
   );
 
-  // helper tp filter products
+  // helper to filter products
   function filter(type, value) {
     type = type.toLowerCase();
     let newProducts = products.filter((product, index) => {
-      console.log(index);
       if (product[type].toLowerCase() === value.toLowerCase()) {
         return product;
       }
@@ -62,8 +62,15 @@ const AdminDasnBoardHome = () => {
   };
 
   useEffect(() => {
+    // update the paginate array once the table product changes
     setPaginateProducts(paginateFn(tableProduct, 50).items);
   }, [tableProduct]);
+
+  useEffect(() => {
+    // updates the out of stock array
+    let _oufOfStoc = products.filter((p) => p.quantity < 1);
+    setOutOfStock(_oufOfStoc);
+  }, [products]);
 
   return (
     <Wrapper className="opacity center">
@@ -75,14 +82,15 @@ const AdminDasnBoardHome = () => {
         </div>
         <div>
           <h3>Out of Stock</h3>
-          <h3>0</h3>
+          <h3>{outOfStock.length}</h3>
         </div>
         <div>
           <h3>Total Customers </h3>
           <h3>{customers.length}</h3>
         </div>
       </section>
-      {/* table-con */}
+
+      {/* table-container */}
       <section className="table-con mt30">
         <div className="header">
           <h3>All Products</h3>
@@ -158,7 +166,6 @@ const AdminDasnBoardHome = () => {
               </div>
 
               {paginateProducts.map((product, index) => {
-                console.log(product);
                 return (
                   <div key={index} className="row">
                     <span className="serial">{index + 1}.</span>
@@ -298,6 +305,7 @@ const Wrapper = styled.main`
       }
     }
   }
+
   @media screen and (min-width: 375px) {
     .counters {
       div {
@@ -308,6 +316,7 @@ const Wrapper = styled.main`
       }
     }
   }
+
   @media screen and (min-width: 600px) {
     .counters {
       div {

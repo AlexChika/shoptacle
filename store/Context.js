@@ -35,6 +35,7 @@ const AppContext = React.createContext();
 const StoreProvider = ({ setHideFooter, children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [refresh, setRefresh] = useState(true);
   const [logger, setLogger] = useState({
     text: "",
     success: true,
@@ -88,7 +89,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
   };
 
   // cart funcs
-  async function addToCart(id) {
+  async function addToCart(id, amount) {
     // check if item already exists in cart
     const isAdded = state.cart.find((item) => item.docId === id);
     // user
@@ -98,6 +99,8 @@ const StoreProvider = ({ setHideFooter, children }) => {
         await updateSubDocs("customers", state.user.email, "cart", id, {
           amount: isAdded.amount + 1,
         });
+
+        // uodate cart in state
         let newCart = [
           ...state.cart.map((item) => {
             if (item.docId == id) {
@@ -110,7 +113,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
       } else {
         let cartData = {
           docId: id,
-          amount: 1,
+          amount: amount,
         };
         // add cart to db
         await setSubDocs("customers", state.user.email, "cart", id, cartData);
@@ -141,7 +144,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
         // step 3 add cart data
         existingCart.unshift({
           docId: id,
-          amount: 1,
+          amount: amount,
         });
         localStorage.setItem("cart", JSON.stringify(existingCart));
         dispatch({ type: actionTypes.ADD_TO_CART, payload: existingCart });
@@ -174,6 +177,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
       });
       dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
     }
+
     if (type == "minus") {
       let newAmount = Math.max(cartItem.amount - 1, 1);
       newCartItem = {
@@ -233,7 +237,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
       }
     });
     return unsubscribe;
-  }, []);
+  }, [refresh]);
 
   // get cart from firestore and recents from localstorage
   useEffect(() => {
@@ -272,6 +276,22 @@ const StoreProvider = ({ setHideFooter, children }) => {
       // console.log(snapshot.docs[0].data());
     });
   }, [state.user]);
+
+  // a constantly running effect that checks online status and re-fetches data by udating setRefresh
+  useEffect(() => {
+    const listenerOnline = () => {
+      setRefresh("online");
+    };
+    const listenerOffline = () => {
+      setRefresh("offline");
+    };
+    window.addEventListener("online", listenerOnline);
+    window.addEventListener("offline", listenerOffline);
+    return () => {
+      window.removeEventListener("online", listenerOnline);
+      window.removeEventListener("offline", listenerOffline);
+    };
+  }, []);
 
   return (
     <AppContext.Provider

@@ -2,6 +2,8 @@ import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 import * as actions from "../store/actionTypes";
 
 // global funcs
+
+// func collects the star rating objec, ouputs total reviews and average star
 function calculateStars(rating) {
   let totalRating = 0;
   for (const key in rating) {
@@ -17,6 +19,8 @@ function calculateStars(rating) {
   stars = stars.toFixed(1);
   return { totalRating, stars };
 }
+
+// func returns an array with star icons arranged depending on star value
 const displayStar = (star) => {
   let starArray = [];
   function recurse(star) {
@@ -37,6 +41,8 @@ const displayStar = (star) => {
   recurse(star);
   return starArray;
 };
+
+// converts price to local currency format
 const formatPrice = (price) => {
   const newNumber = new Intl.NumberFormat("en-NG", {
     style: "currency",
@@ -44,6 +50,8 @@ const formatPrice = (price) => {
   }).format(price / 100);
   return newNumber;
 };
+
+// returns slices and returns array for pagination
 const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
   if (!itemsPerPage) throw new Error("check parameters at paginateFn");
 
@@ -59,8 +67,8 @@ const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
     buttonArray: pageNumberArray,
   };
 };
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
+// shuffkes array
 const shuffler = (a) => {
   let array = [...a];
   const j = Math.floor(Math.random() * 6);
@@ -73,6 +81,7 @@ const shuffler = (a) => {
   return array;
 };
 
+// validates strings and numbers
 class Validate {
   text(input, min = 3, max = Infinity, name = "text") {
     let valid = true;
@@ -132,7 +141,7 @@ class Validate {
   }
 }
 
-// reducer function
+// reducer function for filtering products on the shop pages
 const filterReducer = (state, action) => {
   if (action.type === actions.SET_CATEGORY) {
     const category = action.payload;
@@ -261,7 +270,6 @@ export {
   displayStar,
   paginateFn,
   shuffler,
-  fetcher,
   Validate,
   filterReducer,
 };

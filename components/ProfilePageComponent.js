@@ -65,6 +65,7 @@ const ProfilePageComponent = () => {
       value: "",
     },
   });
+  let array = [1, 2, 3];
 
   useEffect(() => {
     setOrderState({
@@ -238,6 +239,7 @@ const ProfilePageComponent = () => {
   return (
     <Wrapper className="center mt30">
       <h3 className="title">My Profile</h3>
+
       <article className="header center">
         <div className="f ">
           {user.url ? (
@@ -258,16 +260,19 @@ const ProfilePageComponent = () => {
           </div>
         </div>
       </article>
+
       <p className="email mt10">{user.email}</p>
+
       <article className="address center mt20">
         <h1>Address</h1>
         <p className="mt10">{user.address}</p>
       </article>
+
       <section ref={tabRef} className="tabs-con center mt30">
         {/* tabs navigation */}
         <div className="nav f j-between" aria-roledescription="nav">
           {[
-            { name: "Order", icon: <BsCartFill /> },
+            { name: "Orders", icon: <BsCartFill /> },
             { name: "Reviews", icon: <BsChatSquareText /> },
             { name: "Edit", icon: <FaUserEdit /> },
           ].map((nav, index) => {
@@ -284,6 +289,7 @@ const ProfilePageComponent = () => {
             );
           })}
         </div>
+
         {/* tabs content */}
         <article className="content">
           {/*  order  */}
@@ -292,13 +298,17 @@ const ProfilePageComponent = () => {
               <div ref={orderRef} className="order">
                 {orderState.paginateOrders.length > 0 ? (
                   orderState.paginateOrders.map((item, index) => {
+                    const { name, amount, price, ref, date } = item;
                     return (
                       <div key={index} className="order-item mt10">
-                        <h3> 2 x name of item</h3>
-                        <div className="f j-between mt10">
-                          <p>Price : {formatPrice(34000)} </p>
-                          <small>25th march 2022</small>
+                        <h3>
+                          {amount} x {name}
+                        </h3>
+                        <div className="f j-between">
+                          <p>Price : {formatPrice(price)} </p>
+                          <small>{date}</small>
                         </div>
+                        <p>ref: {ref}</p>
                       </div>
                     );
                   })
@@ -317,6 +327,7 @@ const ProfilePageComponent = () => {
               />
             </div>
           )}
+
           {/* reviews */}
           {tabs === 1 && (
             <div>
@@ -355,6 +366,7 @@ const ProfilePageComponent = () => {
               />
             </div>
           )}
+
           {/* edit */}
           {tabs === 2 && (
             <div className="edit">
@@ -438,6 +450,7 @@ const Wrapper = styled.main`
     text-decoration: underline;
     color: var(--gray);
   }
+
   .header {
     max-width: 650px;
     padding: 10px;
@@ -479,6 +492,7 @@ const Wrapper = styled.main`
       text-decoration: underline;
     }
   }
+
   .tabs-con {
     max-width: 650px;
     .nav {
@@ -495,6 +509,7 @@ const Wrapper = styled.main`
         color: var(--pink);
       }
     }
+
     .content {
       border: 1px solid gray;
 
@@ -506,28 +521,31 @@ const Wrapper = styled.main`
         color: var(--gray);
       }
     }
+
     .order {
       overflow-y: auto;
       max-height: 530px;
+
       .order-item {
-        padding: 10px;
+        padding: 5px;
         border-bottom: 2px solid var(--pink-light);
         color: var(--blue);
       }
-      .order-item:nth-of-type(even) {
-        background-color: var(--pink-light);
-      }
-      .order-item:nth-of-type(odd) {
-        background-color: white;
-      }
-      h3 {
-        letter-spacing: 0.12rem;
+
+      h3,
+      p {
         font-style: italic;
       }
+
+      h3 {
+        letter-spacing: 0.12rem;
+      }
+
       small {
         color: gray;
       }
     }
+
     .review {
       color: var(--blue);
       overflow-y: auto;
@@ -549,6 +567,7 @@ const Wrapper = styled.main`
         font-size: 15px;
       }
     }
+
     .edit {
       color: var(--blue);
       padding: 20px 0px;

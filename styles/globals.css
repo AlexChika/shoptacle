@@ -46,21 +46,7 @@ a {
 .spinner.stop {
   display: none;
 }
-@-moz-keyframes spinner {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@-o-keyframes spinner {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes spinner {
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 @keyframes spinner {
   100% {
     transform: rotate(360deg);

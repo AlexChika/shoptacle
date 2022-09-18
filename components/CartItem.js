@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Store } from "../store/Context";
 import Image from "next/image";
-import Link from "next/link";
 import { FaTimes } from "react-icons/fa";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { formatPrice } from "../utils/functions";
@@ -22,23 +21,23 @@ const CartItem = ({ cart }) => {
   }
 
   async function incDecCartItem(id, quantity, type) {
+    if (quantity < 1) return;
     try {
       await incDecCart(id, quantity, type);
       Logger("Item updated successfully", "success", 1000);
     } catch (error) {
-      Logger("Coul not update item", "success");
+      Logger("Coul not update item", "error");
     }
   }
 
   const { name, price, imgOne, amount, id, quantity } = cart;
 
   return (
-    // <Link href={`/shop/${name}-${id}`}>
-    // </Link>
     <Wrapper className="f">
       <div className="img">
         <Image layout="fill" alt="cart item" src={imgOne}></Image>
       </div>
+
       <button
         onClick={() => removeCartItem(id)}
         type="button"
@@ -46,7 +45,8 @@ const CartItem = ({ cart }) => {
       >
         <span>Remove</span>
         <FaTimes />
-      </button>{" "}
+      </button>
+
       <div className="detail f j-around">
         <h3 className="capitalize name">{name}</h3>
 
@@ -75,7 +75,11 @@ const CartItem = ({ cart }) => {
 
         <div className="f align j-around">
           <p>Sub-Total</p>
-          <p>{formatPrice(price * amount)}</p>
+          {quantity < 1 ? (
+            <p>Out Of Stock</p>
+          ) : (
+            <p>{formatPrice(price * amount)}</p>
+          )}
         </div>
       </div>
     </Wrapper>

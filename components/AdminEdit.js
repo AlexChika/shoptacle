@@ -34,7 +34,7 @@ const AdminEdit = () => {
       name: { value: product.name, valid: true },
       collection: { value: product.collection, valid: true },
       arrival: { value: product.arrival, valid: true },
-      price: { value: Number(product.price), valid: true },
+      price: { value: Number(product.price) / 100, valid: true },
       quantity: { value: Number(product.quantity), valid: true },
       brand: { value: product.brand, valid: true },
       category: { value: product.category, valid: true },

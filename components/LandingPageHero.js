@@ -19,12 +19,15 @@ const LandingPageHero = () => {
         </div>
         <div className="emptySpace minvh"></div>
       </section>
+
       {/* main page content */}
       <main className="hero-main-content">
         <NavBar page="home" />
         <SideBar />
+
         <section className="body">
           <div className="emptySpace minvh"></div>
+
           <div className="mainContent minvh f fcenter">
             <div className="hero-title">
               <h1>Think Fashion? Think Us</h1>
@@ -40,6 +43,7 @@ const LandingPageHero = () => {
               </button>
             </div>
           </div>
+
           <div className="socialCon minvh f j-around align">
             <a href="#new-arrival" className="side-text trans">
               <h1>Trending Collections</h1>

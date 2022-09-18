@@ -13,13 +13,15 @@ const ProductDetail = ({ data }) => {
   const { Logger, recent, addToCart } = Store();
   const { product, relatedProducts, id } = data;
   const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState(1);
   const [currentImage, setCurrentImage] = useState(product.imgOne);
 
   // funcs
   const handleAddToCart = async () => {
+    if (product.quantity < 1) return;
     try {
       setLoading(true);
-      await addToCart(id);
+      await addToCart(id, amount);
       setLoading(false);
       Logger("we added your product to the cart", "success", 2000);
     } catch (error) {
@@ -29,9 +31,20 @@ const ProductDetail = ({ data }) => {
     }
   };
 
+  // sets cart amount
+  const handleAmount = (type) => {
+    let max = product.quantity;
+    if (type == "plus") {
+      setAmount(Math.min(amount + 1, max));
+    }
+    if (type == "minus") {
+      setAmount(Math.max(amount - 1, 1));
+    }
+  };
+
   const {
     name,
-    category,
+    quantity,
     price,
     desc,
     brand,
@@ -86,6 +99,7 @@ const ProductDetail = ({ data }) => {
                 </p>
               </div>
             </div>
+
             <div className="price-qual-con f j-between mt30">
               <div>
                 <h3>Price</h3>
@@ -94,25 +108,44 @@ const ProductDetail = ({ data }) => {
               <div>
                 <h3>Quantity</h3>
                 <div className="f align j-around">
-                  <button type="button" className="f align">
+                  <button
+                    onClick={() => handleAmount("plus")}
+                    type="button"
+                    className="f align"
+                  >
                     <HiPlus />
                   </button>
-                  <span>{1}</span>
-                  <button type="button" className="f align">
+                  <span>{amount}</span>
+                  <button
+                    onClick={() => handleAmount("minus")}
+                    type="button"
+                    className="f align"
+                  >
                     <HiMinus />
                   </button>
                 </div>
               </div>
             </div>
+
             <div className="desc mt30">
               <p>{desc}</p>
             </div>
+
             <div
               className={`spinner sm center mt20 ${loading ? "" : "stop"}`}
             ></div>
-            <button onClick={handleAddToCart} className="cart-btn center mt30">
-              Add To Cart
-            </button>
+
+            {quantity < 1 ? (
+              <button className="cart-btn center mt30">Out Of Stock</button>
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                className="cart-btn center mt30"
+              >
+                Add To Cart
+              </button>
+            )}
+
             <button className="btn center mt30">
               <Link href="/cart">Go To Cart</Link>
             </button>

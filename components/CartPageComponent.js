@@ -11,9 +11,10 @@ import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
 import { paginateFn, formatPrice } from "../utils/functions";
+import { payWithPaystack } from "../paystack/paystack";
 const CartPageComponent = ({ data }) => {
-  const { Logger, recent } = Store();
-  const { cart, loading, cartTotals } = data;
+  const { Logger, recent, user } = Store();
+  const { cart, loading, cartTotals, setRefresh, refresh } = data;
   const cartRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
   const [modal, setModal] = useState(false);
@@ -33,7 +34,45 @@ const CartPageComponent = ({ data }) => {
     setModal(true);
   };
 
-  const handleSelectCheckout = () => {
+  const handlePayWithPaystack = async () => {
+    // this would refresh the cart incase of any out of stock
+    // when refreshed cartTotals will not be upto date since component is still loading/fetching
+    setRefresh(refresh + 1);
+
+    async function pay() {
+      // this calls pay untill loading is done
+      if (loading) {
+        setTimeout(() => {
+          pay();
+        }, 100);
+        return;
+      }
+
+      const data = {
+        email: user.email,
+        amount: cartTotals.total,
+        cart,
+      };
+
+      try {
+        await payWithPaystack(data);
+        setModal(false);
+      } catch (error) {
+        Logger("There was an error", "error");
+        console.log(error.message);
+      }
+    }
+    pay();
+  };
+
+  const handlePayWithStripe = async () => {
+    const details = {
+      amount: cartTotals.total,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    };
+
     Logger("Checkout would be the last implementation", "success");
   };
 
@@ -49,13 +88,13 @@ const CartPageComponent = ({ data }) => {
           <h2>Choose Your Payment Method</h2>
           <div className="mt20">
             <h3>Paystack</h3>
-            <button onClick={handleSelectCheckout} className="mt10">
+            <button onClick={handlePayWithPaystack} className="mt10">
               <Image alt="paystack icon" src={paystackIcon} />
             </button>
           </div>
           <div className="mt20">
             <h3>Stripe</h3>
-            <button onClick={handleSelectCheckout} className="mt10">
+            <button onClick={handlePayWithStripe} className="mt10">
               <Image alt="stripe icon" src={stripeIcon} />
             </button>
           </div>

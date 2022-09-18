@@ -67,10 +67,11 @@ const UserReviews = ({ data }) => {
       router.push("/profile");
       return;
     }
+
     // activate spinner
     spinner.style.display = "block";
 
-    let type;
+    let type; //get the equivalent key of rating object
     switch (selectStarRating) {
       case 1:
         type = "one";

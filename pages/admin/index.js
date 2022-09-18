@@ -65,6 +65,7 @@ const Products = () => {
             payload: products,
           });
         });
+
         getAllCustomers().then((customers) => {
           dispatch({
             type: actionTypes.ADMIN_FETCH_ALL_CUSTOMERS,
@@ -78,7 +79,7 @@ const Products = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [state.refreshState]);
+  }, [state.refreshState, user]);
 
   return (
     <AdminContext.Provider value={{ ...state, dispatch, refreshState }}>

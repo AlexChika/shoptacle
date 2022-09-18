@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Store } from "../store/Context";
 import { useRouter } from "next/router";
+import Shoptacle from "../svg-components/shoptacle";
 import AdminDashBoardHome from "./AdminDashBoardHome";
 import AdminAdd from "./AdminAdd";
 import AdminEdit from "./AdminEdit";
@@ -33,6 +34,7 @@ const AdminDashboard = () => {
   };
   return (
     <DashboardWrapper className="f opacity">
+      {/* side  bar  */}
       <section className={`sideBar trans ${sideBar ? "" : "close"}`}>
         <span onClick={() => setSideBar(!sideBar)} className="arrow">
           {sideBar ? <BsArrowLeftCircleFill /> : <BsArrowRightCircleFill />}
@@ -85,7 +87,10 @@ const AdminDashboard = () => {
           </button>
         </div>
       </section>
+
+      {/* main content */}
       <section className="content">
+        {/* heading of main content */}
         <div className="heading">
           <button
             onClick={() => setSideBar(!sideBar)}
@@ -112,6 +117,7 @@ const AdminDashboard = () => {
           )}
         </div>
 
+        {/* components acting as pages (add, edit, searc, dashboard etc) */}
         <main className="mt10">
           {currentTab == 0 && <AdminDashBoardHome />}
           {currentTab == 1 && <AdminSearch handleSetTab={handleSetTab} />}
@@ -119,6 +125,11 @@ const AdminDashboard = () => {
           {currentTab == 3 && <AdminEdit />}
         </main>
       </section>
+
+      {/* background.... shoptacle logo */}
+      <div className="logo f fcenter minvh">
+        <Shoptacle fill={"#ececec"} />
+      </div>
     </DashboardWrapper>
   );
 };
@@ -202,6 +213,8 @@ const DashboardWrapper = styled.main`
     padding: 0px 10px;
     width: 100%;
     overflow-y: auto;
+    z-index: 2;
+
     .heading {
       padding: 5px;
       h3 {
@@ -219,11 +232,19 @@ const DashboardWrapper = styled.main`
     }
   }
 
+  .logo {
+    width: 120px;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
   @media screen and (min-width: 320px) {
     .sideBar {
       width: 300px;
     }
   }
+
   @media screen and (min-width: 768px) {
     .navigation {
       display: none;

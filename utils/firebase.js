@@ -22,12 +22,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCRDLu2rHp703rAf8OLDb57QYvvEOCnZGQ",
-  authDomain: "shoptacle-676a3.firebaseapp.com",
-  projectId: "shoptacle-676a3",
-  storageBucket: "shoptacle-676a3.appspot.com",
-  messagingSenderId: "1096229491593",
-  appId: "1:1096229491593:web:0256decae2e2c4be174758",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
@@ -160,7 +160,11 @@ async function getCartItem(cart) {
     const ref = getProductDocRef(docId);
     const snapshot = await getDoc(ref);
     const data = snapshot.data();
-    cartItems.push({ ...data, amount, id: snapshot.id });
+    cartItems.push({
+      ...data,
+      amount: Math.min(data.quantity, amount),
+      id: snapshot.id,
+    });
   }
   return cartItems;
 }

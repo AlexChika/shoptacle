@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Script from "next/script";
 import { Store } from "../../store/Context";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
@@ -10,7 +11,9 @@ import CartPageComponent from "../../components/CartPageComponent";
 import { getCartItem } from "../../utils/firebase";
 const Index = () => {
   let { cart, Logger } = Store();
+
   // states
+  const [refresh, setRefresh] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [cartTotals, setCartTotals] = useState({
@@ -19,6 +22,7 @@ const Index = () => {
     subtotal: 0,
     total: 0,
   });
+
   // get updated cart items
   useEffect(() => {
     let isSubscribed = true;
@@ -45,7 +49,7 @@ const Index = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [cart]);
+  }, [cart, refresh]);
 
   // update cartTotals
   useEffect(() => {
@@ -66,13 +70,15 @@ const Index = () => {
 
   return (
     <Wrapper className="layout">
+      <Script
+        src="https://js.paystack.co/v1/inline.js"
+        strategy="beforeInteractive"
+      ></Script>
       <NavBar page={"cart"} />
       <SideBar />
       <HeroBar />
       <CartPageComponent
-        data={{ loading, cart: cartItems, cartTotals }}
-        loading={loading}
-        cart={cartItems}
+        data={{ loading, cart: cartItems, cartTotals, setRefresh, refresh }}
       />
     </Wrapper>
   );

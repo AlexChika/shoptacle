@@ -3,10 +3,19 @@ import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import Icon from "../public/icon.png";
+import {
+  BsBehance,
+  BsGithub,
+  BsEnvelopeFill,
+  BsGlobe,
+  BsLinkedin,
+  BsTwitter,
+} from "react-icons/bs";
+
 const Footer = ({ hide }) => {
   return (
     <Wrapper hide={hide} className="layout">
-      <section className="headerWrapper f center">
+      <section className="footerHeader f center">
         <div className="shoptacle f col">
           <Link href="/">
             <div className="f align">
@@ -50,17 +59,45 @@ const Footer = ({ hide }) => {
           <h5>Refer us</h5>
         </div>
       </section>
+
       <section className="footerFooter f center">
-        <h5>
-          <a href="https://www.behance.net/ClementinaClement">
-            Designed by Clementina Clement <br /> UIUX Designer
-          </a>
-        </h5>
-        <h5>
-          <a href="https://i-am-alex.netlify.app/">
-            Copyright &#169; 2022 Alex Chika <br /> Frontend Developer
-          </a>
-        </h5>
+        <article>
+          <h5>
+            <a href="https://www.behance.net/ClementinaClement" target="_blank">
+              Designed by Clementina Clement <br /> UIUX Designer
+            </a>
+          </h5>
+          <div className="icons mt10">
+            <a href="https://www.behance.net/ClementinaClement" target="_blank">
+              <BsBehance />
+            </a>
+            <a href="http://twitter.com/tinaclement19" target="_blank">
+              <BsTwitter />
+            </a>
+            <a href="http://linkedin.com/in/clementina-clement" target="_blank">
+              <BsLinkedin />
+            </a>
+          </div>
+        </article>
+
+        <article>
+          <h5>
+            <a href="https://i-am-alex.netlify.app/" target="_blank">
+              Copyright &#169; 2022 Alex Chika <br /> Frontend Developer
+            </a>
+          </h5>
+          <div className="icons mt10">
+            <a href="https://github.com/AlexChika" target="_blank">
+              <BsGithub />
+            </a>
+            <a href="mailto:i.am.alex.chika@gmail.com">
+              <BsEnvelopeFill />
+            </a>
+            <a href="https://i-am-alex.netlify.app" target="_blank">
+              <BsGlobe />
+            </a>
+          </div>
+        </article>
       </section>
     </Wrapper>
   );
@@ -73,7 +110,7 @@ const Wrapper = styled.footer`
   color: white;
   padding: 40px 20px 10px 20px;
 
-  .headerWrapper {
+  .footerHeader {
     flex-wrap: wrap;
     justify-content: space-around;
     .col {
@@ -86,9 +123,11 @@ const Wrapper = styled.footer`
       padding: 10px;
     }
   }
+
   h5 {
     padding: 5px 0;
   }
+
   .shoptacle {
     h2 {
       font-family: "Lobster", cursive;
@@ -111,6 +150,7 @@ const Wrapper = styled.footer`
     align-items: center;
     justify-content: space-around;
   }
+
   .footerFooter {
     flex-wrap: wrap;
     justify-content: center;
@@ -120,7 +160,11 @@ const Wrapper = styled.footer`
     text-align: center;
     h5 {
       margin: 0px 10px;
-      color: white;
+      color: #bfbfff;
+    }
+    .icons a {
+      font-size: 20px;
+      margin: 0px 10px;
     }
   }
   @media screen and (min-width: 546px) {
