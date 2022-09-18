@@ -28,7 +28,6 @@ const initialState = {
   currRoute: "",
   cart: [], //user cart (productIds and amount)
   recent: [], //recently viewed items
-  cartAtCheckOut: [],
 };
 
 // app
@@ -43,7 +42,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
     show: false,
     timeoutId: "",
   });
-  console.log(state.cartAtCheckOut);
+
   // funcs
   // modal handler
   function handleCloseModal() {

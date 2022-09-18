@@ -12,7 +12,7 @@ function NavBar({ page }) {
   return (
     <main
       style={{
-        position: "sticky",
+        // position: "sticky",
         top: "0",
         backgroundColor: "inherit",
         zIndex: "1",
