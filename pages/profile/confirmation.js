@@ -5,15 +5,19 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import ladyFlower from "../../public/lady-flower.png";
 import celebrate from "../../public/celebrate.png";
-import { SET_CART_AT_CHECKOUT } from "../../store/actionTypes";
 // firebase imports
 import { addSubDocs, updateProduct } from "../../utils/firebase";
 
 // app
 const Confirm = () => {
+<<<<<<< HEAD
   const { user, dispatch, cartAtCheckOut } = Store();
+=======
+  const { user, Logger } = Store();
+>>>>>>> dev
   const router = useRouter();
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // btn handlers ....
   const backToCart = () => {
@@ -37,37 +41,51 @@ const Confirm = () => {
 
   // update user orders in  db ...
   useEffect(() => {
-    console.log(cartAtCheckOut);
     const paymentIntent = new URLSearchParams(window.location.search).get(
       "payment_intent"
     );
-    console.log(paymentIntent);
+
+    let cart = JSON.parse(localStorage.getItem("checkout")) || [];
+    console.log(cart);
+    let email = user.email;
+
+    if (!email) {
+      return;
+    }
 
     async function updateOrders() {
-      for (let i = 0; i < cartAtCheckOut.length; i++) {
-        if (cartAtCheckOut[i].quantity < 1) continue;
-        let amount = cartAtCheckOut[i].amount;
-        let quantity = cartAtCheckOut[i].quantity;
+      for (let i = 0; i < cart.length; i++) {
+        console.log("running");
+
+        if (cart[i].quantity < 1) continue;
+        let amount = cart[i].amount;
+        let quantity = cart[i].quantity;
+
+        // order object
         const order = {
-          name: cartAtCheckOut[i].name, // of product
-          price: cartAtCheckOut[i].price, // price of item
+          name: cart[i].name, // of product
+          price: cart[i].price, // price of item
           amount, // amount of item
           ref: paymentIntent, //ref(paystack) or paymentIntent(stripe)
           date: new Date().toDateString(),
         };
+
         // add to db
         await addSubDocs("customers", email, "orders", order);
-        // update product
+        // update product quantity
         await updateProduct(cart[i].id, { quantity: quantity - amount });
-        Logger("Payment complete! Reference: " + ref, "success");
       }
-    }
-    if (success) {
-      // updateOrders();
-    }
-  }, [success]);
+      console.log("finished");
 
-  //localhost:3000/profile/confirmation?payment_intent=pi_3LjPlIARITds5BKw0H3f42rK&payment_intent_client_secret=pi_3LjPlIARITds5BKw0H3f42rK_secret_s3bY2Bvg1CfCEoNLgVpL5AM9W&redirect_status=succeeded
+      // reset localstorage
+      localStorage.setItem("checkout", "[]");
+      setLoading(false);
+    }
+
+    if (success) {
+      updateOrders();
+    }
+  }, [success, user]); // added user as a dependency in case of a disconnection during confirmation or lag in state. useEffect will rerun when connection is restored
 
   return (
     <Wrapper className="layout f fcenter">
@@ -77,7 +95,11 @@ const Confirm = () => {
         </div>
       </div>
 
-      {success ? (
+      {loading ? (
+        <div className="loading f j-around">
+          <div className="spinner center"></div>
+        </div>
+      ) : success ? (
         <section className="box success f j-around">
           <h1>Yipee , Your order has been Placed Successfully</h1>
 
@@ -126,7 +148,8 @@ const Wrapper = styled.main`
   position: relative;
   flex-direction: column;
 
-  .box {
+  .box,
+  .loading {
     max-width: 945px;
     width: 90%;
     height: 80vh;

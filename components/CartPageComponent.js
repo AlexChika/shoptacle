@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Store } from "../store/Context";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Paginate from "./Paginate";
 import Modal from "./Modal";
@@ -11,7 +12,6 @@ import stripeIcon from "../public/stripe.png";
 import { ProductRow } from "./ShopPageComponent";
 import CartItem from "./CartItem";
 import { paginateFn, formatPrice } from "../utils/functions";
-import { SET_CART_AT_CHECKOUT } from "../store/actionTypes";
 
 // stripe imports
 import { loadStripe } from "@stripe/stripe-js";
@@ -24,7 +24,8 @@ const stripePromise = loadStripe(
 );
 
 const CartPageComponent = ({ data }) => {
-  const { Logger, recent, user, dispatch } = Store();
+  const { Logger, recent, user } = Store();
+  const router = useRouter();
   const [clientSecret, setClientSecrete] = useState("");
   const { cart, loading, cartTotals, setRefresh, refresh } = data;
   const cartRef = useRef(null);
@@ -52,6 +53,12 @@ const CartPageComponent = ({ data }) => {
   };
 
   const handleCheckout = () => {
+    if (!user) {
+      Logger("Please Login To See Checkout", "error");
+      router.push("/profile");
+      return;
+    }
+
     // this would refresh the cart incase of any out of stock
     setRefresh(refresh + 1);
     setModal(true);
@@ -65,7 +72,7 @@ const CartPageComponent = ({ data }) => {
     };
 
     try {
-      dispatch({ type: SET_CART_AT_CHECKOUT, payload: cart });
+      localStorage.setItem("checkout", JSON.stringify(cart));
       await payWithPaystack(data);
       setModal(false);
     } catch (error) {
@@ -85,7 +92,7 @@ const CartPageComponent = ({ data }) => {
       const { clientSecret } = await res.json();
       setClientSecrete(clientSecret);
       setModal(false);
-      dispatch({ type: SET_CART_AT_CHECKOUT, payload: cart });
+      localStorage.setItem("checkout", JSON.stringify(cart));
     } catch (error) {
       Logger("There was an error", "error");
       console.log(error.message);
@@ -182,9 +189,16 @@ const CartPageComponent = ({ data }) => {
                 </div>
               </article>
             </div>
-            <button onClick={handleCheckout} className="mt30">
-              Continue To Checkout
-            </button>
+
+            {user ? (
+              <button onClick={handleCheckout} className="mt30">
+                Continue To Checkout
+              </button>
+            ) : (
+              <button onClick={() => router.push("/profile")} className="mt30">
+                Login To See Checkout
+              </button>
+            )}
           </div>
         </section>
       )}
