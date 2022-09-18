@@ -10,7 +10,7 @@ import { SET_CART_AT_CHECKOUT } from "../../store/actionTypes";
 import { addSubDocs, updateProduct } from "../../utils/firebase";
 
 // app
-const confirm = () => {
+const Confirm = () => {
   const { user, dispatch, cartAtCheckOut } = Store();
   const router = useRouter();
   const [success, setSuccess] = useState(false);
@@ -117,7 +117,7 @@ const confirm = () => {
   );
 };
 
-export default confirm;
+export default Confirm;
 
 const Wrapper = styled.main`
   background-color: var(--pink-light);
