@@ -100,7 +100,7 @@ const AdminEdit = () => {
     }
     if (name == "quantity") {
       value = parseInt(value);
-      status = validate.number(value, 1, ...[,], "Quantity");
+      status = validate.number(value, 0, ...[,], "Quantity");
     }
     if (name == "brand") {
       status = validate.text(value, ...[,], ...[,], "Brand");

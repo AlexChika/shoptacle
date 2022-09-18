@@ -63,18 +63,34 @@ const Footer = ({ hide }) => {
       <section className="footerFooter f center">
         <article>
           <h5>
-            <a href="https://www.behance.net/ClementinaClement" target="_blank">
+            <a
+              href="https://www.behance.net/ClementinaClement"
+              target="_blank"
+              rel="noreferrer"
+            >
               Designed by Clementina Clement <br /> UIUX Designer
             </a>
           </h5>
           <div className="icons mt10">
-            <a href="https://www.behance.net/ClementinaClement" target="_blank">
+            <a
+              href="https://www.behance.net/ClementinaClement"
+              target="_blank"
+              rel="noreferrer"
+            >
               <BsBehance />
             </a>
-            <a href="http://twitter.com/tinaclement19" target="_blank">
+            <a
+              href="http://twitter.com/tinaclement19"
+              target="_blank"
+              rel="noreferrer"
+            >
               <BsTwitter />
             </a>
-            <a href="http://linkedin.com/in/clementina-clement" target="_blank">
+            <a
+              href="http://linkedin.com/in/clementina-clement"
+              target="_blank"
+              rel="noreferrer"
+            >
               <BsLinkedin />
             </a>
           </div>
@@ -82,18 +98,30 @@ const Footer = ({ hide }) => {
 
         <article>
           <h5>
-            <a href="https://i-am-alex.netlify.app/" target="_blank">
+            <a
+              href="https://i-am-alex.netlify.app/"
+              target="_blank"
+              rel="noreferrer"
+            >
               Copyright &#169; 2022 Alex Chika <br /> Frontend Developer
             </a>
           </h5>
           <div className="icons mt10">
-            <a href="https://github.com/AlexChika" target="_blank">
+            <a
+              href="https://github.com/AlexChika"
+              target="_blank"
+              rel="noreferrer"
+            >
               <BsGithub />
             </a>
             <a href="mailto:i.am.alex.chika@gmail.com">
               <BsEnvelopeFill />
             </a>
-            <a href="https://i-am-alex.netlify.app" target="_blank">
+            <a
+              href="https://i-am-alex.netlify.app"
+              target="_blank"
+              rel="noreferrer"
+            >
               <BsGlobe />
             </a>
           </div>

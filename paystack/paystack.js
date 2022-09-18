@@ -1,5 +1,5 @@
-import { addSubDocs } from "../utils/firebase";
-export async function payWithPaystack({ email, amount, cart }) {
+import { addSubDocs, updateProduct } from "../utils/firebase";
+export async function payWithPaystack({ email, amount, cart, Logger }) {
   const handler = PaystackPop.setup({
     key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
     email,
@@ -15,27 +15,31 @@ export async function payWithPaystack({ email, amount, cart }) {
       if (status) {
         for (let i = 0; i < cart.length; i++) {
           if (cart[i].quantity < 1) continue;
+          let amount = cart[i].amount;
+          let quantity = cart[i].quantity;
 
           const order = {
             name: cart[i].name, // of product
             price: cart[i].price, // price of item
-            amount: cart[i].amount, // amount of item
+            amount, // amount of item
             ref, //ref from payment
             date: new Date().toDateString(),
           };
 
           // add to db
           await addSubDocs("customers", email, "orders", order);
-          alert("Payment complete! Reference: " + ref);
+          // update product
+          await updateProduct(cart[i].id, { quantity: quantity - amount });
+          Logger("Payment complete! Reference: " + ref, "success");
         }
       }
 
       if (!status) {
-        alert("Payment failed! Reference: " + ref);
+        Logger("Payment failed! Reference: " + ref, "error");
       }
     },
     onClose: function () {
-      alert("Transaction was not completed, window closed.");
+      Logger("Transaction was not completed, window closed.", "error");
     },
   });
   handler.openIframe();

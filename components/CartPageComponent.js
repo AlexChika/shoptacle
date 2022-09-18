@@ -31,38 +31,26 @@ const CartPageComponent = ({ data }) => {
   };
 
   const handleCheckout = () => {
+    // this would refresh the cart incase of any out of stock
+    setRefresh(refresh + 1);
     setModal(true);
   };
 
   const handlePayWithPaystack = async () => {
-    // this would refresh the cart incase of any out of stock
-    // when refreshed cartTotals will not be upto date since component is still loading/fetching
-    setRefresh(refresh + 1);
+    const data = {
+      email: user.email,
+      amount: cartTotals.total,
+      cart,
+      Logger,
+    };
 
-    async function pay() {
-      // this calls pay untill loading is done
-      if (loading) {
-        setTimeout(() => {
-          pay();
-        }, 100);
-        return;
-      }
-
-      const data = {
-        email: user.email,
-        amount: cartTotals.total,
-        cart,
-      };
-
-      try {
-        await payWithPaystack(data);
-        setModal(false);
-      } catch (error) {
-        Logger("There was an error", "error");
-        console.log(error.message);
-      }
+    try {
+      await payWithPaystack(data);
+      setModal(false);
+    } catch (error) {
+      Logger("There was an error", "error");
+      console.log(error.message);
     }
-    pay();
   };
 
   const handlePayWithStripe = async () => {

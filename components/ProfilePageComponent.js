@@ -65,11 +65,10 @@ const ProfilePageComponent = () => {
       value: "",
     },
   });
-  let array = [1, 2, 3];
 
   useEffect(() => {
     setOrderState({
-      paginateOrders: paginateFn(orders, 5).items,
+      paginateOrders: paginateFn(orders, 7).items,
       currentBtn: 0,
     });
     setReviewState({
@@ -424,6 +423,7 @@ const ProfilePageComponent = () => {
           )}
         </article>
       </section>
+
       <div className="btns center f j-around">
         <Link href="/cart">
           <button>Go to cart</button>
@@ -524,7 +524,7 @@ const Wrapper = styled.main`
 
     .order {
       overflow-y: auto;
-      max-height: 530px;
+      height: 530px;
 
       .order-item {
         padding: 5px;
@@ -549,7 +549,7 @@ const Wrapper = styled.main`
     .review {
       color: var(--blue);
       overflow-y: auto;
-      max-height: 530px;
+      height: 530px;
       .review-row {
         padding: 10px;
         border-bottom: 2px solid var(--gray);
@@ -570,6 +570,7 @@ const Wrapper = styled.main`
 
     .edit {
       color: var(--blue);
+      height: 530px;
       padding: 20px 0px;
       h1 {
         text-align: center;

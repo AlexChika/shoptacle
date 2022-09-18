@@ -23,9 +23,9 @@ const HeroBar = () => {
       <div className="hero-content center">
         <h3 className="capitalize">
           <Link href={pathNames(preRoute).path}>
-            <span className="trans">{pathNames(preRoute).name}&nbsp;</span>
+            <span className="trans">{pathNames(preRoute).name}..&nbsp;</span>
           </Link>
-          /&nbsp;{pathNames(currRoute).name}
+          /&nbsp;{pathNames(currRoute).name}..
         </h3>
       </div>
     </Wrapper>
