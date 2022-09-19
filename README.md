@@ -49,8 +49,8 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 
  <table>
   <tr>
-    <td><img src="https://drive.google.com/file/d/14sfsbzFlrg6mMoycLixUYzqHxw--6a9C/view" alt="home" /></td>
-    <td><img src="https://drive.google.com/file/d/1Z3ISPswhhXODLEHxtANkqYR_XkkdAIj3/view" alt="small-home" /></td>
+    <td><img src="https://i.postimg.cc/GtYcC8j2/shoptacle-home.png" alt="home" /></td>
+    <td><img src="https://i.postimg.cc/N0JG7wMg/shoptacle-home-small.png" alt="small-home" /></td>
   </tr>
  </table>
 <br />
@@ -154,7 +154,7 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 
 <h2>Demo</h2>
 
-[Click here to checkoout this project](https://shoptacle.vercel.app/)
+[Click here to checkout this project](https://shoptacle.vercel.app/)
 
 <br />
 

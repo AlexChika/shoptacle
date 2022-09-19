@@ -220,6 +220,7 @@ const Wrapper = styled.main`
       width: 55px;
       border-radius: 50%;
       background-color: white;
+      border: 1px solid black;
       padding: 10px;
       h1 {
         font-size: 16px;
