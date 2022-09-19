@@ -103,15 +103,90 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 <hr />
 <table>
    <tr>
-    <td><img src="https://drive.google.com/file/d/14sfsbzFlrg6mMoycLixUYzqHxw--6a9C/view" alt="home" /></td>
-    <td><img src="https://drive.google.com/file/d/1Z3ISPswhhXODLEHxtANkqYR_XkkdAIj3/view" alt="small-home" /></td>
+    <td><img src="https://i.postimg.cc/GtYcC8j2/shoptacle-home.png" alt="home" /></td>
+    <td><img src="https://i.postimg.cc/N0JG7wMg/shoptacle-home-small.png" alt="small-home" /></td>
   </tr>
   <tr>
-    <td><img src="https://drive.google.com/file/d/156KjFK8lMBE1trn3OSsaP9Cx_lNpno5S/view" alt="new arrival" /></td>
-    <td><img src="https://drive.google.com/file/d/1zh0elR1t0Ku_SoAHVlXH0aPJQu2ZcKSl/view" alt="collections" /></td>
+    <td><img src="https://i.postimg.cc/yd2VtXct/shoptacle-new-arrival.png" alt="new arrival" /></td>
+    <td><img src="https://i.postimg.cc/3Rk8tb42/shoptacle-collection.png" alt="collections" /></td>
   </tr>
-    <!--  -->
 
+  <tr>
+    <td><img src="https://i.postimg.cc/Jh44khR6/shoptacle-cartone.png" alt="product detail" /></td>
+    <td><img src="https://i.postimg.cc/Sx4Kmr3p/shoptacle-carttwo.png" alt="product rating" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://i.postimg.cc/4NVdCM85/shoptacle-cartthree.png" alt="cart" /></td>
+    <td><img src="https://i.postimg.cc/RCjFD9Th/shoptacle-payment.png" alt="payment modal" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://i.postimg.cc/3ryN1Wmz/shoptacle-success.png" alt="payment success" /></td>
+    <td><img src="https://i.postimg.cc/kDrkFTKM/shoptacle-dashboard.png" alt="admin dashboard" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://i.postimg.cc/BvMf9c9N/shoptacle-add.png" alt="admin add" /></td>
+    <td><img src="https://i.postimg.cc/bJrczDqP/shoptacle-search.png" alt="admin search view" /></td>
+  </tr>
 </table>
 
 <br />
+
+## Stripe Test Cards
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Card number</th>
+    <th>CVV</th>
+    <th>Expiry</th>
+  </tr>
+  
+  <tr>
+    <td>Any Card </td>
+    <td>4242 4242 4242 4242</td>
+    <td>564</td>
+    <td>12/35</td>
+  </tr>
+  
+</table>
+
+<br />
+
+<h2>Demo</h2>
+
+[Click here to checkoout this project](https://shoptacle.vercel.app/)
+
+<br />
+
+## Getting Started
+
+This project was built using NextJs a React framework for production, React Context api, Styled-components, CSS, JavaScript, Firebase, Stripe SDK and Paystack APIS. It is a fashion e-commerce web application and for running on your local environment you should follow these guidelines.
+
+### Prerequisites
+
+- NPM
+- Node JS
+
+### Setup
+
+The project repository can be found in [GitHub link](https://github.com/AlexChika/shoptacle) or just clone the project using this command.
+
+```
+Using HTTPS
+
+# git clone https://github.com/AlexChika/shoptacle.git
+```
+
+- Open terminal on your workspace with
+
+```
+cd shoptacle
+```
+
+## Install
+
+Install NPM
+
+Check that you have node and npm installed
+
+To check if you have Node.js installed, run this command in your terminal:
