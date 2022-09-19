@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=yellow" alt="javascript" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="css3" />
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="html5" />
-   <img src="https://img.shields.io/badge/Framer_motion-E34F26?style=for-the-badge&logo=framer-motion&logoColor=white" alt="html5" />
+
 </p>
 
 <h4 align="center">Backend:</h4>
@@ -26,4 +26,10 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Paystack-008CDD?style=for-the-badge&logo=paystack&logoColor=white" alt="paystack" />
   <img src="https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white" alt="stripe" />
+</p>
+
+<h4 align="center">Deployed On:</h4>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Vercel-430098?style=for-the-badge&logo=vercel&logoColor=white" alt="vercel" />
 </p>
