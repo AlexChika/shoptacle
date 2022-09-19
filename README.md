@@ -33,3 +33,24 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Vercel-430098?style=for-the-badge&logo=vercel&logoColor=white" alt="vercel" />
 </p>
+
+<h3 align="center"><a href="https://shoptacle.vercel.app/"><strong>Want to see live preview »</strong></a></h3>
+
+<p align="center">
+  <br />&#10023;
+  <a href="#Demo">View Demo</a> &#10023;
+  <a href="https://github.com/AlexChika/shoptacle/issues">Report Bug</a> &#10023;
+  <a href="#Getting-Started">Getting Started</a> &#10023; 
+  <a href="#Install">Installing</a> &#10023;
+  <a href="#Contact">Author</a> &#10023;
+</p>
+
+Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A modern responsive full stack Next Js app with clean UI and implementations including user authentication, paystack and stripe payment, firebase database for customer data and products data, an admin portal with CRUD operations featuring data manipulations and image uploads to firebase cloud storage and fully responsive.
+
+ <table>
+  <tr>
+    <td><img src="https://drive.google.com/file/d/14sfsbzFlrg6mMoycLixUYzqHxw--6a9C/view?usp=sharing" alt="home" /></td>
+    <td><img src="https://drive.google.com/file/d/1Z3ISPswhhXODLEHxtANkqYR_XkkdAIj3/view?usp=sharing" alt="small-home" /></td>
+  </tr>
+ </table>
+<br />
