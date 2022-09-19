@@ -49,8 +49,69 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 
  <table>
   <tr>
-    <td><img src="https://drive.google.com/file/d/14sfsbzFlrg6mMoycLixUYzqHxw--6a9C/view?usp=sharing" alt="home" /></td>
-    <td><img src="https://drive.google.com/file/d/1Z3ISPswhhXODLEHxtANkqYR_XkkdAIj3/view?usp=sharing" alt="small-home" /></td>
+    <td><img src="https://drive.google.com/file/d/14sfsbzFlrg6mMoycLixUYzqHxw--6a9C/view" alt="home" /></td>
+    <td><img src="https://drive.google.com/file/d/1Z3ISPswhhXODLEHxtANkqYR_XkkdAIj3/view" alt="small-home" /></td>
   </tr>
  </table>
+<br />
+
+## 📱 Screens ( All screens are responsive along with smooth and seamless transition between pages)
+
+- Homepage / Landing Page
+- All Category Page with product previews
+- Category Page (Male,Female,Gadgets etc)
+- Individual Product Page (product details and rating)
+- Cart Page (with select payment gateway modal)
+- Checkout with Paystack (pop ups)
+- Checkout with Stripe (pop ups)
+- Login / Signup Page
+- Profile Page
+- About Page
+- Successfull payment Page
+- Admin dashboard Page
+- Admin add product Page
+- Admin edit product Page
+- Admin search/delete/view product Page
+
+<br />
+
+## 🚀 Features
+
+- Login and Signup User Account
+- Google Authentication with Firebase
+- Edit user profile inf0
+- Fetch Products details from db
+- View Product ratings and stars
+- Rate a product (star and comment)
+- View user specific ratings /order from user profile
+- Shopping Cart
+- Have an option to change the quantity and remove items from Cart
+  -Save user specific cart to db
+  -Realtime updates of cart items
+- Order Summary
+- Secure Payment Checkout with Paystack
+- Secure Payment Checkout with Stripe
+- Admin CRUD operations
+- View all products, search category / brands
+- Add products to db with image upload
+- Edit / manipulate products, with multiple image upload
+- Search, view, and delete products
+
+<br />
+
+<h4  align="center"> Sneak peak of Shoptacle 🙈 </h4>
+<hr />
+<table>
+   <tr>
+    <td><img src="https://drive.google.com/file/d/14sfsbzFlrg6mMoycLixUYzqHxw--6a9C/view" alt="home" /></td>
+    <td><img src="https://drive.google.com/file/d/1Z3ISPswhhXODLEHxtANkqYR_XkkdAIj3/view" alt="small-home" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://drive.google.com/file/d/156KjFK8lMBE1trn3OSsaP9Cx_lNpno5S/view" alt="new arrival" /></td>
+    <td><img src="https://drive.google.com/file/d/1zh0elR1t0Ku_SoAHVlXH0aPJQu2ZcKSl/view" alt="collections" /></td>
+  </tr>
+    <!--  -->
+
+</table>
+
 <br />
