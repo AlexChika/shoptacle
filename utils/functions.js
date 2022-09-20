@@ -68,11 +68,9 @@ const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
   };
 };
 
-// shuffkes array
+// shuffles array
 const shuffler = (a) => {
   let array = [...a];
-  const j = Math.floor(Math.random() * 6);
-  console.log(j);
 
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

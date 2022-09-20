@@ -4,10 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Store } from "../store/Context";
 import { UPDATE_USER, SET_USER } from "../store/actionTypes";
-import Logo from "../public/icon.png";
 import Paginate from "./Paginate";
-import { FaUserEdit } from "react-icons/fa";
-import { BsChatSquareText, BsCartFill } from "react-icons/bs";
+import { FaUserEdit, FaOpencart } from "react-icons/fa";
+import {
+  BsChatSquareText,
+  BsCartFill,
+  BsFillHouseDoorFill,
+} from "react-icons/bs";
 import {
   formatPrice,
   paginateFn,
@@ -18,7 +21,6 @@ import {
 // firebase imports
 import { signOut } from "firebase/auth";
 import { getDoc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   auth,
   uploadImage,
@@ -102,7 +104,7 @@ const ProfilePageComponent = () => {
 
   const handleSwitchTabs = (index) => {
     setTabs(index);
-    window.scrollTo(0, Number(tabRef.current.offsetTop) - 60);
+    window.scrollTo(0, Number(tabRef.current.offsetTop));
   };
 
   const validate = new Validate();
@@ -237,17 +239,15 @@ const ProfilePageComponent = () => {
 
   return (
     <Wrapper className="center mt30">
-      <h3 className="title">My Profile</h3>
-
       <article className="header center">
-        <div className="f ">
+        <div className="f j-between align">
           {user.url ? (
             <span className="profile-image">
               <Image src={user.url} layout="fill" alt="profile image"></Image>
             </span>
           ) : (
             <span className="profile-image">
-              <Image src={Logo} layout="fill" alt="profile image"></Image>
+              <Image src="/logo.svg" layout="fill" alt="profile image"></Image>
             </span>
           )}
 
@@ -426,13 +426,19 @@ const ProfilePageComponent = () => {
 
       <div className="btns center f j-around">
         <Link href="/cart">
-          <button>Go to cart</button>
+          <button>
+            Go to cart&nbsp; <BsCartFill />
+          </button>
         </Link>
         <Link href="/shop">
-          <button>Continue shopping</button>
+          <button>
+            Continue shopping&nbsp; <FaOpencart />
+          </button>
         </Link>
         <Link href="/">
-          <button>Home</button>
+          <button>
+            Home&nbsp; <BsFillHouseDoorFill />
+          </button>
         </Link>
       </div>
     </Wrapper>
@@ -443,13 +449,6 @@ export default ProfilePageComponent;
 const Wrapper = styled.main`
   max-width: 1170px;
   background-color: white;
-  .title {
-    padding: 30px;
-    font-style: italic;
-    text-align: center;
-    text-decoration: underline;
-    color: var(--gray);
-  }
 
   .header {
     max-width: 650px;
@@ -473,7 +472,7 @@ const Wrapper = styled.main`
     }
     button {
       width: 100%;
-      color: var(--pink);
+      color: tomato;
       text-decoration: underline;
     }
   }
@@ -495,24 +494,25 @@ const Wrapper = styled.main`
 
   .tabs-con {
     max-width: 650px;
+    border: 1px solid var(--gray);
+
     .nav {
       span {
         flex: 1;
         text-align: center;
         padding: 15px 10px;
-        color: white;
+        color: Var(--blue);
         cursor: pointer;
-        background-color: gray;
+        background-color: #d9ecec;
+        border: 1px solid white;
       }
       span.active {
-        background-color: var(--blue-light);
-        color: var(--pink);
+        background-color: var(--blue);
+        color: white;
       }
     }
 
     .content {
-      border: 1px solid gray;
-
       max-height: 600px;
       overflow: hidden;
       padding: 0px 10px;
@@ -606,7 +606,7 @@ const Wrapper = styled.main`
         font-size: 14px;
       }
       button {
-        background-color: var(--pink);
+        background-color: var(--blue);
         width: 100%;
         padding: 10px 20px;
         border-radius: 20px;
@@ -614,27 +614,21 @@ const Wrapper = styled.main`
       }
     }
   }
+
   .btns {
     max-width: 650px;
     padding: 30px 10px;
     flex-wrap: wrap;
     button {
-      background-color: red;
+      background-color: var(--blue);
       color: white;
+      display: flex;
+      justify-content: center;
       flex: 1;
       font-size: 16px;
       min-width: 10em;
       padding: 10px 10px;
-      margin-top: 10px;
-    }
-    button:nth-of-type(1) {
-      background-color: var(--blue);
-    }
-    button:nth-of-type(2) {
-      background-color: teal;
-    }
-    button:nth-of-type(3) {
-      background-color: var(--pink);
+      margin: 10px 2px 0px 2px;
     }
   }
 `;

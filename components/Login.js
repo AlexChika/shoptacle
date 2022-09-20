@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import Logo from "../public/icon.png";
 import { Store } from "../store/Context";
 import { Validate } from "../utils/functions";
 import { auth, getCustomerDocRef } from "../utils/firebase";
@@ -191,12 +190,16 @@ const Index = () => {
       <main className="body f fcenter center mt30">
         <section ref={containerRef} className="container f center">
           {/* side banner display */}
-          <article className="side-banner f fcenter gray">
+          <article className="side-banner f fcenter">
             <div className="content f fcenter">
               <div className="logo center">
-                <Image layout="fill" src={Logo} alt="logo icon"></Image>
+                <Image
+                  width={100}
+                  height={100}
+                  src="/logowhite.svg"
+                  alt="logo icon"
+                ></Image>
               </div>
-              <h1>Shoptacle</h1>
               <p>Your one stop for perfect fashion</p>
             </div>
           </article>
@@ -205,8 +208,9 @@ const Index = () => {
             {/* sign in */}
             <div className="signin card f align j-around trans">
               <div>
-                <h1>Shoptacle</h1>
-                <p className="mt20">Welcome to Shoptacle</p>
+                <div className=" f fcenter">
+                  <Image width={70} height={70} src="/logo.svg"></Image>
+                </div>
                 <h3 className="mt30">Login to your account</h3>
               </div>
               <form onSubmit={handleUserLogIn} className="f align j-around">
@@ -252,8 +256,9 @@ const Index = () => {
             {/* signup  */}
             <div className="card signup f align j-around trans">
               <div>
-                <h1>Shoptacle</h1>
-                <p className="mt10">Welcome to Shoptacle</p>
+                <div className=" f fcenter">
+                  <Image width={70} height={70} src="/logo.svg"></Image>
+                </div>
                 <h3 className="mt20">Create an account for free</h3>
               </div>
               <form onSubmit={handleUserSignUp} className="f j-around align">
@@ -350,9 +355,11 @@ const Wrapper = styled.main`
 
   /* ........... */
   .side-banner {
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-      url("/heroImage.jfif");
-    background-position: 80% 0%;
+    background: linear-gradient(var(--pink), var(--pink)),
+      url("/whitelogo3.svg");
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
     display: none;
     text-align: center;
     color: var(--blue);
@@ -360,21 +367,14 @@ const Wrapper = styled.main`
       flex-direction: column;
       height: 200px;
       width: 200px;
-      background-color: rgba(255, 255, 255, 0.3);
+      background-color: var(--blue);
       border-radius: 50%;
       padding: 10px;
     }
-    .logo {
-      position: relative;
-      width: 100px;
-      aspect-ratio: 4/3;
-    }
-    h1 {
-      font-family: "Lobster", cursive;
-      font-size: 25px;
-    }
+
     p {
       font-style: italic;
+      color: white;
     }
   }
 
@@ -413,7 +413,7 @@ const Wrapper = styled.main`
     }
 
     input::placeholder {
-      color: var(--pink);
+      color: var(--blue);
     }
     span {
       text-decoration: underline;
@@ -448,9 +448,12 @@ const Wrapper = styled.main`
       padding: 0;
       border-bottom: 0px;
     }
+    input::placeholder {
+      color: white;
+    }
     input {
-      background-color: whitesmoke;
-      color: black;
+      background-color: var(--blue);
+      color: white;
       padding: 10px;
     }
   }

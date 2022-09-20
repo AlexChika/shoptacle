@@ -41,7 +41,7 @@ const Wrapper = styled.article`
     width: 55px;
     border-radius: 50%;
     background-color: white;
-    border: 1px solid black;
+    box-shadow: 1px 1px 5px var(--gray);
     padding: 5px;
     h1 {
       font-size: 16px;

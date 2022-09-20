@@ -185,14 +185,17 @@ const Wrapper = styled.main`
   .product-card {
     flex-direction: column;
   }
+
   .image-section,
   .detail-section {
     width: 95%;
   }
+
   .image-section {
     position: relative;
     aspect-ratio: 1/1;
     object-fit: cover;
+    padding: 10px;
     .sub-image-con {
       position: absolute;
       width: 100%;
@@ -220,7 +223,7 @@ const Wrapper = styled.main`
       width: 55px;
       border-radius: 50%;
       background-color: white;
-      border: 1px solid black;
+      box-shadow: 1px 1px 5px var(--gray);
       padding: 10px;
       h1 {
         font-size: 16px;
@@ -230,10 +233,12 @@ const Wrapper = styled.main`
       }
     }
   }
+
   .image-section:hover .sub-image-con,
   .image-section:focus .sub-image-con {
     visibility: visible;
   }
+
   .detail-section {
     background-color: white;
     padding: 10px 0px;
@@ -309,7 +314,10 @@ const Wrapper = styled.main`
     .detail-section {
       width: 50%;
     }
+
     .detail-section {
+      border-left: 1px solid var(--blue);
+
       .content {
         padding: 0px;
         width: 80%;

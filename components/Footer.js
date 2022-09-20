@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
-import Icon from "../public/icon.png";
 import {
   BsBehance,
   BsGithub,
@@ -18,12 +17,9 @@ const Footer = ({ hide }) => {
       <section className="footerHeader f center">
         <div className="shoptacle f col">
           <Link href="/">
-            <div className="f align">
-              <span className="image-con">
-                <Image alt="Logo" layout="fill" src={Icon} />
-              </span>
-              <h2>Shoptacle...</h2>
-            </div>
+            <span>
+              <Image width={200} height={70} alt="Logo" src="/logowhite.svg" />
+            </span>
           </Link>
           <h5 className="mt10">
             The No 1 shopping platform for everything fashion. Stay premium with
@@ -136,14 +132,14 @@ const Wrapper = styled.footer`
   display: ${({ hide }) => (hide ? "none" : "block")};
   background: var(--blue);
   color: white;
-  padding: 40px 20px 10px 20px;
+  padding: 20px 20px 10px 20px;
 
   .footerHeader {
     flex-wrap: wrap;
     justify-content: space-around;
     .col {
       margin: 0 10px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       flex: 1;
       min-height: 100px;
       min-width: 220px;
@@ -152,23 +148,15 @@ const Wrapper = styled.footer`
     }
   }
 
-  h5 {
-    padding: 5px 0;
+  img {
+    cursor: pointer;
   }
 
-  .shoptacle {
-    h2 {
-      font-family: "Lobster", cursive;
-      color: var(--pink);
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    .image-con {
-      position: relative;
-      height: 3em;
-      width: 3em;
-    }
+  h5 {
+    padding: 3px 0;
+    text-align: center;
   }
+
   .shoptacle,
   .help,
   .support,
@@ -186,6 +174,11 @@ const Wrapper = styled.footer`
     margin-top: 30px;
     border-top: 1px solid grey;
     text-align: center;
+
+    article {
+      margin-bottom: 10px;
+    }
+
     h5 {
       margin: 0px 10px;
       color: #bfbfff;
