@@ -103,12 +103,12 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 <hr />
 <table>
    <tr>
-    <td><img src="https://i.postimg.cc/WzYd7KqK/shoptacle-product.png" alt="product page" /></td>
-    <td><img src="https://i.postimg.cc/1RvVPg7H/shoptacle-product1.png" alt="product page" /></td>
+    <td><img src="https://i.postimg.cc/1XZZPq5R/shoptacle-product1.png" alt="product page one" /></td>
+    <td><img src="https://i.postimg.cc/hG7wjtYX/shoptacle-product2.png" alt="product page two" /></td>
   </tr>
    <tr>
-    <td><img src="https://i.postimg.cc/fTDYCnt3/shoptacle-product2.png" alt="product page" /></td>
-    <td><img src="https://i.postimg.cc/cCMwWTj4/shoptacle-product3.png" alt="product page" /></td>
+    <td><img src="https://i.postimg.cc/9QkKC7L3/shoptacle-product3.png" alt="product page three" /></td>
+    <td><img src="https://i.postimg.cc/Qx0vYP5d/shoptacle-product4.png" alt="product page four" /></td>
   </tr>
   <tr>
     <td><img src="https://i.postimg.cc/yd2VtXct/shoptacle-new-arrival.png" alt="new arrival" /></td>
