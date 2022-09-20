@@ -51,35 +51,3 @@ const Header = ({ children }) => {
 };
 
 export default Header;
-//   <meta
-//         name="keywords"
-//         key="keywords"
-//         content="Ecommerce, Shoptacle, Ecommerce Firebase, Ecommerce authentication, ecommerce implmentation, ecommerce app"
-//       />
-//  <meta
-//         name="description"
-//         key="description"
-//         content="Your one stop for perfect fashion, Shoptacle is the way to go. A modern responsive full stack Next Js app with clean UI and implementations with user authentication, flutter, stripe, authentication and fully responsive"
-//       />
-//  <meta
-//    name="title"
-//    key="title"
-//    content="Shoptacle | Your one stop for perfect fashion"
-//  />;
-//   <meta
-//     content="Shoptacle | Your one stop for perfect fashion"
-//     property="og:title"
-//     key="og:title"
-//   />;
-
-//    <meta
-//      content="Your one stop for perfect fashion, Shoptacle is the way to go. A modern responsive full stack Next Js app with clean UI and implementations with user authentication, flutter, stripe, authentication and fully responsive"
-//      key="og:description"
-//      property="og:description"
-//    />;
-
-//     <meta
-//       content="https://shoptacle.vercel.app/"
-//       property="og:url"
-//       key="url"
-//     />;
