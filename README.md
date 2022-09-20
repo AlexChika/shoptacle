@@ -103,12 +103,12 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 <hr />
 <table>
    <tr>
-    <td><img src="https://i.postimg.cc/1XZZPq5R/shoptacle-product1.png" alt="product page one" /></td>
-    <td><img src="https://i.postimg.cc/hG7wjtYX/shoptacle-product2.png" alt="product page two" /></td>
+    <td><img src="https://user-images.githubusercontent.com/83684826/191225421-b2346887-b884-4d5c-9698-399949702538.png" alt="product page one" /></td>
+    <td><img src="https://user-images.githubusercontent.com/83684826/191225610-b2e2a4f7-e0d4-43b6-aa2a-e71604f711e7.png" alt="product page two" /></td>
   </tr>
    <tr>
-    <td><img src="https://i.postimg.cc/9QkKC7L3/shoptacle-product3.png" alt="product page three" /></td>
-    <td><img src="https://i.postimg.cc/Qx0vYP5d/shoptacle-product4.png" alt="product page four" /></td>
+    <td><img src="https://user-images.githubusercontent.com/83684826/191225736-05825d77-c056-4f02-8756-974083dfe01d.png" alt="product page three" /></td>
+    <td><img src="https://user-images.githubusercontent.com/83684826/191225833-11b21506-3514-475d-83cc-8b73a41a3609.png" alt="product page four" /></td>
   </tr>
   <tr>
     <td><img src="https://i.postimg.cc/yd2VtXct/shoptacle-new-arrival.png" alt="new arrival" /></td>
