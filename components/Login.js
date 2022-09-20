@@ -144,7 +144,7 @@ const Index = () => {
       }
     }
 
-    const email = signUpDetails.email.value;
+    const email = signUpDetails.email.value.toLowerCase();
     const password = signUpDetails.password.value;
 
     const userData = {
