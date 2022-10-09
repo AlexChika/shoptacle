@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import styled from "styled-components";
+import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
@@ -32,17 +33,35 @@ const MaleFashion = ({ products }) => {
   }, []);
 
   return (
-    <Wrapper className="layout">
-      <NavBar />
-      <SideBar />
-      <HeroBar path="/shop" pre="Shop" curr="Male fashion" />
-      <FilterProducts data={{ dispatch, state }} />
-      {state.grid ? (
-        <ProductPageGrid products={state.filtered} />
-      ) : (
-        <ProductPageList products={state.filtered} />
-      )}
-    </Wrapper>
+    <>
+      <Header title="Male fashion | Shoptacle">
+        <meta name="title" content="Male fashion | Shoptacle" key="title" />
+
+        <meta
+          content="Male fashion | Shoptacle"
+          property="og:title"
+          key="og:title"
+        />
+
+        <meta
+          content="https://shoptacle.vercel.app/shop/male-fashion"
+          property="og:url"
+          key="og:url"
+        />
+      </Header>
+
+      <Wrapper className="layout">
+        <NavBar />
+        <SideBar />
+        <HeroBar />
+        <FilterProducts data={{ dispatch, state }} />
+        {state.grid ? (
+          <ProductPageGrid products={state.filtered} />
+        ) : (
+          <ProductPageList products={state.filtered} />
+        )}
+      </Wrapper>
+    </>
   );
 };
 

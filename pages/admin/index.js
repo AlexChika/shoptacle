@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useContext } from "react";
 import styled from "styled-components";
 import { Store } from "../../store/Context";
+import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import AdminDashboard from "../../components/AdminDashboard";
 import AdminWelcome from "../../components/AdminWelcome";
@@ -82,12 +83,40 @@ const Products = () => {
   }, [state.refreshState, user]);
 
   return (
-    <AdminContext.Provider value={{ ...state, dispatch, refreshState }}>
-      <Wrapper className="layout">
-        <SideBar />
-        {user ? <AdminDashboard /> : <AdminWelcome />}
-      </Wrapper>
-    </AdminContext.Provider>
+    <>
+      <Header title="Shoptacle Admin Page">
+        <meta name="title" content="Shoptacle Admin Page" key="title" />
+
+        <meta
+          content="Shoptacle Admin Page"
+          property="og:title"
+          key="og:title"
+        />
+
+        <meta
+          content="https://shoptacle.vercel.app/admin"
+          property="og:url"
+          key="og:url"
+        />
+
+        <meta
+          name="description"
+          content="Welcome to the Shoptacle admin page. Utilize our powerful dashboard to view, search and manage products, including editting, deleting and updating. Keep track of products and track of shoptacle"
+          key="description"
+        />
+        <meta
+          content="Welcome to the Shoptacle admin page. Utilize our powerful dashboard to view, search and manage products, including editting, deleting and updating. Keep track of products and track of shoptacle"
+          key="og:description"
+        />
+      </Header>
+
+      <AdminContext.Provider value={{ ...state, dispatch, refreshState }}>
+        <Wrapper className="layout">
+          <SideBar />
+          {user ? <AdminDashboard /> : <AdminWelcome />}
+        </Wrapper>
+      </AdminContext.Provider>
+    </>
   );
 };
 export default Products;

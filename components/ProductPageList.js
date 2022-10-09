@@ -19,7 +19,7 @@ const ListView = ({ product }) => {
   return (
     <ListWrapper onClick={handleNavigate}>
       <div className="img">
-        <Image layout="fill" src={imgOne}></Image>
+        <Image layout="fill" alt={name} src={imgOne}></Image>
       </div>
 
       <div className="details f j-around">

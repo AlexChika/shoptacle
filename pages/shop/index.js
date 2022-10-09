@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "../../components/Header";
 import HeroBar from "../../components/HeroBar";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
@@ -7,12 +8,34 @@ import ShopPageComponent from "../../components/ShopPageComponent";
 import { searchProduct } from "../../utils/firebase";
 const Products = ({ products }) => {
   return (
-    <Wrapper className="layout">
-      <NavBar page="shop" />
-      <SideBar />
-      <HeroBar path="/" pre={"Home"} curr={"Shop"} />
-      <ShopPageComponent products={products} />
-    </Wrapper>
+    <>
+      <Header title="Shop male fashion, female wears, smart gadgets here at Shoptacle">
+        <meta
+          name="title"
+          content="Shop male fashion, female wears, smart gadgets here at Shoptacle"
+          key="title"
+        />
+
+        <meta
+          content="Shop male fashion, female wears, smart gadgets here at Shoptacle"
+          property="og:title"
+          key="og:title"
+        />
+
+        <meta
+          content="https://shoptacle.vercel.app/shop"
+          property="og:url"
+          key="og:url"
+        />
+      </Header>
+
+      <Wrapper className="layout">
+        <NavBar page="shop" />
+        <SideBar />
+        <HeroBar path="/" pre={"Home"} curr={"Shop"} />
+        <ShopPageComponent products={products} />
+      </Wrapper>
+    </>
   );
 };
 export default Products;

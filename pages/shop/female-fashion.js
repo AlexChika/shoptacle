@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import styled from "styled-components";
+import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
@@ -31,17 +32,39 @@ const FemaleFashion = ({ products }) => {
   }, []);
 
   return (
-    <Wrapper className="layout">
-      <NavBar />
-      <SideBar />
-      <HeroBar path="/shop" pre="Shop" curr="Female fashion" />
-      <FilterProducts data={{ dispatch, state }} />
-      {state.grid ? (
-        <ProductPageGrid products={state.filtered} />
-      ) : (
-        <ProductPageList products={state.filtered} />
-      )}
-    </Wrapper>
+    <>
+      <Header title="Female fashion | all kinds of female wears | Shoptacle">
+        <meta
+          name="title"
+          content="Female fashion | all kinds of female wears | Shoptacle"
+          key="title"
+        />
+
+        <meta
+          content="Female fashion | all kinds of female wears | Shoptacle"
+          property="og:title"
+          key="og:title"
+        />
+
+        <meta
+          content="https://shoptacle.vercel.app/shop/female-fashion"
+          property="og:url"
+          key="og:url"
+        />
+      </Header>
+
+      <Wrapper className="layout">
+        <NavBar />
+        <SideBar />
+        <HeroBar />
+        <FilterProducts data={{ dispatch, state }} />
+        {state.grid ? (
+          <ProductPageGrid products={state.filtered} />
+        ) : (
+          <ProductPageList products={state.filtered} />
+        )}
+      </Wrapper>
+    </>
   );
 };
 

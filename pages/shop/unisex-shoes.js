@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import styled from "styled-components";
+import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";
@@ -30,17 +31,39 @@ const FemaleFashion = ({ products }) => {
     dispatch({ type: actions.SET_SORT, payload: "a-z" });
   }, []);
   return (
-    <Wrapper className="layout">
-      <NavBar />
-      <SideBar />
-      <HeroBar path="/shop" pre="Shop" curr="Unisex Shoes" />
-      <FilterProducts data={{ dispatch, state }} />
-      {state.grid ? (
-        <ProductPageGrid products={state.filtered} />
-      ) : (
-        <ProductPageList products={state.filtered} />
-      )}
-    </Wrapper>
+    <>
+      <Header title="Unisex Shoes, Sneakers, Flip flops , Crocs assorted | Shoptacle">
+        <meta
+          name="title"
+          content="Unisex Shoes, Sneakers, Flip flops , Crocs assorted | Shoptacle"
+          key="title"
+        />
+
+        <meta
+          content="Unisex Shoes, Sneakers, Flip flops , Crocs assorted | Shoptacle"
+          property="og:title"
+          key="og:title"
+        />
+
+        <meta
+          content="https://shoptacle.vercel.app/shop/unisex-shoes"
+          property="og:url"
+          key="og:url"
+        />
+      </Header>
+
+      <Wrapper className="layout">
+        <NavBar />
+        <SideBar />
+        <HeroBar />
+        <FilterProducts data={{ dispatch, state }} />
+        {state.grid ? (
+          <ProductPageGrid products={state.filtered} />
+        ) : (
+          <ProductPageList products={state.filtered} />
+        )}
+      </Wrapper>
+    </>
   );
 };
 
