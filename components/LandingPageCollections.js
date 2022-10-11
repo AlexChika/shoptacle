@@ -5,9 +5,10 @@ import Link from "next/link";
 import rightRectangle from "../public/right-rectangle.png";
 import leftRectangle from "../public/left-rectangle.png";
 import { collections } from "../utils/data";
+
 const CollectionCard = ({ collection }) => {
   return (
-    <CollectionCardWrapper id={collection.id} className="center f">
+    <CollectionCardWrapper id={collection.id} className="center f red">
       <div className="detail f fcenter">
         <div className="content">
           <h1>{collection.id}</h1>
@@ -48,18 +49,7 @@ const CollectionCard = ({ collection }) => {
     </CollectionCardWrapper>
   );
 };
-const Collections = () => {
-  return (
-    <Wrapper className="layout">
-      <h1 className="center heading">Collections</h1>
-      {collections.map((collection) => {
-        return <CollectionCard collection={collection} key={collection.id} />;
-      })}
-    </Wrapper>
-  );
-};
 
-export default Collections;
 const CollectionCardWrapper = styled.article`
   background-color: var(--blue);
   width: 95%;
@@ -176,6 +166,21 @@ const CollectionCardWrapper = styled.article`
     }
   }
 `;
+
+// main app
+const Collections = () => {
+  return (
+    <Wrapper className="layout">
+      <h1 className="center heading">Collections</h1>
+      {collections.map((collection) => {
+        return <CollectionCard collection={collection} key={collection.id} />;
+      })}
+    </Wrapper>
+  );
+};
+
+export default Collections;
+
 const Wrapper = styled.section`
   background-color: var(--pink-light);
   /* background-color: var(--blue); */

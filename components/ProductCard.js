@@ -1,38 +1,37 @@
 import React from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { MdStarRate } from "react-icons/md";
 import { formatPrice, calculateStars } from "../utils/functions";
 const ProductCard = ({ product }) => {
-  const router = useRouter();
   const { id, name, price, rating, imgOne } = product;
-  const handleNavigate = () => {
-    router.push(`/shop/${name}_${id}`);
-  };
+
   return (
-    <Wrapper onClick={handleNavigate} className="f align">
-      <div className="img">
-        <Image alt={name} layout="fill" src={imgOne}></Image>
-      </div>
-      <div className="detail f align j-around">
-        <h2>{name}</h2>
-        <h2>{formatPrice(price)}</h2>
-        <div className="star-con f j-around">
-          <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
-          <span className="f fcenter">
-            <MdStarRate />
-            &nbsp;
-            {calculateStars(rating).stars}
-          </span>
+    <Link href={`/shop/${name}_${id}`} passHref>
+      <Wrapper className="f align">
+        <div className="img">
+          <Image alt={name} layout="fill" src={imgOne}></Image>
         </div>
-      </div>
-    </Wrapper>
+        <div className="detail f align j-around">
+          <h2>{name}</h2>
+          <h2>{formatPrice(price)}</h2>
+          <div className="star-con f j-around">
+            <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
+            <span className="f fcenter">
+              <MdStarRate />
+              &nbsp;
+              {calculateStars(rating).stars}
+            </span>
+          </div>
+        </div>
+      </Wrapper>
+    </Link>
   );
 };
 
 export default ProductCard;
-const Wrapper = styled.article`
+const Wrapper = styled.a`
   width: 100%;
   height: 100%;
   padding: 10px;

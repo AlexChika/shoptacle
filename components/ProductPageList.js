@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { paginateFn } from "../utils/functions";
 import Paginate from "./Paginate";
@@ -12,38 +13,37 @@ const ListView = ({ product }) => {
   const router = useRouter();
   const { desc, name, price, imgOne, id, rating } = product;
 
-  const handleNavigate = () => {
-    router.push(`/shop/${name}_${id}`);
-  };
-
   return (
-    <ListWrapper onClick={handleNavigate}>
-      <div className="img">
-        <Image layout="fill" alt={name} src={imgOne}></Image>
-      </div>
-
-      <div className="details f j-around">
-        <h3>{name}</h3>
-
-        <p>{desc.substring(0, 150)}...</p>
-
-        <p>{formatPrice(price)}</p>
-
-        <div className="star-con f j-between">
-          <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
-          <span className="f fcenter">
-            <MdStarRate />
-            &nbsp;
-            {calculateStars(rating).stars}
-          </span>
+    <Link href={`/shop/${name}_${id}`} passHref>
+      <ListWrapper>
+        <div className="img">
+          <Image layout="fill" alt={name} src={imgOne}></Image>
         </div>
-      </div>
-    </ListWrapper>
+
+        <div className="details f j-around">
+          <h3>{name}</h3>
+
+          <p>{desc.substring(0, 150)}...</p>
+
+          <p>{formatPrice(price)}</p>
+
+          <div className="star-con f j-between">
+            <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
+            <span className="f fcenter">
+              <MdStarRate />
+              &nbsp;
+              {calculateStars(rating).stars}
+            </span>
+          </div>
+        </div>
+      </ListWrapper>
+    </Link>
   );
 };
 
-const ListWrapper = styled.article`
+const ListWrapper = styled.a`
   cursor: pointer;
+  display: block;
   background-color: white;
   color: var(--blue);
   padding: 10px;
