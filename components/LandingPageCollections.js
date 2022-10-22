@@ -8,7 +8,7 @@ import { collections } from "../utils/data";
 
 const CollectionCard = ({ collection }) => {
   return (
-    <CollectionCardWrapper id={collection.id} className="center f red">
+    <CollectionCardWrapper id={collection.id} className="center f">
       <div className="detail f fcenter">
         <div className="content">
           <h1>{collection.id}</h1>
@@ -56,26 +56,32 @@ const CollectionCardWrapper = styled.article`
   /* max-width: 1170px; */
   margin-bottom: 40px;
   flex-direction: column;
+
   .image-con,
   .detail {
     width: 100%;
     aspect-ratio: 1/1;
   }
+
   .detail {
     order: 1;
     padding: 10px 0px;
+
     .content {
       width: 95%;
     }
+
     h1,
     h2 {
       border-bottom: 3px solid var(--pink);
       padding: 20px 0px;
     }
+
     h1 {
       font-size: 40px;
       font-family: "Lobster", cursive;
     }
+
     h2 {
       font-family: "Libre Baskerville", serif;
       font-size: 25px;
@@ -83,18 +89,22 @@ const CollectionCardWrapper = styled.article`
       width: 70%;
       cursor: pointer;
     }
+
     h2:hover,
     h2:focus {
       color: var(--pink);
     }
+
     p,
     button {
       font-family: "Inter", sans-serif;
     }
+
     p {
       font-size: 16px;
       line-height: 35px;
     }
+
     button {
       display: block;
       font-size: 16px;
@@ -103,31 +113,37 @@ const CollectionCardWrapper = styled.article`
       width: 8em;
       color: inherit;
     }
+
     button:hover,
     button:focus {
       color: var(--pink);
       border: 2px solid var(--pink);
     }
   }
+
   .image-con {
     position: relative;
   }
+
   .main-img,
   .rectangle {
     position: absolute;
     top: 0;
     bottom: 0;
   }
+
   .main-img {
     width: 100%;
     left: 0;
   }
+
   .rectangle {
     width: 50%;
     right: 0;
     right: ${(props) => (props.id % 2 === 1 ? "0" : "")};
     left: ${(props) => (props.id % 2 === 1 ? "" : "0")};
   }
+
   @media screen and (min-width: 768px) {
     flex-direction: row;
     margin-bottom: 50px;
@@ -135,6 +151,7 @@ const CollectionCardWrapper = styled.article`
     .detail {
       width: 50%;
     }
+
     .detail {
       order: ${(props) => (props.id % 2 === 1 ? 1 : 0)};
       .content {
