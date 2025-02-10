@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import ShopPageComponent from "../../components/ShopPageComponent";
 import { searchProduct } from "../../utils/firebase";
+import { shuffler } from "../../utils/functions";
 const Products = ({ products }) => {
   return (
     <>
@@ -49,28 +50,28 @@ export async function getStaticProps() {
   const unisexShoes = await searchProduct("collection", "Unisex Shoes");
   const smartGadgets = await searchProduct("collection", "Smart Gadgets");
   return {
-    revalidate: 60,
+    revalidate: 160,
     props: {
       products: [
         {
           name: "Male Fashion",
           blob: "/shop/male-fashion",
-          product: maleFashion,
+          product: shuffler(maleFashion).slice(0, 15),
         },
         {
           name: "Female Fashion",
           blob: "/shop/female-fashion",
-          product: femaleFashion,
+          product: shuffler(femaleFashion).slice(0, 15),
         },
         {
           name: "Smart Gadgets",
           blob: "/shop/smart-gadgets",
-          product: smartGadgets,
+          product: shuffler(smartGadgets).slice(0, 15),
         },
         {
           name: "Unisex Shoes",
           blob: "/shop/unisex-shoes",
-          product: unisexShoes,
+          product: shuffler(unisexShoes).slice(0, 15),
         },
       ],
     },

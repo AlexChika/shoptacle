@@ -16,17 +16,17 @@ import { paginateFn, formatPrice } from "../utils/functions";
 // stripe imports
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { payWithPaystack } from "../payment/paystack";
+import { usePaystack } from "../payment/paystack";
 import StripeCheckout from "../payment/StripeCheckout";
 
-const stripePromise = loadStripe(
-  "pk_test_51LSLaZARITds5BKwN58CYKoe4agmffBx3LePJxcTChrtdlR1IHpB2kLVuNNeteSvahOWYIj7E3AQGvRH6gLo6Jdy00kfOKDDTY"
-);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const CartPageComponent = ({ data }) => {
   const { Logger, recent, user } = Store();
   const router = useRouter();
-  const [clientSecret, setClientSecrete] = useState("");
+  const { Paystack } = usePaystack();
+  const [clientSecret, setClientSecrete] = useState(null);
+  const [stripeLoading, setStripeLoading] = useState(false);
   const { cart, loading, cartTotals, setRefresh, refresh } = data;
   const cartRef = useRef(null);
   const [currentBtn, setCurrentBtn] = useState(0);
@@ -65,31 +65,29 @@ const CartPageComponent = ({ data }) => {
   };
 
   const handlePayWithPaystack = async () => {
-    const data = {
+    setModal(false);
+
+    const d = {
       email: user.email,
       amount: cartTotals.total,
       Logger,
     };
 
-    try {
-      localStorage.setItem("checkout", JSON.stringify(cart));
-      await payWithPaystack(data);
-      setModal(false);
-    } catch (error) {
-      Logger("There was an error", "error");
-      console.log(error.message);
-    }
+    const p = new Paystack();
+    if (!p.hasLoaded()) return;
+    p.payWithPaystack(d);
   };
 
-  const handlePayWithStripe = async () => {
+  const handlePayWithStripe = async (e) => {
+    setStripeLoading(true);
     try {
       const res = await fetch("/api/stripe-create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: cartTotals.total }),
       });
-
       const { clientSecret } = await res.json();
+      setStripeLoading(false);
       setClientSecrete(clientSecret);
       setModal(false);
       localStorage.setItem("checkout", JSON.stringify(cart));
@@ -97,6 +95,13 @@ const CartPageComponent = ({ data }) => {
       Logger("There was an error", "error");
       console.log(error.message);
     }
+  };
+
+  const cancelPaymentModal = () => {
+    setModal(false);
+    setStripeLoading(false);
+    setClientSecrete(null);
+    Logger("Payment was not completed. Window closed", "error");
   };
 
   // update paginate array
@@ -108,7 +113,10 @@ const CartPageComponent = ({ data }) => {
     <Wrapper className="center mt30">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <StripeCheckout />
+          <StripeCheckout
+            cancelPaymentModal={cancelPaymentModal}
+            Logger={Logger}
+          />
         </Elements>
       )}
 
@@ -124,6 +132,7 @@ const CartPageComponent = ({ data }) => {
           <div className="mt20">
             <h3>Stripe</h3>
             <button onClick={handlePayWithStripe} className="mt10">
+              {stripeLoading && <div className="spinner sm center"></div>}
               <Image alt="stripe icon" src={stripeIcon} />
             </button>
           </div>
@@ -219,6 +228,7 @@ const CartPageComponent = ({ data }) => {
 
 export default CartPageComponent;
 const Wrapper = styled.main`
+  padding: 0px 5px;
   max-width: 1170px;
   .modal {
     padding-top: 20px;
@@ -305,5 +315,9 @@ const Wrapper = styled.main`
         margin-top: 0px;
       }
     }
+  }
+
+  @media screen and (min-width: 1200px) {
+    padding: 0px;
   }
 `;

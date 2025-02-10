@@ -178,6 +178,6 @@ const Wrapper = styled.main`
   transform: ${(props) =>
     props.modal ? "translateX(0)" : "translateX(-110%)"};
   @media screen and (min-width: 768px) {
-    transform: translateX(-110%);
+    left: -100%;
   }
 `;

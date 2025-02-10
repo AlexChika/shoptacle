@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export const ProductRow = ({ params, products }) => {
-  const { name, blob, color } = params;
+  const { name, blob, color, showHeader = true } = params;
   let count = 0;
 
   const scrollForward = (e) => {
@@ -37,7 +37,7 @@ export const ProductRow = ({ params, products }) => {
   };
 
   return (
-    <ProductRowWrapper color={color}>
+    <ProductRowWrapper $showHeader={showHeader} $color={color}>
       <div className="header f align j-between">
         <h1>{blob ? <Link href={blob}>{name}</Link> : name}</h1>
         {blob && (
@@ -51,6 +51,7 @@ export const ProductRow = ({ params, products }) => {
           </Link>
         )}
       </div>
+
       <div className="container">
         <div className="card-container center">
           {products.slice(0, 15).map((product, index) => {
@@ -80,7 +81,7 @@ export const ProductRow = ({ params, products }) => {
   );
 };
 
-const ProductsPage = ({ products }) => {
+const ShopPageComponent = ({ products }) => {
   return (
     <Wrapper className="center">
       {products.map((item, index) => {
@@ -96,7 +97,7 @@ const ProductsPage = ({ products }) => {
     </Wrapper>
   );
 };
-export default ProductsPage;
+export default ShopPageComponent;
 const ProductRowWrapper = styled.section`
   margin-bottom: 30px;
   background-color: white;
@@ -107,8 +108,9 @@ const ProductRowWrapper = styled.section`
     }
   }
   .header {
+    display: ${({ $showHeader }) => ($showHeader ? "flex" : "none")};
     padding: 15px;
-    background-color: ${({ color }) => color};
+    background-color: ${({ $color }) => $color};
     color: var(--blue);
     font-family: "Libre Baskerville", serif;
     button {

@@ -144,6 +144,8 @@ const ProfilePageComponent = () => {
     }
 
     if (name == "url") {
+      const labelEl = e.target.previousSibling;
+      labelEl.textContent = "Profile Image";
       const file = e.target.files[0];
       if (!file) {
         valid = false;
@@ -156,6 +158,7 @@ const ProfilePageComponent = () => {
           valid = false;
           value = "";
         } else {
+          labelEl.textContent = file.name;
           e.target.nextSibling.textContent = "";
           valid = true;
           value = file;
@@ -406,9 +409,11 @@ const ProfilePageComponent = () => {
                   <small className="status"></small>
                 </div>
                 <div className="inputCon f mt20">
+                  <label htmlFor="profileImage">Profile Image</label>
                   <input
                     onChange={formOnchange}
                     accept="image/*"
+                    id="profileImage"
                     type="file"
                     name="url"
                   />
@@ -586,6 +591,7 @@ const Wrapper = styled.main`
         padding: 0;
         flex-direction: column;
       }
+      label,
       input,
       textarea {
         background-color: whitesmoke;
@@ -597,6 +603,13 @@ const Wrapper = styled.main`
         min-width: 100%;
         max-height: 150px;
         min-height: 150px;
+      }
+      label {
+        color: grey;
+        cursor: pointer;
+      }
+      input[type="file"] {
+        display: none;
       }
       input::placeholder {
         color: gray;

@@ -54,8 +54,8 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     width: 95%;
-    place-content: center;
-    place-items: center;
+    /* place-content: center; */
+    /* place-items: center; */
     gap: 1em 1em;
     margin-top: 30px;
   }

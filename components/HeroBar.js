@@ -6,6 +6,7 @@ import { Store } from "../store/Context";
 const HeroBar = () => {
   const router = useRouter();
   const { currRoute, preRoute } = Store();
+
   function pathNames(path) {
     if (path === "/shop/[productDetail]") {
       path = router.asPath;
@@ -15,7 +16,7 @@ const HeroBar = () => {
     pageName = pageName === "" ? "Home" : pageName.replace(/\d|[%-]/gi, " ");
     return {
       path: path,
-      name: pageName.substring(0, 20),
+      name: pageName.substring(0, 50),
     };
   }
   return (
@@ -35,12 +36,12 @@ const HeroBar = () => {
 const Wrapper = styled.section`
   background: var(--blue-light);
   width: 100%;
-  min-height: 18vh;
+  /* min-height: 100px; */
   color: white;
   .hero-content {
     width: 100%;
     max-width: 1170px;
-    padding: 0px 10px;
+    padding: 15px 15px;
   }
   span {
     color: var(--pink);
@@ -57,14 +58,16 @@ const Wrapper = styled.section`
       font-size: 20px;
     }
   }
-  @media screen and (min-width: 50px) {
+
+  @media screen and (min-width: 768px) {
     h3 {
       font-size: 25px;
     }
   }
-  @media screen and (min-width: 768px) {
-    h3 {
-      font-size: 30px;
+
+  @media screen and (min-width: 1200px) {
+    .hero-content {
+      padding: 15px 0px;
     }
   }
 `;

@@ -8,7 +8,13 @@ const NewArrivalCard = ({ product }) => {
   const { price, name, id, rating, imgOne } = product;
   return (
     <Wrapper className="trans">
-      <Image width={720} height={960} src={imgOne} alt={name} />
+      <Image
+        objectFit="contain"
+        width={720}
+        height={960}
+        src={imgOne}
+        alt={name}
+      />
       <div className="star-con f align">
         <h1 className="trans f align">
           <MdStarRate /> <span>{calculateStars(rating).stars}</span>
@@ -32,6 +38,7 @@ const Wrapper = styled.article`
   position: relative;
   cursor: pointer;
   color: var(--blue);
+  background-color: white;
 
   .star-con {
     position: absolute;

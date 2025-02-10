@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Script from "next/script";
 import { Store } from "../../store/Context";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
@@ -31,6 +30,7 @@ const Index = () => {
       try {
         setLoading(true);
         const newCartItems = await getCartItem(cart);
+        if (!isSubscribed) return;
         setCartItems(newCartItems);
         setLoading(false);
       } catch (error) {
@@ -49,7 +49,7 @@ const Index = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [cart, refresh]);
+  }, [cart, refresh, Logger]);
 
   // update cartTotals
   useEffect(() => {
@@ -70,10 +70,6 @@ const Index = () => {
 
   return (
     <Wrapper className="layout">
-      <Script
-        src="https://js.paystack.co/v1/inline.js"
-        strategy="beforeInteractive"
-      ></Script>
       <NavBar page={"cart"} />
       <SideBar />
       <HeroBar />

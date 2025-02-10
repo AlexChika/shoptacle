@@ -1,19 +1,23 @@
-const stripe = require("stripe")(
-  "sk_test_51LSLaZARITds5BKwqoKW1PaCzyqc5KPjq1yjEy11gJnAsCyvyMPtcgmhO5tTfojwS1GQ9Nj6Wzp9PzhB4QpuLSAl0070pdKW8k"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRETE_KEY);
 
 export default async function handler(req, res) {
-  const amount = req.body.amount;
+  try {
+    const amount = req.body.amount;
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount,
-    currency: "usd",
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "usd",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
 
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    res.send({
+      status: true,
+      msg: "payment successful",
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    res.json({ status: false, msg: "server error, couldn't reach stripe" });
+  }
 }

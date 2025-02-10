@@ -87,7 +87,7 @@ const Wrapper = styled.nav`
   justify-content: space-between;
   color: ${({ page }) => (page === "home" ? "white" : "var(--blue)")};
   height: 60px;
-  padding: 0px 10px;
+  padding: 0px 15px;
 
   .side-modal-btn {
     order: 3;
@@ -119,7 +119,7 @@ const Wrapper = styled.nav`
     }
 
     span.active {
-      border-bottom: 2px solid var(--pink);
+      border-bottom: 2px solid;
     }
 
     span:hover {
@@ -194,5 +194,9 @@ const Wrapper = styled.nav`
       width: 130px;
       order: 4;
     }
+  }
+
+  @media screen and (min-width: 1200px) {
+    padding: 0px;
   }
 `;

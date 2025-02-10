@@ -11,9 +11,62 @@ import teamJasmine from "../public/jasmine.png";
 import teamAda from "../public/ada.png";
 import teamDan from "../public/dan.png";
 
+// background images
+//ash (#9A9489)
+import bgAshPrimary from "../public/bg-ash-primary.png";
+import bgAshSecondary1 from "../public/bg-ash-secondary1.png";
+import bgAshSecondary2 from "../public/bg-ash-secondary2.png";
+
+// pink (#ffe3e8)
+import bgPinkPrimary from "../public/bg-pink-primary.png";
+import bgPinkSecondary1 from "../public/bg-pink-secondary1.png";
+import bgPinkSecondary2 from "../public/bg-pink-secondary2.png";
+
+// yellow (white)
+import bgPrimaryYellow from "../public/bg-yellow-primary.png";
+import bgYellowSecondary1 from "../public/bg-yellow-secondary1.png";
+import bgYellowSecondary2 from "../public/bg-yellow-secondary2.png";
+
+// red (#f24949)
+import bgPrimaryRed from "../public/bg-red-primary.png";
+import bgRedSecondary1 from "../public/bg-red-secondary1.png";
+import bgRedSecondary2 from "../public/bg-red-secondary2.png";
+
+const backgrounds = [
+  {
+    theme: "#9A9489",
+    id: 1,
+    primary: bgAshPrimary,
+    secondary1: bgAshSecondary1,
+    secondary2: bgAshSecondary2,
+  },
+  {
+    theme: "#ffe3e8",
+    id: 2,
+    primary: bgPinkPrimary,
+    secondary1: bgPinkSecondary1,
+    secondary2: bgPinkSecondary2,
+  },
+  {
+    theme: "white",
+    id: 3,
+    primary: bgPrimaryYellow,
+    secondary1: bgYellowSecondary1,
+    secondary2: bgYellowSecondary2,
+  },
+  {
+    theme: "#f24949",
+    id: 4,
+    primary: bgPrimaryRed,
+    secondary1: bgRedSecondary1,
+    secondary2: bgRedSecondary2,
+  },
+];
+
 const collections = [
   {
     id: 1,
+    alias: "maleFashion",
     name: "Male Fashion",
     blob: "/shop/male-fashion",
     img: CollectionMale,
@@ -21,6 +74,7 @@ const collections = [
   },
   {
     id: 2,
+    alias: "femaleFashion",
     name: "Female Fashion",
     blob: "/shop/female-fashion",
     img: CollectionFemale,
@@ -28,6 +82,7 @@ const collections = [
   },
   {
     id: 3,
+    alias: "unisexShoes",
     name: "Unisex Shoes",
     blob: "/shop/unisex-shoes",
     img: CollectionShoe,
@@ -35,6 +90,7 @@ const collections = [
   },
   {
     id: 4,
+    alias: "smartGadgets",
     name: "Smart Gadgets",
     blob: "/shop/smart-gadgets",
     img: CollectionGadget,
@@ -112,4 +168,4 @@ const _category = {
   ],
   ["Unisex Shoes"]: ["sneakers", "boots", "crocs", "flip flops"],
 };
-export { collections, testimony, team, _category };
+export { collections, testimony, team, _category, backgrounds };

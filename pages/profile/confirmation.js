@@ -42,7 +42,7 @@ const Confirm = () => {
     );
 
     let cart = JSON.parse(localStorage.getItem("checkout")) || [];
-    console.log(cart);
+    // console.log(cart);
     let email = user.email;
 
     if (!email) {

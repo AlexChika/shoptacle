@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import styled from "styled-components";
 import {
   PaymentElement,
@@ -6,7 +7,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ Logger, cancelPaymentModal }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -14,13 +15,18 @@ export default function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    return;
     if (!stripe) {
       return;
     }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
+    console.log({ stripe, elements }); // just for testing
+
+    // const clientSecret = new URLSearchParams(window.location.search).get(
+    //   "payment_intent_client_secret"
+    // );
+
+    console.log({ clientSecret });
 
     if (!clientSecret) {
       return;
@@ -42,7 +48,7 @@ export default function CheckoutForm() {
           break;
       }
     });
-  }, [stripe]);
+  }, [stripe, elements]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,8 +75,10 @@ export default function CheckoutForm() {
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
+      Logger(error.message, "error");
     } else {
       setMessage("An unexpected error occurred.");
+      Logger("An unexpected error occurred.", "error");
     }
 
     setIsLoading(false);
@@ -81,15 +89,15 @@ export default function CheckoutForm() {
     <Wrapper>
       <form id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" />
+
         <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : (
-              "Pay now"
-            )}
-          </span>
+          {isLoading ? <span className="spinner xsm center"></span> : "Pay now"}
         </button>
+
+        <button id="closeStripe" onClick={() => cancelPaymentModal()}>
+          <FaTimes />
+        </button>
+
         {/* Show any error or success messages */}
         {message && <div id="payment-message">{message}</div>}
       </form>
@@ -117,6 +125,7 @@ const Wrapper = styled.main`
   z-index: 100;
 
   form {
+    position: relative;
     width: 30vw;
     min-width: 500px;
     align-self: center;
@@ -141,7 +150,7 @@ const Wrapper = styled.main`
   }
 
   /* Buttons and links */
-  button {
+  #submit {
     background: #5469d4;
     font-family: Arial, sans-serif;
     color: #ffffff;
@@ -157,79 +166,22 @@ const Wrapper = styled.main`
     width: 100%;
   }
 
-  button:hover {
+  button#closeStripe {
+    color: white;
+    position: absolute;
+    top: -25px;
+    right: 0;
+    font-size: 20px;
+  }
+
+  button#submit:hover {
     filter: contrast(115%);
   }
 
-  button:disabled {
-    opacity: 0.5;
-    cursor: default;
+  button#submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
-
-  /* spinner/processing state, errors */
-  .spinner,
-  .spinner:before,
-  .spinner:after {
-    border-radius: 50%;
-  }
-
-  .spinner {
-    color: #ffffff;
-    font-size: 22px;
-    text-indent: -99999px;
-    margin: 0px auto;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    box-shadow: inset 0 0 0 2px;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-
-  .spinner:before,
-  .spinner:after {
-    position: absolute;
-    content: "";
-  }
-
-  .spinner:before {
-    width: 10.4px;
-    height: 20.4px;
-    background: #5469d4;
-    border-radius: 20.4px 0 0 20.4px;
-    top: -0.2px;
-    left: -0.2px;
-    -webkit-transform-origin: 10.4px 10.2px;
-    transform-origin: 10.4px 10.2px;
-    -webkit-animation: loading 2s infinite ease 1.5s;
-    animation: loading 2s infinite ease 1.5s;
-  }
-
-  .spinner:after {
-    width: 10.4px;
-    height: 10.2px;
-    background: #5469d4;
-    border-radius: 0 10.2px 10.2px 0;
-    top: -0.1px;
-    left: 10.2px;
-    -webkit-transform-origin: 0px 10.2px;
-    transform-origin: 0px 10.2px;
-    -webkit-animation: loading 2s infinite ease;
-    animation: loading 2s infinite ease;
-  }
-
-  @keyframes loading {
-    0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
   @media only screen and (max-width: 600px) {
     form {
       width: 80vw;

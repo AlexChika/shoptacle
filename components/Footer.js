@@ -10,8 +10,11 @@ import {
   BsLinkedin,
   BsTwitter,
 } from "react-icons/bs";
+import { Store } from "../store/Context";
 
-const Footer = ({ hide }) => {
+const Footer = () => {
+  const { hideFooter: hide } = Store();
+
   return (
     <Wrapper hide={hide} className="layout">
       <section className="footerHeader f center">
@@ -60,7 +63,7 @@ const Footer = ({ hide }) => {
         <article>
           <h5>
             <a
-              href="https://www.behance.net/ClementinaClement"
+              href="https://www.behance.net/gallery/146232213/E-commerce-Store"
               target="_blank"
               rel="noreferrer"
             >
@@ -95,7 +98,7 @@ const Footer = ({ hide }) => {
         <article>
           <h5>
             <a
-              href="https://i-am-alex.netlify.app/"
+              href="https://www.alexchika.com"
               target="_blank"
               rel="noreferrer"
             >
@@ -110,11 +113,11 @@ const Footer = ({ hide }) => {
             >
               <BsGithub />
             </a>
-            <a href="mailto:i.am.alex.chika@gmail.com">
+            <a href="mailto:contact@alexchika.com">
               <BsEnvelopeFill />
             </a>
             <a
-              href="https://i-am-alex.netlify.app"
+              href="https://www.alexchika.com"
               target="_blank"
               rel="noreferrer"
             >

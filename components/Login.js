@@ -73,7 +73,7 @@ const Index = () => {
       });
     }
     if (name == "password") {
-      let valid = logError(value, "text", e.target, 6, 15, "password");
+      let valid = logError(value, "text", e.target, 6, 20, "password");
       setLoginDetails({
         ...loginDetails,
         [name]: { ...loginDetails[name], valid, value },
@@ -106,7 +106,7 @@ const Index = () => {
       });
     }
     if (name == "password") {
-      let valid = logError(value, "text", e.target, 6, 15, "password");
+      let valid = logError(value, "text", e.target, 6, 20, "password");
       setSignUpDetails({
         ...signUpDetails,
         [name]: { ...signUpDetails[name], valid, value },

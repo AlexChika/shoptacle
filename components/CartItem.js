@@ -14,7 +14,7 @@ const CartItem = ({ cart }) => {
   async function removeCartItem(id) {
     try {
       await removeCart(id);
-      Logger("Item removed successfully", "success", 1000);
+      Logger("Item removed successfully", "success", 1500);
     } catch (error) {
       Logger("Could not remove item", "success");
     }
@@ -24,9 +24,9 @@ const CartItem = ({ cart }) => {
     if (quantity < 1) return;
     try {
       await incDecCart(id, quantity, type);
-      Logger("Item updated successfully", "success", 1000);
+      Logger("Item updated successfully", "success", 1500);
     } catch (error) {
-      Logger("Coul not update item", "error");
+      Logger("Could not update item", "error");
     }
   }
 

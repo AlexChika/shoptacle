@@ -1,5 +1,11 @@
 // imports
-import React, { useContext, useState, useEffect, useReducer } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useReducer,
+  useCallback,
+} from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import reducer from "./Reducer";
@@ -32,9 +38,10 @@ const initialState = {
 
 // app
 const AppContext = React.createContext();
-const StoreProvider = ({ setHideFooter, children }) => {
+const StoreProvider = ({ children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [hideFooter, setHideFooter] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [logger, setLogger] = useState({
     text: "",
@@ -45,36 +52,42 @@ const StoreProvider = ({ setHideFooter, children }) => {
 
   // funcs
   // modal handler
-  function handleCloseModal() {
+  const handleCloseModal = useCallback(function () {
     dispatch({ type: actionTypes.HANDLE_MODAL });
-  }
+  }, []);
 
   // error or succes logger
-  const Logger = (text, type, time = 4000) => {
+  const Logger = useCallback(function (text, type, time = 4000) {
     if (type === "success" || type === "error") {
-      clearTimeout(logger.timeoutId);
-      let success = type === "success";
-      const timeout = setTimeout(() => {
-        setLogger({
-          ...logger,
-          text: "",
-          show: false,
+      setLogger((prev) => {
+        const timeoutId = prev.timeoutId;
+        clearTimeout(timeoutId);
+        let success = type === "success";
+
+        const timeout = setTimeout(() => {
+          setLogger({
+            ...prev,
+            text,
+            show: false,
+            success,
+          });
+        }, time);
+
+        return {
+          text,
+          show: true,
           success,
-        });
-      }, time);
-      setLogger({
-        text,
-        show: true,
-        success,
-        timeoutId: timeout,
+          timeoutId: timeout,
+        };
       });
+
       return;
     }
     throw new Error(`wrong type "${type}" at Logger`);
-  };
+  }, []);
 
   //sets recently viewed to local storage
-  const setRecent = (product) => {
+  const setRecent = useCallback(function (product) {
     // first get localstorage
     let recent = JSON.parse(localStorage.getItem("recent")) || [];
     recent = recent.slice(0, 19);
@@ -86,71 +99,74 @@ const StoreProvider = ({ setHideFooter, children }) => {
     localStorage.setItem("recent", JSON.stringify(recent));
     // update state
     dispatch({ type: actionTypes.SET_RECENT, payload: recent });
-  };
+  }, []);
 
   // cart funcs
-  async function addToCart(id, amount) {
-    // check if item already exists in cart
-    const isAdded = state.cart.find((item) => item.docId === id);
-    // user
-    if (state.user) {
-      if (isAdded) {
-        // update cart in db
-        await updateSubDocs("customers", state.user.email, "cart", id, {
-          amount: isAdded.amount + 1,
-        });
+  const addToCart = useCallback(
+    async function (id, amount) {
+      // check if item already exists in cart
+      const isAdded = state.cart.find((item) => item.docId === id);
+      // user
+      if (state.user) {
+        if (isAdded) {
+          // update cart in db
+          await updateSubDocs("customers", state.user.email, "cart", id, {
+            amount: isAdded.amount + 1,
+          });
 
-        // uodate cart in state
-        let newCart = [
-          ...state.cart.map((item) => {
-            if (item.docId == id) {
+          // uodate cart in state
+          let newCart = [
+            ...state.cart.map((item) => {
+              if (item.docId == id) {
+                item.amount = item.amount + 1;
+              }
+              return item;
+            }),
+          ];
+          dispatch({ type: actionTypes.ADD_TO_CART, payload: newCart });
+        } else {
+          let cartData = {
+            docId: id,
+            amount: amount,
+          };
+          // add cart to db
+          await setSubDocs("customers", state.user.email, "cart", id, cartData);
+          let newCart = [...state.cart];
+          newCart.unshift(cartData);
+          dispatch({
+            type: actionTypes.ADD_TO_CART,
+            payload: newCart,
+          });
+        }
+      }
+
+      // No user
+      else {
+        // add cart to local storage
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (isAdded) {
+          // update cart data
+          let newCart = existingCart.map((item) => {
+            if (item.docId === id) {
               item.amount = item.amount + 1;
             }
             return item;
-          }),
-        ];
-        dispatch({ type: actionTypes.ADD_TO_CART, payload: newCart });
-      } else {
-        let cartData = {
-          docId: id,
-          amount: amount,
-        };
-        // add cart to db
-        await setSubDocs("customers", state.user.email, "cart", id, cartData);
-        let newCart = [...state.cart];
-        newCart.unshift(cartData);
-        dispatch({
-          type: actionTypes.ADD_TO_CART,
-          payload: newCart,
-        });
+          });
+          localStorage.setItem("cart", JSON.stringify(newCart));
+          dispatch({ type: actionTypes.ADD_TO_CART, payload: newCart });
+        } else {
+          // step 3 add cart data
+          existingCart.unshift({
+            docId: id,
+            amount: amount,
+          });
+          localStorage.setItem("cart", JSON.stringify(existingCart));
+          dispatch({ type: actionTypes.ADD_TO_CART, payload: existingCart });
+        }
       }
-    }
-
-    // No user
-    else {
-      // add cart to local storage
-      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-      if (isAdded) {
-        // update cart data
-        let newCart = existingCart.map((item) => {
-          if (item.docId === id) {
-            item.amount = item.amount + 1;
-          }
-          return item;
-        });
-        localStorage.setItem("cart", JSON.stringify(newCart));
-        dispatch({ type: actionTypes.ADD_TO_CART, payload: newCart });
-      } else {
-        // step 3 add cart data
-        existingCart.unshift({
-          docId: id,
-          amount: amount,
-        });
-        localStorage.setItem("cart", JSON.stringify(existingCart));
-        dispatch({ type: actionTypes.ADD_TO_CART, payload: existingCart });
-      }
-    }
-  }
+    },
+    [state]
+  );
 
   async function removeCart(id) {
     await deleteSubDocs("customers", state.user.email, "cart", id);
@@ -202,9 +218,11 @@ const StoreProvider = ({ setHideFooter, children }) => {
       type: actionTypes.SET_CURRENT_ROUTE,
       payload: router.pathname,
     });
+
     const handleRouteChange = (url, { shallow }) => {
       dispatch({ type: actionTypes.ROUTE_CHANGE, payload: url });
     };
+
     router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
@@ -237,7 +255,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
       }
     });
     return unsubscribe;
-  }, [refresh]);
+  }, [refresh, Logger]);
 
   // get cart from firestore and recents from localstorage
   useEffect(() => {
@@ -297,6 +315,7 @@ const StoreProvider = ({ setHideFooter, children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        hideFooter,
         handleCloseModal,
         dispatch,
         Logger,
@@ -330,24 +349,33 @@ const Wrapper = styled.div`
   visibility: ${(props) => (props.show ? "visible" : "hidden")};
 
   .box {
-    color: white;
-    min-height: 70px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
     padding: 10px;
-    background-color: ${({ success }) =>
-      success ? "rgba(47, 255, 0, 1)" : "rgba(253, 51, 91, 1)"};
-    max-width: 600px;
-    width: 100%;
+    border: 2px solid
+      ${({ success }) =>
+        success ? "rgba(47, 255, 0, 1)" : "rgba(253, 51, 91, 1)"};
+    background-color: white;
+    width: max-content;
+    max-width: 90%;
     border-radius: 15px;
-    box-shadow: -4px 0px var(--blue), -6px 0px skyblue, -8px 0px tomato;
-    border-bottom: 2px solid var(--blue);
     transform: translateY(-110%);
   }
   .box.show {
-    transform: translateY(0%);
+    transform: translateY(20px);
   }
   p {
+    color: var(--blue);
     font-weight: 500;
     font-size: 20px;
+    width: max-content;
+  }
+
+  span {
+    color: ${({ success }) =>
+      success ? "rgba(47, 255, 0, 1)" : "rgba(253, 51, 91, 1)"};
   }
 `;

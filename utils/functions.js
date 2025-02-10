@@ -215,7 +215,6 @@ const filterReducer = (state, action) => {
 
   if (action.type === actions.SET_SORT) {
     const value = action.payload;
-    console.log(value);
     let array;
     if (value == "a-z") {
       array = [...state.filtered].sort((a, b) => {

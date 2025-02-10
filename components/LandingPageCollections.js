@@ -5,6 +5,7 @@ import Link from "next/link";
 import rightRectangle from "../public/right-rectangle.png";
 import leftRectangle from "../public/left-rectangle.png";
 import { collections } from "../utils/data";
+import { ProductRow } from "./ShopPageComponent";
 
 const CollectionCard = ({ collection }) => {
   return (
@@ -54,13 +55,13 @@ const CollectionCardWrapper = styled.article`
   background-color: var(--blue);
   width: 95%;
   /* max-width: 1170px; */
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
   flex-direction: column;
 
   .image-con,
   .detail {
     width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 16/9;
   }
 
   .detail {
@@ -146,7 +147,7 @@ const CollectionCardWrapper = styled.article`
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     .image-con,
     .detail {
       width: 50%;
@@ -185,12 +186,27 @@ const CollectionCardWrapper = styled.article`
 `;
 
 // main app
-const Collections = () => {
+const Collections = ({ products }) => {
   return (
     <Wrapper className="layout">
       <h1 className="center heading">Collections</h1>
-      {collections.map((collection) => {
-        return <CollectionCard collection={collection} key={collection.id} />;
+      {collections.map((collection, index) => {
+        return (
+          <React.Fragment key={collection.id}>
+            <CollectionCard collection={collection} />
+            <div className="ProductRow center">
+              <ProductRow
+                params={{
+                  color: "var(--blue-light)",
+                  name: "",
+                  showHeader: false,
+                  blob: collection.blob,
+                }}
+                products={products[collection.alias]}
+              />
+            </div>
+          </React.Fragment>
+        );
       })}
     </Wrapper>
   );
@@ -213,5 +229,22 @@ const Wrapper = styled.section`
     font-size: 30px;
     font-family: "Libre Baskerville", serif;
     color: var(--blue);
+  }
+
+  .ProductRow {
+    width: 95%;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: var(--blue);
+    & > section {
+      max-width: 1170px;
+      margin: auto;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .ProductRow {
+      margin-bottom: 50px;
+    }
   }
 `;

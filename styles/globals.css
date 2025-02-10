@@ -33,6 +33,7 @@ a {
 }
 /* general classes */
 .spinner {
+  display: block;
   width: 60px;
   height: 60px;
   border-left: 2px solid var(--pink);
@@ -42,6 +43,10 @@ a {
 .spinner.sm {
   width: 30px;
   height: 30px;
+}
+.spinner.xsm {
+  width: 20px;
+  height: 20px;
 }
 .spinner.stop {
   display: none;

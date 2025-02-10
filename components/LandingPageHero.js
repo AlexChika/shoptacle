@@ -1,17 +1,107 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import NavBar from "./NavBar";
 import Shoptacle from "../svg-components/shoptacle";
 import SideBar from "./SideBar";
 import { FaAngleLeft, FaAngleRight, FaTwitter, FaGithub } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
+import { backgrounds } from "../utils/data";
 const LandingPageHero = () => {
+  const [index, setIndex] = useState(null);
+  const backgroundImages = backgrounds[index] || backgrounds[0];
+
+  function changeBackground(dir) {
+    setIndex((prev) => {
+      // preventing changeOfbackground untill image is fully loaded and startDynamicBg func changes index to zero
+
+      console.log({ prev });
+
+      if (prev === null) return prev;
+
+      if (dir === "left") {
+        const newIndex = prev - 1 < 0 ? backgrounds.length - 1 : prev - 1;
+        return newIndex;
+      }
+      const newIndex = prev + 1 > backgrounds.length - 1 ? 0 : prev + 1;
+
+      console.log({ newIndex });
+      return newIndex;
+    });
+  }
+
+  const loadImage = useCallback(function (src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      function onload() {
+        resolve(img);
+        img.removeEventListener("load", onload);
+        img.removeEventListener("error", onerror);
+      }
+
+      function onerror() {
+        reject(img);
+        img.removeEventListener("error", onerror);
+        img.removeEventListener("load", onload);
+      }
+      img.src = src;
+      img.addEventListener("load", onload);
+      img.addEventListener("error", onerror);
+    });
+  }, []);
+
+  const loadAllImages = useCallback(
+    async function () {
+      let images = [];
+      for (let i = 0; i < backgrounds.length; i++) {
+        images.push(loadImage(backgrounds[i].primary.src));
+        images.push(loadImage(backgrounds[i].secondary1.src));
+        images.push(loadImage(backgrounds[i].secondary2.src));
+      }
+
+      try {
+        await Promise.all(images);
+        images.length = 0;
+        console.log("all images are loaded");
+        return true;
+        // all images are loaded
+      } catch (error) {
+        // an image failed to load
+        return false;
+      }
+    },
+    [loadImage]
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      changeBackground("right");
+    }, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    async function startDynamicBg() {
+      const allLoaded = await loadAllImages();
+
+      if (allLoaded) {
+        setIndex((prev) => 0);
+        return;
+      }
+
+      setTimeout(() => {
+        startDynamicBg();
+      }, 20000); // retry after 20 second
+    }
+
+    startDynamicBg();
+  }, [loadAllImages]);
+
   return (
-    <Wrapper className="layout">
+    <Wrapper $bg={backgroundImages} className="layout">
       {/* backgrounds */}
       <section className="background-layout trans">
         <div className="hero-logo minvh f fcenter">
-          <Shoptacle fill={"#9A9489"} />
+          <Shoptacle fill={backgroundImages.theme} />
         </div>
         <div className="smallImages minvh display">
           <div className="image-one"></div>
@@ -35,10 +125,18 @@ const LandingPageHero = () => {
               <h3 className="mt30 center">Explore</h3>
             </div>
             <div className="hero-nav f">
-              <button className="f fcenter" type="button">
+              <button
+                onClick={() => changeBackground("left")}
+                className="f fcenter"
+                type="button"
+              >
                 <FaAngleLeft />
               </button>
-              <button className="f fcenter" type="button">
+              <button
+                onClick={() => changeBackground("right")}
+                className="f fcenter"
+                type="button"
+              >
                 <FaAngleRight />
               </button>
             </div>
@@ -69,10 +167,12 @@ export default LandingPageHero;
 const Wrapper = styled.main`
   position: relative;
   height: 100vh;
-  background-image: url("/heroImage.jfif");
+  /* background-image: url("/heroImage.jfif"); */
+  background-image: ${({ $bg }) => `url(${$bg.primary.src})`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 80% 50%;
+
   .background-layout {
     display: grid;
     width: 100%;
@@ -224,16 +324,20 @@ const Wrapper = styled.main`
           width: 100%;
         }
         .image-one {
-          background-image: url("/heroImage2.jfif");
+          /* background-image: url("/heroImage2.jfif"); */
+          background-image: ${({ $bg }) => `url(${$bg.secondary1.src})`};
           background-repeat: no-repeat;
           background-size: cover;
           background-position: 60% 50%;
+          background-position: top;
         }
         .image-two {
-          background-image: url("/heroImage3.jfif");
+          /* background-image: url("/heroImage3.jfif"); */
+          background-image: ${({ $bg }) => `url(${$bg.secondary2.src})`};
           background-repeat: no-repeat;
           background-size: cover;
-          background-position: 80% 50%;
+          /* background-position: 80% 50%; */
+          background-position: top;
         }
         grid-area: smallImages;
       }
