@@ -23,13 +23,15 @@ export function usePaystack() {
           currency: "NGN",
           ref: new Date().getTime().toString(),
           onCancel: function (response) {
-            console.log(response, "cancelled");
+            console.error(response, "cancelled");
+            Logger("Transaction was not completed", "error");
           },
           onSuccess: function (response) {
-            console.log(response, "success");
+            // console.error(response, "success");
+            Logger("Transaction was successful", "success");
           },
           onError: function (response) {
-            console.log({ response }, "error");
+            console.error({ response }, "error");
             Logger("There was an error", "error");
           },
           callback: async function (response) {

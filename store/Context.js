@@ -60,17 +60,14 @@ const StoreProvider = ({ children }) => {
   const Logger = useCallback(function (text, type, time = 4000) {
     if (type === "success" || type === "error") {
       setLogger((prev) => {
-        const timeoutId = prev.timeoutId;
-        clearTimeout(timeoutId);
+        clearTimeout(prev.timeoutId);
         let success = type === "success";
 
         const timeout = setTimeout(() => {
-          setLogger({
+          setLogger((prev) => ({
             ...prev,
-            text,
             show: false,
-            success,
-          });
+          }));
         }, time);
 
         return {
@@ -165,51 +162,65 @@ const StoreProvider = ({ children }) => {
         }
       }
     },
-    [state]
+    [state.user, state.cart]
   );
 
-  async function removeCart(id) {
-    await deleteSubDocs("customers", state.user.email, "cart", id);
-    const newCart = [...state.cart].filter((item) => item.docId !== id);
-    dispatch({ type: actionTypes.REMOVE_CART, payload: newCart });
-  }
+  const removeCart = useCallback(
+    async function (id) {
+      await deleteSubDocs("customers", state.user.email, "cart", id);
+      const newCart = [...state.cart].filter((item) => item.docId !== id);
+      dispatch({ type: actionTypes.REMOVE_CART, payload: newCart });
+    },
+    [state.user.email, state.cart]
+  );
 
-  async function incDecCart(id, quantity, type) {
-    let cartItem = [...state.cart].find((item) => item.docId == id);
-    let newCartItem;
-    if (type == "plus") {
-      let newAmount = Math.min(cartItem.amount + 1, quantity);
-      newCartItem = {
-        docId: cartItem.docId,
-        amount: newAmount,
-      };
-      updateSubDocs("customers", state.user.email, "cart", id, newCartItem);
-      let newCart = [...state.cart].map((item) => {
-        if (item.docId === id) {
-          let newAmount = Math.min(item.amount + 1, quantity);
-          item.amount = newAmount;
-        }
-        return item;
-      });
-      dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
-    }
+  const incDecCart = useCallback(
+    async function (id, quantity, type) {
+      let cartItem = [...state.cart].find((item) => item.docId == id);
+      let newCartItem;
 
-    if (type == "minus") {
-      let newAmount = Math.max(cartItem.amount - 1, 1);
-      newCartItem = {
-        docId: cartItem.docId,
-        amount: newAmount,
-      };
-      updateSubDocs("customers", state.user.email, "cart", id, newCartItem);
-      let newCart = [...state.cart].map((item) => {
-        if (item.docId === id) {
-          item.amount = newAmount;
-        }
-        return item;
-      });
-      dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
-    }
-  }
+      if (type == "plus") {
+        let intendedIncAmount = cartItem.amount + 1;
+        if (intendedIncAmount > quantity)
+          return { status: false, log: "Max quantity reached" };
+
+        let newAmount = Math.min(intendedIncAmount, quantity);
+        newCartItem = {
+          docId: cartItem.docId,
+          amount: newAmount,
+        };
+        updateSubDocs("customers", state.user.email, "cart", id, newCartItem);
+        let newCart = [...state.cart].map((item) => {
+          if (item.docId === id) {
+            item.amount = newAmount;
+          }
+          return item;
+        });
+        dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
+      }
+
+      if (type == "minus") {
+        let intendedDecAmount = cartItem.amount - 1;
+        if (intendedDecAmount < 1)
+          return { status: false, log: "Min quantity reached" };
+
+        let newAmount = Math.max(intendedDecAmount, 1);
+        newCartItem = {
+          docId: cartItem.docId,
+          amount: newAmount,
+        };
+        updateSubDocs("customers", state.user.email, "cart", id, newCartItem);
+        let newCart = [...state.cart].map((item) => {
+          if (item.docId === id) {
+            item.amount = newAmount;
+          }
+          return item;
+        });
+        dispatch({ type: actionTypes.INC_DEC_CART, payload: newCart });
+      }
+    },
+    [state.user.email, state.cart]
+  );
 
   // useEffects
   // monitor route change
@@ -267,7 +278,7 @@ const StoreProvider = ({ children }) => {
           cart = await getSubDocs("customers", state.user.email, "cart");
         } catch (error) {
           cart = [];
-          console.log(error);
+          console.eroor(error);
         }
         dispatch({ type: actionTypes.GET_CART, payload: cart });
       }
@@ -291,7 +302,6 @@ const StoreProvider = ({ children }) => {
       } else {
         dispatch({ type: actionTypes.SET_ADMIN, payload: false });
       }
-      // console.log(snapshot.docs[0].data());
     });
   }, [state.user]);
 

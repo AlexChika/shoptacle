@@ -182,8 +182,8 @@ const AdminSearch = ({ handleSetTab }) => {
           <h4 className="mt10">
             However, if you wish to make Edits and add Products to SHOPTACE or
             to Test the app, please send a mail to &nbsp;
-            <a href="mailto:i.am.alex.chika@gmail.com">
-              i.am.alex.chika@gmail.com
+            <a href="mailto:contact@alexchika.com">
+              contact@alexchika.com
             </a>{" "}
             &nbsp; for Admin access using your registered email
           </h4>

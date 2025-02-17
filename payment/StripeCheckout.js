@@ -20,13 +20,9 @@ export default function CheckoutForm({ Logger, cancelPaymentModal }) {
       return;
     }
 
-    console.log({ stripe, elements }); // just for testing
-
     // const clientSecret = new URLSearchParams(window.location.search).get(
     //   "payment_intent_client_secret"
     // );
-
-    console.log({ clientSecret });
 
     if (!clientSecret) {
       return;

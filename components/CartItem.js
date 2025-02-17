@@ -8,13 +8,11 @@ import { formatPrice } from "../utils/functions";
 const CartItem = ({ cart }) => {
   const { Logger, removeCart, incDecCart } = Store();
 
-  // local state
-
   // local func
   async function removeCartItem(id) {
     try {
       await removeCart(id);
-      Logger("Item removed successfully", "success", 1500);
+      Logger("Item removed successfully", "success", 2500);
     } catch (error) {
       Logger("Could not remove item", "success");
     }
@@ -23,8 +21,13 @@ const CartItem = ({ cart }) => {
   async function incDecCartItem(id, quantity, type) {
     if (quantity < 1) return;
     try {
-      await incDecCart(id, quantity, type);
-      Logger("Item updated successfully", "success", 1500);
+      const res = await incDecCart(id, quantity, type);
+      if (res) return Logger(res.log, "error");
+      Logger(
+        `Item ${type === "plus" ? "incremented" : "decremented"} successfully`,
+        "success",
+        2500
+      );
     } catch (error) {
       Logger("Could not update item", "error");
     }

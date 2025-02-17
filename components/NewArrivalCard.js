@@ -36,7 +36,6 @@ const NewArrivalCard = ({ product }) => {
 export default NewArrivalCard;
 const Wrapper = styled.article`
   position: relative;
-  cursor: pointer;
   color: var(--blue);
   background-color: white;
 

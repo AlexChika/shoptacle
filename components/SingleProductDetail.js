@@ -27,7 +27,7 @@ const ProductDetail = ({ data }) => {
     } catch (error) {
       setLoading(false);
       Logger("Couldn't add item to cart, please check your internet", "error");
-      console.log(error.message);
+      console.error(error.message);
     }
   };
 

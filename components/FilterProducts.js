@@ -32,7 +32,6 @@ const FilterProducts = ({ data }) => {
     }
 
     if (name === "brand") {
-      console.log("i was fired");
       dispatch({ type: actions.SET_BRAND, payload: value });
     }
 

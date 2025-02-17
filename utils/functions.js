@@ -186,7 +186,7 @@ const filterReducer = (state, action) => {
 
   if (action.type === actions.SET_MIN_MAX_RANGE) {
     const { min, max } = action.payload;
-    console.log(min, max);
+
     const array = [...state.products].filter(
       (item) => item.price <= max && item.price >= min
     );

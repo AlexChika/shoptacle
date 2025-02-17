@@ -238,7 +238,7 @@ const ProfilePageComponent = () => {
       }
     }
     updateUser();
-  }, []);
+  }, [user, Logger, dispatch]);
 
   return (
     <Wrapper className="center mt30">
@@ -256,7 +256,8 @@ const ProfilePageComponent = () => {
 
           <div>
             <h1>
-              {user?.firstName} {user?.lastName.charAt(0).toUpperCase()}.
+              {user?.firstName || "User"}{" "}
+              {user?.lastName?.charAt(0).toUpperCase() || ""}.
             </h1>
             <button onClick={handleLogout}>Logout</button>
           </div>

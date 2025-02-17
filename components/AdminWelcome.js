@@ -19,9 +19,9 @@ const AdminWelcome = () => {
 
         <span>
           To Make Edits or Add products, please send a mail here
-          <a href="mailto:i.am.alex.chika@gmail.com">
+          <a href="mailto:contact@alexchika.com">
             {" "}
-            (i.am.alex.chika@gmail.com){" "}
+            (contact@alexchika.com){" "}
           </a>{" "}
           for admin access
         </span>
@@ -29,9 +29,7 @@ const AdminWelcome = () => {
         <span>
           We are eager to receive your reviews. Please report issues / errors or
           get in contact here{" "}
-          <a href="mailto:i.am.alex.chika@gmail.com">
-            (i.am.alex.chika@gmail.com){" "}
-          </a>
+          <a href="mailto:contact@alexchika.com">(contact@alexchika.com) </a>
         </span>
 
         <Link href="/profile" passHref>

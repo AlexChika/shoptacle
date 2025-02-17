@@ -14,8 +14,6 @@ const LandingPageHero = () => {
     setIndex((prev) => {
       // preventing changeOfbackground untill image is fully loaded and startDynamicBg func changes index to zero
 
-      console.log({ prev });
-
       if (prev === null) return prev;
 
       if (dir === "left") {
@@ -24,7 +22,6 @@ const LandingPageHero = () => {
       }
       const newIndex = prev + 1 > backgrounds.length - 1 ? 0 : prev + 1;
 
-      console.log({ newIndex });
       return newIndex;
     });
   }
@@ -34,12 +31,14 @@ const LandingPageHero = () => {
       const img = new Image();
       function onload() {
         resolve(img);
+        // prevent memory leak
         img.removeEventListener("load", onload);
         img.removeEventListener("error", onerror);
       }
 
       function onerror() {
         reject(img);
+        // prevent memory leak
         img.removeEventListener("error", onerror);
         img.removeEventListener("load", onload);
       }
@@ -60,10 +59,8 @@ const LandingPageHero = () => {
 
       try {
         await Promise.all(images);
-        images.length = 0;
-        console.log("all images are loaded");
+        images.length = 0; // free memory
         return true;
-        // all images are loaded
       } catch (error) {
         // an image failed to load
         return false;
@@ -153,7 +150,7 @@ const LandingPageHero = () => {
               <a className="mt30 trans" href="https://github.com/AlexChika">
                 <FaGithub />
               </a>
-              <a className="mt30 trans" href="mailto:i.am.alex.chika@gmail.com">
+              <a className="mt30 trans" href="mailto:contact@alexchika.com">
                 <IoIosMail />
               </a>
             </div>

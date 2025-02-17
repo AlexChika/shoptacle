@@ -51,7 +51,7 @@ const Confirm = () => {
 
     async function updateOrders() {
       for (let i = 0; i < cart.length; i++) {
-        console.log("running");
+        // console.log("running");
 
         if (cart[i].quantity < 1) continue;
         let amount = cart[i].amount;
@@ -71,7 +71,7 @@ const Confirm = () => {
         // update product quantity
         await updateProduct(cart[i].id, { quantity: quantity - amount });
       }
-      console.log("finished");
+      // console.log("finished");
 
       // reset localstorage
       localStorage.setItem("checkout", "[]");

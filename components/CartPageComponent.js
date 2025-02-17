@@ -93,7 +93,7 @@ const CartPageComponent = ({ data }) => {
       localStorage.setItem("checkout", JSON.stringify(cart));
     } catch (error) {
       Logger("There was an error", "error");
-      console.log(error.message);
+      console.error(error.message);
     }
   };
 
