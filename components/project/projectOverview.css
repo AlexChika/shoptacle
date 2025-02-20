@@ -342,6 +342,7 @@
 
 .pov_overview_body_video_overlay.playing {
   opacity: 0;
+  pointer-events: none;
 }
 
 .pov_video_overlay_playBtn {

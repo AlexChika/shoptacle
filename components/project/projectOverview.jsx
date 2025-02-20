@@ -17,11 +17,11 @@ export function ProjectOverviewModal({
     "https://i.postimg.cc/3rVN9nKW/shoptacle-port-3.png",
   ],
   projectIconUrl = "/logowhite.svg",
-  videoUrl = "https://miniblog.devarise.tech/mini-blog.mp4",
+  videoUrl = "https://res.cloudinary.com/dsdysokfq/video/upload/v1740038882/shoptacle_overview_zy5uuf.mp4",
   posterUrl = "https://i.postimg.cc/8kb0Dn0n/shoptacle-port-2.png",
   open = true,
   id = "project_overview",
-  projectName = "Swift-Mini",
+  projectName = "Shoptacle",
   description = `A Complete, full-featured e-commerce App,
     with customer profile, order-history management, authentication, stripe and paystack payments, Real products, live comments and ratings, admin portal for crud operations"`,
   feautures = [
@@ -31,6 +31,11 @@ export function ProjectOverviewModal({
     "Live comments and ratings",
     "Product management",
     "Order history management",
+  ],
+  aimOfProject = [
+    "To demonstrate fullstack (CRUD) implementation",
+    "General Best practices",
+    "User Profile Management and Payment integrations",
   ],
   stacks = [
     {
@@ -254,15 +259,14 @@ export function ProjectOverviewModal({
               </h2>
 
               <div className="pov_overview_summary_list">
-                <p>
-                  <span className="pov_summary_bullet pov_summary_bullet_small"></span>
-                  <span>To demonstrate SANITY and its applications</span>
-                </p>
-
-                <p>
-                  <span className="pov_summary_bullet pov_summary_bullet_small" />
-                  <span>Implement blog features - likes and comments</span>
-                </p>
+                {aimOfProject.map((aim, index) => {
+                  return (
+                    <p key={index}>
+                      <span className="pov_summary_bullet pov_summary_bullet_small"></span>
+                      <span>{aim}</span>
+                    </p>
+                  );
+                })}
               </div>
             </div>
 
