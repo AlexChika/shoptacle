@@ -18,7 +18,7 @@
 
 /* Root wrapper */
 .pov_wrapper {
-  --ball-color: rgb(255, 94, 255);
+  --ball-color: rgb(13, 79, 116);
   padding: 0;
   margin: 0;
   box-sizing: border-box;

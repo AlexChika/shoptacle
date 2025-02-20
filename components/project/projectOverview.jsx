@@ -8,7 +8,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { SiReact } from "react-icons/si";
+import { SiNodedotjs, SiFirebase, SiNextdotjs } from "react-icons/si";
 
 export function ProjectOverviewModal({
   imgUrls = [
@@ -39,16 +39,16 @@ export function ProjectOverviewModal({
   ],
   stacks = [
     {
-      name: "React",
-      icon: <SiReact />,
+      name: "NodeJs",
+      icon: <SiNodedotjs />,
     },
     {
-      name: "React",
-      icon: <SiReact />,
+      name: "Firebase",
+      icon: <SiFirebase />,
     },
     {
-      name: "React",
-      icon: <SiReact />,
+      name: "NextJs",
+      icon: <SiNextdotjs />,
     },
   ],
 }) {
