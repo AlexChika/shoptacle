@@ -168,7 +168,7 @@ export function ProjectOverviewModal({
               <article>
                 <div>
                   <h4>
-                    <span>About</span> Swift-Mini
+                    <span>About</span> {projectName}
                   </h4>
                   <p>{description}</p>
                 </div>
