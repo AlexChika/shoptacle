@@ -17,6 +17,7 @@ export function ProjectOverviewModal({
     "https://i.postimg.cc/3rVN9nKW/shoptacle-port-3.png",
   ],
   projectIconUrl = "/logowhite.svg",
+  youtubeVidID = "-N_e3ZIkmKk",
   videoUrl = "https://res.cloudinary.com/dsdysokfq/video/upload/v1740038882/shoptacle_overview_zy5uuf.mp4",
   posterUrl = "https://i.postimg.cc/8kb0Dn0n/shoptacle-port-2.png",
   open = true,
@@ -54,6 +55,7 @@ export function ProjectOverviewModal({
 }) {
   // Refs
   const ballRef = useRef(null);
+  const ytRef = useRef(null);
   const videoRef = useRef(null);
   useDrag(ballRef, handleOpenCloseModal);
   const { fade, currIdx } = useFade({
@@ -79,23 +81,41 @@ export function ProjectOverviewModal({
   function handleOpenCloseModal(action = "open") {
     if (action === "close") {
       setIsOpen(false);
-      handlePause();
+      handleYtPlayPause("pause");
       return;
     }
     setIsOpen((prev) => !prev);
   }
 
-  function handlePlay() {
-    if (!videoRef.current) return;
-    setPlay(true);
-    videoRef.current.play();
+  function handleYtPlayPause(action = "play") {
+    const yt = ytRef.current;
+    if (!yt) return;
+
+    action === "play"
+      ? (yt.contentWindow.postMessage(
+          '{"event":"command","func":"playVideo","args":""}',
+          "*"
+        ),
+        setPlay(true))
+      : (yt.contentWindow.postMessage(
+          '{"event":"command","func":"pauseVideo","args":""}',
+          "*"
+        ),
+        setPlay(false));
   }
 
-  function handlePause() {
-    if (!videoRef.current) return;
-    setPlay(false);
-    videoRef.current.pause();
-  }
+  /* ---------- Video implementation ---------- */
+  // function handlePause() {
+  //   if (!videoRef.current) return;
+  //   setPlay(false);
+  //   videoRef.current.pause();
+  // }
+
+  //   function handlePlay() {
+  //     if (!videoRef.current) return;
+  //     setPlay(true);
+  //     videoRef.current.play();
+  //   }
 
   useEffect(() => {
     const video = videoRef.current;
@@ -213,7 +233,16 @@ export function ProjectOverviewModal({
               videoMode ? "videoMode" : ""
             }`}
           >
-            <video controls ref={videoRef} poster={posterUrl} src={videoUrl} />
+            {/* <video controls ref={videoRef} poster={posterUrl} src={videoUrl} />  */}
+
+            <iframe
+              ref={ytRef}
+              src={`https://www.youtube.com/embed/${youtubeVidID}?enablejsapi=1`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
 
             <div
               className={`pov_overview_body_video_overlay ${
@@ -226,7 +255,8 @@ export function ProjectOverviewModal({
 
               <button
                 className="pov_video_overlay_playBtn"
-                onClick={handlePlay}
+                onClick={() => handleYtPlayPause("play")}
+                // onClick={handlePlay}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

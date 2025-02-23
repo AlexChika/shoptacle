@@ -72,12 +72,6 @@ const Header = ({
         content="Shoptacle | Your one stop for perfect fashion"
         key="title"
       />
-      <link
-        rel="preload"
-        href="/projectOverview.mp4"
-        as="video"
-        type="video/mp4"
-      />
       <title>{title}</title>
       {children}
     </Head>
