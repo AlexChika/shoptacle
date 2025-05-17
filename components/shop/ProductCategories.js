@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ProductRow from "shared/components/ProductRow";
 
-const ShopPageComponent = ({ products }) => {
+const ProductCategories = ({ products }) => {
   return (
     <Wrapper className="center">
       {products.map((item, index) => {
@@ -17,7 +17,7 @@ const ShopPageComponent = ({ products }) => {
     </Wrapper>
   );
 };
-export default ShopPageComponent;
+export default ProductCategories;
 
 const Wrapper = styled.main`
   background-color: var(--pink-light);

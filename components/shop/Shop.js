@@ -1,7 +1,7 @@
 import React from "react";
 import SideBar from "shared/components/SideBar";
 import styled from "styled-components";
-import ShopPageComponent from "./ShopPageComponent";
+import ProductCategories from "./ProductCategories";
 import HeroBar from "shared/components/HeroBar";
 import NavBar from "shared/components/NavBar";
 
@@ -11,7 +11,7 @@ function Shop({ products }) {
       <NavBar page="shop" />
       <SideBar />
       <HeroBar path="/" pre={"Home"} curr={"Shop"} />
-      <ShopPageComponent products={products} />
+      <ProductCategories products={products} />
     </Wrapper>
   );
 }

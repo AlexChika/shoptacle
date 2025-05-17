@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Store } from "../store/Context";
+import { Store } from "store/Context";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaList } from "react-icons/fa";
 import { ImCheckboxChecked } from "react-icons/im";
-import * as actions from "../store/actionTypes";
-import { formatPrice } from "../utils/functions";
+import * as actions from "store/actionTypes";
+import { formatPrice } from "utils/functions";
 // app
 const FilterProducts = ({ data }) => {
   const { Logger } = Store();

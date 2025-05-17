@@ -1,21 +1,18 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { paginateFn } from "../utils/functions";
-import Paginate from "./Paginate";
 import { MdStarRate } from "react-icons/md";
-import { formatPrice, calculateStars } from "../utils/functions";
+import { formatPrice, calculateStars } from "utils/functions";
+import usePaginate from "shared/hooks/usePaginate";
 
 // list component
-const ListView = ({ product }) => {
-  const router = useRouter();
+function ListCard({ product }) {
   const { desc, name, price, imgOne, id, rating } = product;
 
   return (
     <Link href={`/shop/${name}_${id}`} passHref>
-      <ListWrapper>
+      <ListCardWrapper>
         <div className="img">
           <Image layout="fill" alt={name} src={imgOne}></Image>
         </div>
@@ -36,12 +33,12 @@ const ListView = ({ product }) => {
             </span>
           </div>
         </div>
-      </ListWrapper>
+      </ListCardWrapper>
     </Link>
   );
-};
+}
 
-const ListWrapper = styled.a`
+const ListCardWrapper = styled.a`
   cursor: pointer;
   display: block;
   background-color: white;
@@ -90,45 +87,30 @@ const ListWrapper = styled.a`
 `;
 
 // parent
-const ProductPageList = ({ products }) => {
-  const pageRef = useRef(null);
-  const [currentBtn, setCurrentBtn] = useState(0);
-  const [productList, setProductList] = useState(
-    paginateFn(products, 15).items
-  );
+const ListView = ({ products }) => {
+  const { Pagination, paginated } = usePaginate(products, 15, 1, true);
 
-  const handlePaginate = (val) => {
-    const newItems = paginateFn(products, 15, val).items;
-    setProductList(newItems);
-    setCurrentBtn(val);
-    window.scrollTo(0, Number(pageRef.current.offsetTop));
-  };
+  function onPageChange() {
+    window.scrollTo(0, 70);
+  }
 
   useEffect(() => {
-    // updates prducts list
-    setProductList(paginateFn(products, 15).items);
-  }, [products]);
+    onPageChange();
+  }, [paginated]);
 
   return (
-    <Wrapper ref={pageRef} className="center mt30">
-      {productList.map((x, index) => {
-        return <ListView product={x} key={index} />;
+    <ListViewWrapper className="center mt30">
+      {paginated.map((x, index) => {
+        return <ListCard product={x} key={index} />;
       })}
-      <Paginate
-        paginateFn={paginateFn}
-        array={products}
-        itemsPerPage={15}
-        currentBtn={currentBtn}
-        handlePaginate={handlePaginate}
-      />
-    </Wrapper>
+
+      <Pagination />
+    </ListViewWrapper>
   );
 };
 
-export default ProductPageList;
-const Wrapper = styled.main`
+export default ListView;
+const ListViewWrapper = styled.main`
   max-width: 1170px;
   background-color: white;
-  /* display: grid; */
-  /* row-gap: 1rem; */
 `;
