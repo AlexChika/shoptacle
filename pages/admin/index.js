@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useContext } from "react";
 import styled from "styled-components";
 import { Store } from "../../store/Context";
-import Header from "../../components/Header";
+import Header from "../../shared/components/Header";
 import SideBar from "../../components/SideBar";
 import AdminDashboard from "../../components/AdminDashboard";
 import AdminWelcome from "../../components/AdminWelcome";

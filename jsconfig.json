@@ -6,6 +6,7 @@
       // "@lib/*": ["lib/*"],
       "@utils/*": ["utils/*"],
       "@store/*": ["store/*"],
+      "@styles/*": ["styles/*"],
       "@svg-components/*": ["svg-components/*"]
     }
   }

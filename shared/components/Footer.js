@@ -10,7 +10,7 @@ import {
   BsLinkedin,
   BsTwitter,
 } from "react-icons/bs";
-import { Store } from "../store/Context";
+import { Store } from "@store/Context";
 
 const Footer = () => {
   const { hideFooter: hide } = Store();

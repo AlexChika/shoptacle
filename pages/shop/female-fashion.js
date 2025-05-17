@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import styled from "styled-components";
-import Header from "../../components/Header";
+import Header from "../../shared/components/Header";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
 import HeroBar from "../../components/HeroBar";

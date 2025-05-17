@@ -1,13 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import Header from "../../components/Header";
-import HeroBar from "../../components/HeroBar";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
-import ShopPageComponent from "../../components/ShopPageComponent";
-import { searchProduct } from "../../utils/firebase";
-import { shuffler } from "../../utils/functions";
-const Products = ({ products }) => {
+import Header from "shared/components/Header";
+import Shop from "@components/shop/Shop";
+import { searchProduct } from "@utils/firebase";
+import { shuffler } from "@utils/functions";
+const ShopPage = ({ products }) => {
   return (
     <>
       <Header title="Shop male fashion, female wears, smart gadgets here at Shoptacle">
@@ -30,19 +25,11 @@ const Products = ({ products }) => {
         />
       </Header>
 
-      <Wrapper className="layout">
-        <NavBar page="shop" />
-        <SideBar />
-        <HeroBar path="/" pre={"Home"} curr={"Shop"} />
-        <ShopPageComponent products={products} />
-      </Wrapper>
+      <Shop products={products} />
     </>
   );
 };
-export default Products;
-const Wrapper = styled.main`
-  background: var(--pink-light);
-`;
+export default ShopPage;
 
 export async function getStaticProps() {
   const maleFashion = await searchProduct("collection", "Male Fashion");
