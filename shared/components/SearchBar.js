@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import styled from "styled-components";
+
 const SearchBar = () => {
   const [searchBtn, setSearchBtn] = useState(false);
   const [searchValue, setSearchValue] = useState("");

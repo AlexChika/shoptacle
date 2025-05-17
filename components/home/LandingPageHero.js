@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
-import NavBar from "./NavBar";
-import Shoptacle from "../svg-components/shoptacle";
-import SideBar from "./SideBar";
+import NavBar from "shared/components/NavBar";
+import Shoptacle from "@svg-components/shoptacle";
+import SideBar from "shared/components/SideBar";
 import { FaAngleLeft, FaAngleRight, FaTwitter, FaGithub } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import { backgrounds } from "../utils/data";
+import { backgrounds } from "@utils/data";
 const LandingPageHero = () => {
   const [index, setIndex] = useState(null);
   const backgroundImages = backgrounds[index] || backgrounds[0];

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import { MdStarRate } from "react-icons/md";
-import { formatPrice, calculateStars } from "../utils/functions";
+import { formatPrice, calculateStars } from "@utils/functions";
 const NewArrivalCard = ({ product }) => {
   const { price, name, id, rating, imgOne } = product;
   return (

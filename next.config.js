@@ -7,6 +7,7 @@ const nextConfig = {
     defaultLocale: "en",
   },
   images: {
+    unoptimized: true,
     domains: ["firebasestorage.googleapis.com"],
   },
   compiler: {

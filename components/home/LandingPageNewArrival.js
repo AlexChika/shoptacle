@@ -1,37 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import NewArrivalCard from "./NewArrivalCard";
-import Paginate from "./Paginate";
-import { paginateFn } from "../utils/functions";
-const LandingPageNewArrival = ({ product }) => {
-  const pageRef = useRef(null);
-  const [currentBtn, setCurrentBtn] = useState(0);
-  const [productList, setProductList] = useState(paginateFn(product, 6).items);
+import usePaginate from "shared/hooks/usePaginate";
 
-  const handlePaginate = (val) => {
-    const newItems = paginateFn(product, 6, val).items;
-    setProductList(newItems);
-    setCurrentBtn(val);
+const LandingPageNewArrival = ({ product }) => {
+  const { Pagination, paginated } = usePaginate(product, 6, 1, true);
+
+  const pageRef = useRef(null);
+  function onPageChange() {
     window.scrollTo(0, Number(pageRef.current.offsetTop));
-  };
+  }
+
+  useEffect(() => {
+    onPageChange();
+  }, [paginated]);
+
   return (
     <Wrapper ref={pageRef} id="new-arrival" className="layout">
       <div className="heading center">
         <h1 className="c-blue center">New Arrivals</h1>
       </div>
       <section className="products center">
-        {productList.map((product) => {
+        {paginated.map((product) => {
           return <NewArrivalCard key={product.id} product={product} />;
         })}
       </section>
 
-      <Paginate
-        paginateFn={paginateFn}
-        array={product}
-        itemsPerPage={6}
-        currentBtn={currentBtn}
-        handlePaginate={handlePaginate}
-      />
+      <Pagination />
     </Wrapper>
   );
 };

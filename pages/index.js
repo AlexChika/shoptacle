@@ -1,23 +1,10 @@
-import styled from "styled-components";
-import Collections from "../components/LandingPageCollections";
-import LandingPageHero from "../components/LandingPageHero";
-import LandingPageNewArrival from "../components/LandingPageNewArrival";
 import { searchProduct } from "../utils/firebase";
 import { shuffler } from "../utils/functions";
+import Home from "@components/home/Home";
 
-export default function Home({ newArrival, products }) {
-  return (
-    <>
-      <Wrapper>
-        <LandingPageHero />
-        <LandingPageNewArrival product={newArrival} />
-        <Collections products={products} />
-      </Wrapper>
-    </>
-  );
+export default function HomePage({ newArrival, products }) {
+  return <Home newArrival={newArrival} products={products} />;
 }
-
-const Wrapper = styled.main``;
 
 export async function getStaticProps() {
   // get new arrival products

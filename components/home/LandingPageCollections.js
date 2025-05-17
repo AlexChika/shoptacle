@@ -2,10 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import rightRectangle from "../public/right-rectangle.png";
-import leftRectangle from "../public/left-rectangle.png";
-import { collections } from "../utils/data";
-import { ProductRow } from "./ShopPageComponent";
+import { collections } from "@utils/data";
+import ProductRow from "shared/components/ProductRow";
 
 const CollectionCard = ({ collection }) => {
   return (
@@ -35,13 +33,13 @@ const CollectionCard = ({ collection }) => {
           {collection.id % 2 === 1 ? (
             <Image
               layout="fill"
-              src={rightRectangle}
+              src="/right-rectangle.png"
               alt={"image decorator"}
             ></Image>
           ) : (
             <Image
               layout="fill"
-              src={leftRectangle}
+              src="/left-rectangle.png"
               alt={"image decorator"}
             ></Image>
           )}

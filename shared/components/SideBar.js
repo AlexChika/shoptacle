@@ -3,12 +3,12 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Store } from "../store/Context";
+import { Store } from "@store/Context";
 import { TbPlaylistX } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
-import SearchBar from "../shared/components/SearchBar";
+import SearchBar from "shared/components/SearchBar";
 import { signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth } from "@utils/firebase";
 const SideBar = () => {
   const router = useRouter();
   const { modalOpen, handleCloseModal, user } = Store();

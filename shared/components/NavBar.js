@@ -1,12 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import Link from "next/link";
 import Image from "next/image";
-import SearchBar from "../shared/components/SearchBar";
-import { Store } from "../store/Context";
+import styled from "styled-components";
+import { Store } from "@store/Context";
 import { FaUser } from "react-icons/fa";
-import { BsCartFill } from "react-icons/bs";
 import { IoMdList } from "react-icons/io";
+import { BsCartFill } from "react-icons/bs";
+import SearchBar from "shared/components/SearchBar";
+
 function NavBar({ page }) {
   const { handleCloseModal, user, cart } = Store();
   return (
