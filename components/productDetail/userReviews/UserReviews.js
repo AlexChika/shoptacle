@@ -314,9 +314,7 @@ const Wrapper = styled.section`
       font-weight: 600;
       font-size: 16px;
       padding: 12px 24px;
-      border: none;
       border-radius: 6px;
-      cursor: pointer;
       transition: background-color 0.2s ease;
       width: 100%;
       max-width: 200px;

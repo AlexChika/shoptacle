@@ -1,16 +1,17 @@
-import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import NavBar from "./NavBar";
-import HeroBar from "./HeroBar";
-import SideBar from "./SideBar";
-import { testimony } from "../utils/data";
+import NavBar from "shared/components/NavBar";
+import HeroBar from "shared/components/HeroBar";
+import SideBar from "shared/components/SideBar";
+import { testimony } from "utils/data";
+
 const AboutPageHero = () => {
   return (
     <Wrapper className="layout">
       <NavBar page="about" />
       <SideBar />
       <HeroBar path="/" pre={"Home"} curr={"About us"} />
+
       <section className="body center mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>

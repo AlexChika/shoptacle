@@ -86,45 +86,61 @@ const FilterProducts = ({ data }) => {
   return (
     <Wrapper className="center mt30">
       <article className="category-brand-bar f j-between">
-        <div className="category">
-          <h2 className="c-blue">Category</h2>
-          {categories.map((item, index) => {
-            return (
-              <li key={index} className="f fcenter">
-                <button
-                  name="category"
-                  value={item}
-                  onClick={filterOnchange}
-                  className={`capitalize ${category == item ? "active" : ""}`}
-                >
-                  {item}
-                </button>
-              </li>
-            );
-          })}
+        <div className="categorya">
+          <SelectContainer>
+            <label htmlFor="category">Category</label>
+
+            <select
+              id="category"
+              onChange={filterOnchange}
+              value={category}
+              name="category"
+            >
+              {categories.map((item, index) => {
+                return (
+                  <option
+                    key={index}
+                    className={`capitalize ${category == item ? "active" : ""}`}
+                  >
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </SelectContainer>
+
+          <p className="capitalize">
+            Selected category: <span>{category}</span>
+          </p>
         </div>
 
         <h2 className="display">Filter Products</h2>
 
-        <div className="brand">
-          <h2 className="c-blue">Brand</h2>
-          {brands.map((item, index) => {
-            return (
-              <li key={index} className="f fcenter">
-                <button
-                  className="capitalize"
-                  onClick={filterOnchange}
-                  name="brand"
-                  value={item}
-                >
-                  {item}
-                </button>
-                <span className={brand == item ? "active" : ""}>
-                  <ImCheckboxChecked />
-                </span>
-              </li>
-            );
-          })}
+        <div className="branda">
+          <SelectContainer>
+            <label htmlFor="brand">Brand</label>
+            <select
+              id="brand"
+              onChange={filterOnchange}
+              value={brand}
+              name="brand"
+            >
+              {brands.map((item, index) => {
+                return (
+                  <option
+                    key={index}
+                    className={`capitalize ${brand == item ? "active" : ""}`}
+                  >
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </SelectContainer>
+
+          <p className="capitalize">
+            Selected brand: <span>{brand}</span>
+          </p>
         </div>
       </article>
 
@@ -187,15 +203,17 @@ const FilterProducts = ({ data }) => {
             id="search"
           />
         </div>
-        <div className="sort-container f align">
+
+        <SelectContainer>
           <label htmlFor="sort">Sort By:</label>
+
           <select onChange={filterOnchange} value={sort} name="sort" id="sort">
             <option value="low-high">Price Low to High</option>
             <option value="high-low">Price High to Low</option>
             <option value="a-z">Alphabet A-Z</option>
             <option value="z-a">Alphabet Z-A</option>
           </select>
-        </div>
+        </SelectContainer>
       </article>
 
       <article className="feedback-bar f align j-between mt10">
@@ -238,7 +256,8 @@ const Wrapper = styled.section`
   .search-sort-bar,
   .feedback-bar,
   .clear {
-    background-color: var(--gray);
+    background-color: var(--blue);
+    /* background-color: var(--gray); */
     color: var(--pink-light);
     padding: 10px;
   }
@@ -297,7 +316,8 @@ const Wrapper = styled.section`
         color: var(--pink-light);
       }
     }
-    .sort-container {
+
+    /* .sort-container {
       select {
         flex: 0.7;
         padding: 10px 0px;
@@ -308,7 +328,7 @@ const Wrapper = styled.section`
         flex: 0.3;
         color: var(--pink-light);
       }
-    }
+    } */
   }
 
   .feedback-bar {
@@ -362,6 +382,7 @@ const Wrapper = styled.section`
       border: 2px solid var(--pink);
       padding: 5px 30px;
       background-color: var(--pink);
+      width: 100%;
     }
     button:hover {
       background-color: var(--gray);
@@ -403,5 +424,61 @@ const Wrapper = styled.section`
         margin-top: 0px;
       }
     }
+  }
+`;
+
+const SelectContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  label {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  select {
+    /* border: 2px solid green; */
+    background-color: white;
+    color: #323148;
+    border-radius: 4px;
+    padding: 8px 36px 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  /* Custom dropdown arrow */
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23323148' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  /* Hover state */
+  select:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Focus state */
+  select:focus {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Remove default focus outlines in Firefox */
+  select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #323148;
   }
 `;

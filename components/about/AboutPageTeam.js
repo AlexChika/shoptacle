@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { team } from "../utils/data";
+import { team } from "utils/data";
 const AboutPageTeam = () => {
   return (
     <Wrapper className="layout">
@@ -92,11 +92,10 @@ const Wrapper = styled.main`
       font-family: "Libre Baskerville", serif;
       font-weight: 400;
       font-size: 20px;
-      letter-spacing: 0.12em;
-      /* border-bottom: 3px solid var(--blue); */
+      letter-spacing: 2px;
     }
     p {
-      font-family: "Baskervville";
+      font-family: "Libre Baskervville";
       font-style: italic;
       font-size: 16px;
       line-height: 25px;
@@ -113,7 +112,7 @@ const Wrapper = styled.main`
       font-weight: 500;
       font-size: 22px;
       text-align: center;
-      letter-spacing: 0.12em;
+      letter-spacing: 2px;
       color: var(--pink);
       border-bottom: 3px solid var(--pink);
     }

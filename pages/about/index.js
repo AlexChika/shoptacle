@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import AboutPageHero from "../../components/AboutPageHero";
-import AboutPageTeam from "../../components/AboutPageTeam";
+import AboutPageHero from "components/about/AboutPageHero";
+import AboutPageTeam from "components/about/AboutPageTeam";
 const Products = () => {
   return (
     <Wrapper>

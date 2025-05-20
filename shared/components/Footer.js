@@ -142,15 +142,25 @@ const Wrapper = styled.footer`
   display: ${({ hide }) => (hide ? "none" : "block")};
   background: var(--blue);
   color: white;
-  padding: 20px 20px 10px 20px;
-  /* max-width: 1170px; */
+  padding: 20px 0px;
+
+  h5 {
+    padding: 3px 0;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-family: "Libre Baskerville", serif;
+  }
 
   .footerHeader {
     display: flex;
     margin-bottom: 10px;
     justify-content: space-between;
     flex-direction: column;
-    gap: 0px 5px;
+    gap: 0px 10px;
 
     .col-wrapper {
       display: flex;
@@ -172,17 +182,6 @@ const Wrapper = styled.footer`
     }
   }
 
-  h5 {
-    padding: 3px 0;
-    text-align: center;
-    font-size: 15px;
-  }
-
-  h3 {
-    font-size: 20px;
-    font-family: "Libre Baskerville", serif;
-  }
-
   .shoptacle,
   .help,
   .info,
@@ -192,17 +191,19 @@ const Wrapper = styled.footer`
     justify-content: space-around;
   }
 
+  .footerHeader,
+  .footerFooter {
+    width: 95%;
+    margin: 0 auto;
+  }
+
   .footerFooter {
     flex-wrap: wrap;
     justify-content: center;
     padding: 10px 0px;
-    margin-top: 10px;
     border-top: 2px solid #3c3b51;
     text-align: center;
-
-    article {
-      margin-bottom: 10px;
-    }
+    gap: 10px;
 
     h5 {
       margin: 0px 10px;

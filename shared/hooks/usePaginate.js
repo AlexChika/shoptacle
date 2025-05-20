@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import Pagination from "shared/components/Pagination";
 
 function getPaginated(array, itemsPerPage = 0, page) {
@@ -29,13 +29,13 @@ function usePaginate(
   const pages = Math.ceil(array.length / itemsPerPage);
 
   const handlePaginate = useCallback(
-    function (page = _currentPage) {
+    function (page) {
       const paginated = getPaginated(array, itemsPerPage, page);
       setPaginated(paginated);
       setCurrentPage(page);
       if (cb) cb(page);
     },
-    [array, itemsPerPage, _currentPage]
+    [array, itemsPerPage]
   );
 
   const _Pagination = useMemo(
@@ -53,6 +53,10 @@ function usePaginate(
     },
     [controls, pages, _currentPage, handlePaginate]
   );
+
+  useEffect(() => {
+    handlePaginate(1);
+  }, [array, itemsPerPage]);
 
   return {
     handlePaginate,
