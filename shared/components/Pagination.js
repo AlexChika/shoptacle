@@ -31,6 +31,7 @@ const Wrapper = styled.div`
     padding: 10px;
     border-radius: 50%;
     border: 2px solid var(--blue);
+    font-size: 12px;
   }
   button.active {
     background-color: var(--pink);

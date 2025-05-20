@@ -129,10 +129,10 @@ const Wrapper = styled.main`
   min-height: calc(100vh);
   max-width: 465px;
   width: 100%;
+
   .header {
-    padding: 20px 10px;
+    padding: 10px 10px;
     text-align: center;
-    font-family: "Lobster", cursive;
     box-shadow: 0px 1px 5px rgba(154, 148, 137, 0.4);
     .profile-img {
       position: relative;
@@ -143,6 +143,10 @@ const Wrapper = styled.main`
         border-radius: 50%;
       }
     }
+    h1 {
+      font-size: 25px;
+      font-family: "Lobster", cursive;
+    }
     .close-btn {
       font-size: 30px;
     }
@@ -150,6 +154,7 @@ const Wrapper = styled.main`
       font-size: 25px;
     }
   }
+
   .sidebar-content {
     height: calc(100vh - 80px);
     overflow-y: auto;
@@ -175,6 +180,7 @@ const Wrapper = styled.main`
       text-decoration: underline;
     }
   }
+
   transform: ${(props) =>
     props.modal ? "translateX(0)" : "translateX(-110%)"};
   @media screen and (min-width: 768px) {

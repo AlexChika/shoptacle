@@ -53,15 +53,10 @@ const Wrapper = styled.section`
   h3 {
     font-size: 16px;
   }
-  @media screen and (min-width: 400px) {
+
+  @media screen and (min-width: 500px) {
     h3 {
       font-size: 20px;
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    h3 {
-      font-size: 25px;
     }
   }
 

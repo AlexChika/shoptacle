@@ -17,45 +17,52 @@ const Footer = () => {
 
   return (
     <Wrapper hide={hide} className="layout">
-      <section className="footerHeader f center">
-        <div className="shoptacle f col">
-          <Link href="/">
-            <span>
-              <Image width={200} height={70} alt="Logo" src="/logowhite.svg" />
-            </span>
-          </Link>
-          <h5 className="mt10">
-            The No 1 shopping platform for everything fashion. Stay premium with
-            the best qualities, own the latest fashion when you shop on our
-            handpicked massive collections.
-          </h5>
+      <section className="footerHeader">
+        <div className="col-wrapper">
+          <div className="shoptacle f col">
+            <Link href="/">
+              <span>
+                <Image
+                  width={300}
+                  height={70}
+                  alt="Logo"
+                  src="/logowhite.svg"
+                />
+              </span>
+            </Link>
+
+            <h5>
+              The No 1 shopping platform for everything fashion. Stay premium
+              and own the latest fashion when you shop on our handpicked massive
+              collections.
+            </h5>
+          </div>
+
+          <div className="about col f">
+            <h3>About Us</h3>
+            <h5>Our story</h5>
+            <h5>Patners</h5>
+            <h5>Staff directory</h5>
+            <h5>Events</h5>
+          </div>
         </div>
-        <div className="about col f">
-          <h3>About Us</h3>
-          <h5>Our story</h5>
-          <h5>Patners</h5>
-          <h5>Staff directory</h5>
-          <h5>Events</h5>
-        </div>
-        <div className="help col f">
-          <h3>Get Help</h3>
-          <h5>Track order</h5>
-          <h5>Shoping info</h5>
-          <h5>Return policy</h5>
-          <h5>Customer service</h5>
-        </div>
-        <div className="info col f">
-          <h3>Information</h3>
-          <h5>Our blog</h5>
-          <h5>Subscribe to Newslater</h5>
-          <h5>Contact us</h5>
-          <h5>Leave a review</h5>
-        </div>
-        <div className="support col f">
-          <h3>Donations</h3>
-          <h5>Partner with us</h5>
-          <h5>Privacy policy</h5>
-          <h5>Refer us</h5>
+
+        <div className="col-wrapper">
+          <div className="help col f">
+            <h3>Get Help</h3>
+            <h5>Track order</h5>
+            <h5>Shoping info</h5>
+            <h5>Return policy</h5>
+            <h5>Customer service</h5>
+          </div>
+
+          <div className="info col f">
+            <h3>Information</h3>
+            <h5>Our blog</h5>
+            <h5>Subscribe to Newslater</h5>
+            <h5>Contact us</h5>
+            <h5>Leave a review</h5>
+          </div>
         </div>
       </section>
 
@@ -136,33 +143,48 @@ const Wrapper = styled.footer`
   background: var(--blue);
   color: white;
   padding: 20px 20px 10px 20px;
+  /* max-width: 1170px; */
 
   .footerHeader {
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 0px 5px;
+
+    .col-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      width: 100%;
+      gap: 10px;
+    }
+
     .col {
-      margin: 0 10px;
-      margin-bottom: 10px;
-      flex: 1;
-      min-height: 100px;
-      min-width: 220px;
-      max-width: 320px;
+      width: 100%;
+      min-height: 200px;
+      background-color: #3c3b51;
       padding: 10px;
     }
-  }
 
-  img {
-    cursor: pointer;
+    .shoptacle h5 {
+      line-height: 25px;
+    }
   }
 
   h5 {
     padding: 3px 0;
     text-align: center;
+    font-size: 15px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-family: "Libre Baskerville", serif;
   }
 
   .shoptacle,
   .help,
-  .support,
   .info,
   .about {
     flex-direction: column;
@@ -174,8 +196,8 @@ const Wrapper = styled.footer`
     flex-wrap: wrap;
     justify-content: center;
     padding: 10px 0px;
-    margin-top: 30px;
-    border-top: 1px solid grey;
+    margin-top: 10px;
+    border-top: 2px solid #3c3b51;
     text-align: center;
 
     article {
@@ -184,16 +206,36 @@ const Wrapper = styled.footer`
 
     h5 {
       margin: 0px 10px;
-      color: #bfbfff;
+      color: rgb(255, 255, 255);
+      a {
+        font-family: "Libre Baskerville", serif;
+        font-size: 14px;
+      }
     }
+
     .icons a {
       font-size: 20px;
       margin: 0px 10px;
     }
   }
+
+  @media screen and (min-width: 500px) {
+    .footerHeader {
+      .col-wrapper {
+        flex-direction: row;
+      }
+    }
+  }
+
   @media screen and (min-width: 546px) {
     .footerFooter {
       justify-content: space-between;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    .footerHeader {
+      flex-direction: row;
     }
   }
 `;

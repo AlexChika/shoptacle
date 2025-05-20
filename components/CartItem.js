@@ -112,7 +112,7 @@ const Wrapper = styled.article`
       border-bottom: 1px solid;
     }
     p {
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 14px;
       /* text-align: center; */
     }

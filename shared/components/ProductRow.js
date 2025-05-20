@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import ProductCard from "shared/components/ProductCard";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { IoIosLink } from "react-icons/io";
 
 const ProductRow = ({ params, products }) => {
   const { name, blob, color, showHeader = true } = params;
@@ -38,6 +39,7 @@ const ProductRow = ({ params, products }) => {
 
   return (
     <ProductRowWrapper $showHeader={showHeader} $color={color}>
+      {/* header */}
       <div className="header f align j-between">
         <h1>{blob ? <Link href={blob}>{name}</Link> : name}</h1>
         {blob && (
@@ -45,7 +47,7 @@ const ProductRow = ({ params, products }) => {
             <button className="f fcenter">
               See All{" "}
               <span>
-                <FaAngleRight />
+                <IoIosLink />
               </span>
             </button>
           </Link>
@@ -53,7 +55,8 @@ const ProductRow = ({ params, products }) => {
       </div>
 
       <div className="container">
-        <div className="card-container center">
+        {/* cards */}
+        <div className="card-container center hide__scroll__bar">
           {products.slice(0, 15).map((product, index) => {
             return (
               <article key={index} className="card">
@@ -62,6 +65,8 @@ const ProductRow = ({ params, products }) => {
             );
           })}
         </div>
+
+        {/* buttons */}
         <button
           onClick={scrollBackward}
           className="prev-btn f fcenter"
@@ -86,26 +91,38 @@ export default ProductRow;
 const ProductRowWrapper = styled.section`
   margin-bottom: 30px;
   background-color: white;
+
   .container {
     position: relative;
     button {
       display: none;
     }
   }
+
   .header {
     display: ${({ $showHeader }) => ($showHeader ? "flex" : "none")};
     padding: 15px;
     background-color: ${({ $color }) => $color};
     color: var(--blue);
-    font-family: "Libre Baskerville", serif;
+
+    h1 {
+      font-family: "Libre Baskerville", serif;
+      font-size: 18px;
+      a {
+        font-family: "Libre Baskerville", serif;
+      }
+    }
+
     button {
       font-size: 18px;
+      font-family: "Libre Baskerville", serif;
       span {
         font-size: 20px;
         margin: 0px 3px;
       }
     }
   }
+
   .card-container {
     scroll-snap-align: start;
     scroll-snap-type: x mandatory;
@@ -131,7 +148,14 @@ const ProductRowWrapper = styled.section`
         -1px -1px 2px rgba(0, 0, 0, 0.2);
     }
   }
+
   @media screen and (min-width: 1170px) {
+    .header {
+      h1 {
+        font-size: 20px;
+      }
+    }
+
     .container {
       button {
         position: absolute;
@@ -151,9 +175,11 @@ const ProductRowWrapper = styled.section`
         right: 6%;
       }
     }
+
     .container:hover button {
       display: flex;
     }
+
     .card-container::-webkit-scrollbar {
       -webkit-appearance: none;
       display: none;

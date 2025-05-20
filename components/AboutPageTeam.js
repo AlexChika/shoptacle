@@ -56,7 +56,7 @@ const Wrapper = styled.main`
       font-size: 25px;
     }
     p {
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 400;
       font-size: 16px;
     }
@@ -103,13 +103,13 @@ const Wrapper = styled.main`
     }
     span {
       position: absolute;
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 14px;
       top: 10%;
       right: 5%;
     }
     button {
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 500;
       font-size: 22px;
       text-align: center;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Store } from "../../store/Context";
+import { Store } from "store/Context";
 import { useRouter } from "next/router";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
-import HeroBar from "../../components/HeroBar";
-import SingleProductDetail from "../../components/SingleProductDetail";
-import { getProduct, getSubDocs, searchProduct } from "../../utils/firebase";
+import NavBar from "shared/components/NavBar";
+import SideBar from "shared/components/SideBar";
+import HeroBar from "shared/components/HeroBar";
+import ProductDetail from "components/productDetail/ProductDetail";
+import { getProduct, getSubDocs, searchProduct } from "utils/firebase";
 const Index = () => {
   const router = useRouter();
   const { Logger, setRecent } = Store();
@@ -27,53 +27,44 @@ const Index = () => {
   // get product and reviews from db
   useEffect(() => {
     let isSubscribed = true;
-    async function getSingleProduct(id) {
-      try {
-        const product = await getProduct(id);
-        if (product) {
-          const reviews = await getSubDocs("products", id, "reviews");
-          const related = await searchProduct("category", product.category);
-          setProduct(product);
-          setReviews(reviews);
-          setRelatedProducts(related);
-          setRecent({ ...product, id });
-          setStatus({
-            loading: false,
-            error: false,
-            success: true,
-          });
-        } else {
-          setStatus({
-            loading: false,
-            error: true,
-            success: false,
-          });
-          setErrorText(
-            "We don't seem to find this resource. Pls check the url and retry"
-          );
-        }
-      } catch (error) {
-        setStatus({
-          loading: false,
-          success: false,
-          error: true,
-        });
-        setErrorText("Probably your internet connection is down, pls retry");
-        Logger("There was an error fetching this product", "error");
-      }
-    }
-    if (isSubscribed && id) {
-      getSingleProduct(id);
-    }
+
+    if (!id) return;
+
+    getSingleProduct(id, isSubscribed).catch((error) => {
+      if (!isSubscribed) return;
+      setStatus({ loading: false, error: true, success: false });
+      setErrorText("Probably your internet connection is down. Please retry.");
+      Logger(error.message || "Error fetching product", "error");
+    });
+
     return () => {
       isSubscribed = false;
-      setStatus({
-        loading: true,
-        error: false,
-        success: false,
-      });
+      setStatus({ loading: true, error: false, success: false });
     };
   }, [id, refresh]);
+
+  async function getSingleProduct(id, isSubscribed) {
+    const [product, reviews] = await Promise.all([
+      getProduct(id),
+      getSubDocs("products", id, "reviews"),
+    ]);
+
+    if (!isSubscribed) return;
+
+    if (product) {
+      const related = await searchProduct("category", product.category);
+      setProduct(product);
+      setReviews(reviews);
+      setRelatedProducts(related);
+      setRecent({ ...product, id });
+      setStatus({ loading: false, error: false, success: true });
+    } else {
+      setStatus({ loading: false, error: true, success: false });
+      setErrorText(
+        "We don't seem to find this resource. Please check the URL and retry."
+      );
+    }
+  }
 
   // get Id from url
   useEffect(() => {
@@ -91,7 +82,7 @@ const Index = () => {
 
       {status.loading && (
         <section className="loading f fcenter">
-          <div className="spinner"></div>
+          <div className="spinner sm"></div>
           <h2 className="mt10">Please wait ...</h2>
         </section>
       )}
@@ -100,15 +91,15 @@ const Index = () => {
         <section className="error f fcenter">
           <h2>There was an error fetching this product</h2>
           <p className="mt10">{errorText}</p>
-          <button className="mt30" onClick={() => router.reload()}>
+          <button className="mt10" onClick={() => router.reload()}>
             Reload
           </button>
         </section>
       )}
 
       {status.success && (
-        <SingleProductDetail
-          data={{ product, reviews, relatedProducts, id, refresh, setRefresh }}
+        <ProductDetail
+          data={{ product, reviews, relatedProducts, id, setRefresh }}
         />
       )}
     </Wrapper>
@@ -122,6 +113,10 @@ const Wrapper = styled.main`
 
   .loading,
   .error {
+    & * {
+      font-size: 20px;
+    }
+
     flex-direction: column;
     color: var(--blue);
     min-height: 80vh;
@@ -131,6 +126,7 @@ const Wrapper = styled.main`
       color: white;
       background-color: var(--pink);
       padding: 10px 30px;
+      font-size: 16px;
     }
   }
 `;

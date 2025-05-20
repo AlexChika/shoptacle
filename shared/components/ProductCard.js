@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
           <Image alt={name} layout="fill" src={imgOne}></Image>
         </div>
         <div className="detail f align j-around">
-          <h2>{name}</h2>
+          <h2 className="capitalize">{name.toLowerCase()}</h2>
           <h2>{formatPrice(price)}</h2>
           <div className="star-con f j-around">
             <span>{calculateStars(rating).totalRating}&nbsp;ratings</span>
@@ -52,10 +52,10 @@ const Wrapper = styled.a`
     padding: 5px;
     color: var(--blue);
     h2 {
-      font-size: 16px;
+      font-size: 15px;
     }
     .star-con {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--pink);
       width: 100%;
     }

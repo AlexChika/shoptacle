@@ -30,7 +30,7 @@ const SearchBar = () => {
   return (
     <Wrapper>
       <div className={`search-con ${searchBtn ? "search" : ""}`}>
-        <button className="search-btn" onClick={handleSearchToggle}>
+        <button className="search-btn fcenter" onClick={handleSearchToggle}>
           <FiSearch />
         </button>
         <form onSubmit={handleSearchOnsubmit}>

@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
@@ -88,15 +87,17 @@ const ListCardWrapper = styled.a`
 
 // parent
 const ListView = ({ products }) => {
-  const { Pagination, paginated } = usePaginate(products, 15, 1, true);
+  const { Pagination, paginated } = usePaginate(
+    products,
+    15,
+    1,
+    true,
+    onPageChange
+  );
 
   function onPageChange() {
     window.scrollTo(0, 70);
   }
-
-  useEffect(() => {
-    onPageChange();
-  }, [paginated]);
 
   return (
     <ListViewWrapper className="center mt30">

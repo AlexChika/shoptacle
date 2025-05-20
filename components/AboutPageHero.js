@@ -76,7 +76,7 @@ const Wrapper = styled.main`
       text-align: center;
     }
     p {
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 16px;
       line-height: 30px;
       padding: 10px;

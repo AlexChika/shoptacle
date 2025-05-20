@@ -1,11 +1,11 @@
 import React from "react";
+import starIcons from "shared/components/starIcons";
 import styled from "styled-components";
-import { displayStar } from "../utils/functions";
 const Stars = ({ stars, reviews }) => {
   return (
     <Wrapper>
-      <div className="stars">
-        {displayStar(stars).map((star, index) => {
+      <div>
+        {starIcons(stars).map((star, index) => {
           return <span key={index}> {star} </span>;
         })}
       </div>
@@ -17,15 +17,20 @@ const Stars = ({ stars, reviews }) => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+
   span {
     color: var(--pink);
-    font-size: 1rem;
-    margin-right: 0.25rem;
+    font-size: 16px;
+    margin-right: 4px;
   }
+
   p {
-    margin-left: 0.5rem;
+    margin-left: 8px;
     margin-bottom: 0;
+    color: var(--pink) !important;
   }
-  margin-bottom: 0.5rem;
+
+  margin-bottom: 8px;
 `;
 export default Stars;

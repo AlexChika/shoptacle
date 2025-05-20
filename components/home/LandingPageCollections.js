@@ -10,16 +10,20 @@ const CollectionCard = ({ collection }) => {
     <CollectionCardWrapper id={collection.id} className="center f">
       <div className="detail f fcenter">
         <div className="content">
-          <h1>{collection.id}</h1>
-          <h2 className="trans">
-            <Link href={collection.blob}>{collection.name}</Link>
-          </h2>
+          <div>
+            <h1>{collection.id}</h1>
+            <h2 className="trans">
+              <Link href={collection.blob}>{collection.name}</Link>
+            </h2>
+          </div>
           <p className="mt20">{collection.desc}</p>
-          <button className="mt30 center trans">
-            <Link href={collection.blob}>Shop Now</Link>
-          </button>
         </div>
+
+        <button className="mt30 center trans">
+          <Link href={collection.blob}>Shop Now</Link>
+        </button>
       </div>
+
       <div className="image-con">
         <div className="main-img">
           <Image
@@ -52,8 +56,6 @@ const CollectionCard = ({ collection }) => {
 const CollectionCardWrapper = styled.article`
   background-color: var(--blue);
   width: 95%;
-  /* max-width: 1170px; */
-  /* margin-bottom: 40px; */
   flex-direction: column;
 
   .image-con,
@@ -65,8 +67,12 @@ const CollectionCardWrapper = styled.article`
   .detail {
     order: 1;
     padding: 10px 0px;
+    flex-direction: column;
 
     .content {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 50px);
       width: 95%;
     }
 
@@ -78,11 +84,10 @@ const CollectionCardWrapper = styled.article`
 
     h1 {
       font-size: 40px;
-      font-family: "Lobster", cursive;
+      font-family: "Libre Baskerville", serif;
     }
 
     h2 {
-      font-family: "Libre Baskerville", serif;
       font-size: 25px;
       letter-spacing: 0.12em;
       width: 70%;
@@ -96,20 +101,26 @@ const CollectionCardWrapper = styled.article`
 
     p,
     button {
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
     }
 
     p {
       font-size: 16px;
       line-height: 35px;
+      overflow-y: auto;
+    }
+
+    a {
+      font-family: "Lobster", cursive !important;
     }
 
     button {
       display: block;
       font-size: 16px;
       border: 2px solid white;
-      padding: 10px;
-      width: 8em;
+      padding: 7px 25px;
+      width: max-content;
+      white-space: nowrap;
       color: inherit;
     }
 
@@ -145,16 +156,26 @@ const CollectionCardWrapper = styled.article`
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
-    /* margin-bottom: 50px; */
+    aspect-ratio: 16/7;
+
     .image-con,
     .detail {
       width: 50%;
     }
 
     .detail {
+      position: relative;
+      flex-direction: unset;
       order: ${(props) => (props.id % 2 === 1 ? 1 : 0)};
+
       .content {
         width: 85%;
+        align-self: flex-start;
+      }
+
+      button {
+        position: absolute;
+        bottom: 10px;
       }
     }
   }
@@ -166,7 +187,7 @@ const CollectionCardWrapper = styled.article`
       }
       h1,
       h2 {
-        padding: 30px 0px;
+        padding: 20px 0px;
       }
       h1 {
         font-size: 60px;
@@ -214,10 +235,10 @@ export default Collections;
 
 const Wrapper = styled.section`
   background-color: var(--pink-light);
-  /* background-color: var(--blue); */
   min-height: 100vh;
   padding: 20px 0px 10px 0px;
   color: white;
+
   .heading {
     text-align: center;
     margin-top: 10px;
@@ -246,3 +267,12 @@ const Wrapper = styled.section`
     }
   }
 `;
+
+// research
+// email and record management  (company)
+// trip reservation
+// customer service and data entry
+// verbal, written, and visual communication
+// scheduling and calender support
+// expense tracking and project management
+// social media management

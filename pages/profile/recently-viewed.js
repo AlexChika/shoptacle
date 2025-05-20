@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Store } from "../../store/Context";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
-import HeroBar from "../../components/HeroBar";
-import ProductPageGrid from "../../components/shop/GridView";
+import { Store } from "store/Context";
+import NavBar from "shared/components/NavBar";
+import SideBar from "shared/components/SideBar";
+import HeroBar from "shared/components/HeroBar";
+import GridView from "components/shop/GridView";
 
 const Recent = () => {
   const { recent } = Store();
@@ -16,7 +16,7 @@ const Recent = () => {
       <HeroBar />
 
       <div className="mt30">
-        <ProductPageGrid products={recent} />
+        <GridView products={recent} />
       </div>
     </Wrapper>
   );

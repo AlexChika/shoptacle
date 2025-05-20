@@ -1,46 +1,50 @@
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 import * as actions from "../store/actionTypes";
 
 // global funcs
 
-// func collects the star rating objec, ouputs total reviews and average star
+/**
+ * @typedef {Object} StarRatingResult
+ * @property {number} totalRating - The sum of all rating values.
+ * @property {string} stars - The average star rating, rounded to one decimal place.
+ */
+
+/**
+ * Calculates the average star rating based on the provided rating object.
+ *
+ * @param {Object} rating - An object containing rating values with the following properties:
+ * @param {number} rating.one - The number of one-star ratings.
+ * @param {number} rating.two - The number of two-star ratings.
+ * @param {number} rating.three - The number of three-star ratings.
+ * @param {number} rating.four - The number of four-star ratings.
+ * @param {number} rating.five - The number of five-star ratings.
+ * @returns {StarRatingResult} An object containing the total rating and the average star rating.
+ */
 function calculateStars(rating) {
-  let totalRating = 0;
-  for (const key in rating) {
-    totalRating = totalRating += rating[key];
-  }
+  const totalRating = Object.keys(rating).reduce(
+    (acc, key) => (acc += rating[key]),
+    0
+  );
 
-  const { five, four, three, two, one } = rating;
-  let stars = five * 5 + four * 4 + three * 3 + two * 2 + one;
   if (totalRating == 0) {
-    return { totalRating, stars: stars.toFixed(1) };
+    return { totalRating, stars: "0.0" };
   }
-  stars = (five * 5 + four * 4 + three * 3 + two * 2 + one) / totalRating;
-  stars = stars.toFixed(1);
-  return { totalRating, stars };
-}
 
-// func returns an array with star icons arranged depending on star value
-const displayStar = (star) => {
-  let starArray = [];
-  function recurse(star) {
-    if (star - 1 >= 0) {
-      starArray.push(<BsStarFill />);
-    } else {
-      if (star - 1 !== -1) {
-        starArray.push(<BsStarHalf />);
-      }
-      let emptyStar = 5 - starArray.length;
-      for (let i = 0; i < emptyStar; i++) {
-        starArray.push(<BsStar />);
-      }
-      return starArray;
-    }
-    recurse(star - 1);
-  }
-  recurse(star);
-  return starArray;
-};
+  const numberKeyMap = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+  };
+
+  const score = Object.keys(rating).reduce((acc, key) => {
+    acc += rating[key] * numberKeyMap[key];
+    return acc;
+  }, 0);
+
+  const stars = score / totalRating;
+  return { totalRating, stars: stars.toFixed(1) };
+}
 
 // converts price to local currency format
 const formatPrice = (price) => {
@@ -52,6 +56,13 @@ const formatPrice = (price) => {
 };
 
 // returns slices and returns array for pagination
+/**
+ * @deprecated
+ * @param {*} array
+ * @param {*} itemsPerPage
+ * @param {*} currentPage
+ * @returns
+ */
 const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
   if (!itemsPerPage) throw new Error("check parameters at paginateFn");
 
@@ -69,6 +80,12 @@ const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
 };
 
 // shuffles array
+/**
+ * Shuffles the elements of the input array and returns a new shuffled array.
+ *
+ * @param {Array<any>} a The input array to be shuffled.
+ * @returns {Array<any>} A new array containing the same elements as the input array, but in a random order.
+ */
 const shuffler = (a) => {
   let array = [...a];
 
@@ -264,7 +281,6 @@ const filterReducer = (state, action) => {
 export {
   calculateStars,
   formatPrice,
-  displayStar,
   paginateFn,
   shuffler,
   Validate,

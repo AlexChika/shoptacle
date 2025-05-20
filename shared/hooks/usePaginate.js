@@ -1,13 +1,24 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Pagination from "shared/components/Pagination";
+
+function getPaginated(array, itemsPerPage = 0, page) {
+  let _page = page - 1;
+  let startIndex = _page * itemsPerPage;
+  let stopIndex = startIndex + itemsPerPage;
+  return array.slice(startIndex, stopIndex);
+}
 
 function usePaginate(
   array = [],
   itemsPerPage,
   currentPage = 1,
-  controls = true
+  controls = true,
+  cb
 ) {
-  const [_paginated, setPaginated] = useState([]);
+  const [_paginated, setPaginated] = useState(
+    getPaginated(array, itemsPerPage, currentPage)
+  );
+
   const [_currentPage, setCurrentPage] = useState(currentPage);
 
   if (!itemsPerPage || typeof itemsPerPage !== "number")
@@ -19,11 +30,10 @@ function usePaginate(
 
   const handlePaginate = useCallback(
     function (page = _currentPage) {
-      let _page = page - 1;
-      let startIndex = _page * itemsPerPage;
-      let stopIndex = startIndex + itemsPerPage;
-      setPaginated(array.slice(startIndex, stopIndex));
+      const paginated = getPaginated(array, itemsPerPage, page);
+      setPaginated(paginated);
       setCurrentPage(page);
+      if (cb) cb(page);
     },
     [array, itemsPerPage, _currentPage]
   );
@@ -43,10 +53,6 @@ function usePaginate(
     },
     [controls, pages, _currentPage, handlePaginate]
   );
-
-  useEffect(() => {
-    handlePaginate();
-  }, []);
 
   return {
     handlePaginate,

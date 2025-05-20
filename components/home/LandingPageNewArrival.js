@@ -1,19 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import NewArrivalCard from "./NewArrivalCard";
 import usePaginate from "shared/hooks/usePaginate";
 
 const LandingPageNewArrival = ({ product }) => {
-  const { Pagination, paginated } = usePaginate(product, 6, 1, true);
+  const { Pagination, paginated } = usePaginate(
+    product,
+    6,
+    1,
+    true,
+    onPageChange
+  );
 
   const pageRef = useRef(null);
   function onPageChange() {
     window.scrollTo(0, Number(pageRef.current.offsetTop));
   }
-
-  useEffect(() => {
-    onPageChange();
-  }, [paginated]);
 
   return (
     <Wrapper ref={pageRef} id="new-arrival" className="layout">

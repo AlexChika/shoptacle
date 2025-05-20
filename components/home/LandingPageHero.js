@@ -164,7 +164,6 @@ export default LandingPageHero;
 const Wrapper = styled.main`
   position: relative;
   height: 100vh;
-  /* background-image: url("/heroImage.jfif"); */
   background-image: ${({ $bg }) => `url(${$bg.primary.src})`};
   background-repeat: no-repeat;
   background-size: cover;
@@ -207,11 +206,15 @@ const Wrapper = styled.main`
     .mainContent {
       flex-direction: column;
       grid-area: mainContent;
-      font-family: "lobster", cursive;
       text-align: center;
       color: white;
       font-style: normal;
       font-weight: 400;
+      h1,
+      h2,
+      h3 {
+        font-family: "lobster", cursive;
+      }
       h1 {
         font-size: 25px;
         line-height: 40px;
@@ -246,7 +249,7 @@ const Wrapper = styled.main`
     .socialCon {
       grid-area: socialCon;
       flex-direction: column;
-      font-family: "Inter";
+      font-family: "Roboto", sans-serif;
       font-style: normal;
       color: white;
       .side-text {

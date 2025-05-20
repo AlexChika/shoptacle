@@ -51,7 +51,7 @@ const Wrapper = styled.article`
     padding: 5px;
     h1 {
       font-size: 16px;
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 500;
       color: var(--pink);
     }
@@ -70,7 +70,7 @@ const Wrapper = styled.article`
     h1,
     span,
     button {
-      font-family: "Inter";
+      font-family: "Roboto", sans-serif;
       font-style: normal;
       letter-spacing: 0.12em;
       font-weight: 700;

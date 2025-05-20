@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Store } from "../store/Context";
+import { Store } from "store/Context";
 import Image from "next/image";
 import Link from "next/link";
 import Stars from "./Stars";
-import UserReviews from "./UserReviews";
-import { ProductRow } from "./ShopPageComponent";
+import UserReviews from "./userReviews/UserReviews";
+import ProductRow from "shared/components/ProductRow";
 import { MdStarRate } from "react-icons/md";
-import { HiPlus, HiMinus } from "react-icons/hi";
-import { formatPrice, calculateStars } from "../utils/functions";
+import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
+import { formatPrice, calculateStars } from "utils/functions";
+
 const ProductDetail = ({ data }) => {
   const { Logger, recent, addToCart } = Store();
   const { product, relatedProducts, id } = data;
@@ -87,66 +88,74 @@ const ProductDetail = ({ data }) => {
 
         <article className="detail-section f align center">
           <div className="content center">
-            <div className="heading">
-              <h1 className="c-blue capitalize">{name}</h1>
-              <div className="mt30">
-                <Stars
-                  stars={calculateStars(rating).stars}
-                  reviews={calculateStars(rating).totalRating}
-                />
-                <p>
-                  Brand : <span>{brand}</span>
-                </p>
-              </div>
-            </div>
+            <div className="heading-con">
+              <div className="heading">
+                <h1 className="c-blue capitalize">{name.toLowerCase()}</h1>
 
-            <div className="price-qual-con f j-between mt30">
-              <div>
-                <h3>Price</h3>
-                <p>{formatPrice(price)}</p>
+                <div className="mt20">
+                  <Stars
+                    stars={calculateStars(rating).stars}
+                    reviews={calculateStars(rating).totalRating}
+                  />
+                  <p>
+                    Brand:{" "}
+                    <span className="capitalize">{brand.toLowerCase()}</span>
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3>Quantity</h3>
-                <div className="f align j-around">
-                  <button
-                    onClick={() => handleAmount("plus")}
-                    type="button"
-                    className="f align"
-                  >
-                    <HiPlus />
-                  </button>
-                  <span>{amount}</span>
-                  <button
-                    onClick={() => handleAmount("minus")}
-                    type="button"
-                    className="f align"
-                  >
-                    <HiMinus />
-                  </button>
+
+              <div className="price-qual-con f j-between mt20">
+                <div>
+                  <h3>Price</h3>
+                  <p>{formatPrice(price)}</p>
+                </div>
+
+                <div>
+                  <h3>Quantity</h3>
+
+                  <div className="f align j-around">
+                    <button
+                      onClick={() => handleAmount("plus")}
+                      type="button"
+                      className="f align"
+                    >
+                      <FiPlusCircle />
+                    </button>
+                    <p>{amount}</p>
+                    <button
+                      onClick={() => handleAmount("minus")}
+                      type="button"
+                      className="f align"
+                    >
+                      <FiMinusCircle />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="desc mt30">
+            <div className="desc mt20">
               <p>{desc}</p>
             </div>
 
             <div
               className={`spinner sm center mt20 ${loading ? "" : "stop"}`}
             ></div>
+          </div>
 
+          <div className="btn-con">
             {quantity < 1 ? (
-              <button className="cart-btn center mt30">Out Of Stock</button>
+              <button className="add-to-cart-btn center">Out Of Stock</button>
             ) : (
               <button
                 onClick={handleAddToCart}
-                className="cart-btn center mt30"
+                className="add-to-cart-btn center"
               >
                 Add To Cart
               </button>
             )}
 
-            <button className="btn center mt30">
+            <button className="go-to-cart-btn center">
               <Link href="/cart">Go To Cart</Link>
             </button>
           </div>
@@ -165,6 +174,7 @@ const ProductDetail = ({ data }) => {
           products={relatedProducts}
         />
       </section>
+
       <section className="recently-viewed mt30">
         <ProductRow
           params={{
@@ -182,6 +192,7 @@ export default ProductDetail;
 const Wrapper = styled.main`
   max-width: 1170px;
   color: var(--blue);
+
   .product-card {
     flex-direction: column;
   }
@@ -196,6 +207,10 @@ const Wrapper = styled.main`
     aspect-ratio: 1/1;
     object-fit: cover;
     padding: 10px;
+    > img {
+      object-fit: cover;
+    }
+
     .sub-image-con {
       position: absolute;
       width: 100%;
@@ -215,6 +230,7 @@ const Wrapper = styled.main`
         object-fit: cover;
       }
     }
+
     .star-con {
       position: absolute;
       top: 20px;
@@ -224,10 +240,10 @@ const Wrapper = styled.main`
       border-radius: 50%;
       background-color: white;
       box-shadow: 1px 1px 5px var(--gray);
-      padding: 10px;
+      padding: 5px;
       h1 {
         font-size: 16px;
-        font-family: "Inter", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-weight: 500;
         color: var(--pink);
       }
@@ -241,75 +257,99 @@ const Wrapper = styled.main`
 
   .detail-section {
     background-color: white;
-    padding: 10px 0px;
-    max-height: 650px;
+    padding: 15px 0px;
+    position: relative;
+    flex-direction: column;
 
     .content {
-      max-height: 600px;
-      overflow-y: auto;
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
       width: 95%;
       padding: 20px 0px;
     }
+
     .heading {
       h1 {
         font-family: "Libre Baskerville", serif;
-        letter-spacing: 0.12em;
+        letter-spacing: 2px;
         font-size: 20px;
         text-align: center;
       }
+
       p {
-        font-family: "Inter", sans-serif;
-        font-size: 20px;
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
         color: var(--gray);
+        text-align: center;
       }
     }
+
     .price-qual-con {
       h3 {
-        font-family: "Lobster", cursive;
         font-family: "Libre Baskerville", serif;
-        padding-bottom: 20px;
-        font-size: 20px;
-        letter-spacing: 0.12em;
+        padding-bottom: 10px;
+        font-size: 18px;
+        letter-spacing: 2px;
       }
+
       p {
         color: var(--pink);
-        font-family: "Inter", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-weight: 700;
         font-size: 20px;
-        letter-spacing: 0.12em;
+        letter-spacing: 2px;
       }
-      span {
-        font-weight: 900;
-      }
+
       button,
       span {
         font-size: 20px;
       }
     }
+
     .desc {
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 16px;
       line-height: 30px;
+      overflow-y: auto;
+      max-height: 300px;
+      opacity: 0.7;
     }
-    .cart-btn {
-      display: block;
-      background-color: var(--blue-light);
-      color: white;
-      width: 12em;
-      padding: 15px 25px;
-    }
-    .btn {
-      display: block;
-      width: max-content;
-      color: pink;
-      border-bottom: 2px solid;
+
+    .btn-con {
+      bottom: 10px;
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      width: 95%;
+
+      .add-to-cart-btn,
+      .go-to-cart-btn {
+        display: block;
+        width: 100%;
+        padding: 7px 10px;
+        font-size: 16px;
+        white-space: nowrap;
+      }
+
+      .add-to-cart-btn {
+        background-color: var(--blue-light);
+        color: white;
+      }
+
+      .go-to-cart-btn {
+        color: var(--blue);
+        border: 2px solid;
+      }
     }
   }
 
   @media screen and (min-width: 768px) {
     .product-card {
       flex-direction: row;
+      aspect-ratio: 2/1;
     }
+
     .image-section,
     .detail-section {
       width: 50%;
@@ -319,7 +359,19 @@ const Wrapper = styled.main`
       border-left: 1px solid var(--blue);
 
       .content {
-        padding: 0px;
+        padding: 0px 0px;
+        width: 80%;
+        height: calc(100% - 45px);
+        max-height: calc(100% - 45px);
+      }
+
+      .desc {
+        height: 100%;
+        max-height: unset;
+      }
+
+      .btn-con {
+        position: absolute;
         width: 80%;
       }
     }

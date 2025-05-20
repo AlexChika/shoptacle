@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
-import HeroBar from "../../components/HeroBar";
-import Profile from "../../components/ProfilePageComponent";
-import Login from "../../components/Login";
-import { Store } from "../../store/Context";
+import NavBar from "shared/components/NavBar";
+import SideBar from "shared/components/SideBar";
+import HeroBar from "shared/components/HeroBar";
+import Profile from "components/ProfilePageComponent";
+import Login from "components/Login";
+import { Store } from "store/Context";
 const Index = () => {
   const { user } = Store();
   return (

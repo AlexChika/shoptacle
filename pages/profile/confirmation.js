@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Store } from "../../store/Context";
 import Image from "next/image";
+import { Store } from "store/Context";
+import styled from "styled-components";
 import { useRouter } from "next/router";
-import ladyFlower from "../../public/lady-flower.png";
-import celebrate from "../../public/celebrate.png";
+import React, { useState, useEffect } from "react";
 // firebase imports
-import { addSubDocs, updateProduct } from "../../utils/firebase";
+import { addSubDocs, updateProduct } from "utils/firebase";
 
 // app
 const Confirm = () => {
@@ -87,7 +85,7 @@ const Confirm = () => {
     <Wrapper className="layout f fcenter">
       <div className="background f align">
         <div>
-          <Image src={ladyFlower} alt={"logo background"}></Image>
+          <Image src="./lady-flower.png" alt={"logo background"}></Image>
         </div>
       </div>
 
@@ -100,7 +98,7 @@ const Confirm = () => {
           <h1>Yipee , Your order has been Placed Successfully</h1>
 
           <div className="small-image center">
-            <Image src={celebrate} alt="celebration icon"></Image>
+            <Image src="celebrate.png" alt="celebration icon"></Image>
           </div>
 
           <p>

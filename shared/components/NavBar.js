@@ -97,8 +97,12 @@ const Wrapper = styled.nav`
 
   .logo-name {
     order: 1;
-    font-family: "Lobster", cursive;
     border-bottom: 2px solid;
+
+    h1 {
+      font-family: "Lobster", cursive;
+      font-size: 25px;
+    }
   }
 
   .search-bar {
@@ -111,7 +115,7 @@ const Wrapper = styled.nav`
 
     span {
       margin-right: 20px;
-      font-family: "Inter", sans-serif;
+      font-family: "Roboto", sans-serif;
       font-style: normal;
       font-weight: 500;
       font-size: 18px;

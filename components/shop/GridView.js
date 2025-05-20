@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
 import styled from "styled-components";
 import ProductCard from "shared/components/ProductCard";
 import usePaginate from "shared/hooks/usePaginate";
 
 const GridView = ({ products }) => {
-  const { Pagination, paginated } = usePaginate(products, 20, 1, true);
+  const { Pagination, paginated } = usePaginate(
+    products,
+    20,
+    1,
+    true,
+    onPageChange
+  );
 
   function onPageChange() {
     window.scrollTo(0, 70);
   }
-
-  useEffect(() => {
-    onPageChange();
-  }, [paginated]);
 
   return (
     <>
