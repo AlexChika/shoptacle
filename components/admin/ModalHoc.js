@@ -1,18 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
+
 const Modal = (props) => {
-  const { modal, setModal, children, absolute } = props;
+  const {
+    modal,
+    setModal,
+    children,
+    center = true,
+    maxWidth = "420px",
+  } = props;
 
   return (
-    <ModalWrap absolute={absolute} modal={modal} className={` `}>
+    <ModalWrap $maxWidth={maxWidth} $center={center} modal={modal}>
       <div className="modal-body bg">
         <button
           onClick={() => setModal(!modal)}
-          className="modal-btn f fcenter red"
+          className="modal-btn f fcenter"
         >
           <FaTimes />
         </button>
+
         <div className="modal-content">{children}</div>
       </div>
     </ModalWrap>
@@ -21,68 +29,52 @@ const Modal = (props) => {
 export default Modal;
 const ModalWrap = styled.div`
   position: fixed;
-  position: ${({ absolute }) => (absolute ? "absolute" : "fixed")};
+  overflow-y: auto;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 8;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.3); //optional
   display: ${({ modal }) => (modal ? "block" : "none")};
+
   .modal-body {
-    border: 2px solid pink;
+    margin: ${({ $center }) => ($center ? "" : "30px 0px")};
     width: 88%;
     position: relative;
-    top: 50%;
     left: 50%;
-    transform: translateX(-70%) translateY(-70%);
+    top: ${({ $center }) => ($center ? "50%" : "20px")};
     opacity: 0;
-    /* background: rgb(26, 26, 39); */
-    background: var(--pink-light);
+    max-width: ${({ $maxWidth }) => $maxWidth};
+    background-color: white;
     color: white;
     border-radius: 15px;
-    /* word-break: break-all; */
     word-wrap: break-word;
     animation: modal 0.3s linear forwards;
   }
+
   @keyframes modal {
     100% {
-      transform: translateX(-50%) translateY(-50%);
+      translate: ${({ $center }) => ($center ? "-50% -50%" : "-50% 0%")};
       opacity: 1;
     }
   }
-  .modal-body .modal-btn {
+
+  .modal-btn {
     position: absolute;
-    right: 10px;
-    font-weight: 300;
+    right: 20px;
+    top: 10px;
     font-size: 20px;
-    padding: 0.5em 1em;
-    /* color: white; */
     z-index: 8;
-    color: red;
-    border: none;
+    color: var(--blue);
     background: transparent;
   }
+
   .modal-content {
-    width: 88%;
-    padding: 0 0.7em 0.7em 0.7em;
+    width: 90%;
+    padding: 0 10px 20px 10px;
     margin: 0 auto;
-  }
-  @media screen and (min-width: 576px) {
-    .modal-body {
-      width: 70%;
-    }
-  }
-  @media screen and (min-width: 768px) {
-    .modal-body {
-      width: 50%;
-    }
-  }
-  @media screen and (min-width: 1200px) {
-    .modal-body {
-      width: 33%;
-    }
   }
 `;

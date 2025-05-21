@@ -1,15 +1,26 @@
 import React, { useState } from "react";
-import { Store } from "../store/Context";
-import { AdminStore } from "../pages/admin";
+import { Store } from "store/Context";
+import { AdminStore } from "./adminStore";
 import styled from "styled-components";
-import Modal from "./Modal";
-import { ADMIN_REFRESH_STATE } from "../store/actionTypes";
-import { Validate } from "../utils/functions";
-import { _category } from "../utils/data";
-import { updateProduct, uploadImage } from "../utils/firebase";
+import { ADMIN_REFRESH_STATE } from "store/actionTypes";
+import { Validate } from "utils/functions";
+import { _category } from "utils/data";
+import { updateProduct, uploadImage } from "utils/firebase";
+import NotAnAdminModal from "./NotAnAdminModal";
+
+const defaultFormInput = {
+  name: { value: "", valid: false },
+  collection: { value: "", valid: false },
+  arrival: { value: "", valid: false },
+  price: { value: "", valid: false },
+  quantity: { value: "", valid: false },
+  brand: { value: "", valid: false },
+  category: { value: "", valid: false },
+  desc: { value: "", valid: false },
+};
 
 const AdminEdit = () => {
-  const { editId, products, dispatch } = AdminStore();
+  const { editId, findProductById, dispatch } = AdminStore();
   const { Logger, user, isAdmin } = Store();
   // local state
   const [category, setCategory] = useState([]);
@@ -17,16 +28,7 @@ const AdminEdit = () => {
   const [modal, setModal] = useState(false);
   const [searchValue, setSearchValue] = useState(editId);
   const [editProduct, setEditProduct] = useState(null);
-  const [formInput, setFormInput] = useState({
-    name: { value: "", valid: false },
-    collection: { value: "", valid: false },
-    arrival: { value: "", valid: false },
-    price: { value: "", valid: false },
-    quantity: { value: "", valid: false },
-    brand: { value: "", valid: false },
-    category: { value: "", valid: false },
-    desc: { value: "", valid: false },
-  });
+  const [formInput, setFormInput] = useState(defaultFormInput);
 
   // update input fields to contain product details to be edited
   function fillForms(product) {
@@ -48,12 +50,13 @@ const AdminEdit = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const product = products.find((item) => item.id === searchValue);
+    const product = findProductById(searchValue);
     if (product) {
       setEditProduct(product);
       fillForms(product);
     } else {
-      setEditProduct("");
+      setEditProduct(null);
+      setFormInput(defaultFormInput);
       Logger("Product not found or Id is incorrect", "error");
     }
   };
@@ -147,16 +150,8 @@ const AdminEdit = () => {
         desc: formInput.desc.value,
       };
       const snapshot = await updateProduct(editProduct.id, productData);
-      setFormInput({
-        name: { value: "", valid: false },
-        collection: { value: "", valid: false },
-        arrival: { value: "", valid: false },
-        price: { value: "", valid: false },
-        quantity: { value: "", valid: false },
-        brand: { value: "", valid: false },
-        category: { value: "", valid: false },
-        desc: { value: "", valid: false },
-      });
+
+      setFormInput(defaultFormInput);
       setLoading(false);
       Logger("Product was Edited succefully", "success");
       dispatch({ type: ADMIN_REFRESH_STATE });
@@ -239,7 +234,7 @@ const AdminEdit = () => {
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
-          placeholder="Search product by Ids"
+          placeholder="Enter product ID"
           type="text"
           name=""
           id=""
@@ -247,7 +242,11 @@ const AdminEdit = () => {
         <button type="submit">Submit</button>
       </form>
 
-      <form onSubmit={handleEditProduct} className="editForm center mt30">
+      <form
+        style={{ opacity: editProduct ? 1 : 0.5 }}
+        onSubmit={handleEditProduct}
+        className="editForm center mt30"
+      >
         <div className="fullwrap">
           <div className="formInput f mt10">
             <label htmlFor="name">Name</label>
@@ -399,66 +398,65 @@ const AdminEdit = () => {
         <div className={`spinner mt20 center ${loading ? "" : "stop"}`}></div>
 
         <div className="fullwrap mt10">
-          <button type="submit">EDIT PRODUCT</button>
+          <button disabled={!editProduct} type="submit">
+            EDIT PRODUCT
+          </button>
         </div>
       </form>
 
       {/* optional for image uploads */}
       <h2 className="mt30">OPTIONAL</h2>
-      <form onSubmit={uploadImages} className="form f center mt20">
+      <form
+        style={{ opacity: editProduct ? 1 : 0.5 }}
+        onSubmit={uploadImages}
+        className="form f center mt20"
+      >
         <input accept="image/*" type="file" name="image one" />
-        <button type="submit">Image One</button>
+
+        <button disabled={!editProduct} type="submit">
+          Image One
+        </button>
       </form>
-      <form onSubmit={uploadImages} className="form f center mt20">
+
+      <form
+        style={{ opacity: editProduct ? 1 : 0.5 }}
+        onSubmit={uploadImages}
+        className="form f center mt20"
+      >
         <input accept="image/*" type="file" name="image two" />
-        <button type="submit">Image Two</button>
+        <button
+          style={{ cursor: editProduct ? "pointer" : "not-allowed" }}
+          disabled={!editProduct}
+          type="submit"
+        >
+          Image Two
+        </button>
       </form>
-      <form onSubmit={uploadImages} className="form f center mt20">
+
+      <form
+        style={{ opacity: editProduct ? 1 : 0.5 }}
+        onSubmit={uploadImages}
+        className="form f center mt20"
+      >
         <input accept="image/*" type="file" name="image three" />
-        <button type="submit">Image Three</button>
+        <button disabled={!editProduct} type="submit">
+          Image Three
+        </button>
       </form>
-      <form onSubmit={uploadImages} className="form f center mt20">
+
+      <form
+        style={{ opacity: editProduct ? 1 : 0.5 }}
+        onSubmit={uploadImages}
+        className="form f center mt20"
+      >
         <input accept="image/*" type="file" name="image four" />
-        <button type="submit">Image Four</button>
+
+        <button disabled={!editProduct} type="submit">
+          Image Four
+        </button>
       </form>
 
-      <Modal modal={modal} setModal={setModal}>
-        <section className="modal">
-          <h1 className="mt20 capitalize">Hello {user.firstName}</h1>
-          <p className="mt10">
-            You are not an admin and cannot make changes to SHOPTACLE
-          </p>
-
-          <h4 className="mt10">
-            However, if you wish to make Edits and add Products to SHOPTACE or
-            to Test the app, please send a mail to &nbsp;
-            <a href="mailto:contact@alexchika.com">
-              contact@alexchika.com
-            </a>{" "}
-            &nbsp; for Admin access using your registered email
-          </h4>
-          <h3 className="mt10">OR</h3>
-          <small className="mt10">Submit the below form</small>
-          <form
-            action="https://formspree.io/f/xbjbdqbl"
-            method="post"
-            className="f mt10"
-          >
-            <input
-              defaultValue={user.email}
-              required
-              type="email"
-              name="Email"
-              id=""
-            />
-            <button type="submit">Submit</button>
-          </form>
-          <small>
-            Once we recieve your email, you will be notified as soon as you now
-            have admin access
-          </small>
-        </section>
-      </Modal>
+      <NotAnAdminModal user={user} modal={modal} setModal={setModal} />
     </Wrapper>
   );
 };
@@ -469,6 +467,7 @@ const Wrapper = styled.main`
   color: var(--blue);
   padding-bottom: 30px;
   text-align: center;
+
   .title {
     text-align: center;
   }
@@ -486,10 +485,11 @@ const Wrapper = styled.main`
       color: white;
       flex: 0.3;
       border-radius: 0;
+      font-size: 16px;
     }
   }
 
-  form {
+  & > form {
     max-width: 600px;
 
     span {
@@ -564,40 +564,17 @@ const Wrapper = styled.main`
       padding: 10px;
       color: white;
       border-radius: 10px;
+      font-size: 16px;
     }
   }
 
-  .modal {
-    color: var(--blue);
-    text-align: center;
-    h1 {
-    }
-
-    p {
-      color: tomato;
-    }
-    a {
-      text-decoration: underline teal;
-    }
-    form {
-      width: 100%;
-    }
-    input {
-      flex: 0.65;
-      padding: 10px;
-      background-color: white;
-    }
-    button {
-      color: white;
-      flex: 0.35;
-      background-color: var(--blue);
-      padding: 10px;
-      border-radius: 0;
-    }
+  button:disabled {
+    /* opacity: 0.5; */
+    cursor: not-allowed;
   }
 
   @media screen and (min-width: 600px) {
-    form {
+    & > form {
       .halfwrap {
         width: 48%;
       }

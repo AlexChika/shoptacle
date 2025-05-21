@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Store } from "../store/Context";
-import { AdminStore } from "../pages/admin";
-import Paginate from "./Paginate";
-import { formatPrice, paginateFn } from "../utils/functions";
+import { Store } from "store/Context";
+import { AdminStore } from "./adminStore";
+import { formatPrice } from "utils/functions";
+import usePaginate from "shared/hooks/usePaginate";
 
 // app
 const AdminDasnBoardHome = () => {
@@ -11,27 +11,37 @@ const AdminDasnBoardHome = () => {
   const { Logger } = Store();
 
   // states
-  const [tab, setTab] = useState("");
+  const [tab, setTab] = useState("Male Fashion");
   const [showForm, setShowForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [currentBtn, setCurrentBtn] = useState(0);
   const [outOfStock, setOutOfStock] = useState([]);
   const [tableProduct, setTableProduct] = useState(
     filter("collection", "Male Fashion")
   );
-  const [paginateProducts, setPaginateProducts] = useState(
-    paginateFn(tableProduct, 50).items
+
+  const { Pagination, paginated } = usePaginate(
+    tableProduct,
+    50,
+    1,
+    true,
+    handleScroll
   );
 
   // helper to filter products
   function filter(type, value) {
     type = type.toLowerCase();
-    let newProducts = products.filter((product, index) => {
-      if (product[type].toLowerCase() === value.toLowerCase()) {
-        return product;
-      }
-    });
+
+    let newProducts = products
+      .filter((product) => {
+        return product[type].toLowerCase() === value.toLowerCase();
+      })
+      .map((p, i) => ({ ...p, index: i + 1 }));
+
     return newProducts;
+  }
+
+  function handleScroll() {
+    window.scrollTo(0, 0);
   }
 
   // funcs changes selected tabs and update table products
@@ -43,28 +53,15 @@ const AdminDasnBoardHome = () => {
       return;
     }
     setShowForm(false);
-    const product = filter("collection", value);
-    setTableProduct(product);
+    setTableProduct(filter("collection", value));
   };
 
   const handleForm = (e) => {
     e.preventDefault();
     if (!searchValue.trim())
       return Logger(`The input field for ${tab} is empty`, "error");
-    const product = filter(tab, searchValue);
-    setTableProduct(product);
+    setTableProduct(filter(tab, searchValue));
   };
-
-  const handlePaginate = (val) => {
-    let newItem = paginateFn(tableProduct, 50, val).items;
-    setPaginateProducts(newItem);
-    setCurrentBtn(val);
-  };
-
-  useEffect(() => {
-    // update the paginate array once the table product changes
-    setPaginateProducts(paginateFn(tableProduct, 50).items);
-  }, [tableProduct]);
 
   useEffect(() => {
     // updates the out of stock array
@@ -74,18 +71,19 @@ const AdminDasnBoardHome = () => {
 
   return (
     <Wrapper className="opacity center">
-      {/* counters */}
-      <section className="counters f j-around mt20">
-        <div>
+      <section className="counters mt20">
+        <div className="counter-card">
           <h3>Total Products</h3>
           <h3>{products.length}</h3>
         </div>
-        <div>
+
+        <div className="counter-card">
           <h3>Out of Stock</h3>
           <h3>{outOfStock.length}</h3>
         </div>
-        <div>
-          <h3>Total Customers </h3>
+
+        <div className="counter-card">
+          <h3>Total Customers</h3>
           <h3>{customers.length}</h3>
         </div>
       </section>
@@ -147,6 +145,7 @@ const AdminDasnBoardHome = () => {
             <button type="submit">Submit</button>
           </form>
         )}
+
         {tableProduct.length < 1 ? (
           <div className="empty f fcenter mt30">
             <h2>No products found</h2>
@@ -165,10 +164,10 @@ const AdminDasnBoardHome = () => {
                 <p>Qty</p>
               </div>
 
-              {paginateProducts.map((product, index) => {
+              {paginated.map((product, index) => {
                 return (
                   <div key={index} className="row">
-                    <span className="serial">{index + 1}.</span>
+                    <span className="serial">{product.index}.</span>
                     <span>{product.name}</span>
                     <span>{formatPrice(product.price)}</span>
                     <span>{product.brand}</span>
@@ -177,13 +176,7 @@ const AdminDasnBoardHome = () => {
                 );
               })}
             </div>
-            <Paginate
-              paginateFn={paginateFn}
-              currentBtn={currentBtn}
-              handlePaginate={handlePaginate}
-              itemsPerPage={50}
-              array={tableProduct}
-            />
+            <Pagination />
           </>
         )}
       </section>
@@ -194,26 +187,107 @@ export default AdminDasnBoardHome;
 
 const Wrapper = styled.main`
   max-width: 1170px;
+
+  /* Counter Cards Container */
   .counters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+
     div {
-      background-color: var(--gray);
-      padding: 10px;
-      margin: 0px 5px;
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 10px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
       text-align: center;
-      border-radius: 10px;
       color: white;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+    /* Hover effect */
+    div:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Background gradient styles for each card */
     div:nth-of-type(1) {
-      background-color: skyblue;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     }
+
     div:nth-of-type(2) {
-      background-color: tomato;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
     }
+
     div:nth-of-type(3) {
-      background-color: green;
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     }
-    h3 {
-      font-size: 14px;
+
+    div h3:first-child {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin: 0 0 12px 0;
+      opacity: 0.9;
+      text-transform: uppercase;
+    }
+
+    div h3:last-child {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    div::before,
+    div::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      z-index: 1;
+    }
+
+    div::before {
+      top: -20px;
+      right: -20px;
+    }
+
+    div::after {
+      bottom: -35px;
+      left: -35px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .counters {
+      gap: 5px;
+
+      div h3:first-child {
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        letter-spacing: 0.5px;
+        margin: 0 0 8px 0;
+        opacity: 0.9;
+        text-transform: uppercase;
+      }
+
+      div h3:last-child {
+        font-size: 25px;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
     }
   }
 
@@ -300,30 +374,8 @@ const Wrapper = styled.main`
         }
       }
 
-      .row:nth-of-type(odd) .serial {
-        background-color: var(--gray);
-      }
-    }
-  }
-
-  @media screen and (min-width: 375px) {
-    .counters {
-      div {
-        padding: 20px;
-      }
-      h3 {
-        font-size: 16px;
-      }
-    }
-  }
-
-  @media screen and (min-width: 600px) {
-    .counters {
-      div {
-        padding: 30px;
-      }
-      h3 {
-        font-size: 18px;
+      .row:nth-of-type(odd) * {
+        background-color: rgba(231, 231, 231, 0.61);
       }
     }
   }

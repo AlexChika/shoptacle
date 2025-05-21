@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Store } from "../store/Context";
-import { AdminStore } from "../pages/admin";
-import { Validate } from "../utils/functions";
-import Modal from "./Modal";
-import { ADMIN_REFRESH_STATE } from "../store/actionTypes";
-import { _category } from "../utils/data";
+import { Store } from "store/Context";
+import { AdminStore } from "./adminStore";
+import { Validate } from "utils/functions";
+import Modal from "./ModalHoc";
+import { ADMIN_REFRESH_STATE } from "store/actionTypes";
+import { _category } from "utils/data";
+
 // firebase imports
-import { addProduct, uploadImage } from "../utils/firebase";
+import { addProduct, uploadImage } from "utils/firebase";
+import NotAnAdminModal from "./NotAnAdminModal";
+
+const defaultFormInput = {
+  name: { value: "", valid: false },
+  collection: { value: "", valid: false },
+  arrival: { value: "", valid: false },
+  price: { value: "", valid: false },
+  quantity: { value: "", valid: false },
+  brand: { value: "", valid: false },
+  category: { value: "", valid: false },
+  desc: { value: "", valid: false },
+  mainUrl: { value: "", valid: false },
+};
 // app
 const AdminAdd = () => {
   const { Logger, isAdmin, user } = Store();
@@ -18,17 +32,7 @@ const AdminAdd = () => {
   const [modal, setModal] = useState(false);
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [formInput, setFormInput] = useState({
-    name: { value: "", valid: false },
-    collection: { value: "", valid: false },
-    arrival: { value: "", valid: false },
-    price: { value: "", valid: false },
-    quantity: { value: "", valid: false },
-    brand: { value: "", valid: false },
-    category: { value: "", valid: false },
-    desc: { value: "", valid: false },
-    mainUrl: { value: "", valid: false },
-  });
+  const [formInput, setFormInput] = useState(defaultFormInput);
 
   // logs invalid input errot to ui
   function logError(status, el) {
@@ -165,17 +169,7 @@ const AdminAdd = () => {
       const snapshot = await addProduct(productData);
       document.querySelector("[data-id = image]").style.display = "none";
       e.target.reset();
-      setFormInput({
-        name: { value: "", valid: false },
-        collection: { value: "", valid: false },
-        arrival: { value: "", valid: false },
-        price: { value: "", valid: false },
-        quantity: { value: "", valid: false },
-        brand: { value: "", valid: false },
-        category: { value: "", valid: false },
-        desc: { value: "", valid: false },
-        mainUrl: { value: "", valid: false },
-      });
+      setFormInput(defaultFormInput);
       setLoading(false);
       Logger("Product was added succefully", "success");
       dispatch({ type: ADMIN_REFRESH_STATE });
@@ -357,43 +351,7 @@ const AdminAdd = () => {
         </div>
       </form>
 
-      <Modal modal={modal} setModal={setModal}>
-        <section className="modal">
-          <h1 className="mt20 capitalize">Hello {user.firstName}</h1>
-          <p className="mt10">
-            You are not an admin and cannot make changes to SHOPTACLE
-          </p>
-
-          <h4 className="mt10">
-            However, if you wish to make Edits and add Products to SHOPTACE or
-            to Test the app, please send a mail to &nbsp;
-            <a href="mailto:contact@alexchika.com">
-              contact@alexchika.com
-            </a>{" "}
-            &nbsp; for Admin access using your registered email
-          </h4>
-          <h3 className="mt10">OR</h3>
-          <small className="mt10">Submit the below form</small>
-          <form
-            action="https://formspree.io/f/xbjbdqbl"
-            method="post"
-            className="f mt10"
-          >
-            <input
-              defaultValue={user.email}
-              required
-              type="email"
-              name="Email"
-              id=""
-            />
-            <button type="submit">Submit</button>
-          </form>
-          <small>
-            Once we recieve your email, you will be notified as soon as you now
-            have admin access
-          </small>
-        </section>
-      </Modal>
+      <NotAnAdminModal user={user} modal={modal} setModal={setModal} />
     </Wrapper>
   );
 };
@@ -408,7 +366,7 @@ const Wrapper = styled.main`
     text-align: center;
   }
 
-  form {
+  & > form {
     max-width: 600px;
 
     span {
@@ -486,36 +444,8 @@ const Wrapper = styled.main`
     }
   }
 
-  .modal {
-    color: var(--blue);
-    text-align: center;
-    h1 {
-    }
-
-    p {
-      color: tomato;
-    }
-    a {
-      text-decoration: underline teal;
-    }
-    form {
-      width: 100%;
-    }
-    input {
-      flex: 0.65;
-      padding: 10px;
-      background-color: white;
-    }
-    button {
-      color: white;
-      flex: 0.35;
-      background-color: var(--blue);
-      padding: 10px;
-      border-radius: 0;
-    }
-  }
   @media screen and (min-width: 600px) {
-    form {
+    & > form {
       .halfwrap {
         width: 48%;
       }

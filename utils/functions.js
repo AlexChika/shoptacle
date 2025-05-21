@@ -46,6 +46,25 @@ function calculateStars(rating) {
   return { totalRating, stars: stars.toFixed(1) };
 }
 
+/**
+ * Creates a debounced version of a function, which delays its execution by a specified amount of time.
+ *
+ * @param {Function} func The function to debounce.
+ * @param {Number} [ms=100] The delay in milliseconds.
+ * @returns {Function} The debounced function.
+ */
+function debounce(func, ms = 100) {
+  let timeout;
+
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(context, args);
+    }, ms);
+  };
+}
+
 // converts price to local currency format
 const formatPrice = (price) => {
   const newNumber = new Intl.NumberFormat("en-NG", {
@@ -285,4 +304,5 @@ export {
   shuffler,
   Validate,
   filterReducer,
+  debounce,
 };

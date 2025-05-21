@@ -55,7 +55,8 @@ function usePaginate(
   );
 
   useEffect(() => {
-    handlePaginate(1);
+    setPaginated(getPaginated(array, itemsPerPage, 1));
+    setCurrentPage(1);
   }, [array, itemsPerPage]);
 
   return {

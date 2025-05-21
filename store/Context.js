@@ -380,7 +380,7 @@ const Wrapper = styled.div`
   p {
     color: var(--blue);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
     width: max-content;
   }
 

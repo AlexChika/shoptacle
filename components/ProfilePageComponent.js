@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import { Store } from "../store/Context";
-import { UPDATE_USER, SET_USER } from "../store/actionTypes";
+import { Store } from "store/Context";
+import { UPDATE_USER, SET_USER } from "store/actionTypes";
 import Paginate from "./Paginate";
 import { FaUserEdit, FaOpencart } from "react-icons/fa";
 import {
@@ -16,7 +16,7 @@ import {
   paginateFn,
   displayStar,
   Validate,
-} from "../utils/functions";
+} from "utils/functions";
 
 // firebase imports
 import { signOut } from "firebase/auth";
@@ -26,7 +26,8 @@ import {
   uploadImage,
   getSubDocs,
   getCustomerDocRef,
-} from "../utils/firebase";
+} from "utils/firebase";
+import starIcons from "shared/components/starIcons";
 
 // app
 const ProfilePageComponent = () => {
@@ -341,7 +342,7 @@ const ProfilePageComponent = () => {
                     return (
                       <div key={id} className="review-row">
                         <div className="star-con">
-                          {displayStar(star).map((star, index) => {
+                          {starIcons(star).map((star, index) => {
                             return <span key={index}>{star}</span>;
                           })}
                         </div>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Paginate from "./Paginate";
-import Modal from "./Modal";
+import Modal from "./admin/ModalHoc";
 import emptyCartImage from "../public/trolley.png";
 import paystackIcon from "../public/paystack.png";
 import stripeIcon from "../public/stripe.png";

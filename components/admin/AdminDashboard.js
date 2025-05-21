@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Store } from "../store/Context";
+import { Store } from "@store/Context";
 import { useRouter } from "next/router";
-import Shoptacle from "../svg-components/shoptacle";
+import Shoptacle from "@svg-components/shoptacle";
 import AdminDashBoardHome from "./AdminDashBoardHome";
 import AdminAdd from "./AdminAdd";
 import AdminEdit from "./AdminEdit";
@@ -108,11 +108,11 @@ const AdminDashboard = () => {
               &nbsp; Admin {user.firstName}
             </h3>
           ) : (
-            <h3 className="f align center capitalize">
-              <span style={{ color: "tomato" }}>
+            <h3 className="f align center">
+              <span style={{ color: "red" }}>
                 <FaTimes />
               </span>{" "}
-              &nbsp;Admin {user.firstName}
+              &nbsp; {user.firstName}, you are not an admin
             </h3>
           )}
         </div>
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
       </section>
 
       {/* background.... shoptacle logo */}
-      <div className="logo f fcenter minvh">
+      <div className="logo f fcenter">
         <Shoptacle fill={"#ececec"} />
       </div>
     </DashboardWrapper>
@@ -144,7 +144,7 @@ const DashboardWrapper = styled.main`
   .sideBar {
     background: var(--blue);
     transform: translateX(0px);
-    border-top-right-radius: 50px;
+    /* border-top-right-radius: 20px; */
     width: 100%;
     position: fixed;
     z-index: 7;
@@ -181,15 +181,18 @@ const DashboardWrapper = styled.main`
         align-items: center;
         transition: all 0.3s linear;
       }
+
       .text {
         font-size: 30px;
       }
+
       .icon {
         display: flex;
         align-items: center;
-        padding-right: 40px;
-        font-size: 40px;
+        padding-right: 10px;
+        font-size: 30px;
       }
+
       .active {
         color: var(--blue);
         background-color: white;
@@ -220,12 +223,15 @@ const DashboardWrapper = styled.main`
       h3 {
         border-bottom: 1px solid var(--gray);
         width: max-content;
+        font-size: 18px;
       }
+
       .navigation {
         position: fixed;
         color: red;
         font-size: 30px;
       }
+
       .navigation.hide {
         display: none;
       }
@@ -233,15 +239,16 @@ const DashboardWrapper = styled.main`
   }
 
   .logo {
+    height: 100vh;
     width: 120px;
     right: 0;
-    position: absolute;
+    position: fixed;
     z-index: 1;
   }
 
   @media screen and (min-width: 320px) {
     .sideBar {
-      width: 300px;
+      width: 280px;
     }
   }
 
@@ -251,7 +258,7 @@ const DashboardWrapper = styled.main`
     }
     .sideBar {
       position: sticky;
-      width: 350px;
+      width: 300px;
     }
     .sideBar.close {
       transform: translateX(0px);
