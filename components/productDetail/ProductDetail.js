@@ -191,7 +191,6 @@ const ProductDetail = ({ data }) => {
 export default ProductDetail;
 const Wrapper = styled.main`
   max-width: 1170px;
-  margin: 0 10px;
   color: var(--blue);
 
   .product-card {
@@ -274,13 +273,13 @@ const Wrapper = styled.main`
       h1 {
         font-family: "Libre Baskerville", serif;
         letter-spacing: 2px;
-        font-size: 20px;
+        font-size: 18px;
         text-align: center;
       }
 
       p {
         font-family: "Roboto", sans-serif;
-        font-size: 18px;
+        font-size: 16px;
         color: var(--gray);
         text-align: center;
       }
@@ -290,7 +289,7 @@ const Wrapper = styled.main`
       h3 {
         font-family: "Libre Baskerville", serif;
         padding-bottom: 10px;
-        font-size: 18px;
+        font-size: 16px;
         letter-spacing: 2px;
       }
 
@@ -310,7 +309,7 @@ const Wrapper = styled.main`
 
     .desc {
       font-family: "Roboto", sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 30px;
       overflow-y: auto;
       max-height: 300px;
@@ -333,11 +332,10 @@ const Wrapper = styled.main`
       .go-to-cart-btn {
         display: block;
         width: 100%;
-        font-size: 16px;
         white-space: nowrap;
         font-weight: 600;
-        font-size: 16px;
-        padding: 12px 24px;
+        font-size: 14px;
+        padding: 10px 24px;
         border-radius: 6px;
       }
 
@@ -366,6 +364,8 @@ const Wrapper = styled.main`
   }
 
   @media screen and (min-width: 768px) {
+    padding: 0 15px;
+
     .product-card {
       flex-direction: row;
       aspect-ratio: 2/1;
@@ -399,6 +399,6 @@ const Wrapper = styled.main`
   }
 
   @media screen and (min-width: 1170px) {
-    margin: 0 auto;
+    padding: 0;
   }
 `;

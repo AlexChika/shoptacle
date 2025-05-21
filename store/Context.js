@@ -23,7 +23,7 @@ import {
   setSubDocs,
   deleteSubDocs,
   auth,
-} from "../utils/firebase";
+} from "utils/firebase";
 
 // initial state...
 const initialState = {
@@ -227,7 +227,7 @@ const StoreProvider = ({ children }) => {
   useEffect(() => {
     dispatch({
       type: actionTypes.SET_CURRENT_ROUTE,
-      payload: router.pathname,
+      payload: router.asPath,
     });
 
     const handleRouteChange = (url, { shallow }) => {
@@ -266,7 +266,7 @@ const StoreProvider = ({ children }) => {
       }
     });
     return unsubscribe;
-  }, [refresh, Logger]);
+  }, [refresh]);
 
   // get cart from firestore and recents from localstorage
   useEffect(() => {

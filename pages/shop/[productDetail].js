@@ -76,7 +76,7 @@ const Index = () => {
 
   return (
     <Wrapper className="layout">
-      <NavBar />
+      <NavBar page={"shop"} />
       <SideBar />
       <HeroBar />
 
@@ -114,7 +114,7 @@ const Wrapper = styled.main`
   .loading,
   .error {
     & * {
-      font-size: 20px;
+      font-size: 16px;
     }
 
     flex-direction: column;
@@ -126,7 +126,7 @@ const Wrapper = styled.main`
       color: white;
       background-color: var(--pink);
       padding: 10px 30px;
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 `;

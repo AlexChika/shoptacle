@@ -237,7 +237,7 @@ const Wrapper = styled.section`
 
     .form-title {
       text-align: center;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .star-con {
@@ -247,7 +247,7 @@ const Wrapper = styled.section`
     }
 
     .star-con button {
-      font-size: 28px;
+      font-size: 26px;
       margin: 0px 10px;
     }
 
@@ -312,8 +312,8 @@ const Wrapper = styled.section`
       background-color: var(--blue);
       color: white;
       font-weight: 600;
-      font-size: 16px;
-      padding: 12px 24px;
+      font-size: 14px;
+      padding: 10px 24px;
       border-radius: 6px;
       transition: background-color 0.2s ease;
       width: 100%;

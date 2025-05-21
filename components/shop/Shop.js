@@ -10,7 +10,7 @@ function Shop({ products }) {
     <Wrapper className="layout">
       <NavBar page="shop" />
       <SideBar />
-      <HeroBar path="/" pre={"Home"} curr={"Shop"} />
+      <HeroBar />
       <ProductCategories products={products} />
     </Wrapper>
   );

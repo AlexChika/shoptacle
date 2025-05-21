@@ -26,22 +26,27 @@ const Wrapper = styled.div`
   padding: 10px;
   width: 95%;
   border-bottom: 2px solid var(--pink-light);
+
   h1 {
     font-family: "Libre Baskerville", serif;
     letter-spacing: 2px;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   p {
     color: var(--pink);
     letter-spacing: 2px;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   @media screen and (min-width: 768px) {
     width: 100%;
     h1 {
-      font-size: 20px;
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 16px;
     }
   }
 `;

@@ -142,6 +142,10 @@ a {
   -webkit-line-clamp: 5;
   line-clamp: 5;
 }
+.line_clamp.clamp1 {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
 
 .hide__scroll__bar {
   -ms-overflow-style: none;

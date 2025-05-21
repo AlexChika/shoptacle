@@ -257,8 +257,10 @@ const Wrapper = styled.section`
   .feedback-bar,
   .clear {
     background-color: var(--blue);
+    background-color: white;
     /* background-color: var(--gray); */
     color: var(--pink-light);
+    color: var(--blue);
     padding: 10px;
   }
   .category-brand-bar {

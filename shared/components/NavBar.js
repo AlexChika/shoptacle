@@ -69,7 +69,7 @@ function NavBar({ page }) {
               type="button"
             >
               <BsCartFill />
-              <small>{cart.length}</small>
+              <small className="f fcenter">{cart.length}</small>
             </a>
           </Link>
         </span>
@@ -136,7 +136,7 @@ const Wrapper = styled.nav`
     order: 2;
     background: #ffffff;
     border-radius: 30px;
-    width: 100px;
+    width: max-content;
     height: 40px;
     padding: 10px;
 
@@ -171,6 +171,8 @@ const Wrapper = styled.nav`
       border-radius: 50%;
       padding: 4px;
       font-size: 11px;
+      min-width: 18px;
+      min-height: 15px;
       color: white;
     }
     color: black;
@@ -178,7 +180,7 @@ const Wrapper = styled.nav`
 
   @media screen and (min-width: 525px) {
     .navCart-con {
-      width: 110px;
+      /* width: 110px; */
     }
   }
 
@@ -196,7 +198,6 @@ const Wrapper = styled.nav`
       display: flex;
     }
     .navCart-con {
-      width: 130px;
       order: 4;
     }
   }

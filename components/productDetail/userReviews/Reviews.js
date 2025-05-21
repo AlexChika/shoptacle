@@ -84,7 +84,7 @@ const Wrapper = styled.article`
   .reviews {
     overflow-y: scroll;
     max-height: 550px;
-    padding: 10px;
+    padding: 10px 20px;
 
     .review-row {
       border-bottom: 2px solid var(--pink-light);
@@ -111,7 +111,7 @@ const Wrapper = styled.article`
 
     p {
       line-height: 30px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .review-date {

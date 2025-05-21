@@ -147,11 +147,11 @@ const Wrapper = styled.footer`
   h5 {
     padding: 3px 0;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 18px;
     font-family: "Libre Baskerville", serif;
   }
 
@@ -208,9 +208,10 @@ const Wrapper = styled.footer`
     h5 {
       margin: 0px 10px;
       color: rgb(255, 255, 255);
+      font-size: 14px;
       a {
         font-family: "Libre Baskerville", serif;
-        font-size: 14px;
+        font-size: 12px;
       }
     }
 

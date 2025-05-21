@@ -34,7 +34,7 @@ const SearchBar = () => {
           <FiSearch />
         </button>
         <form onSubmit={handleSearchOnsubmit}>
-          <div className="form-input f align">
+          <div className="form-input f fcenter">
             <input
               type="text"
               name=""
@@ -63,9 +63,9 @@ const Wrapper = styled.div`
     .search-btn {
       text-align: 2px 2px black;
       position: absolute;
-      top: 0%;
-      transform: translateY(25%);
-      font-size: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
       display: block;
     }
     form {
@@ -81,6 +81,7 @@ const Wrapper = styled.div`
       .submit-btn {
         width: 20%;
         border-left: 1px solid;
+        font-size: 20px;
       }
       .form-input {
         padding: 7px 7px;
