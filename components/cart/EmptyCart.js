@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 function EmptyCart() {
   return (
-    <Wrapper className="cart-empty">
+    <Wrapper className="mt30">
       <div className="icon center f fcenter">
         <Image
           alt="empty cart logo"

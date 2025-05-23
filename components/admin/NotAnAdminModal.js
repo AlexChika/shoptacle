@@ -47,7 +47,7 @@ function NotAnAdminModal({ modal, setModal, user }) {
 export default NotAnAdminModal;
 
 const Wrapper = styled.div`
-  padding: 10px 0px 0px 0px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   width: 100%;

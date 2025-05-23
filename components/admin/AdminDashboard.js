@@ -105,7 +105,7 @@ const AdminDashboard = () => {
               <span style={{ color: "green" }}>
                 <BsFillCheckCircleFill />
               </span>{" "}
-              &nbsp; Admin {user.firstName}
+              &nbsp; {user.firstName}, you are an admin
             </h3>
           ) : (
             <h3 className="f align center">
@@ -167,7 +167,7 @@ const DashboardWrapper = styled.main`
       }
     }
     .linkCon {
-      padding-left: 20px;
+      padding-left: 10px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;

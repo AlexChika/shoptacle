@@ -5,11 +5,11 @@ const ProductCategories = ({ products }) => {
   return (
     <Wrapper className="center">
       {products.map((item, index) => {
-        let { name, blob, product } = item;
+        let { name, blob, product, color } = item;
         return (
           <ProductRow
             key={index}
-            params={{ name, blob, color: "#fee2cc" }}
+            params={{ name, blob, color }}
             products={product}
           />
         );

@@ -50,7 +50,7 @@ export default SearchProductModal;
 const Wrapper = styled.section`
   display: grid;
   grid-template-columns: 1fr;
-  padding: 20px 10px;
+  padding: 20px;
   width: 100%;
   color: #333;
   font-family: "Roboto", sans-serif;
@@ -58,7 +58,6 @@ const Wrapper = styled.section`
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    /* padding: 30px; */
   }
 
   .image {

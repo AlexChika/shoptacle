@@ -86,10 +86,8 @@ function CartSummary({ cartTotals, user, handleCheckout, formatPrice }) {
 export default CartSummary;
 const Wrapper = styled.div`
   color: var(--blue);
-  /* max-width: 575px; */
   width: 100%;
   margin: 30px auto 0;
-  /* border: 2px solid red; */
 
   .summary-card {
     background-color: white;
@@ -326,7 +324,7 @@ const Wrapper = styled.div`
   }
 
   /* Tablet and Desktop */
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 700px) {
     width: 45%;
     align-self: flex-start;
     margin-top: 0;

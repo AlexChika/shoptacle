@@ -42,7 +42,7 @@ const ModalWrap = styled.div`
 
   .modal-body {
     margin: ${({ $center }) => ($center ? "" : "30px 0px")};
-    width: 88%;
+    width: 96%;
     position: relative;
     left: 50%;
     top: ${({ $center }) => ($center ? "50%" : "20px")};
@@ -73,8 +73,6 @@ const ModalWrap = styled.div`
   }
 
   .modal-content {
-    width: 90%;
-    padding: 0 10px 20px 10px;
     margin: 0 auto;
   }
 `;

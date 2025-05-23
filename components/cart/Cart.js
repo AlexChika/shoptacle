@@ -17,6 +17,7 @@ import StripeCheckout from "payment/StripeCheckout";
 import usePaginate from "shared/hooks/usePaginate";
 import CartSummary from "./CartSummary";
 import EmptyCart from "./EmptyCart";
+import ChoosePaymentModal from "./ChoosePaymentModal";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
@@ -108,28 +109,15 @@ const Cart = ({ data }) => {
         </Elements>
       )}
 
-      <Modal modal={modal} setModal={setModal}>
-        <div className="modal">
-          <h2>Choose Your Payment Method</h2>
-          <div className="mt20">
-            <h3>Paystack</h3>
-            <button onClick={handlePayWithPaystack} className="mt10">
-              <Image layout="fill" alt="paystack icon" src="/paystack.png" />
-            </button>
-          </div>
-          <div className="mt20">
-            <h3>Stripe</h3>
-            <button onClick={handlePayWithStripe} className="mt10">
-              {stripeLoading && <div className="spinner sm center"></div>}
-              <Image layout="fill" alt="stripe icon" src="/stripe.png" />
-            </button>
-          </div>
-        </div>
-      </Modal>
+      <ChoosePaymentModal
+        modal={modal}
+        setModal={setModal}
+        handlePayWithPaystack={handlePayWithPaystack}
+        handlePayWithStripe={handlePayWithStripe}
+        stripeLoading={stripeLoading}
+      />
 
-      <main className="loading">
-        {loading ? <div className="spinner center sm"></div> : ""}
-      </main>
+      {loading && <div className="spinner center sm" />}
 
       {cart.length < 1 ? (
         <EmptyCart />
@@ -169,23 +157,6 @@ export default Cart;
 const Wrapper = styled.main`
   padding: 0px 5px;
   max-width: 1170px;
-  .modal {
-    padding-top: 20px;
-    text-align: center;
-    color: var(--blue);
-    h3 {
-      color: skyblue;
-    }
-    button {
-      width: 100%;
-      border: 2px solid var(--gray);
-      border-radius: 10px;
-    }
-  }
-
-  .loading {
-    height: 30px;
-  }
 
   .cart {
     flex-direction: column;
@@ -195,6 +166,7 @@ const Wrapper = styled.main`
   @media screen and (min-width: 700px) {
     .cart {
       flex-direction: row;
+      gap: 20px;
       .cart-items {
         width: 50%;
       }
