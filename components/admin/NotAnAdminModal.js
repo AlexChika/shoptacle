@@ -60,6 +60,7 @@ const Wrapper = styled.div`
     font-weight: 600;
     color: #323148;
     line-height: 1.2;
+    padding-top: 10px;
   }
 
   p {

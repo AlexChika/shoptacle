@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Store } from "../../store/Context";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
-import HeroBar from "../../components/HeroBar";
-import CartPageComponent from "../../components/CartPageComponent";
+import { Store } from "store/Context";
+import NavBar from "shared/components/NavBar";
+import SideBar from "shared/components/SideBar";
+import HeroBar from "shared/components/HeroBar";
+import Cart from "@components/cart/Cart";
 
 // firebase import
-import { getCartItem } from "../../utils/firebase";
-const Index = () => {
+import { getCartItem } from "utils/firebase";
+const CartPage = () => {
   let { cart, Logger } = Store();
 
   // states
@@ -73,14 +73,14 @@ const Index = () => {
       <NavBar page={"cart"} />
       <SideBar />
       <HeroBar />
-      <CartPageComponent
+      <Cart
         data={{ loading, cart: cartItems, cartTotals, setRefresh, refresh }}
       />
     </Wrapper>
   );
 };
 
-export default Index;
+export default CartPage;
 const Wrapper = styled.main`
   padding-bottom: 30px;
   background-color: var(--pink-light);

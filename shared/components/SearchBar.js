@@ -57,32 +57,38 @@ export default SearchBar;
 const Wrapper = styled.div`
   .search-con {
     position: relative;
+
     button {
       font-size: 25px;
     }
+
     .search-btn {
-      text-align: 2px 2px black;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       font-size: 24px;
       display: block;
     }
+
     form {
       color: var(--blue);
       transition: all 0.2s linear;
       width: 25px;
+      height: 1px;
       overflow: hidden;
       visibility: collapse;
+
       input {
         width: 80%;
         font-size: 16px;
       }
+
       .submit-btn {
         width: 20%;
         border-left: 1px solid;
         font-size: 20px;
       }
+
       .form-input {
         padding: 7px 7px;
         background-color: white;
@@ -90,20 +96,24 @@ const Wrapper = styled.div`
       }
     }
   }
+
   .search-con.search {
     .search-btn {
       display: none;
     }
+
     form {
       visibility: visible;
       width: 100%;
+      height: unset;
       overflow: visible;
     }
   }
+
   @media screen and (min-width: 525px) {
     .search-con.search {
       form {
-        width: 15em;
+        width: 200px;
       }
     }
   }

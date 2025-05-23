@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Store } from "store/Context";
 import { UPDATE_USER, SET_USER } from "store/actionTypes";
-import Paginate from "./Paginate";
 import { FaUserEdit, FaOpencart } from "react-icons/fa";
 import {
   BsChatSquareText,
@@ -28,6 +27,7 @@ import {
   getCustomerDocRef,
 } from "utils/firebase";
 import starIcons from "shared/components/starIcons";
+import usePaginate from "shared/hooks/usePaginate";
 
 // app
 const ProfilePageComponent = () => {
@@ -42,14 +42,12 @@ const ProfilePageComponent = () => {
   const reviews = user.reviews || [];
   const orders = user.orders || [];
   const [loading, setLoading] = useState(false);
-  const [orderState, setOrderState] = useState({
-    paginateOrders: paginateFn(orders, 7).items,
-    currentBtn: 0,
-  });
-  const [reviewState, setReviewState] = useState({
-    paginateReviews: paginateFn(reviews, 5).items,
-    currentBtn: 0,
-  });
+
+  const { Pagination: OrderPagination, paginated: orderPaginated } =
+    usePaginate(orders, 7, 1, true);
+  const { Pagination: ReviewPagination, paginated: reviewPaginated } =
+    usePaginate(reviews, 5, 1, true);
+
   const [formInput, setFormInput] = useState({
     firstName: {
       valid: false,
@@ -68,17 +66,6 @@ const ProfilePageComponent = () => {
       value: "",
     },
   });
-
-  useEffect(() => {
-    setOrderState({
-      paginateOrders: paginateFn(orders, 7).items,
-      currentBtn: 0,
-    });
-    setReviewState({
-      paginateReviews: paginateFn(reviews, 5).items,
-      currentBtn: 0,
-    });
-  }, [user]);
 
   // handlers
   const handleLogout = async () => {
@@ -239,7 +226,7 @@ const ProfilePageComponent = () => {
       }
     }
     updateUser();
-  }, [user, Logger, dispatch]);
+  }, [user, dispatch]);
 
   return (
     <Wrapper className="center mt30">
@@ -300,8 +287,8 @@ const ProfilePageComponent = () => {
           {tabs === 0 && (
             <div>
               <div ref={orderRef} className="order">
-                {orderState.paginateOrders.length > 0 ? (
-                  orderState.paginateOrders.map((item, index) => {
+                {orderPaginated.length > 0 ? (
+                  orderPaginated.map((item, index) => {
                     const { name, amount, price, ref, date } = item;
                     return (
                       <div key={index} className="order-item mt10">
@@ -322,13 +309,7 @@ const ProfilePageComponent = () => {
                   </div>
                 )}
               </div>
-              <Paginate
-                paginateFn={paginateFn}
-                array={orders}
-                itemsPerPage={7}
-                currentBtn={orderState.currentBtn}
-                handlePaginate={handlePaginateOrder}
-              />
+              <OrderPagination />
             </div>
           )}
 
@@ -336,8 +317,8 @@ const ProfilePageComponent = () => {
           {tabs === 1 && (
             <div>
               <div ref={reviewRef} className="review">
-                {reviewState.paginateReviews.length > 0 ? (
-                  reviewState.paginateReviews.map((review) => {
+                {reviewPaginated.length > 0 ? (
+                  reviewPaginated.map((review) => {
                     const { name, star, experience, title, date, id } = review;
                     return (
                       <div key={id} className="review-row">
@@ -361,13 +342,7 @@ const ProfilePageComponent = () => {
                   </div>
                 )}
               </div>
-              <Paginate
-                paginateFn={paginateFn}
-                array={reviews}
-                itemsPerPage={5}
-                currentBtn={reviewState.currentBtn}
-                handlePaginate={handlePaginateReviews}
-              />
+              <ReviewPagination />
             </div>
           )}
 

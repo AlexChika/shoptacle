@@ -3,6 +3,7 @@
 :root {
   --pink: #f58b42;
   --pink-light: #faf4f4;
+  --pink-dark: #ce5f30;
   --gray: #c7c1b9;
   --blue: #323148;
   --blue-light: #464463;
@@ -24,7 +25,6 @@ a {
   cursor: pointer;
   color: inherit;
 }
-
 * {
   margin: 0;
   padding: 0;
@@ -38,7 +38,8 @@ a {
   font-variation-settings: "wdth" 100;
   -webkit-tap-highlight-color: transparent;
 }
-/* general classes */
+
+/* spinner  */
 .spinner {
   display: block;
   width: 60px;
@@ -59,6 +60,54 @@ a {
   display: none;
 }
 
+/* button */
+.shoptacle-btn-blue,
+.shoptacle-btn-pink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all 0.3s linear;
+}
+
+.shoptacle-btn-blue:disabled,
+.shoptacle-btn-pink:disabled {
+  background-color: #dee2e6;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.shoptacle-btn-blue:active:not(:disabled),
+.shoptacle-btn-pink:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.shoptacle-btn-pink:hover:not(:disabled) {
+  background: var(--pink-dark);
+}
+.shoptacle-btn-blue:hover:not(:disabled) {
+  background: var(--blue-light);
+}
+
+.shoptacle-btn-pink {
+  background: var(--pink);
+}
+.shoptacle-btn-blue {
+  background: var(--blue);
+}
+
+.shoptacle-btn-pink:hover {
+  transform: scale(1.05);
+}
+.shoptacle-btn-blue:hover {
+  transform: scale(1.05);
+}
+
 @keyframes spinner {
   100% {
     transform: rotate(360deg);
@@ -75,6 +124,8 @@ a {
     opacity: 1;
   }
 }
+
+/* general classes */
 .capitalize {
   text-transform: capitalize;
 }
@@ -84,8 +135,8 @@ a {
 .blue {
   border: 2px solid blue;
 }
-.gray {
-  border: 1px solid gray;
+.green {
+  border: 1px solid green;
 }
 .c-blue {
   color: #323148;

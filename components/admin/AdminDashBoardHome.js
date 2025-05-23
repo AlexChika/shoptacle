@@ -66,6 +66,7 @@ const AdminDasnBoardHome = () => {
   useEffect(() => {
     // updates the out of stock array
     let _oufOfStoc = products.filter((p) => p.quantity < 1);
+    setTableProduct(filter("collection", tab));
     setOutOfStock(_oufOfStoc);
   }, [products]);
 

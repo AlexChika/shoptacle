@@ -256,14 +256,18 @@
   font-size: 36px;
   font-weight: 700;
   color: white;
+  font-style: italic;
+  font-family: Lobster cursive;
 }
+
 .pov_banner_content article h4 span {
-  color: var(--ball-color);
+  /* color: var(--ball-color); */
+  /* text-shadow: unset; */
 }
 .pov_banner_content article p {
   text-align: center;
   line-height: 20px;
-  font-size: 17px;
+  font-size: 16px;
   text-shadow: 2px 2px 3px rgb(85, 85, 85);
   font-weight: 900;
   width: 100%;

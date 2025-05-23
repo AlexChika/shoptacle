@@ -27,11 +27,11 @@ const SideBar = () => {
 
   return (
     <Wrapper modal={modalOpen} className="trans">
-      <div className="header f align j-around">
+      <div className="header f align j-between">
         {user && user.url ? (
           <button
             onClick={() => {
-              handleRoute("/");
+              handleRoute("/profile");
             }}
             type="button"
             className="profile-img"
@@ -39,13 +39,21 @@ const SideBar = () => {
             <Image layout="fill" src={user.url} alt="profile image" />
           </button>
         ) : (
-          <button className="user-btn" type="button">
+          <button
+            onClick={() => {
+              handleRoute("/profile");
+            }}
+            className="user-btn"
+            type="button"
+          >
             <FaUser />
           </button>
         )}
+
         <Link href="/">
           <h1 className="c-color">Shoptacle</h1>
         </Link>
+
         <button
           onClick={handleCloseModal}
           type="button"
@@ -131,7 +139,7 @@ const Wrapper = styled.main`
   width: 100%;
 
   .header {
-    padding: 10px 10px;
+    padding: 10px 15px;
     text-align: center;
     box-shadow: 0px 1px 5px rgba(154, 148, 137, 0.4);
     .profile-img {
@@ -159,22 +167,27 @@ const Wrapper = styled.main`
     height: calc(100vh - 80px);
     overflow-y: auto;
     padding: 30px 10px;
+
     h3 {
       background-color: var(--blue);
       padding: 10px;
       color: white;
       margin-top: 20px;
       font-size: 20px;
+      border-radius: 8px;
     }
+
     span {
       padding-right: 10px;
       color: white;
     }
+
     .link {
       font-size: 16px;
       display: block;
       margin-top: 20px;
       color: var(--blue);
+      opacity: 0.9;
       padding: 5px 20px;
       border-radius: 10px;
       text-decoration: underline;

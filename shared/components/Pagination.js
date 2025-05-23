@@ -32,11 +32,27 @@ const Wrapper = styled.div`
     border-radius: 50%;
     border: 2px solid var(--blue);
     font-size: 12px;
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:hover:not(:disabled) {
+      border: 2px solid var(--blue);
+      transform: scale(1.05);
+    }
   }
+
   button.active {
     background-color: var(--pink);
     border: 2px solid var(--pink);
     color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--pink-dark);
+      border: 2px solid var(--pink-dark);
+      transform: scale(1.05);
+    }
   }
 `;
 
