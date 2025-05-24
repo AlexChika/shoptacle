@@ -114,7 +114,7 @@ const team = [
     name: "Jasmine",
     position: "CEO",
     img: teamJasmine,
-    desc: "“I have always been skeptical about online shopping but Shoptacle changed my mindset. They sell high quality, Luxury products and they are also honest and efficient’’",
+    desc: "“Here at shoptacle we thrive to provide only luxury and beauty in uniqueness’’",
   },
   {
     name: "Dan",
@@ -124,7 +124,7 @@ const team = [
   },
   {
     name: "Ada",
-    position: "Chief Stylist",
+    position: "Stylist",
     img: teamAda,
     desc: "‘’I love fashion and love helping people look good, I have a degree in Art and design’’",
   },

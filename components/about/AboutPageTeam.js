@@ -1,7 +1,8 @@
+import Shoptacle from "@svg-components/shoptacle";
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import { team } from "utils/data";
+
 const AboutPageTeam = () => {
   return (
     <Wrapper className="layout">
@@ -14,22 +15,32 @@ const AboutPageTeam = () => {
           working enviroment
         </p>
       </div>
-      <section className="container center f">
+
+      <section className="team-cards center f">
         {team.map((team, index) => {
           return (
-            <article key={index} className="f team-cards center">
-              <div className={`img ${index === 1 ? "order" : ""}`}>
-                <Image alt={team.name} layout="fill" src={team.img} />
+            <article
+              key={index}
+              className={`f team-card center ${index === 1 ? "order" : ""}`}
+            >
+              <div className={`team-img ${index === 1 ? "order" : ""}`}>
+                <img alt={team.name} src={team.img.src} />
               </div>
+
               <div className="body f align j-around">
                 <div className="title">
                   <h1>{team.name}</h1>
                   <span>{team.position}</span>
                 </div>
+
                 <div className="text">
                   <p>{team.desc}</p>
                 </div>
                 <button>Learn more</button>
+              </div>
+
+              <div className={`shoptacle ${index === 1 ? "order" : ""}`}>
+                <Shoptacle fill="var(--blue-light)" />
               </div>
             </article>
           );
@@ -44,9 +55,11 @@ const Wrapper = styled.main`
   background: var(--blue);
   min-height: 100vh;
   padding: 50px 0px;
+
   .heading {
     color: white;
     text-align: center;
+
     h1 {
       font-family: "Libre Baskerville", serif;
       font-weight: 400;
@@ -59,62 +72,110 @@ const Wrapper = styled.main`
       font-family: "Roboto", sans-serif;
       font-weight: 400;
       font-size: 16px;
+      padding: 30px 10px;
     }
   }
-  .container {
-    width: 95%;
+
+  .team-cards {
+    padding: 0px 15px;
     margin-top: 50px;
     flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
   }
-  .team-cards {
-    height: 650px;
+
+  .team-card {
     width: 100%;
     max-width: 500px;
-    margin-bottom: 30px;
+    flex: 1;
     flex-direction: column;
     background-color: var(--pink-light);
-    .img {
-      height: 65%;
-      position: relative;
-      object-fit: cover;
+    gap: 0px 10px;
+    position: relative;
+
+    .team-img {
+      width: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
+
     .body {
-      height: 35%;
+      position: absolute;
       flex-direction: column;
       text-align: center;
       color: var(--blue);
-    }
-    .title {
-      position: relative;
+      padding: 10px;
+      bottom: 0%;
       width: 100%;
+      background-color: var(--pink-light);
+
+      .title {
+        position: relative;
+        width: 100%;
+        padding: 5px;
+
+        h1 {
+          font-family: "Libre Baskerville", serif;
+          font-weight: 400;
+          font-size: 20px;
+          letter-spacing: 2px;
+        }
+
+        span {
+          position: absolute;
+          font-family: "Roboto", sans-serif;
+          font-size: 14px;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 5%;
+          opacity: 0.6;
+        }
+      }
+
+      .text {
+        p {
+          font-family: "Libre Baskervville";
+          font-style: italic;
+          font-size: 16px;
+          line-height: 25px;
+          padding: 10px;
+        }
+      }
+
+      button {
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+        font-size: 22px;
+        text-align: center;
+        letter-spacing: 2px;
+        color: var(--pink);
+        border-bottom: 3px solid var(--pink);
+      }
     }
-    h1 {
-      font-family: "Libre Baskerville", serif;
-      font-weight: 400;
-      font-size: 20px;
-      letter-spacing: 2px;
-    }
-    p {
-      font-family: "Libre Baskervville";
-      font-style: italic;
-      font-size: 16px;
-      line-height: 25px;
-    }
-    span {
+
+    .shoptacle {
       position: absolute;
-      font-family: "Roboto", sans-serif;
-      font-size: 14px;
-      top: 10%;
-      right: 5%;
+      width: 100px;
+      top: 50%;
+      left: 102%;
+      transform: translate(0%, -50%);
+
+      &.order {
+        left: -22%;
+        /* transform: translate(-100%, 0%); */
+      }
     }
-    button {
-      font-family: "Roboto", sans-serif;
-      font-weight: 500;
-      font-size: 22px;
-      text-align: center;
-      letter-spacing: 2px;
-      color: var(--pink);
-      border-bottom: 3px solid var(--pink);
+  }
+
+  @media screen and (max-width: 500px) {
+    .team-card {
+      .body {
+        position: unset;
+      }
     }
   }
 
@@ -130,18 +191,43 @@ const Wrapper = styled.main`
         min-width: 768px;
       }
     }
-    .container {
+
+    .team-cards {
       flex-direction: row;
+      gap: 0px;
     }
-    .order {
-      order: 1;
+
+    .team-card {
+      width: 33%;
+      aspect-ratio: unset;
+
+      .team-img {
+        &.order {
+          order: 1;
+        }
+      }
+
+      .body {
+        position: unset;
+      }
+
+      .shoptacle {
+        display: none;
+      }
     }
   }
+
   @media screen and (min-width: 1024px) {
-    .team-cards {
+    .team-card {
       p {
         font-size: 18px;
       }
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .team-cards {
+      padding: 0px;
     }
   }
 `;

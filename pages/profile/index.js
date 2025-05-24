@@ -4,21 +4,23 @@ import NavBar from "shared/components/NavBar";
 import SideBar from "shared/components/SideBar";
 import HeroBar from "shared/components/HeroBar";
 import Profile from "components/ProfilePageComponent";
-import Login from "components/Login";
+import Auth from "components/auth/Auth";
 import { Store } from "store/Context";
-const Index = () => {
+const ProfilePage = () => {
   const { user } = Store();
   return (
     <Wrapper className="layout">
       <NavBar page={"profile"} />
       <SideBar />
       <HeroBar />
-      {user ? <Profile /> : <Login />}
+
+      <Profile />
+      {/* {user ? <Profile /> : <Auth />} */}
     </Wrapper>
   );
 };
 
-export default Index;
+export default ProfilePage;
 const Wrapper = styled.main`
   background-color: var(--pink-light);
   padding-bottom: 30px;

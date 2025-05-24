@@ -193,7 +193,7 @@ const Wrapper = styled.footer`
 
   .footerHeader,
   .footerFooter {
-    width: 95%;
+    padding: 0px 15px;
     margin: 0 auto;
   }
 
@@ -238,6 +238,13 @@ const Wrapper = styled.footer`
   @media screen and (min-width: 1000px) {
     .footerHeader {
       flex-direction: row;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .footerHeader,
+    .footerFooter {
+      padding: 0px;
     }
   }
 `;

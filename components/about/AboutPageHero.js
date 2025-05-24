@@ -15,6 +15,7 @@ const AboutPageHero = () => {
       <section className="body center mt30">
         <div className="heading">
           <h1 className="c-blue">Maintaining the Brand Standards</h1>
+
           <p className="center c-blue mt20">
             Shoptacle offers clothing, shoes and accessories for men and women.
             It was founded in 1995 and has over 340 offline stores in the
@@ -24,13 +25,15 @@ const AboutPageHero = () => {
             lifestyle, but enhances the ability to live it. We will accomplish
             this by being committed to offering great service and real value to
             our business partners and consumers.
+            <span className="box box-left display"></span>
+            <div className="box box-right display"></div>
           </p>
-          <div className="box box-left display"></div>
-          <div className="box box-right display"></div>
         </div>
-        <div className="testimony mt30">
+
+        <div className="testimony-section mt30">
           <h1 className="c-blue center">Testimonies</h1>
-          <section className="testimony-con f align mt30">
+
+          <section className="testimonies f align mt30">
             {testimony.map((testimony, index) => {
               return (
                 <article key={index} className="testimony-card">
@@ -41,11 +44,7 @@ const AboutPageHero = () => {
                     </div>
                   </div>
                   <div className="image-con">
-                    <Image
-                      layout="fill"
-                      alt={testimony.name}
-                      src={testimony.img}
-                    ></Image>
+                    <Image alt={testimony.name} src={testimony.img}></Image>
                   </div>
                   <div className="text-con f fcenter">
                     <p>{testimony.desc}</p>
@@ -53,8 +52,6 @@ const AboutPageHero = () => {
                 </article>
               );
             })}
-            <button className="bns"></button>
-            <button></button>
           </section>
         </div>
       </section>
@@ -64,11 +61,16 @@ const AboutPageHero = () => {
 export default AboutPageHero;
 const Wrapper = styled.main`
   background: var(--pink-light);
+  .body {
+    padding: 0px 15px;
+    /* border: 2px solid red; */
+  }
 
   .heading {
     h1,
     p {
       font-weight: 400;
+      text-align: justify;
     }
     h1 {
       font-family: "Libre Baskerville", serif;
@@ -83,7 +85,8 @@ const Wrapper = styled.main`
       padding: 10px;
     }
   }
-  .testimony {
+
+  .testimony-section {
     h1 {
       font-size: 30px;
       font-family: "Libre Baskerville", serif;
@@ -91,9 +94,11 @@ const Wrapper = styled.main`
       border-bottom: 3px solid var(--blue);
     }
   }
-  .testimony-con {
+
+  .testimonies {
     flex-direction: column;
   }
+
   .testimony-card {
     position: relative;
     width: 100%;
@@ -105,11 +110,11 @@ const Wrapper = styled.main`
       position: absolute;
     }
     .image-con {
-      top: 0;
+      bottom: 30%;
       right: 5%;
       width: 75%;
-      height: 75%;
     }
+
     .background {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -130,6 +135,7 @@ const Wrapper = styled.main`
         font-size: 18px;
       }
     }
+
     .text-con {
       left: 0;
       bottom: 0;
@@ -147,6 +153,7 @@ const Wrapper = styled.main`
       }
     }
   }
+
   @media screen and (min-width: 600px) {
     .heading {
       p {
@@ -165,45 +172,60 @@ const Wrapper = styled.main`
       }
     }
   }
+
   @media screen and (min-width: 768px) {
     .heading {
       text-align: center;
       position: relative;
       padding: 60px 0px;
+
       h1 {
         font-size: 30px;
         line-height: 52px;
         letter-spacing: 0.12em;
       }
+
       p {
         font-size: 18px;
         line-height: 35px;
-        max-width: 70%;
-        min-width: 694px;
+        max-width: 65%;
+        min-width: 650px;
+        position: relative;
       }
+
       .box {
         position: absolute;
         width: 90px;
         height: 90px;
       }
+
       .box-left {
-        top: calc(100% - 90px);
-        left: 5%;
+        top: calc(100% - 40px);
+        left: -40px;
         border-left: 2px solid var(--pink);
         border-bottom: 2px solid var(--pink);
       }
+
       .box-right {
-        bottom: calc(100% - 90px);
-        right: 5%;
+        bottom: calc(100%);
+        right: -40px;
         border-right: 2px solid var(--pink);
         border-top: 2px solid var(--pink);
       }
     }
-    .testimony-con {
+
+    .testimonies {
       flex-direction: row;
     }
+
     .testimony-card {
       width: 50%;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .body {
+      padding: 0px;
     }
   }
 `;
