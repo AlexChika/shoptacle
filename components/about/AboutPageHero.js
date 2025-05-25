@@ -62,8 +62,7 @@ export default AboutPageHero;
 const Wrapper = styled.main`
   background: var(--pink-light);
   .body {
-    padding: 0px 15px;
-    /* border: 2px solid red; */
+    width: 95%;
   }
 
   .heading {
@@ -220,12 +219,6 @@ const Wrapper = styled.main`
 
     .testimony-card {
       width: 50%;
-    }
-  }
-
-  @media screen and (min-width: 1200px) {
-    .body {
-      padding: 0px;
     }
   }
 `;

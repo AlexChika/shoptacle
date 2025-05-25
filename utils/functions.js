@@ -74,30 +74,6 @@ const formatPrice = (price) => {
   return newNumber;
 };
 
-// returns slices and returns array for pagination
-/**
- * @deprecated
- * @param {*} array
- * @param {*} itemsPerPage
- * @param {*} currentPage
- * @returns
- */
-const paginateFn = (array = [], itemsPerPage, currentPage = 0) => {
-  if (!itemsPerPage) throw new Error("check parameters at paginateFn");
-
-  let pageNumber = Math.ceil(array.length / itemsPerPage);
-  let startIndex = currentPage * itemsPerPage;
-  let stopIndex = startIndex + itemsPerPage;
-  let items = array.slice(startIndex, stopIndex);
-  const pageNumberArray = Array.from({ length: pageNumber }, (v, i) => {
-    return i;
-  });
-  return {
-    items,
-    buttonArray: pageNumberArray,
-  };
-};
-
 // shuffles array
 /**
  * Shuffles the elements of the input array and returns a new shuffled array.
@@ -300,7 +276,6 @@ const filterReducer = (state, action) => {
 export {
   calculateStars,
   formatPrice,
-  paginateFn,
   shuffler,
   Validate,
   filterReducer,

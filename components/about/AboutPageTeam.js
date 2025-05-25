@@ -77,7 +77,7 @@ const Wrapper = styled.main`
   }
 
   .team-cards {
-    padding: 0px 15px;
+    width: 95%;
     margin-top: 50px;
     flex-direction: column;
     gap: 20px;
@@ -222,12 +222,6 @@ const Wrapper = styled.main`
       p {
         font-size: 18px;
       }
-    }
-  }
-
-  @media screen and (min-width: 1200px) {
-    .team-cards {
-      padding: 0px;
     }
   }
 `;

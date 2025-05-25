@@ -44,9 +44,9 @@ const Wrapper = styled.div`
   }
 
   button.active {
-    background-color: var(--pink);
     border: 2px solid var(--pink);
     color: white;
+    background-image: linear-gradient(135deg, var(--blue), #f9a8d4, #e9d5ff);
 
     &:hover:not(:disabled) {
       background-color: var(--pink-dark);

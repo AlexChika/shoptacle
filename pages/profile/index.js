@@ -3,9 +3,10 @@ import styled from "styled-components";
 import NavBar from "shared/components/NavBar";
 import SideBar from "shared/components/SideBar";
 import HeroBar from "shared/components/HeroBar";
-import Profile from "components/ProfilePageComponent";
 import Auth from "components/auth/Auth";
 import { Store } from "store/Context";
+import Profile from "@components/profile/Profile";
+
 const ProfilePage = () => {
   const { user } = Store();
   return (
@@ -14,8 +15,7 @@ const ProfilePage = () => {
       <SideBar />
       <HeroBar />
 
-      <Profile />
-      {/* {user ? <Profile /> : <Auth />} */}
+      {user ? <Profile /> : <Auth />}
     </Wrapper>
   );
 };

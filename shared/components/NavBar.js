@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
@@ -15,11 +14,13 @@ function NavBar({ page }) {
       <button onClick={handleCloseModal} className="side-modal-btn">
         <IoMdList />
       </button>
+
       <div className="logo-name">
         <Link href="/">
           <h1>Shoptacle</h1>
         </Link>
       </div>
+
       <div className="link-con f">
         <span className={`trans ${page === "home" ? "active" : ""}`}>
           <Link href="/">Home</Link>
@@ -113,7 +114,8 @@ const Wrapper = styled.nav`
     display: none;
     min-width: 18rem;
 
-    span {
+    span,
+    a {
       margin-right: 20px;
       font-family: "Roboto", sans-serif;
       font-style: normal;
@@ -176,12 +178,6 @@ const Wrapper = styled.nav`
       color: white;
     }
     color: black;
-  }
-
-  @media screen and (min-width: 525px) {
-    .navCart-con {
-      /* width: 110px; */
-    }
   }
 
   @media screen and (min-width: 768px) {

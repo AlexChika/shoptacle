@@ -14,7 +14,6 @@ function Login({
 
   return (
     <Wrapper className="signin f fcenter trans">
-      {/* <BackgroundDecoration /> */}
       <ContentContainer>
         <Heading>
           <span className="welcome">Welcome Back</span>
@@ -121,41 +120,6 @@ export const Wrapper = styled.article`
   }
 `;
 
-const BackgroundDecoration = styled.div`
-  /* border: 2px solid red; */
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-
-  /* inset: 0; */
-  background: radial-gradient(
-      circle at 25% 25%,
-      rgba(102, 126, 234, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 75% 75%,
-      rgba(118, 75, 162, 0.1) 0%,
-      transparent 50%
-    );
-  animation: float 20s ease-in-out infinite;
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    33% {
-      transform: translate(30px, -30px) rotate(120deg);
-    }
-    66% {
-      transform: translate(-20px, 20px) rotate(240deg);
-    }
-  }
-`;
-
 export const ContentContainer = styled.div`
   position: relative;
   display: flex;
@@ -210,6 +174,11 @@ export const InputContainer = styled.div`
 
   &.focused {
     transform: translateY(-2px);
+  }
+
+  small {
+    color: red;
+    font-size: 12px;
   }
 `;
 
