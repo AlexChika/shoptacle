@@ -43,6 +43,7 @@ function ProfileMenu({ reviews, orders, activeTab, setActiveTab }) {
             $isActive={activeTab === index}
           >
             <TabIcon $isActive={activeTab === index}>{item.icon}</TabIcon>
+
             <TabContent>
               <TabName>{item.name}</TabName>
               {item.count && (

@@ -13,14 +13,13 @@ function FashionPage({ products }) {
   const initialState = {
     filtered: [...products],
     products: products,
-    brand: "",
-    category: "",
+    brand: "all",
+    category: "all",
     sort: "a-z",
     search: "",
     grid: true,
     min: Math.min(...products.map((item) => item.price)),
     max: Math.max(...products.map((item) => item.price)),
-    priceRange: Math.min(...products.map((item) => item.price)),
   };
 
   const [state, dispatch] = useReducer(filterReducer, initialState);

@@ -104,18 +104,15 @@ export default function CheckoutForm({ Logger, cancelPaymentModal }) {
 const Wrapper = styled.main`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.7);
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  inset: 0;
+  overflow-y: auto;
   display: flex;
   align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   display: flex;
   justify-content: center;
-  align-content: center;
   height: 100%;
   width: 100%;
   z-index: 100;

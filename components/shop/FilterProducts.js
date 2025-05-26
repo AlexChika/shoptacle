@@ -1,31 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { Store } from "store/Context";
-import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaList } from "react-icons/fa";
-import { ImCheckboxChecked } from "react-icons/im";
 import * as actions from "store/actionTypes";
-import { formatPrice } from "utils/functions";
+import { BsFillGrid3X3GapFill } from "react-icons/bs";
+import { FaLongArrowAltRight } from "react-icons/fa";
+import { filterFunc } from "@utils/functions";
+
 // app
 const FilterProducts = ({ data }) => {
   const { Logger } = Store();
   const { dispatch, state } = data;
-  const {
-    products,
-    filtered,
-    category,
-    brand,
-    grid,
-    min,
-    max,
-    priceRange,
-    sort,
-    search,
-  } = state;
+  const { products, filtered, category, brand, grid, min, max, sort, search } =
+    state;
 
   function filterOnchange(e) {
     const name = e.target.name;
     let value = e.target.value;
+
+    if (name === "sort") {
+      dispatch({ type: actions.SET_SORT, payload: value });
+      return;
+    }
 
     if (name === "category") {
       dispatch({ type: actions.SET_CATEGORY, payload: value });
@@ -43,10 +39,6 @@ const FilterProducts = ({ data }) => {
       dispatch({ type: actions.SET_GRID, payload: false });
     }
 
-    if (name === "price-range") {
-      dispatch({ type: actions.SET_PRICE_RANGE, payload: value });
-    }
-
     if (name === "price-form") {
       e.preventDefault();
       let min = e.target.querySelector("#min-number").value;
@@ -59,8 +51,8 @@ const FilterProducts = ({ data }) => {
           "error"
         );
 
-      min = JSON.parse(min);
-      max = JSON.parse(max);
+      min = JSON.parse(min * 100);
+      max = JSON.parse(max * 100);
 
       dispatch({ type: actions.SET_MIN_MAX_RANGE, payload: { min, max } });
     }
@@ -69,131 +61,118 @@ const FilterProducts = ({ data }) => {
       dispatch({ type: actions.SET_SEARCH, payload: value });
     }
 
-    if (name === "sort") {
-      dispatch({ type: actions.SET_SORT, payload: value });
-    }
-
     if (name === "clear") {
       dispatch({ type: actions.CLEAR });
-      return;
     }
+
+    // finally, sort
+    dispatch({ type: actions.SET_SORT, payload: sort });
   }
 
   // Values...
-  const brands = [...new Set(filtered.map((item) => item.brand))];
   const categories = [...new Set(products.map((item) => item.category))];
+
+  const categoryProducts = filterFunc(
+    products,
+    "category",
+    category === "all" ? "" : category
+  );
+
+  const brands = [...new Set(categoryProducts.map((item) => item.brand))];
 
   return (
     <Wrapper className="center mt30">
       <article className="category-brand-bar f j-between">
-        <div className="categorya">
-          <SelectContainer>
-            <label htmlFor="category">Category</label>
+        <SelectContainer>
+          <label htmlFor="category">
+            Category: <span className="capitalize">{category}</span>
+          </label>
 
-            <select
-              id="category"
-              onChange={filterOnchange}
-              value={category}
-              name="category"
-            >
-              {categories.map((item, index) => {
-                return (
-                  <option
-                    key={index}
-                    className={`capitalize ${category == item ? "active" : ""}`}
-                  >
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
-          </SelectContainer>
+          <select
+            id="category"
+            onChange={filterOnchange}
+            value={category}
+            name="category"
+          >
+            <option value="all">All</option>
+            {categories.map((item, index) => {
+              return (
+                <option value={item} key={index}>
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </option>
+              );
+            })}
+          </select>
+        </SelectContainer>
 
-          <p className="capitalize">
-            Selected category: <span>{category}</span>
-          </p>
-        </div>
-
-        <h2 className="display">Filter Products</h2>
-
-        <div className="branda">
-          <SelectContainer>
-            <label htmlFor="brand">Brand</label>
-            <select
-              id="brand"
-              onChange={filterOnchange}
-              value={brand}
-              name="brand"
-            >
-              {brands.map((item, index) => {
-                return (
-                  <option
-                    key={index}
-                    className={`capitalize ${brand == item ? "active" : ""}`}
-                  >
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
-          </SelectContainer>
-
-          <p className="capitalize">
-            Selected brand: <span>{brand}</span>
-          </p>
-        </div>
+        <SelectContainer>
+          <label htmlFor="brand">
+            Brand: <span className="capitalize">{brand}</span>
+          </label>
+          <select
+            id="brand"
+            onChange={filterOnchange}
+            value={brand}
+            name="brand"
+          >
+            <option value="all">All</option>
+            {brands.map((item, index) => {
+              return (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
+        </SelectContainer>
       </article>
 
-      <article className="range f align j-between mt10">
-        <div className="side-left">
-          <h3>Price #</h3>
-          <div className="f align j-between">
-            <h4>{formatPrice(min)}</h4>
-            <input
-              onChange={filterOnchange}
-              type="range"
-              value={priceRange}
-              min={min}
-              max={max}
-              name="price-range"
-            />
-            <h4>{formatPrice(max)}</h4>
-          </div>
-          <h3>{formatPrice(priceRange)}</h3>
-        </div>
+      <article className="range f align mt10">
+        <label className="range-label" htmlFor="max-number">
+          Range:
+        </label>
 
-        <div className="side-right">
-          <form onSubmit={filterOnchange} name="price-form" value="price-form">
-            <div className="f align j-between">
-              <label htmlFor="max-number">Max :</label>
-              <input
-                min={min / 100}
-                max={max / 100}
-                type="number"
-                name="max"
-                id="max-number"
-              />
-            </div>
-            <div className="f align j-between mt10">
-              <label htmlFor="min-number">Min :</label>
-              <input
-                min={min / 100}
-                max={max / 100}
-                type="number"
-                name="min"
-                id="min-number"
-              />
-            </div>
-            <button type="submit" className="mt10">
-              apply
-            </button>
-          </form>
-        </div>
+        <form onSubmit={filterOnchange} name="price-form" value="price-form">
+          <SelectContainer className="range-container">
+            <label htmlFor="min-number">Min</label>
+
+            <input
+              required
+              placeholder={min / 100}
+              min={min / 100}
+              max={max / 100}
+              type="number"
+              name="min"
+              id="min-number"
+            />
+          </SelectContainer>
+
+          <FaLongArrowAltRight className="arrow" />
+
+          <SelectContainer className="range-container">
+            <label htmlFor="max-number">Max</label>
+
+            <input
+              required
+              placeholder={max / 100}
+              min={min / 100}
+              max={max / 100}
+              type="number"
+              name="max"
+              id="max-number"
+            />
+          </SelectContainer>
+
+          <button type="submit" className="shoptacle-btn-pink">
+            apply
+          </button>
+        </form>
       </article>
 
       <article className="search-sort-bar f align j-between mt10">
-        <div className="search-bar f align j-between">
-          <label htmlFor="search">Search</label>
+        <SelectContainer>
+          <label htmlFor="search">Search:</label>
+
           <input
             value={search}
             onChange={filterOnchange}
@@ -202,10 +181,13 @@ const FilterProducts = ({ data }) => {
             name="search"
             id="search"
           />
-        </div>
+        </SelectContainer>
 
         <SelectContainer>
-          <label htmlFor="sort">Sort By:</label>
+          <label htmlFor="sort">
+            Sort By:{" "}
+            <span className="capitalize">{sort || "None Selected"}</span>
+          </label>
 
           <select onChange={filterOnchange} value={sort} name="sort" id="sort">
             <option value="low-high">Price Low to High</option>
@@ -217,8 +199,9 @@ const FilterProducts = ({ data }) => {
       </article>
 
       <article className="feedback-bar f align j-between mt10">
-        <div className="view-container f align">
+        <div className="f fcenter">
           <p>View :</p>
+
           <button
             name="grid"
             value="grid"
@@ -227,6 +210,7 @@ const FilterProducts = ({ data }) => {
           >
             <BsFillGrid3X3GapFill />
           </button>
+
           <button
             name="list"
             value="list"
@@ -236,11 +220,17 @@ const FilterProducts = ({ data }) => {
             <FaList />
           </button>
         </div>
+
         <p>{filtered.length} products found</p>
       </article>
 
       <article className="clear mt10">
-        <button name="clear" value={"clear"} onClick={filterOnchange}>
+        <button
+          className="shoptacle-btn-pink"
+          name="clear"
+          value={"clear"}
+          onClick={filterOnchange}
+        >
           clear all filters
         </button>
       </article>
@@ -257,43 +247,15 @@ const Wrapper = styled.section`
   .feedback-bar,
   .clear {
     background-color: var(--blue);
-    background-color: white;
-    /* background-color: var(--gray); */
     color: var(--pink-light);
-    color: var(--blue);
     padding: 10px;
-  }
-  .category-brand-bar {
     flex-wrap: wrap;
-    .category,
-    .brand {
-      max-width: 270px;
-      min-width: 130px;
-      text-align: center;
-      height: 100px;
-      overflow-y: auto;
-      padding: 0px 10px;
-    }
-    li {
-      width: 100%;
-      height: 35px;
-    }
-    button {
-      letter-spacing: 0.12rem;
-    }
-    button.active {
-      color: var(--pink);
-      border-bottom: 2px solid var(--pink);
-    }
-    span {
-      margin: 0px 5px;
-    }
-    span.active {
-      color: var(--pink);
-    }
-    button:hover + span,
-    button:hover {
-      color: var(--pink);
+    gap: 15px;
+
+    p {
+      margin-top: 7px;
+      font-size: 16px;
+      color: var(--pink-light);
     }
   }
 
@@ -334,97 +296,85 @@ const Wrapper = styled.section`
   }
 
   .feedback-bar {
-    .view-container {
-      width: 50%;
-      button {
-        margin: 0px 7px;
-        font-size: 20px;
-      }
-      button.active {
-        color: var(--pink);
-      }
-      button:focus,
-      button:hover {
-        color: var(--pink);
-      }
-      svg,
-      path {
-        user-select: none;
-        pointer-events: none;
-      }
+    p {
+      margin: 0;
+    }
+
+    button {
+      margin: 0px 7px;
+      font-size: 20px;
+    }
+
+    button.active {
+      color: var(--pink);
+    }
+
+    button:focus,
+    button:hover {
+      color: var(--pink);
+    }
+
+    svg,
+    path {
+      user-select: none;
+      pointer-events: none;
     }
   }
 
   .range {
-    text-align: center;
-    flex-direction: column;
-    .side-left,
-    .side-right {
-      width: 100%;
-    }
-    .side-right {
-      margin-top: 30px;
-      label {
-        border: 1px solid var(--pink-light);
-        width: 6em;
-        color: gray;
-        background-color: var(--pink-light);
-      }
+    .range-label {
+      color: var(--pink-light);
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+      white-space: nowrap;
     }
 
-    input {
-      background-color: white;
-      width: 100%;
-      flex: 0.8;
-      color: var(--blue);
-      padding: 5px;
+    form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .range-container {
+        gap: 5px;
+
+        input {
+          width: 70px;
+          height: 30px;
+          background-color: #ebebeb;
+          padding: 10px;
+        }
+      }
+
+      .arrow {
+        font-size: 20px;
+      }
+
+      button {
+        text-transform: uppercase;
+        font-weight: 700;
+        height: 33px;
+        padding: 0px 10px;
+      }
     }
+    text-align: center;
+    flex-direction: row;
+
     button {
-      border-radius: 10px;
-      border: 2px solid var(--pink);
-      padding: 5px 30px;
-      background-color: var(--pink);
       width: 100%;
-    }
-    button:hover {
-      background-color: var(--gray);
     }
   }
 
   .clear {
+    overflow: hidden;
     button {
       width: 100%;
       background-color: var(--pink);
-      padding: 10px;
       text-transform: uppercase;
-      border-radius: 15px;
       font-weight: 700;
-    }
-  }
-
-  @media screen and (min-width: 425px) {
-    .search-sort-bar {
-      .search-bar,
-      .sort-container {
-        width: 47%;
-        max-width: 250px;
-        margin-bottom: 0px;
-      }
-    }
-  }
-
-  @media screen and (min-width: 600px) {
-    .range {
-      flex-direction: row;
-      .side-left,
-      .side-right {
-        width: 45%;
-        max-width: 300px;
-      }
-
-      .side-right {
-        margin-top: 0px;
-      }
+      font-size: 14px;
+      height: 30px;
+      border-radius: 4px;
     }
   }
 `;
@@ -436,15 +386,19 @@ const SelectContainer = styled.div`
   gap: 12px;
 
   label {
-    color: white;
-    font-size: 14px;
+    color: var(--pink-light);
+    font-size: 16px;
     font-weight: 500;
     margin: 0;
     white-space: nowrap;
+
+    span {
+      color: var(--pink);
+    }
   }
 
-  select {
-    /* border: 2px solid green; */
+  select,
+  input {
     background-color: white;
     color: #323148;
     border-radius: 4px;
@@ -469,17 +423,20 @@ const SelectContainer = styled.div`
   }
 
   /* Hover state */
-  select:hover {
+  select:hover,
+  input:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   }
 
   /* Focus state */
-  select:focus {
+  select:focus,
+  input:focus {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
   }
 
   /* Remove default focus outlines in Firefox */
-  select:-moz-focusring {
+  select:-moz-focusring,
+  input:-moz-focusring {
     color: transparent;
     text-shadow: 0 0 0 #323148;
   }

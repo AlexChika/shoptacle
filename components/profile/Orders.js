@@ -8,6 +8,8 @@ function Orders({ orders }) {
 
   const { Pagination, paginated } = usePaginate(orders, 7, 1, true, onScroll);
 
+  console.log({ paginated });
+
   function onScroll() {
     window.scrollTo(0, Number(orderRef.current.offsetTop) - 100);
   }

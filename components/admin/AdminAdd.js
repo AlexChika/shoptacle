@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Store } from "store/Context";
 import { AdminStore } from "./adminStore";
 import { Validate } from "utils/functions";
-import Modal from "./ModalHoc";
 import { ADMIN_REFRESH_STATE } from "store/actionTypes";
 import { _category } from "utils/data";
 

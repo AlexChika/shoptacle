@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Store } from "store/Context";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import Modal from "components/admin/ModalHoc";
 import CartItem from "./CartItem";
 import ProductRow from "shared/components/ProductRow";
 import { formatPrice } from "utils/functions";

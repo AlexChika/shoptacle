@@ -1,4 +1,3 @@
-import { formatPrice } from "@utils/functions";
 import React, { memo, useRef } from "react";
 import usePaginate from "shared/hooks/usePaginate";
 import { MdOutlineReviews } from "react-icons/md";

@@ -34,13 +34,13 @@
   <img src="https://img.shields.io/badge/Vercel-430098?style=for-the-badge&logo=vercel&logoColor=white" alt="vercel" />
 </p>
 
-<h3 align="center"><a href="https://shoptacle.vercel.app/"><strong>Want to see live preview »</strong></a></h3>
+<h3 align="center"><a href="https://shoptacle.globalstack.dev"><strong>Want to see live preview »</strong></a></h3>
 
 <p align="center">
   <br />&#10023;
   <a href="#Demo">View Demo</a> &#10023;
   <a href="https://github.com/AlexChika/shoptacle/issues">Report Bug</a> &#10023;
-  <a href="#Getting-Started">Getting Started</a> &#10023; 
+  <a href="#Getting-Started">Getting Started</a> &#10023;
   <a href="#Install">Installing</a> &#10023;
   <a href="#Contact">Author</a> &#10023;
 </p>
@@ -144,14 +144,14 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
     <th>CVV</th>
     <th>Expiry</th>
   </tr>
-  
+
   <tr>
     <td>Any Card </td>
     <td>4242 4242 4242 4242</td>
     <td>564</td>
     <td>12/35</td>
   </tr>
-  
+
 </table>
 
 <br />

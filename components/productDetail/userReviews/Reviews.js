@@ -111,7 +111,7 @@ const Wrapper = styled.article`
     }
 
     p {
-      line-height: 30px;
+      line-height: 20px;
       font-size: 14px;
     }
 

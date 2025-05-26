@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Store } from "store/Context";
 import { UPDATE_USER } from "store/actionTypes";
@@ -14,8 +14,8 @@ const Profile = () => {
   const { user, Logger, dispatch } = Store();
   const [activeTab, setActiveTab] = useState(0);
 
-  const reviews = user.reviews || [];
-  const orders = user.orders || [];
+  const orders = useMemo(() => user.orders || [], [user]);
+  const reviews = useMemo(() => user.reviews || [], [user]);
 
   // handlers
   const handleLogout = async () => {

@@ -151,28 +151,69 @@ class Validate {
   }
 }
 
+function filterFunc(array, key, value) {
+  if (!value) return array;
+  return array.filter((item) => item[key] === value);
+}
+
+function getMinMax(array) {
+  const valArr = array.map((item) => item.price);
+
+  return {
+    min: Math.min(...valArr),
+    max: Math.max(...valArr),
+  };
+}
+
 // reducer function for filtering products on the shop pages
 const filterReducer = (state, action) => {
   if (action.type === actions.SET_CATEGORY) {
     const category = action.payload;
-    const array = [
-      ...state.products.filter((item) => item.category == category),
-    ];
+    if (category === "all") {
+      return {
+        ...state,
+        category: "all",
+        brand: "all",
+        filtered: [...state.products],
+        ...getMinMax(state.products),
+      };
+    }
+
+    const array = state.products.filter((item) => item.category == category);
+
     return {
       ...state,
       category,
-      brand: "",
+      brand: "all",
       filtered: array,
+      ...getMinMax(array),
     };
   }
 
   if (action.type === actions.SET_BRAND) {
     const brand = action.payload;
-    const array = [...state.filtered.filter((item) => item.brand == brand)];
+
+    const categoryProducts = filterFunc(
+      state.products,
+      "category",
+      state.category === "all" ? "" : state.category
+    );
+
+    if (brand === "all") {
+      return {
+        ...state,
+        brand: "all",
+        filtered: categoryProducts,
+        ...getMinMax(categoryProducts),
+      };
+    }
+
+    const array = categoryProducts.filter((item) => item.brand == brand);
     return {
       ...state,
       brand,
       filtered: array,
+      ...getMinMax(array),
     };
   }
 
@@ -183,45 +224,53 @@ const filterReducer = (state, action) => {
     };
   }
 
-  if (action.type === actions.SET_PRICE_RANGE) {
-    const array = [...state.products].filter(
-      (item) => item.price <= action.payload
-    );
-    return {
-      ...state,
-      priceRange: action.payload,
-      filtered: array,
-      category: "",
-      brand: "",
-    };
-  }
-
   if (action.type === actions.SET_MIN_MAX_RANGE) {
     const { min, max } = action.payload;
 
-    const array = [...state.products].filter(
+    const categoryProducts = filterFunc(
+      state.products,
+      "category",
+      state.category === "all" ? "" : state.category
+    );
+    const brandProducts = filterFunc(
+      categoryProducts,
+      "brand",
+      state.brand === "all" ? "" : state.brand
+    );
+
+    const array = brandProducts.filter(
       (item) => item.price <= max && item.price >= min
     );
     return {
       ...state,
       filtered: array,
-      category: "",
-      brand: "",
+      search: "",
+      ...getMinMax(array),
     };
   }
 
   if (action.type === actions.SET_SEARCH) {
     const value = action.payload.toLowerCase();
-    const array = [
-      ...state.products.filter((item) =>
-        item.name.toLowerCase().includes(value)
-      ),
-    ];
+    const categoryProducts = filterFunc(
+      state.products,
+      "category",
+      state.category === "all" ? "" : state.category
+    );
+    const brandProducts = filterFunc(
+      categoryProducts,
+      "brand",
+      state.brand === "all" ? "" : state.brand
+    );
+
+    const array = brandProducts.filter((item) =>
+      item.name.toLowerCase().includes(value)
+    );
+
     return {
       ...state,
       filtered: array,
       search: value,
-      brand: "",
+      ...getMinMax(array),
     };
   }
 
@@ -263,10 +312,12 @@ const filterReducer = (state, action) => {
     return {
       ...state,
       filtered: [...state.products],
-      category: "",
-      brand: "",
-      priceRange: Math.min(...state.products.map((item) => item.price)),
+      category: "all",
+      brand: "all",
+      sort: "a-z",
+      search: "",
       grid: true,
+      ...getMinMax(state.products),
     };
   }
 
@@ -280,4 +331,5 @@ export {
   Validate,
   filterReducer,
   debounce,
+  filterFunc,
 };

@@ -267,12 +267,3 @@ const Wrapper = styled.section`
     }
   }
 `;
-
-// research
-// email and record management  (company)
-// trip reservation
-// customer service and data entry
-// verbal, written, and visual communication
-// scheduling and calender support
-// expense tracking and project management
-// social media management

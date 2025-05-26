@@ -113,6 +113,7 @@ a {
     transform: rotate(360deg);
   }
 }
+
 .opacity {
   animation: opacity 1s linear;
 }
@@ -126,6 +127,9 @@ a {
 }
 
 /* general classes */
+.lobster {
+  font-family: "Lobster", cursive;
+}
 .capitalize {
   text-transform: capitalize;
 }

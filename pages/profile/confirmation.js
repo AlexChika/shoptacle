@@ -1,8 +1,9 @@
-import Image from "next/image";
 import { Store } from "store/Context";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
+import { BsExclamationLg } from "react-icons/bs";
+
 // firebase imports
 import { addSubDocs, updateProduct } from "utils/firebase";
 
@@ -83,22 +84,21 @@ const Confirm = () => {
 
   return (
     <Wrapper className="layout f fcenter">
-      <div className="background f align">
-        <div>
-          <Image src="./lady-flower.png" alt={"logo background"}></Image>
-        </div>
-      </div>
-
       {loading ? (
-        <div className="loading f j-around">
+        <Loading>
           <div className="spinner center"></div>
-        </div>
+          <div className="background f align">
+            <div>
+              <img src="/lady-flower.png" alt="logo background" />
+            </div>
+          </div>
+        </Loading>
       ) : success ? (
-        <section className="box success f j-around">
+        <Success className="f j-around">
           <h1>Yipee , Your order has been Placed Successfully</h1>
 
-          <div className="small-image center">
-            <Image src="celebrate.png" alt="celebration icon"></Image>
+          <div className="img center">
+            <img src="/celebrate.png" alt="celebration icon" />
           </div>
 
           <p>
@@ -107,27 +107,31 @@ const Confirm = () => {
             you. If you have any queries, feel free to reach us at Shoptacle
           </p>
 
-          <div className="f j-around">
-            <button onClick={backToCart} className="center">
-              Back to Cart
-            </button>
-            <button onClick={backToShop} className="center">
-              Back to Shop
-            </button>
+          <button onClick={backToShop} className="center shoptacle-btn-pink">
+            Back to Shop
+          </button>
+
+          <div className="background f align">
+            <div>
+              <img src="/lady-flower.png" alt="logo background" />
+            </div>
           </div>
-        </section>
+        </Success>
       ) : (
-        <section className="box f j-around">
-          <h1>This payment failed... Please try again</h1>
-          <div className="f j-around">
-            <button onClick={backToCart} className="center">
-              Back to Cart
-            </button>
-            <button onClick={backToShop} className="center">
-              Back to Shop
-            </button>
+        <Error className="f j-around">
+          <div className="icon f fcenter">
+            <BsExclamationLg />
           </div>
-        </section>
+
+          <div>
+            <h1>This payment failed</h1>
+            <p>Please try again</p>
+          </div>
+
+          <button onClick={backToCart} className="center shoptacle-btn-blue">
+            Back to Cart
+          </button>
+        </Error>
       )}
     </Wrapper>
   );
@@ -139,67 +143,122 @@ const Wrapper = styled.main`
   background-color: var(--pink-light);
   color: var(--blue);
   height: 100vh;
+  min-height: 500px;
   position: relative;
   flex-direction: column;
 
-  .box,
-  .loading {
-    max-width: 945px;
-    width: 90%;
-    height: 80vh;
-    min-height: 500px;
-    background-color: white;
-    flex-direction: column;
-    text-align: center;
-    padding: 10px;
-
-    .small-image {
-      width: 250px;
-    }
-
-    h1,
-    p {
-      font-family: "Libre Baskerville", serif;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 30px;
-    }
-
-    button {
-      max-width: 250px;
-      padding: 10px 20px;
-      color: white;
-      background-color: var(--blue-light);
-    }
-  }
-
   .background {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     flex-direction: column;
     justify-content: flex-end;
     pointer-events: none;
-  }
 
-  @media screen and (min-width: 768px) {
-    .box {
-      h1,
-      p {
-        font-size: 20px;
-        line-height: 35px;
+    div {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+
+      img {
+        width: 100%;
       }
     }
   }
-  @media screen and (min-width: 1000px) {
-    .box {
-      h1,
-      p {
-        font-size: 25px;
-        line-height: 50px;
-      }
+`;
+
+const Loading = styled.div``;
+
+const Error = styled.div`
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 26px;
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    background-color: darkred;
+    animation: bounce 1s ease infinite;
+  }
+
+  .btns {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 16px;
+    opacity: 0.7;
+  }
+
+  button {
+    width: 250px;
+  }
+`;
+
+const Success = styled.div`
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 95%;
+  gap: 50px;
+
+  h1,
+  p {
+    font-family: "Libre Baskerville", sans-serif;
+  }
+
+  h1 {
+    font-size: 20px;
+    max-width: 700px;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 16px;
+    opacity: 0.7;
+    line-height: 2.2;
+    max-width: 600px;
+  }
+
+  button {
+    width: 250px;
+  }
+
+  .img {
+    width: 150px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    h1 {
+      font-size: 30px;
     }
   }
 `;

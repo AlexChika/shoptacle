@@ -187,7 +187,7 @@ export function ProjectOverviewModal({
             <section className="pov_banner_content">
               <article>
                 <div>
-                  <h4>
+                  <h4 className="lobster">
                     <span>About</span> {projectName}
                   </h4>
                   <p>{description}</p>
