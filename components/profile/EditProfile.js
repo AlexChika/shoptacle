@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Store } from "@store/Context";
 import styled from "styled-components";
 import { Validate } from "@utils/functions";
-import { FaAddressBook } from "react-icons/fa";
+import { SET_USER } from "@store/actionTypes";
 import { getDoc, updateDoc } from "firebase/firestore";
 import { getCustomerDocRef, uploadImage } from "@utils/firebase";
-import { SET_USER } from "@store/actionTypes";
+import { FaAddressBook, FaAddressCard, FaImage } from "react-icons/fa";
 
 const defaultInput = {
   firstName: {
@@ -31,8 +31,6 @@ function EditProfile() {
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
   const [formInput, setFormInput] = useState(defaultInput);
-
-  console.log({ user });
 
   const validate = new Validate();
   function logError(value, type, element, min, max, name) {
@@ -191,7 +189,7 @@ function EditProfile() {
           <Label>Address</Label>
           <InputWrapper>
             <InputIcon>
-              <FaAddressBook />
+              <FaAddressCard />
             </InputIcon>
             <textarea
               placeholder={user.address || "Enter Your Address"}
@@ -209,7 +207,7 @@ function EditProfile() {
           <Label>Profile Image</Label>
           <InputWrapper>
             <InputIcon>
-              <FaAddressBook />
+              <FaImage />
             </InputIcon>
             <input
               onChange={formOnchange}

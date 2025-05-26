@@ -4,7 +4,17 @@ import { BiExit, BiEnvelope } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { memo } from "react";
 
-function ProfileHeader({ user, handleLogout, noOfReviews, noOfOrders }) {
+function ProfileHeader({
+  user,
+  handleLogout,
+  noOfReviews,
+  noOfOrders,
+  setActiveTab,
+}) {
+  function handleEditProfile() {
+    window.scrollTo(0, 600);
+    setActiveTab(2);
+  }
   return (
     <>
       <HeaderSection>
@@ -61,11 +71,11 @@ function ProfileHeader({ user, handleLogout, noOfReviews, noOfOrders }) {
               </UserNameSection>
 
               <ActionButtons>
-                <EditButton>
+                <EditButton onClick={() => handleEditProfile(2)}>
                   <FaUserEdit />
                   Edit Profile
                 </EditButton>
-                <LogoutButton onClick={handleLogout}>
+                <LogoutButton onClick={() => handleLogout()}>
                   <BiExit />
                   Logout
                 </LogoutButton>

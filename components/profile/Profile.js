@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Store } from "store/Context";
 import { UPDATE_USER } from "store/actionTypes";
@@ -12,6 +12,7 @@ import ProfileMenu from "./ProfileMenu";
 // app
 const Profile = () => {
   const { user, Logger, dispatch } = Store();
+  const [activeTab, setActiveTab] = useState(0);
 
   const reviews = user.reviews || [];
   const orders = user.orders || [];
@@ -40,13 +41,19 @@ const Profile = () => {
       <Container>
         <Content>
           <ProfileHeader
+            setActiveTab={setActiveTab}
             noOfReviews={reviews.length}
             noOfOrders={orders.length}
             user={user}
             handleLogout={handleLogout}
           />
 
-          <ProfileMenu reviews={reviews} orders={orders} />
+          <ProfileMenu
+            setActiveTab={setActiveTab}
+            activeTab={activeTab}
+            reviews={reviews}
+            orders={orders}
+          />
         </Content>
       </Container>
     </Wrapper>

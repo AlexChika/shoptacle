@@ -12,7 +12,7 @@ import Reviews from "./Reviews";
 const UserReviews = ({ data }) => {
   const { Logger, user } = Store();
   const { product, reviews, id, setRefresh } = data;
-  const { rating, name: productName } = product;
+  const { rating, name: productName, imgOne } = product;
   const router = useRouter();
   // local states
   const [selectedStar, setSelectedStar] = useState(0);
@@ -91,7 +91,10 @@ const UserReviews = ({ data }) => {
     // review object to add to reviews collection
     const review = {
       name: `${user.firstName} ${user.lastName}`,
-      star: selectStarRating,
+      productName,
+      productId: id,
+      productImage: imgOne,
+      star: selectedStar,
       date: new Date().toDateString(),
       title,
       experience,

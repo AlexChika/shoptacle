@@ -1,5 +1,4 @@
 import { formatPrice } from "@utils/functions";
-import { or } from "firebase/firestore";
 import React, { memo, useRef } from "react";
 import usePaginate from "shared/hooks/usePaginate";
 import styled from "styled-components";
@@ -19,14 +18,14 @@ function Orders({ orders }) {
         paginated.map((item, index) => {
           const { name, amount, price, ref, date } = item;
           return (
-            <OrderReviewItem key={index} className="order-item">
-              <OrderReviewHeader>
+            <OrderItem key={index} className="order-item">
+              <OrderHeader>
                 <ItemTitle>
                   <AmountBadge>{amount}x</AmountBadge>
                   <ItemName>{name}</ItemName>
                 </ItemTitle>
                 <DateTag>{date}</DateTag>
-              </OrderReviewHeader>
+              </OrderHeader>
 
               <OrderDetails>
                 <PriceSection>
@@ -38,7 +37,7 @@ function Orders({ orders }) {
                   <RefValue>#{ref}</RefValue>
                 </RefSection>
               </OrderDetails>
-            </OrderReviewItem>
+            </OrderItem>
           );
         })
       ) : (
@@ -52,9 +51,11 @@ function Orders({ orders }) {
         </NoOrdersReviews>
       )}
 
-      <PaginationWrapper>
-        {orders.length > 0 && <Pagination />}
-      </PaginationWrapper>
+      {orders.length > 0 && (
+        <PaginationWrapper>
+          <Pagination />
+        </PaginationWrapper>
+      )}
     </Wrapper>
   );
 }
@@ -66,7 +67,7 @@ export const Wrapper = styled.div`
   max-width: 100%;
 `;
 
-export const OrderReviewItem = styled.div`
+export const OrderItem = styled.div`
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -99,7 +100,7 @@ export const OrderReviewItem = styled.div`
   }
 `;
 
-export const OrderReviewHeader = styled.div`
+export const OrderHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -236,7 +237,7 @@ export const NoOrdersReviews = styled.div`
   background: #fafafa;
   border-radius: 16px;
   border: 2px dashed #e5e7eb;
-  margin: 20px 0;
+  margin-top: 20px;
 
   @media (max-width: 768px) {
     padding: 40px 20px;
@@ -278,7 +279,7 @@ export const EmptySubtitle = styled.p`
 `;
 
 export const PaginationWrapper = styled.div`
-  margin-top: 32px;
+  margin-top: 16px;
   display: flex;
   justify-content: center;
 `;

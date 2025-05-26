@@ -470,6 +470,12 @@ const Wrapper = styled.div`
       -webkit-overflow-scrolling: touch;
     }
   }
+
+  @media screen and (min-width: 768px) {
+    .hero-content {
+      padding: 20px 0px;
+    }
+  }
 `;
 
 export default HeroBar;

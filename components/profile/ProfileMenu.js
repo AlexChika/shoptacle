@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, memo } from "react";
+import React, { useRef, useCallback, memo } from "react";
 import { BsCartFill, BsChatSquareText } from "react-icons/bs";
 import { FaUserEdit } from "react-icons/fa";
 import styled from "styled-components";
@@ -6,8 +6,7 @@ import Orders from "./Orders";
 import Reviews from "./Reviews";
 import EditProfile from "./EditProfile";
 
-function ProfileMenu({ reviews, orders }) {
-  const [activeTab, setActiveTab] = useState(0);
+function ProfileMenu({ reviews, orders, activeTab, setActiveTab }) {
   const tabRef = useRef(null);
 
   const handleSwitchTabs = useCallback(function (index) {
@@ -154,6 +153,6 @@ const TabCount = styled.span`
 `;
 
 const ContentArea = styled.div`
-  min-height: 400px;
+  /* min-height: 400px; */
   padding: 0px 5px;
 `;

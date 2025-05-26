@@ -99,6 +99,7 @@ const Wrapper = styled.article`
     }
 
     .review-title {
+      margin: 5px 0px;
       font-size: 16px;
       font-weight: 600;
     }

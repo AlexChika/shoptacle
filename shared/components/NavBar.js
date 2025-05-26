@@ -113,10 +113,10 @@ const Wrapper = styled.nav`
   .link-con {
     display: none;
     min-width: 18rem;
+    gap: 25px;
 
     span,
     a {
-      margin-right: 20px;
       font-family: "Roboto", sans-serif;
       font-style: normal;
       font-weight: 500;
