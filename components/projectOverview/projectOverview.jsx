@@ -122,7 +122,6 @@ export function ProjectOverviewModal({
     if (!video) return;
 
     const handleEnded = () => {
-      console.log("handleEnded");
       setPlay(false);
     };
 

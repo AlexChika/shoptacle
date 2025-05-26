@@ -66,8 +66,6 @@ const AdminProvider = ({ children }) => {
         const promises = [getAllProducts(), getAllCustomers()];
 
         Promise.all(promises).then((values) => {
-          console.log({ values });
-
           if (!isSubscribed) return;
           dispatch({
             type: actionTypes.ADMIN_FETCH_ALL_PRODUCTS,
