@@ -158,7 +158,7 @@ Shoptacle, Your one stop for perfect fashion, Shoptacle is the way to go. A mode
 
 <h2>Demo</h2>
 
-[Click here to checkout this project](https://shoptacle.vercel.app/)
+[Click here to checkout this project](https://shoptacle.globalstack.dev)
 
 <br />
 
