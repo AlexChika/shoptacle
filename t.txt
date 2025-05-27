@@ -1,0 +1,33 @@
+Hello, welcome to another project overview. Our project for today is Shoptacle - a fully-featured ecommerce app implementation.
+
+For this one, we have added
+
+> User authentication - including simple sign-in and sign-up pages.
+
+> A customer profile -  that displays some basic user metadata.
+
+> Also, we have added a large collection of beautifully, hand picked products and have divided our products into four categories..
+
+> We have the Men's clothing collection,
+> Women's fashion and wearables,
+> Smart gadgets and appliance
+> and lastly, a Unisex shoe collection.
+
+> On the product page, we have added product ratings and reviews - where we can easily submit ratings and reviews for purchased products,
+
+> We have also included a cart page with 2 payment options
+
+For this one,
+> we have Stripe - for global payments and
+> Paystack, a fast and secure local alternative.
+
+Before I forget, on the User Profile page, users can view their order history and see all the reviews they have submitted.
+
+> To make it even cooler, we have added an admin portal. Here, an admin can view all the products, with an ability to Search through the products, view products, delete and edit as needed.
+
+With the admin page, managing Shoptacle is easy and efficient.
+
+Thank you for checking Shoptacle out.
+see you in the next one. bye byeee.
+
+

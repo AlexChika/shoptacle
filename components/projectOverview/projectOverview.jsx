@@ -17,7 +17,7 @@ export function ProjectOverviewModal({
     "https://i.postimg.cc/3rVN9nKW/shoptacle-port-3.png",
   ],
   projectIconUrl = "/logowhite.svg",
-  youtubeVidID = "-N_e3ZIkmKk",
+  youtubeVidID = "ZKuJpFd4K8Y",
   videoUrl = "https://res.cloudinary.com/dsdysokfq/video/upload/v1740038882/shoptacle_overview_zy5uuf.mp4",
   posterUrl = "https://i.postimg.cc/8kb0Dn0n/shoptacle-port-2.png",
   open = true,
