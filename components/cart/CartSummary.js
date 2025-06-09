@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 function CartSummary({ cartTotals, user, handleCheckout, formatPrice }) {
+  const router = useRouter();
+
   return (
     <Wrapper>
       <div className="summary-card">
